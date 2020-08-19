@@ -1,0 +1,173 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "annu-ng-lib": {
+      "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/annu-ng-lib",
+      "sourceRoot": "projects/annu-ng-lib/src",
+      "prefix": "anu",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/annu-ng-lib/tsconfig.lib.json",
+            "project": "projects/annu-ng-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/annu-ng-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/annu-ng-lib/src/test.ts",
+            "tsConfig": "projects/annu-ng-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/annu-ng-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/annu-ng-lib/tsconfig.lib.json",
+              "projects/annu-ng-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "annu-ng-lib-pages": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/annu-ng-lib-pages",
+      "sourceRoot": "projects/annu-ng-lib-pages/src",
+      "prefix": "anu",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/annu-ng-lib-pages",
+            "index": "projects/annu-ng-lib-pages/src/index.html",
+            "main": "projects/annu-ng-lib-pages/src/main.ts",
+            "polyfills": "projects/annu-ng-lib-pages/src/polyfills.ts",
+            "tsConfig": "projects/annu-ng-lib-pages/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/annu-ng-lib-pages/src/favicon.ico",
+              "projects/annu-ng-lib-pages/src/assets"
+            ],
+            "styles": [
+              "projects/annu-ng-lib-pages/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/annu-ng-lib-pages/src/environments/environment.ts",
+                  "with": "projects/annu-ng-lib-pages/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "annu-ng-lib-pages:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "annu-ng-lib-pages:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "annu-ng-lib-pages:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/annu-ng-lib-pages/src/test.ts",
+            "polyfills": "projects/annu-ng-lib-pages/src/polyfills.ts",
+            "tsConfig": "projects/annu-ng-lib-pages/tsconfig.spec.json",
+            "karmaConfig": "projects/annu-ng-lib-pages/karma.conf.js",
+            "assets": [
+              "projects/annu-ng-lib-pages/src/favicon.ico",
+              "projects/annu-ng-lib-pages/src/assets"
+            ],
+            "styles": [
+              "projects/annu-ng-lib-pages/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/annu-ng-lib-pages/tsconfig.app.json",
+              "projects/annu-ng-lib-pages/tsconfig.spec.json",
+              "projects/annu-ng-lib-pages/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/annu-ng-lib-pages/e2e/protractor.conf.js",
+            "devServerTarget": "annu-ng-lib-pages:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "annu-ng-lib-pages:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "annu-ng-lib"
+}
