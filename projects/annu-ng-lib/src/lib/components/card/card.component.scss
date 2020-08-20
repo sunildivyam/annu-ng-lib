@@ -1,0 +1,22 @@
+.anu_card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: var(--anu-background);
+  color: var(--anu-accent);
+}
+
+.anu_card_header {
+  padding: 10px;
+  background-color: grey;
+}
+
+.anu_card_content {
+  padding: 10px;
+  background-color: rgb(233, 230, 230);
+}
+
+.anu_card_footer {
+  padding: 10px;
+  background-color: grey;
+}

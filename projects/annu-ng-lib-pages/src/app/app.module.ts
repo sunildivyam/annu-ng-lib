@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AnnuNgLibModule } from 'annu-ng-lib';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { AnnuNgLibModule } from 'annu-ng-lib';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AnnuNgLibModule
+    AnnuNgLibModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
