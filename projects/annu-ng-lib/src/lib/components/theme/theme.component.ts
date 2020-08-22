@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ThemeService } from '../../services';
 import { Theme } from '../../interfaces';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'anu-theme',
@@ -9,20 +8,31 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent {
-  selectedTheme: string;
-  listControl: FormControl;
-  invertControl: FormControl;
+  palettes: Palettes;
+  theme: Theme;
 
-  constructor(public themeService: ThemeService) {
-    this.invertControl = new FormControl(false);
-    this.listControl = new FormControl(this.themeService.theme);
-
-    this.invertControl.valueChanges.subscribe((value: boolean) => this.themeService.toggleInvert(value));
-    this.listControl.valueChanges.subscribe(this.themeSelected);
+  constructor(private themeService: ThemeService) {
+    this.palettes = {
+      primary: [],
+      secondary: [],
+      accent: []
+    };
   }
 
-  public themeSelected = (themeName: string): void => {
-    console.log('Selected Theme', themeName);
-    this.themeService.setTheme(themeName);
+  public paletteChanged = (colors: Array<string>, paletteName: string): void => {
+    this.palettes[paletteName] = colors;
+    console.log(colors, paletteName);
+    this.theme = this.themeService.generateTheme(
+      'themeName',
+      'Theme Description',
+      this.palettes.primary,
+      this.palettes.secondary,
+      this.palettes.accent);
   }
+}
+
+interface Palettes {
+  primary: Array<string>;
+  secondary: Array<string>;
+  accent: Array<string>;
 }

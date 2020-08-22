@@ -1,9 +1,38 @@
-<div>
-  <label>Invert Theme</label>
-  <input type="checkbox" [formControl]="invertControl"/>
+<h1>Theme Generator</h1>
+<div class="anu_theme">
+  <div class="anu_section_edit">
+    <div class="palette">
+      <anu-color-palette
+        headerText="Primary Colors"
+        hue="0"
+        saturation="90"
+        (valueChanges)="paletteChanged($event, 'primary')">
+      </anu-color-palette>
+    </div>
+    <div class="palette">
+      <anu-color-palette
+        headerText="Secondary Colors"
+        hue="120"
+        saturation="60"
+        (valueChanges)="paletteChanged($event, 'secondary')">
+      </anu-color-palette>
+    </div>
+    <div class="palette">
+      <anu-color-palette
+        headerText="Accent Colors"
+        hue="40"
+        saturation="10"
+        (valueChanges)="paletteChanged($event, 'accent')">
+      </anu-color-palette>
+    </div>
+  </div>
+  <div class="anu_section_json">
+    <div class="anu_theme_json">
+      <code>
+        <pre>
+{{theme | json}}
+        </pre>
+      </code>
+    </div>
+  </div>
 </div>
-<select name="" id="" [formControl]="listControl">
-  <option *ngFor="let theme of themeService.themes" value={{theme.name}}>
-    {{theme.description}}
-  </option>
-</select>

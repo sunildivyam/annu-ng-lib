@@ -1,11 +1,16 @@
 <div class="anu_color_palette">
+  <h2>{{headerText}}</h2>
   <div class="anu_hue">
-    <label>Hue (0 - 360)</label>
-    <input type="number" [formControl]="hueControl"/>
+    <label>Hue: </label>
+    <input type="range" min="0" max="360" [value]="hue" class="anu_slider" [formControl]="hueControl">
+    <label>saturation: </label>
+    <input type="range" min="0" max="100" [value]="saturation" class="anu_slider" [formControl]="saturationControl">
   </div>
   <div class="anu_palette">
-    <div class="anu_color" *ngFor="let color of colors" [style.background-color]="color">
-      {{color}}
+    <div class="anu_color" *ngFor="let color of colors"
+    [style.background-color]="color"
+    [style.color]="color">
+      <h4>{{color}}</h4>
     </div>
   </div>
 </div>
