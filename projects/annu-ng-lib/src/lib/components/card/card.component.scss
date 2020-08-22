@@ -3,11 +3,14 @@
   flex-direction: column;
   padding: var(--anu-spacing);
   color: var(--anu-accentDarker);
+  border-radius: var(--anu-borderRadius);
+  overflow: hidden;
 }
 
 .anu_card_header {
   padding: var(--anu-spacing);
   background-color: var(--anu-primary);
+  background: linear-gradient(90deg, var(--anu-primary) 0%, var(--anu-primaryLight) 35%, var(--anu-primaryLighter) 100%);
   color: var(--anu-accentDarkest);
 }
 
@@ -19,5 +22,6 @@
 .anu_card_footer {
   padding: var(--anu-spacing);
   background-color: var(--anu-primary);
+  background: linear-gradient(90deg, var(--anu-primary) 0%, var(--anu-primaryLight) 35%, var(--anu-primaryLighter) 100%);
   color: var(--anu-accentDarkest);
 }
