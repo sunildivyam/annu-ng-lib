@@ -1,0 +1,9 @@
+<div>
+  <label>Invert Theme</label>
+  <input type="checkbox" [formControl]="invertControl"/>
+</div>
+<select name="" id="" [formControl]="listControl">
+  <option *ngFor="let theme of themeService.themes" value={{theme.name}}>
+    {{theme.description}}
+  </option>
+</select>

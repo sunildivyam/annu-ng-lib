@@ -1,0 +1,13 @@
+.anu_palette {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+.anu_color {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: calc(100%/10);
+}
