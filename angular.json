@@ -63,8 +63,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/annu-ng-lib-pages",
-            "index": "/index.html",
-            "main": "src/main.ts",
+            "index": "projects/annu-ng-lib-pages/src/index.html",
+            "main": "projects/annu-ng-lib-pages/src/main.ts",
             "polyfills": "projects/annu-ng-lib-pages/src/polyfills.ts",
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.app.json",
             "aot": true,
