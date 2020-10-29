@@ -1,7 +1,30 @@
-<div class="content" role="main">
-  <anu-card></anu-card>
-  <!-- <anu-color-palette></anu-color-palette> -->
-  <anu-theme-picker></anu-theme-picker>
-  <anu-theme></anu-theme>
+<div class="anu_mainContent" role="main">
+  <header>
+    <ul>
+      <li><h1>Annu Ng Lib Pages</h1></li>
+      <li style="float:right" class="anu_active">
+        <anu-theme-picker></anu-theme-picker>
+      </li>
+    </ul>
+  </header>
+  <section class="anu_container">
+    <section class="anu_leftSidemenu">
+      <ul>
+        <li *ngFor="let route of routes">
+          <ng-container *ngIf="route.path">
+            <a [routerLink]="route.path">{{route.data.title}}</a>
+          </ng-container>
+        </li>
+      </ul>
+    </section>
+    <section class="anu_content">
+      <router-outlet></router-outlet>
+    </section>
+    <section class="anu_rightSidemenu">
+      Right Navigation
+    </section>
+  </section>
+  <footer>
+
+  </footer>
 </div>
-<router-outlet></router-outlet>

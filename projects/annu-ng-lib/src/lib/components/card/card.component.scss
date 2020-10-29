@@ -1,10 +1,11 @@
 .anu_card {
   display: flex;
   flex-direction: column;
-  padding: var(--anu-spacing);
+  padding: 0px;
   color: var(--anu-accentDarker);
   border-radius: var(--anu-borderRadius);
   overflow: hidden;
+  box-shadow: var(--anu-boxShadow);
 }
 
 .anu_card_header {
