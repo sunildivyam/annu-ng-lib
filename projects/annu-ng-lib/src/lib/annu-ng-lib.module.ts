@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+
 import { CardComponent } from './components/card/card.component';
+import { ThemeComponent } from './components/theme/theme.component';
+import { ThemeService } from './services';
+import { ColorPaletteComponent } from './components/color-palette/color-palette.component';
+import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
 
 @NgModule({
-  declarations: [CardComponent],
+  declarations: [CardComponent, ThemeComponent, ColorPaletteComponent, ThemePickerComponent],
   imports: [
+    BrowserModule,
+    ReactiveFormsModule
   ],
-  exports: [CardComponent]
+  exports: [CardComponent, ThemeComponent, ColorPaletteComponent, ThemePickerComponent]
 })
 export class AnnuNgLibModule {
-  constructor() {
-    console.log(this.cssVar('anu-background'));
-  }
-
-  private cssVar(name: string, value: string = ''): string {
-    if (name[0] !== '-') {
-      name = '--' + name; // allow passing with or without --
-    }
-    if (value) {
-      document.documentElement.style.setProperty(name, value);
-    }
-    return getComputedStyle(document.documentElement).getPropertyValue(name);
+  constructor(private themeService: ThemeService) {
+    this.themeService.setTheme();
   }
 }

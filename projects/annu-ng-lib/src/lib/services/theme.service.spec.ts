@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AnnuNgLibService } from './annu-ng-lib.service';
+import { ThemeService } from './theme.service';
 
-describe('AnnuNgLibService', () => {
-  let service: AnnuNgLibService;
+describe('ThemeService', () => {
+  let service: ThemeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AnnuNgLibService);
+    service = TestBed.inject(ThemeService);
   });
 
   it('should be created', () => {

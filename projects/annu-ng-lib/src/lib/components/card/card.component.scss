@@ -1,22 +1,28 @@
 .anu_card {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  background-color: var(--anu-background);
-  color: var(--anu-accent);
+  padding: 0px;
+  color: var(--anu-accentDarker);
+  border-radius: var(--anu-borderRadius);
+  overflow: hidden;
+  box-shadow: var(--anu-boxShadow);
 }
 
 .anu_card_header {
-  padding: 10px;
-  background-color: grey;
+  padding: var(--anu-spacing);
+  background-color: var(--anu-primary);
+  background: linear-gradient(90deg, var(--anu-primary) 0%, var(--anu-primaryLight) 35%, var(--anu-primaryLighter) 100%);
+  color: var(--anu-accentDarkest);
 }
 
 .anu_card_content {
-  padding: 10px;
-  background-color: rgb(233, 230, 230);
+  padding: var(--anu-spacing);
+  background-color: var(--anu-primaryLightest);
 }
 
 .anu_card_footer {
-  padding: 10px;
-  background-color: grey;
+  padding: var(--anu-spacing);
+  background-color: var(--anu-primary);
+  background: linear-gradient(90deg, var(--anu-primary) 0%, var(--anu-primaryLight) 35%, var(--anu-primaryLighter) 100%);
+  color: var(--anu-accentDarkest);
 }

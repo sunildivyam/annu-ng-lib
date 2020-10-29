@@ -1,0 +1,22 @@
+.anu {
+  &_mainContent {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &_leftSidemenu, &_rightSidemenu, &_content {
+    width: 20%;
+  }
+
+  &_content {
+    width:60%;
+  }
+}
+li {
+  display: block;
+}
