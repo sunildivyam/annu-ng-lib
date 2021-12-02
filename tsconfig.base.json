@@ -17,8 +17,10 @@
     ],
     "paths": {
       "annu-ng-lib": [
-        "dist/annu-ng-lib/annu-ng-lib",
-        "dist/annu-ng-lib"
+        "projects/annu-ng-lib/src/lib"
+      ],
+      "annu-ng-lib/*": [
+        "projects/annu-ng-lib/src/lib/*"
       ]
     }
   }

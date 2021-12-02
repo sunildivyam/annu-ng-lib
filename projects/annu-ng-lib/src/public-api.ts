@@ -1,16 +1,4 @@
 /*
  * Public API Surface of annu-ng-lib
  */
-
-// Modules
-export * from './lib/annu-ng-lib.module';
-
- // Components
-export * from './lib/components/card/card.component';
-export * from './lib/components/theme/theme.component';
-export * from './lib/components/color-palette/color-palette.component';
-export * from './lib/components/theme-picker/theme-picker.component';
-
-// Services
-
-export * from './lib/services';
+export * from './lib/index';

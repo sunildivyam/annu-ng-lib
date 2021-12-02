@@ -1,27 +1,23 @@
 # AnnuNgLib
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
+The objective of this project to develop a framework that can provide all required bolts and nuts to retail requirements, for example: Hiring and Jobs Retail Shopping and e-commerce Tour, Travel & hotels Web classifieds, etc.
 
-## Development server
+## Using Live reload of library and pages app for local development.
+`ng serve` will start a local dev server at http://localhost:4200 and loads annu-ng-lib-pages app. Any code changes in any of the annu-ng-lib (library) and the annu-ng-lib-pages (pages app), will hot reload in the browser.
+### How this is enabled:
+* One `index.ts` file is created in `projects/annu-ng-lib/src/lib` and exported all library angular items that need to be exposed publically.
+* `public-api.ts` needs to export all from this `index.ts`.
+* The last thing is to add `paths` to the root `tsconfig.base.json` to point to this `index.ts`.
+* This is all, now you just need to import library in your main app module.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Build Library 
 
-## Code scaffolding
+Run `ng build annu-ng-lib` to build the project. The build artifacts will be stored in the `dist/annu-ng-lib` directory. Use the `--prod` flag for a production build.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Build Library Pages
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/annu-ng-lib-pages` directory. Use the `--prod` flag for a production build.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Generate alternate & optional Library documentation static site.
+* Run `npm run docs`, will create a `documentation` folder in root, that contains all static documentation code.
+* Run `npm run docs:serve`, will start a local static web server at http://localhost:8080 that will serve the static library documentation.
+* This documentation support can be removed later once pages app is completed.
