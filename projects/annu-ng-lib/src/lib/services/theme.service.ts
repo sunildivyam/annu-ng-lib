@@ -149,7 +149,7 @@ export class ThemeService {
       success: 'hsl(120, 90%, 50%)',
 
       // Typography
-      fontFamily: 'Arial, Roboto',
+      fontFamily: '"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
       lineHeight: '1.5',
       characterSpacing: '100%',
       fontSize: '140x',

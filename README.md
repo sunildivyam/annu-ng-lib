@@ -17,6 +17,14 @@ Run `ng build annu-ng-lib` to build the project. The build artifacts will be sto
 ## Build Library Pages
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/annu-ng-lib-pages` directory. Use the `--prod` flag for a production build.
 
+## Deploy `annu-ng-lib-pages` to Github Pages.
+You can visit library's app pages at https://sunildivyam.github.io/annu-ng-lib.
+To deploy latest `annu-ng-lib-pages` app to Github Pages, follow below steps:
+* Switch to branch `annu-ng-lib-pages/ghithub-docs`.
+* Rebase it from `master` branch.
+* Run `ng build`, this generates the `docs` folder in root.
+* Push your changes and this is all done. Go to https://sunildivyam.github.io/annu-ng-lib and view pages.
+
 ## Generate alternate & optional Library documentation static site.
 * Run `npm run docs`, will create a `documentation` folder in root, that contains all static documentation code.
 * Run `npm run docs:serve`, will start a local static web server at http://localhost:8080 that will serve the static library documentation.

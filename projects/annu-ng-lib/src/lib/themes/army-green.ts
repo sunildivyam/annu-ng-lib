@@ -35,7 +35,7 @@ export const armyGreen: Theme = {
     error: 'hsl(0, 90%, 50%)',
     warn: 'hsl(50, 90%, 50%)',
     success: 'hsl(120, 90%, 50%)',
-    fontFamily: 'Arial, Roboto',
+    fontFamily: '"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
     lineHeight: '1.5',
     characterSpacing: '100%',
     fontSize: '140x',
