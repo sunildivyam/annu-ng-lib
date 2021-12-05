@@ -23,7 +23,7 @@
       appearance: none;
       width: 25px;
       height: 25px;
-      background: var(--anu-primary);
+      background: var(--anu-primaryNormal);
       cursor: pointer;
       border-radius: 50%;
     }
@@ -31,7 +31,7 @@
     &::-moz-range-thumb {
       width: 25px;
       height: 25px;
-      background: var(--anu-primary);
+      background: var(--anu-primaryNormal);
       cursor: pointer;
     }
   }

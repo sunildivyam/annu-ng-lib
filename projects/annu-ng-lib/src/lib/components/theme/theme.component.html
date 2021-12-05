@@ -1,11 +1,19 @@
 <div class="annuTheme">
 
   <section class="annuTheme_navs">
+    <anu-tabs [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
   </section>
-  <header class="annuTheme_header">
-    <h2>Theme Generator</h2>
-  </header>
-  <section class="annuTheme_content">
+
+  <section class="annuTheme_overview" *ngIf="selectedTab.name === 'overview'">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="themeName">
+    <label>Title </label>
+    <input type="text" [(ngModel)]="themeTitle">
+    <label>Description </label>
+    <textarea [(ngModel)]="themeDescription"></textarea>
+  </section>
+
+  <section class="annuTheme_palettes" *ngIf="selectedTab.name === 'palettes'">
     <div class="annuTheme_palette">
       <anu-color-palette name="Primary" hue="0" saturation="90" (valueChanges)="paletteChanged($event, 'primary')">
       </anu-color-palette>
@@ -20,11 +28,13 @@
       </anu-color-palette>
     </div>
     <div class="annuTheme_palette">
-      <anu-color-palette name="Background" hue="0" saturation="80" (valueChanges)="paletteChanged($event, 'background')">
+      <anu-color-palette name="Background" hue="0" saturation="80"
+        (valueChanges)="paletteChanged($event, 'background')">
       </anu-color-palette>
     </div>
   </section>
-  <section class="annuTheme_json">
+
+  <section class="annuTheme_json" *ngIf="selectedTab.name === 'json'">
     <div class="annuTheme_json_code">
       <code>
         <pre>

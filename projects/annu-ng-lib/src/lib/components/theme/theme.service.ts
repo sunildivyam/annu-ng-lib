@@ -125,6 +125,7 @@ export class ThemeService {
 
   public generateTheme(
     name: string,
+    title: string,
     description: string,
     primaryColors: Array<string>,
     secondaryColors: Array<string>,
@@ -133,6 +134,7 @@ export class ThemeService {
     ): Theme {
     const theme: Theme = {
       name,
+      title,
       description,
       vars: { ...this.getShadeVars('primary', primaryColors),
         ...this.getShadeVars('secondary', secondaryColors),
