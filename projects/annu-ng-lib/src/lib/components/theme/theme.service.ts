@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import themes from '../themes';
-import { Theme } from '../interfaces';
+import themes from '../../themes';
+import { Theme } from './theme.interface';
 
 const DEFAULT_THEME = 'shadyGrey';
-const PALETTE_COLOR_COUNT = 7;
+const PALETTE_COLOR_COUNT = 8;
+const PALETTE_LIGHTNESS_START = 10;
+const PALETTE_SHADES = ['DeepDark', 'Darkest', 'Darker', 'Dark', 'Normal', 'Light', 'Lighter', 'Lightest', 'DeepLight'];
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
   private selectedTheme: BehaviorSubject<string>;
+  private counter: number;
 
   constructor() {
+    this.counter = 0;
     this.selectedTheme = new BehaviorSubject<string>('');
     this.selectedTheme.subscribe(themeName => this.loadTheme(themeName));
   }
@@ -34,7 +38,7 @@ export class ThemeService {
   }
 
   private loadTheme(themeName: string): boolean {
-    const theme = themes[themeName] as Theme;
+    let theme = themes[themeName] as Theme;
     if (!theme) {
       return false;
     }
@@ -47,10 +51,9 @@ export class ThemeService {
   }
 
   private getShadeVars(name: string, colors: Array<string>): object  {
-    const shades = ['Darkest', 'Darker', 'Dark', 'main', 'Light', 'Lighter', 'Lightest'];
     const shadeVars = {};
     colors.forEach((color, i) => {
-      shadeVars[ shades[i] === 'main' ? name : `${name}${shades[i]}`] = color;
+      shadeVars[`${name}${PALETTE_SHADES[i]}`] = color;
     });
 
     return shadeVars;
@@ -68,17 +71,28 @@ export class ThemeService {
     return this.selectedTheme.getValue();
   }
 
+  public get paletteShades(): Array<string> {
+    return PALETTE_SHADES;
+  }
+
   public getTheme(): Observable<string> {
     return this.selectedTheme.asObservable();
   }
 
-  public setTheme(themeName: string = ''): void {
-    if (!themeName) {
+  public setTheme(themeName: string = '', forced: boolean = true): void {
+    this.counter++;
+
+    if (forced) {
+      if (!themes[themeName]) {
+        themeName = DEFAULT_THEME;
+      }
+    } else {      
       themeName = window.localStorage.getItem('selectedTheme');
-      if (!themeName) {
+      if (!themes[themeName]) {
         themeName = DEFAULT_THEME;
       }
     }
+
     window.localStorage.setItem('selectedTheme', themeName);
     this.selectedTheme.next(themeName);
   }
@@ -92,10 +106,16 @@ export class ThemeService {
   }
 
   public getPaletteColors(hue: number, saturation: number): Array<string> {
+    /**
+     * Hue 0 - 360 degree
+     * Saturation - 0% - 100%
+     * Lightness - 0% - 100%
+     */
     const colors = [];
-    const L = 10;
-    for (let i = 0; i < PALETTE_COLOR_COUNT; i++) {
-      const l = L + (i * 13);
+    
+    const factoringNumer = (99 - PALETTE_LIGHTNESS_START) / PALETTE_COLOR_COUNT; // equal portions of 100%
+    for (let i = 0; i <= PALETTE_COLOR_COUNT; i++) {
+      const l = PALETTE_LIGHTNESS_START + (i * factoringNumer);
       const color = `hsl(${hue}, ${saturation}%, ${l}%)`;
       colors.push(color);
     }
@@ -108,41 +128,21 @@ export class ThemeService {
     description: string,
     primaryColors: Array<string>,
     secondaryColors: Array<string>,
-    accentColors: Array<string>
-    // primaryHue: number,
-    // primarySaturation: number,
-    // secondaryHue: number,
-    // secondarySaturation: number,
-    // accentHue: number,
-    // accentSaturation: number
+    accentColors: Array<string>,
+    backgroundColors: Array<string>
     ): Theme {
-
-    // const primaryColors = this.getPaletteColors(primaryHue, primarySaturation) as Array<string>;
-    // const secondaryColors = this.getPaletteColors(secondaryHue, secondarySaturation) as Array<string>;
-    // const accentColors = this.getPaletteColors(accentHue, accentSaturation) as Array<string>;
-
-    console.log({...this.getShadeVars('primary', primaryColors)});
-
     const theme: Theme = {
       name,
       description,
       vars: { ...this.getShadeVars('primary', primaryColors),
         ...this.getShadeVars('secondary', secondaryColors),
-        ...this.getShadeVars('accent', accentColors)
+        ...this.getShadeVars('accent', accentColors),
+        ...this.getShadeVars('background', backgroundColors)
       }
     };
 
     theme.vars = {
       ...theme.vars,
-      // background
-      background: theme.vars.primary,
-      backgroundDark: theme.vars.primaryDark,
-      backgroundDarker: theme.vars.primaryDarker,
-      backgroundDarkest: theme.vars.primaryDarkest,
-      backgroundLight: theme.vars.primaryLight,
-      backgroundLighter: theme.vars.primaryLighter,
-      backgroundLightest: theme.vars.primaryLightest,
-
       // error/warn/success
       error: 'hsl(0, 90%, 50%)',
       warn: 'hsl(50, 90%, 50%)',

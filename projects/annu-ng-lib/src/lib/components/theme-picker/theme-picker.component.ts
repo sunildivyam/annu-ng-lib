@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ThemeService } from '../../services';
+import { ThemeService } from '../theme/theme.service';
 import { FormControl } from '@angular/forms';
 
 @Component({

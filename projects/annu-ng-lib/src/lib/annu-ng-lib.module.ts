@@ -1,24 +1,29 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+// import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { TabsModule } from './components/tabs/tabs.module';
+import { ColorPaletteModule } from './components/color-palette/color-palette.module';
+import { ThemeModule } from './components/theme/theme.module';
+import { CardModule } from './components/card/card.module';
+import { ThemePickerModule } from './components/theme-picker/theme-picker.module';
 
-import { CardComponent } from './components/card/card.component';
-import { ThemeComponent } from './components/theme/theme.component';
-import { ThemeService } from './services';
-import { ColorPaletteComponent } from './components/color-palette/color-palette.component';
-import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
 
 @NgModule({
-  declarations: [CardComponent, ThemeComponent, ColorPaletteComponent, ThemePickerComponent],
+  declarations: [],
   imports: [
     BrowserModule,
-    ReactiveFormsModule
   ],
-  exports: [CardComponent, ThemeComponent, ColorPaletteComponent, ThemePickerComponent]
+  exports: [
+    TabsModule,
+    ColorPaletteModule,
+    ThemeModule,
+    CardModule,
+    ThemePickerModule,
+  ]
 })
 export class AnnuNgLibModule {
-  constructor(private themeService: ThemeService) {
-    this.themeService.setTheme();
+  constructor() {
+    
   }
 }

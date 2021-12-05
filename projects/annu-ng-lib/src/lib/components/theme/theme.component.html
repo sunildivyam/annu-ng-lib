@@ -1,38 +1,36 @@
-<h1>Theme Generator</h1>
-<div class="anu_theme">
-  <div class="anu_section_edit">
-    <div class="palette">
-      <anu-color-palette
-        headerText="Primary Colors"
-        hue="0"
-        saturation="90"
-        (valueChanges)="paletteChanged($event, 'primary')">
+<div class="annuTheme">
+
+  <section class="annuTheme_navs">
+  </section>
+  <header class="annuTheme_header">
+    <h2>Theme Generator</h2>
+  </header>
+  <section class="annuTheme_content">
+    <div class="annuTheme_palette">
+      <anu-color-palette name="Primary" hue="0" saturation="90" (valueChanges)="paletteChanged($event, 'primary')">
       </anu-color-palette>
     </div>
-    <div class="palette">
-      <anu-color-palette
-        headerText="Secondary Colors"
-        hue="120"
-        saturation="60"
+    <div class="annuTheme_palette">
+      <anu-color-palette name="Secondary" hue="120" saturation="60"
         (valueChanges)="paletteChanged($event, 'secondary')">
       </anu-color-palette>
     </div>
-    <div class="palette">
-      <anu-color-palette
-        headerText="Accent Colors"
-        hue="40"
-        saturation="10"
-        (valueChanges)="paletteChanged($event, 'accent')">
+    <div class="annuTheme_palette">
+      <anu-color-palette name="Accent" hue="40" saturation="10" (valueChanges)="paletteChanged($event, 'accent')">
       </anu-color-palette>
     </div>
-  </div>
-  <div class="anu_section_json">
-    <div class="anu_theme_json">
+    <div class="annuTheme_palette">
+      <anu-color-palette name="Background" hue="0" saturation="80" (valueChanges)="paletteChanged($event, 'background')">
+      </anu-color-palette>
+    </div>
+  </section>
+  <section class="annuTheme_json">
+    <div class="annuTheme_json_code">
       <code>
         <pre>
 {{theme | json}}
         </pre>
       </code>
     </div>
-  </div>
+  </section>
 </div>

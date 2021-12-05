@@ -1,4 +1,4 @@
-import { Theme } from '../interfaces';
+import { Theme } from '../components/theme';
 
 export const armyGreen: Theme = {
   name: 'armyGreen',

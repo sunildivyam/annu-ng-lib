@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ThemeService } from '../../services';
+import { ThemeService } from '../theme/theme.service';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./color-palette.component.scss']
 })
 export class ColorPaletteComponent implements OnInit, OnChanges {
-  @Input() headerText: string;
+  @Input() name: string;
   @Input() hue: number;
   @Input() saturation: number;
 
@@ -17,12 +17,15 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
   colors: Array<string>;
   hueControl: FormControl;
   saturationControl: FormControl;
+  headerText: string;
+  paletteShades: Array<string>;
 
   constructor(private themeService: ThemeService) {
-    this.headerText = 'Default Palette';
+    this.name = 'Default';
+    this.paletteShades = themeService.paletteShades;
 
-    this.hue = 0;
-    this.saturation = 90;
+    this.hue = 180;
+    this.saturation = 50;
 
     this.hueControl = new FormControl(this.hue);
     this.saturationControl = new FormControl(this.hue);
@@ -42,6 +45,7 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit(): void {
+    this.headerText = `${this.name ? this.name : 'Default'} Palette`;
     this.colors = this.themeService.getPaletteColors(this.hue, this.saturation);
     this.valueChanges.emit(this.colors);
   }

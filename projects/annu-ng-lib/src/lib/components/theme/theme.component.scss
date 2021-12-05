@@ -1,9 +1,16 @@
-.anu_theme {
+.annuTheme {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-items: flex-start;
-}
-.anu_section_edit, .anu_section_json {
-  padding: 10px;
+
+  &_navs {
+    padding: 1em;
+    background-color: var(--anu-background);
+  }
+
+  &_json {
+    padding: 10px;
+  }
+  
 }

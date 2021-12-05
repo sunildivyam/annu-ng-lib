@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { ThemeService } from '@annu-ng-lib';
+import themes from '@annu-ng-lib/themes';
 
 @Component({
   selector: 'anu-root',
@@ -10,7 +12,8 @@ export class AppComponent {
   title = 'annu-ng-lib-pages';
   routes: Array<Route>;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private themeService: ThemeService) {
     this.routes = router.config;
+    this.themeService.setTheme('pureGold', false);
   }
 }
