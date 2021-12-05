@@ -9,12 +9,27 @@ import { Tab } from './tabs.interface';
 export class TabsComponent implements OnInit {
   @Input() tabs: Array<Tab>;
   @Output() tabChanged = new EventEmitter<Tab>();
-  
+
   constructor() {
     this.tabs = []
+  }
+
+  private setActiveTab(selectedTab: Tab) {
+    this.tabs.forEach(tab => {
+      if (tab.name === selectedTab.name) {
+        tab.active = true;
+        this.tabChanged.emit(tab);
+      } else {
+        tab.active = false;
+      }
+    })
   }
 
   ngOnInit(): void {
   }
 
+  public tabClicked(event: any, selectedTab: Tab): void {
+    event.preventDefault();
+    this.setActiveTab(selectedTab);
+  }
 }

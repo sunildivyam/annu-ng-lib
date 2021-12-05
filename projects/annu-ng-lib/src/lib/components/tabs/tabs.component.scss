@@ -1,0 +1,31 @@
+.annuTabs {
+    display: flex;
+    flex-direction: row;
+    border-bottom: solid 1px var(--anu-backgroundNormal);
+
+    &_tab {
+        text-decoration: none;
+        padding: 0.5em 1.5em;
+        margin-bottom: -1px;;
+        border: solid 1px var(--anu-backgroundNormal);
+        border-bottom: none;
+        border-top-left-radius: 0.5em;
+        border-top-right-radius: 0.5em;
+        background-color: var(--anu-backgroundDark);
+        color: var(--anu-accentDarkest);
+        text-align: center;
+        
+        &:hover {
+            background-color: var(--anu-backgroundLighter);
+            color: var(--anu-accentDark)
+        }
+
+        &.active {
+            background-color: var(--anu-backgroundDeepLight);
+        }
+    }
+
+    &_tab + &_tab {
+        margin-left: 0.5em;
+    }
+}

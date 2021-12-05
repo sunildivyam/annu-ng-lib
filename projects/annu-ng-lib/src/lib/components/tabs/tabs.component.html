@@ -1,6 +1,9 @@
 <nav class="annuTabs">
-    Tabs:
-    <a href="" *ngFor="let tab of tabs">
+    <a href="" 
+    *ngFor="let tab of tabs" 
+    (click)="tabClicked($event, tab)" 
+    class="annuTabs_tab"
+    [ngClass]="{'active': tab.active}">
         {{tab.title}}
     </a>
 </nav>

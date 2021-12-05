@@ -10,18 +10,16 @@ export class TabsPageComponent implements OnInit {
   public tabs = [
     {
       name: 'tab1',
-      title: 'Tab 1',
-      enabled: true
+      title: 'Tab 1'
     } as Tab,
     {
       name: 'tab2',
       title: 'Tab 2',
-      enabled: true
+      active: true
     } as Tab,
     {
       name: 'tab3',
-      title: 'Tab 3',
-      enabled: true
+      title: 'Tab 3'
     } as Tab
   ];
   
@@ -30,7 +28,7 @@ export class TabsPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public tabChanged(tab): void {
+  public tabChanged(tab: Tab): void {
     console.log('selected Tab', tab);
   }
 
