@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import themes from '../../themes';
+import { PaletteColor, Typography, CssVar, ColorPalette } from './theme.interface';
 import { Theme } from './theme.interface';
 
-const DEFAULT_THEME = 'shadyGrey';
+const DEFAULT_THEME = 'default';
 const PALETTE_COLOR_COUNT = 8;
 const PALETTE_LIGHTNESS_START = 10;
 const PALETTE_SHADES = ['DeepDark', 'Darkest', 'Darker', 'Dark', 'Normal', 'Light', 'Lighter', 'Lightest', 'DeepLight'];
@@ -13,62 +14,91 @@ const PALETTE_SHADES = ['DeepDark', 'Darkest', 'Darker', 'Dark', 'Normal', 'Ligh
   providedIn: 'root'
 })
 export class ThemeService {
-  private selectedTheme: BehaviorSubject<string>;
-  private counter: number;
+  private selectedThemeName: BehaviorSubject<string>;
 
   constructor() {
-    this.counter = 0;
-    this.selectedTheme = new BehaviorSubject<string>('');
-    this.selectedTheme.subscribe(themeName => this.loadTheme(themeName));
+    this.selectedThemeName = new BehaviorSubject<string>('');
+    this.selectedThemeName.subscribe(themeName => this.loadTheme(themeName));
   }
 
-  private cssVar(name: string, value: string = ''): string {
+  /*
+  * get css var name and value.
+  */
+  private getCssVar(name: string, value: string = ''): CssVar {
     if (!name) {
-      return '';
+      return;
     }
 
-    if (name.indexOf('--') !== 0) {
-      name = '--anu-' + name; // allow passing with or without --
-    }
     if (value) {
-      document.documentElement.style.setProperty(name, value);
+      name = '--anu-' + name;
+      return { name, value } as CssVar;
     }
 
-    return getComputedStyle(document.documentElement).getPropertyValue(name);
+    return;
   }
 
+  /*
+  * write a css variable to DOM
+  */
+  private writeCssVarToDom(name: string, value: string = ''): void {
+    const cssVar = this.getCssVar(name, value);
+    if (cssVar) {
+      document.documentElement.style.setProperty(cssVar.name, cssVar.value);
+      // getComputedStyle(document.documentElement).getPropertyValue(name);
+    }
+  }
+
+  /*
+  * Loads the selected theme json from themes folder, and writes all css variables to DOM
+  */
   private loadTheme(themeName: string): boolean {
     let theme = themes[themeName] as Theme;
     if (!theme) {
       return false;
     }
-
-    for (const [key, value] of Object.entries(theme.vars)) {
-      this.cssVar(key, value);
-    }
+    // Write Color CSS variables to DOM
+    theme.colorPalettes.forEach(cp => {
+      cp.colors.forEach(c => {
+        this.writeCssVarToDom(`${cp.name}${c.name}`, c.hsl)
+      })
+    })
+    // Write Typography CSS variables to DOM
+    theme.typography.forEach(tp => {
+      this.writeCssVarToDom(tp.name, tp.value);
+    })
 
     return true;
   }
 
-  private getShadeVars(name: string, colors: Array<string>): object  {
-    const shadeVars = {};
-    colors.forEach((color, i) => {
-      shadeVars[`${name}${PALETTE_SHADES[i]}`] = color;
-    });
-
-    return shadeVars;
+  /*
+   * returns a list of css vars as combined string of name and value
+   */
+  public getCssVars(theme: Theme): Array<string> {
+    const cssVars: Array<string> = [];
+    // get Color CSS variables
+    theme.colorPalettes.forEach(cp => {
+      cp.colors.forEach(c => {
+        const cssVar = this.getCssVar(`${cp.name}${c.name}`, c.hsl);
+        cssVars.push(`${cssVar.name}: ${cssVar.value}`);
+      })
+    })
+    // get Typography CSS variables
+    theme.typography.forEach(tp => {
+      const cssVar = this.getCssVar(tp.name, tp.value);
+      cssVars.push(`${cssVar.name}: ${cssVar.value}`);
+    })
+    return cssVars;
   }
 
-  public get toList(): Array<Theme> {
-    return Object.values(themes).map((theme: Theme) => ({ name: theme.name, description: theme.description} as Theme));
-  }
-
+  /*
+  * returns the Available themes as an Array
+  */
   public get themes(): Array<Theme> {
     return Object.values(themes);
   }
 
   public get theme(): string {
-    return this.selectedTheme.getValue();
+    return this.selectedThemeName.getValue();
   }
 
   public get paletteShades(): Array<string> {
@@ -76,25 +106,23 @@ export class ThemeService {
   }
 
   public getTheme(): Observable<string> {
-    return this.selectedTheme.asObservable();
+    return this.selectedThemeName.asObservable();
   }
 
   public setTheme(themeName: string = '', forced: boolean = true): void {
-    this.counter++;
-
     if (forced) {
       if (!themes[themeName]) {
         themeName = DEFAULT_THEME;
       }
-    } else {      
-      themeName = window.localStorage.getItem('selectedTheme');
+    } else {
+      themeName = window.localStorage.getItem('selectedThemeName');
       if (!themes[themeName]) {
         themeName = DEFAULT_THEME;
       }
     }
 
-    window.localStorage.setItem('selectedTheme', themeName);
-    this.selectedTheme.next(themeName);
+    window.localStorage.setItem('selectedThemeName', themeName);
+    this.selectedThemeName.next(themeName);
   }
 
   public toggleInvert(invert: boolean): void {
@@ -105,63 +133,69 @@ export class ThemeService {
     }
   }
 
-  public getPaletteColors(hue: number, saturation: number): Array<string> {
+  public getPaletteColors(hue: number, saturation: number): Array<PaletteColor> {
     /**
      * Hue 0 - 360 degree
      * Saturation - 0% - 100%
      * Lightness - 0% - 100%
      */
     const colors = [];
-    
+
     const factoringNumer = (99 - PALETTE_LIGHTNESS_START) / PALETTE_COLOR_COUNT; // equal portions of 100%
     for (let i = 0; i <= PALETTE_COLOR_COUNT; i++) {
       const l = PALETTE_LIGHTNESS_START + (i * factoringNumer);
-      const color = `hsl(${hue}, ${saturation}%, ${l}%)`;
-      colors.push(color);
+      const paletteColor: PaletteColor = {
+        name: PALETTE_SHADES[i],
+        hsl: `hsl(${hue}, ${saturation}%, ${l}%)`
+      }
+
+      colors.push(paletteColor);
     }
 
     return colors;
   }
 
-  public generateTheme(
-    name: string,
-    title: string,
-    description: string,
-    primaryColors: Array<string>,
-    secondaryColors: Array<string>,
-    accentColors: Array<string>,
-    backgroundColors: Array<string>
-    ): Theme {
-    const theme: Theme = {
-      name,
-      title,
-      description,
-      vars: { ...this.getShadeVars('primary', primaryColors),
-        ...this.getShadeVars('secondary', secondaryColors),
-        ...this.getShadeVars('accent', accentColors),
-        ...this.getShadeVars('background', backgroundColors)
-      }
-    };
+  // public generateTheme(theme: Theme): Theme {
+  //   // const theme = {
+  //   //   name: 'default',
+  //   //   title: 'Default Theme',
+  //   //   description: 'Default theme description',
+  //   //   colorPalettes: [],
+  //   //   cssVars: [],
+  //   //   typography: []
+  //   // }
 
-    theme.vars = {
-      ...theme.vars,
-      // error/warn/success
-      error: 'hsl(0, 90%, 50%)',
-      warn: 'hsl(50, 90%, 50%)',
-      success: 'hsl(120, 90%, 50%)',
+  //   // const theme: Theme = {
+  //   //   name,
+  //   //   title,
+  //   //   description,
+  //   //   vars: {
+  //   //     ...this.getShadeVars('primary', primaryColors),
+  //   //     ...this.getShadeVars('secondary', secondaryColors),
+  //   //     ...this.getShadeVars('accent', accentColors),
+  //   //     ...this.getShadeVars('background', backgroundColors)
+  //   //   }
+  //   // };
 
-      // Typography
-      fontFamily: '"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
-      lineHeight: '1.5',
-      characterSpacing: '100%',
-      fontSize: '140x',
-      borderRadius: '4px',
-      borderWidth: '1px',
-      spacing: '15px',
-      boxShadow: '2px 2px 2px grey'
-    };
+  //   // theme.vars = {
+  //   //   ...theme.vars,
+  //   //   // error/warn/success
+  //   //   error: 'hsl(0, 90%, 50%)',
+  //   //   warn: 'hsl(50, 90%, 50%)',
+  //   //   success: 'hsl(120, 90%, 50%)',
 
-    return theme;
-  }
+  //   //   // Typography
+  //   //   fontFamily: '"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
+  //   //   lineHeight: '1.5',
+  //   //   characterSpacing: '100%',
+  //   //   fontSize: '140x',
+  //   //   borderRadius: '4px',
+  //   //   borderWidth: '1px',
+  //   //   spacing: '15px',
+  //   //   boxShadow: '2px 2px 2px grey'
+  //   // };
+
+  //   return theme;
+  // }
 
 }

@@ -1,55 +1,185 @@
-import { Theme } from '../components/theme';
+import { Theme } from '../components/theme/theme.interface';
 
-export const armyGreen: Theme = {
-  name: 'armyGreen',
-  description: 'Army Green',
-  vars: {
-    accentDark: "hsl(40, 10%, 43.375%)",
-    accentDarker: "hsl(40, 10%, 32.25%)",
-    accentDarkest: "hsl(40, 10%, 21.125%)",
-    accentDeepDark: "hsl(40, 10%, 10%)",
-    accentDeepLight: "hsl(40, 10%, 99%)",
-    accentLight: "hsl(40, 10%, 65.625%)",
-    accentLighter: "hsl(40, 10%, 76.75%)",
-    accentLightest: "hsl(40, 10%, 87.875%)",
-    accentNormal: "hsl(40, 10%, 54.5%)",
-    backgroundDark: "hsl(195, 99%, 43.375%)",
-    backgroundDarker: "hsl(195, 99%, 32.25%)",
-    backgroundDarkest: "hsl(195, 99%, 21.125%)",
-    backgroundDeepDark: "hsl(195, 99%, 10%)",
-    backgroundDeepLight: "hsl(195, 99%, 99%)",
-    backgroundLight: "hsl(195, 99%, 65.625%)",
-    backgroundLighter: "hsl(195, 99%, 76.75%)",
-    backgroundLightest: "hsl(195, 99%, 87.875%)",
-    backgroundNormal: "hsl(195, 99%, 54.5%)",
-    borderRadius: "4px",
-    borderWidth: "1px",
-    boxShadow: "2px 2px 2px grey",
-    characterSpacing: "100%",
-    error: "hsl(0, 90%, 50%)",
-    fontFamily: "\"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
-    fontSize: "140x",
-    lineHeight: "1.5",
-    primaryDark: "hsl(108, 100%, 43.375%)",
-    primaryDarker: "hsl(108, 100%, 32.25%)",
-    primaryDarkest: "hsl(108, 100%, 21.125%)",
-    primaryDeepDark: "hsl(108, 100%, 10%)",
-    primaryDeepLight: "hsl(108, 100%, 99%)",
-    primaryLight: "hsl(108, 100%, 65.625%)",
-    primaryLighter: "hsl(108, 100%, 76.75%)",
-    primaryLightest: "hsl(108, 100%, 87.875%)",
-    primaryNormal: "hsl(108, 100%, 54.5%)",
-    secondaryDark: "hsl(232, 100%, 43.375%)",
-    secondaryDarker: "hsl(232, 100%, 32.25%)",
-    secondaryDarkest: "hsl(232, 100%, 21.125%)",
-    secondaryDeepDark: "hsl(232, 100%, 10%)",
-    secondaryDeepLight: "hsl(232, 100%, 99%)",
-    secondaryLight: "hsl(232, 100%, 65.625%)",
-    secondaryLighter: "hsl(232, 100%, 76.75%)",
-    secondaryLightest: "hsl(232, 100%, 87.875%)",
-    secondaryNormal: "hsl(232, 100%, 54.5%)",
-    spacing: "15px",
-    success: "hsl(120, 90%, 50%)",
-    warn: "hsl(50, 90%, 50%)",
-  }
-};
+const jsonTheme = `
+{
+  "name": "armyGreen",
+  "title": "Army Green",
+  "description": "Army Green Theme",
+  "colorPalettes": [
+    {
+      "name": "primary",
+      "hue": 119,
+      "saturation": 71,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(119, 71%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(119, 71%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(119, 71%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(119, 71%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(119, 71%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(119, 71%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(119, 71%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(119, 71%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(119, 71%, 99%)"
+        }
+      ]
+    },
+    {
+      "name": "secondary",
+      "hue": 180,
+      "saturation": 74,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(180, 74%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(180, 74%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(180, 74%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(180, 74%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(180, 74%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(180, 74%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(180, 74%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(180, 74%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(180, 74%, 99%)"
+        }
+      ]
+    },
+    {
+      "name": "accent",
+      "hue": 0,
+      "saturation": 0,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(0, 0%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(0, 0%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(0, 0%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(0, 0%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(0, 0%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(0, 0%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(0, 0%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(0, 0%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(0, 0%, 99%)"
+        }
+      ]
+    },
+    {
+      "name": "background",
+      "hue": 222,
+      "saturation": 66,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(222, 66%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(222, 66%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(222, 66%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(222, 66%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(222, 66%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(222, 66%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(222, 66%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(222, 66%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(222, 66%, 99%)"
+        }
+      ]
+    }
+  ],
+  "typography": []
+}`;
+
+export const armyGreen: Theme = JSON.parse(jsonTheme);

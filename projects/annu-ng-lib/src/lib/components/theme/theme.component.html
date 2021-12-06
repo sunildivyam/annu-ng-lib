@@ -6,39 +6,47 @@
 
   <section class="annuTheme_overview" *ngIf="selectedTab.name === 'overview'">
     <label>Name</label>
-    <input type="text" [(ngModel)]="themeName">
+    <input type="text" [(ngModel)]="theme.name">
     <label>Title </label>
-    <input type="text" [(ngModel)]="themeTitle">
+    <input type="text" [(ngModel)]="theme.title">
     <label>Description </label>
-    <textarea [(ngModel)]="themeDescription"></textarea>
+    <textarea [(ngModel)]="theme.description"></textarea>
   </section>
 
   <section class="annuTheme_palettes" *ngIf="selectedTab.name === 'palettes'">
-    <div class="annuTheme_palette">
-      <anu-color-palette name="Primary" hue="0" saturation="90" (valueChanges)="paletteChanged($event, 'primary')">
+    <div class="annuTheme_palette" *ngFor="let colorPalette of theme.colorPalettes">
+      <anu-color-palette [colorPalette]="colorPalette" (valueChanges)="paletteChanged($event)">
       </anu-color-palette>
     </div>
-    <div class="annuTheme_palette">
+    <!-- <div class="annuTheme_palette">
       <anu-color-palette name="Secondary" hue="120" saturation="60"
         (valueChanges)="paletteChanged($event, 'secondary')">
       </anu-color-palette>
     </div>
     <div class="annuTheme_palette">
-      <anu-color-palette name="Accent" hue="40" saturation="10" (valueChanges)="paletteChanged($event, 'accent')">
+      <anu-color-palette name="Accent" hue="40" saturation="10" 
+      (valueChanges)="paletteChanged($event, 'accent')">
       </anu-color-palette>
     </div>
     <div class="annuTheme_palette">
       <anu-color-palette name="Background" hue="0" saturation="80"
         (valueChanges)="paletteChanged($event, 'background')">
       </anu-color-palette>
-    </div>
+    </div> -->
   </section>
 
   <section class="annuTheme_json" *ngIf="selectedTab.name === 'json'">
     <div class="annuTheme_json_code">
+      <h3>Theme Json</h3>
       <code>
         <pre>
-{{theme | json}}
+          {{theme | json}}
+        </pre>
+      </code>
+      <h3>CSS Vars</h3>
+      <code>
+        <pre>
+          {{getCssVars(theme) | json}}
         </pre>
       </code>
     </div>

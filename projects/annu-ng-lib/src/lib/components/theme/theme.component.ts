@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ThemeService } from './theme.service';
-import { Theme, Palettes } from './theme.interface';
+import { Theme } from './theme.interface';
 import { Tab } from '../tabs';
+import { ColorPalette } from '@annu-ng-lib';
 
 const TABS = [
   {
@@ -23,48 +24,66 @@ const TABS = [
   } as Tab
 ];
 
+const COLOR_PALETTES = [
+  {
+    name: 'primary',
+    hue: 180,
+    saturation: 50,
+    colors: []
+  } as ColorPalette,
+  {
+    name: 'secondary',
+    hue: 180,
+    saturation: 50,
+    colors: []
+  } as ColorPalette,
+  {
+    name: 'accent',
+    hue: 180,
+    saturation: 50,
+    colors: []
+  } as ColorPalette,
+  {
+    name: 'background',
+    hue: 180,
+    saturation: 50,
+    colors: []
+  } as ColorPalette
+];
+
 @Component({
   selector: 'anu-theme',
   templateUrl: './theme.component.html',
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent {
-  palettes: Palettes;
   theme: Theme;
   tabs: Array<Tab> = TABS;
   selectedTab: Tab;
   themeName: string;
-  themeTitle: string;
-  themeDescription: string;
 
   constructor(private themeService: ThemeService) {
     this.selectedTab = this.tabs[0];
-    this.palettes = {
-      primary: [],
-      secondary: [],
-      accent: [],
-      background: []
+    this.theme = {
+      name: 'default',
+      title: 'Default Theme',
+      description: 'Default theme description',
+      colorPalettes: COLOR_PALETTES,
+      typography: []
     };
-    this.generateTheme();
-  }
-
-  private generateTheme(): void {
-    this.theme = this.themeService.generateTheme(
-      this.themeName,
-      this.themeTitle,
-      this.themeDescription,
-      this.palettes.primary,
-      this.palettes.secondary,
-      this.palettes.accent,
-      this.palettes.background);
   }
 
   public tabChanged(tab: Tab): void {
     this.selectedTab = tab;
   }
 
-  public paletteChanged = (colors: Array<string>, paletteName: string): void => {
-    this.palettes[paletteName] = colors;
-    this.generateTheme();
+  public paletteChanged = (colorPalette: ColorPalette): void => {
+    this.theme.colorPalettes.forEach(cp => {
+      if (cp.name === colorPalette.name) cp = colorPalette;
+    });
+  }
+
+  public getCssVars(theme: Theme) {
+    return this.themeService.getCssVars(theme);
   }
 }
