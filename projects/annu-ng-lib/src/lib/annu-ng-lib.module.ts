@@ -9,6 +9,7 @@ import { ThemePickerModule } from './components/theme-picker/theme-picker.module
 import { TypographyModule } from './components/typography/typography.module';
 import { ThemePreviewModule } from './components/theme-preview/theme-preview.module';
 import { HamburgerModule } from './components/hamburger/hamburger.module';
+import { ToggleModule } from './components/toggle/toggle.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { HamburgerModule } from './components/hamburger/hamburger.module';
     TypographyModule,
     ThemePreviewModule,
     HamburgerModule,
+    ToggleModule,
   ]
 })
 export class AnnuNgLibModule {

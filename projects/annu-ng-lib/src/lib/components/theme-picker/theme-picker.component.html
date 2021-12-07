@@ -6,9 +6,5 @@
   (click)="themeSelected(theme.name)"
   [ngClass]="{'active': theme.name === selectedTheme}"
   [title]="theme.title"> </a>
+  <anu-toggle [rounded]="true" (changed)="invert($event)" title="Invert Theme Colors"></anu-toggle>
 </section>
-
-<div style="float: right;margin-bottom: 40px;">
-  <input type="checkbox" [formControl]="invertControl"/>
-  <label>Invert Theme</label>
-</div>

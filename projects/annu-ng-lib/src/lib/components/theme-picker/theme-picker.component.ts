@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ThemeService } from '../theme/theme.service';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'anu-theme-picker',
@@ -10,16 +9,8 @@ import { FormControl } from '@angular/forms';
 })
 export class ThemePickerComponent implements OnInit {
   selectedTheme: string;
-  // listControl: FormControl;
-  invertControl: FormControl;
 
-  constructor(public themeService: ThemeService) {
-    this.invertControl = new FormControl(false);
-    // this.listControl = new FormControl(this.themeService.theme);
-
-    this.invertControl.valueChanges.subscribe((value: boolean) => this.themeService.toggleInvert(value));
-    // this.listControl.valueChanges.subscribe(this.themeSelected);
-  }
+  constructor(public themeService: ThemeService) { }
 
   public ngOnInit(): void {
     this.selectedTheme = this.themeService.theme;
@@ -30,4 +21,7 @@ export class ThemePickerComponent implements OnInit {
     this.themeService.setTheme(themeName);
   }
 
+  public invert(invert: boolean): void {   
+    this.themeService.toggleInvert(invert);
+  }
 }

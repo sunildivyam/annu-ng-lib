@@ -14,6 +14,7 @@ import { ColorPalettePageComponent } from './page-components/color-palette-page/
 import { OverviewPageComponent } from './page-components/overview-page/overview-page.component';
 import { TabsPageComponent } from './page-components/tabs-page/tabs-page.component';
 import { ThemePreviewPageComponent } from './page-components/theme-preview-page/theme-preview-page.component';
+import { TogglePageComponent } from './page-components/toggle-page/toggle-page.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ThemePreviewPageComponent } from './page-components/theme-preview-page/
     OverviewPageComponent,
     TabsPageComponent,
     ThemePreviewPageComponent,
+    TogglePageComponent,
   ],
   imports: [
     BrowserModule,

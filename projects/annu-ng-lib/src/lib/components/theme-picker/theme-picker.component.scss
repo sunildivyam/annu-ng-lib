@@ -1,4 +1,8 @@
 .annuThemePicker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
   .btn {
     margin: 0.12rem;
     padding: 0;
