@@ -179,7 +179,16 @@ const jsonTheme = `
       ]
     }
   ],
-  "typography": []
+  "typography": [
+    {
+      "name": "fontFamily",
+      "value": "Arial"
+    },
+    {
+      "name": "fontSize",
+      "value": "14px"
+    }
+  ]
 }`;
 
 export const armyGreen: Theme = JSON.parse(jsonTheme);

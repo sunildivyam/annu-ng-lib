@@ -1,17 +1,17 @@
+@import "../../themes/mixins.scss";
+
 .annuTabs {
     display: flex;
     flex-direction: row;
-    border-bottom: solid 1px var(--anu-backgroundNormal);
+    border-bottom: solid 1px var(--anu-primaryDark);
 
     &_tab {
         text-decoration: none;
-        padding: 0.5em 1.5em;
-        margin-bottom: -1px;;
-        border: solid 1px var(--anu-backgroundNormal);
+        padding: 0.5rem 1.5rem;
+        margin-bottom: -1px;
+        border: solid 1px var(--anu-primaryDark);
         border-bottom: none;
-        border-top-left-radius: 0.5em;
-        border-top-right-radius: 0.5em;
-        background-color: var(--anu-backgroundDark);
+        background-color: var(--anu-primaryNormal);
         color: var(--anu-accentDarkest);
         text-align: center;
         
@@ -23,9 +23,58 @@
         &.active {
             background-color: var(--anu-backgroundDeepLight);
         }
+
+        &.rounded {            
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+
+        @include medium {
+            padding: 0.4rem 0.8rem;
+        }
+
+        @include small {
+            padding: 0.3rem 0.5rem;
+            font-size: 0.8rem;
+        }
     }
 
-    &_tab + &_tab {
-        margin-left: 0.5em;
+    &_tab.spaced + &_tab.spaced {
+        margin-left: 0.5rem;
+    }
+
+
+    &.vertical {
+        flex-direction: column;
+        margin-bottom: 0;
+        border-bottom: none;
+        border-right: solid 1px var(--anu-primaryDark);
+
+        .annuTabs_tab { 
+            border: solid 1px var(--anu-primaryDark);  
+            
+            &.active {
+                border-right: none;
+                margin-right: -1px;
+                z-index: 1;
+            }
+
+            &.rounded {            
+                border-radius: 0.5rem;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        .annuTabs_tab.spaced + .annuTabs_tab.spaced {
+            margin-left: 0;
+            margin-top: 0.5rem;
+        }
+    }
+
+    
+
+    @include small {
+        justify-content: center;
     }
 }

@@ -178,7 +178,16 @@ const jsonTheme = `{
       ]
     }
   ],
-  "typography": []
+  "typography": [
+    {
+      "name": "fontFamily",
+      "value": "Times new roman"
+    },
+    {
+      "name": "fontSize",
+      "value": "18px"
+    }
+  ]
 }`;
 export const pureGold: Theme = JSON.parse(jsonTheme);
 

@@ -1,3 +1,5 @@
+@import '../../themes/mixins.scss';
+
 .annuTheme {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,25 @@
   &_overview {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+
+    &_fromJson {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      .btn {
+        margin-top: 1rem;;
+      }
+    }
+  }
+
+  &_typography {
+    display: flex;
+    flex-direction: column;
     width: 100%;
   }
 
@@ -23,8 +43,27 @@
     width: 100%;
   }
 
+  &_palette {
+    @include large {
+      width: 33.33%;
+    }
+
+    @include medium {
+      width: 50%;
+    }
+
+    @include small {
+      width: 100%;
+    }
+  }
+
+  &_palette + &_palette {
+    padding-left: 1rem;
+  }
+
   &_json {
-    padding: 10px;
+    padding: 1rem;
+    width: 100%;
   }
   
 }

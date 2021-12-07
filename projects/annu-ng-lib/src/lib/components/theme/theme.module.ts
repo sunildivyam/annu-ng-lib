@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeComponent } from './theme.component';
 import { ColorPaletteModule } from '../color-palette/color-palette.module';
 import { TabsModule } from '../tabs';
+import { TypographyModule } from '../typography/typography.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { TabsModule } from '../tabs';
     CommonModule,
     FormsModule,
     ColorPaletteModule,
-    TabsModule
+    TabsModule,
+    TypographyModule
   ],
   exports: [ThemeComponent],
 })

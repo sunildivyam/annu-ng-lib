@@ -44,6 +44,7 @@ export class ThemeService {
     const cssVar = this.getCssVar(name, value);
     if (cssVar) {
       document.documentElement.style.setProperty(cssVar.name, cssVar.value);
+      console.log(document.head.childNodes);
       // getComputedStyle(document.documentElement).getPropertyValue(name);
     }
   }
@@ -105,6 +106,17 @@ export class ThemeService {
     return PALETTE_SHADES;
   }
 
+  /*
+  * returns the primary Theme Color code. basically primaryNormal color code
+  */
+  public getThemeColor(theme: Theme): string {
+    let themeColor: string;
+    const primaryPalette: ColorPalette = theme.colorPalettes.find(cp => cp.name === 'primary') || {} as ColorPalette;
+    const primaryNormal: PaletteColor = primaryPalette.colors.find(c => c.name === 'Normal')
+
+    return primaryNormal.hsl;
+  }
+
   public getTheme(): Observable<string> {
     return this.selectedThemeName.asObservable();
   }
@@ -154,48 +166,4 @@ export class ThemeService {
 
     return colors;
   }
-
-  // public generateTheme(theme: Theme): Theme {
-  //   // const theme = {
-  //   //   name: 'default',
-  //   //   title: 'Default Theme',
-  //   //   description: 'Default theme description',
-  //   //   colorPalettes: [],
-  //   //   cssVars: [],
-  //   //   typography: []
-  //   // }
-
-  //   // const theme: Theme = {
-  //   //   name,
-  //   //   title,
-  //   //   description,
-  //   //   vars: {
-  //   //     ...this.getShadeVars('primary', primaryColors),
-  //   //     ...this.getShadeVars('secondary', secondaryColors),
-  //   //     ...this.getShadeVars('accent', accentColors),
-  //   //     ...this.getShadeVars('background', backgroundColors)
-  //   //   }
-  //   // };
-
-  //   // theme.vars = {
-  //   //   ...theme.vars,
-  //   //   // error/warn/success
-  //   //   error: 'hsl(0, 90%, 50%)',
-  //   //   warn: 'hsl(50, 90%, 50%)',
-  //   //   success: 'hsl(120, 90%, 50%)',
-
-  //   //   // Typography
-  //   //   fontFamily: '"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
-  //   //   lineHeight: '1.5',
-  //   //   characterSpacing: '100%',
-  //   //   fontSize: '140x',
-  //   //   borderRadius: '4px',
-  //   //   borderWidth: '1px',
-  //   //   spacing: '15px',
-  //   //   boxShadow: '2px 2px 2px grey'
-  //   // };
-
-  //   return theme;
-  // }
-
 }

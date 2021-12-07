@@ -13,6 +13,7 @@ import { ThemePageComponent } from './page-components/theme-page/theme-page.comp
 import { ColorPalettePageComponent } from './page-components/color-palette-page/color-palette-page.component';
 import { OverviewPageComponent } from './page-components/overview-page/overview-page.component';
 import { TabsPageComponent } from './page-components/tabs-page/tabs-page.component';
+import { ThemePreviewPageComponent } from './page-components/theme-preview-page/theme-preview-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TabsPageComponent } from './page-components/tabs-page/tabs-page.compone
     ColorPalettePageComponent,
     OverviewPageComponent,
     TabsPageComponent,
+    ThemePreviewPageComponent,
   ],
   imports: [
     BrowserModule,

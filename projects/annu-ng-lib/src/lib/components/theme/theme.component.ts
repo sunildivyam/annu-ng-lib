@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ThemeService } from './theme.service';
-import { Theme } from './theme.interface';
+import { Theme, ColorPalette, Typography } from './theme.interface';
 import { Tab } from '../tabs';
-import { ColorPalette } from '@annu-ng-lib';
 
 const TABS = [
   {
@@ -15,12 +14,12 @@ const TABS = [
     title: 'Colors'
   } as Tab,
   {
-    name: 'typograpgy',
+    name: 'typography',
     title: 'Typography',
   } as Tab,
   {
     name: 'json',
-    title: 'JSON View',
+    title: 'JSON',
   } as Tab
 ];
 
@@ -51,6 +50,17 @@ const COLOR_PALETTES = [
   } as ColorPalette
 ];
 
+const TYPOGRAPHY: Array<Typography> = [
+  {
+    name: 'fontFamily',
+    value: 'Arial'
+  } as Typography,
+  {
+    name: 'fontSize',
+    value: '14px'
+  } as Typography,
+];
+
 @Component({
   selector: 'anu-theme',
   templateUrl: './theme.component.html',
@@ -61,15 +71,18 @@ export class ThemeComponent {
   tabs: Array<Tab> = TABS;
   selectedTab: Tab;
   themeName: string;
+  themeFromJson: string;
+  isThemeFromJson: boolean = false;
+  isJsonError: boolean = false;
 
   constructor(private themeService: ThemeService) {
-    this.selectedTab = this.tabs[0];
+    this.selectedTab = this.tabs.find(tb => tb.active === true);
     this.theme = {
       name: 'default',
       title: 'Default Theme',
       description: 'Default theme description',
       colorPalettes: COLOR_PALETTES,
-      typography: []
+      typography: TYPOGRAPHY,
     };
   }
 
@@ -85,5 +98,15 @@ export class ThemeComponent {
 
   public getCssVars(theme: Theme) {
     return this.themeService.getCssVars(theme);
+  }
+
+  public loadThemeFromJson(): void {
+    this.isJsonError = false;
+    try {
+      this.theme = JSON.parse(this.themeFromJson);
+      this.isThemeFromJson = false;
+    } catch(er) {
+      this.isJsonError = true;
+    }
   }
 }

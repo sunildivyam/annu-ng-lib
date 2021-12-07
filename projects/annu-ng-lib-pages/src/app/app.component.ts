@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { ThemeService } from '@annu-ng-lib';
-import themes from '@annu-ng-lib/themes';
 
 @Component({
   selector: 'anu-root',

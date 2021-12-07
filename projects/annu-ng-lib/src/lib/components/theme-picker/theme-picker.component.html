@@ -1,9 +1,14 @@
+<section class="annuThemePicker">
+  <a class="btn" 
+  href="javascript:void(0)" 
+  *ngFor="let theme of themeService.themes" 
+  [ngStyle]="{backgroundColor: themeService.getThemeColor(theme)}"
+  (click)="themeSelected(theme.name)"
+  [ngClass]="{'active': theme.name === selectedTheme}"
+  [title]="theme.title"> </a>
+</section>
+
 <div style="float: right;margin-bottom: 40px;">
-  <select name=" id=" [formControl]="listControl">
-    <option *ngFor="let theme of themeService.themes" value={{theme.name}}>
-      {{theme.title}}
-    </option>
-  </select>
   <input type="checkbox" [formControl]="invertControl"/>
   <label>Invert Theme</label>
 </div>

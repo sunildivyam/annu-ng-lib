@@ -23,13 +23,16 @@ export class TabsPageComponent implements OnInit {
     } as Tab
   ];
   
-  constructor() { }
+  public selectedTab: Tab
+  constructor() { 
+    this.selectedTab = this.tabs.find(t => t.active === true);
+  }
 
   ngOnInit(): void {
   }
 
   public tabChanged(tab: Tab): void {
-    console.log('selected Tab', tab);
+    this.selectedTab = tab;
   }
 
 }
