@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
 
 // Components from Lib
 import { OverviewPageComponent,
@@ -11,8 +11,18 @@ import { OverviewPageComponent,
   TogglePageComponent,
   LayoutPageComponent } from './page-components';
 
+  const route:Route = {
+
+  }
+
 export const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'},
+
+  { path: 'start-business', component: LayoutPageComponent, data: {type: 'main-navigation', title: 'Start Business'} },
+  { path: 'franchise', component: LayoutPageComponent, data: {type: 'main-navigation', title: 'Franchise'} },
+  { path: 'Business-tools', component: LayoutPageComponent, data: {type: 'main-navigation', title: 'Business Tools'} },
+  { path: 'best-products', component: LayoutPageComponent, data: {type: 'main-navigation', title: 'Best Products'} },
+
   { path: 'overview', component: OverviewPageComponent, data: {title: 'Getting Started'}},
   { path: 'card', component: CardPageComponent, data: {title: 'Card'}},
   { path: 'color-palette', component: ColorPalettePageComponent, data: {title: 'Color Palette'} },

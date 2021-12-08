@@ -10,9 +10,11 @@ import { ThemeService } from '@annu-ng-lib';
 export class AppComponent {
   title = 'annu-ng-lib-pages';
   routes: Array<Route>;
+  mainRoutes: Array<Route>;
 
   constructor(private router: Router, private themeService: ThemeService) {
-    this.routes = router.config;
+    this.routes = router.config.filter(r => r.data?.type !== 'main-navigation');
+    this.mainRoutes = router.config.filter(r => r.data?.type === 'main-navigation');
     this.themeService.setTheme('pureGold', false);
   }
 }

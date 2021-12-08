@@ -4,6 +4,8 @@ $medium-breakpoint: 42em !default;
 $error: red;
 $warning: green;
 $success: orange;
+$menu-z-index: 1000;
+$menu-modal: 9000;
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {
@@ -27,46 +29,59 @@ $success: orange;
   @return $i * 100%/12;
 }
 
+@mixin row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+@mixin col($i) {
+  display: flex;
+  flex-direction: column;
+  width: boxSize($i);
+}
+
 @mixin box-sizes {
   &-1 {
-    width: boxSize(1);
+    @include col(1);
   }
 
   &-2 {
-      width: boxSize(2);
+    @include col(2);
   }
 
   &-3 {
-      width: boxSize(3);
+    @include col(3);
   }
 
   &-4 {
-      width: boxSize(4);
+    @include col(4);
   }
 
   &-5 {
-      width: boxSize(5);
+    @include col(5);
   }
 
   &-6 {
-      width: boxSize(6);
+    @include col(6);
   }
   &-7 {
-      width: boxSize(7);
+    @include col(7);
   }
   &-8 {
-      width: boxSize(8);
+    @include col(8);
   }
   &-9 {
-      width: boxSize(9);
+    @include col(9);
   }
   &-10 {
-      width: boxSize(10);
+    @include col(10);
   }
   &-11 {
-      width: boxSize(11);
+    @include col(11);
   }
   &-12 {
-      width: boxSize(12);
+    @include col(12);
   }
 }

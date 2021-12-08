@@ -10,3 +10,4 @@ export * from './components/typography';
 export * from './components/theme-preview';
 export * from './components/hamburger';
 export * from './components/toggle';
+export * from './components/menu';

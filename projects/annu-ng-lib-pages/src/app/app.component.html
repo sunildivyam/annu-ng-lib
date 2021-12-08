@@ -1,25 +1,27 @@
-<div class="appContainer" role="main">
-  <header class="appHeader">
-    <anu-hamburger></anu-hamburger>
-    <a class="appHeader_title" href="/">Annu Ng Lib Pages</a>
-    <anu-theme-picker></anu-theme-picker>
+<div class="appContainer container" role="main">
+  <header class="appHeader row">
+    <anu-menu [items]="mainRoutes" heading="Annu Components Library"></anu-menu>
   </header>
-  <section class="appContent">
-    <section class="leftSideMenu">
+  <header class="appHeader row">  
+    <section class="col-12 right"><anu-theme-picker></anu-theme-picker></section>
+  </header>
+  <main class="appContent row">
+    <section class="leftSideMenu col-sm-12 col-md-3 col-lg-2">
       <ul>
         <ng-container *ngFor="let route of routes">
           <li *ngIf="route.path"><a [routerLink]="route.path">{{route.data.title}}</a></li>
         </ng-container>
       </ul>
     </section>
-    <section class="content">
+    <main class="content col-sm-12 col-md-6 col-lg-8">
       <router-outlet></router-outlet>
-    </section>
-    <section class="rightSideMenu">
+    </main>
+    <section class="rightSideMenu col-sm-12 col-md-3 col-lg-2">
       Right Navigation
     </section>
-  </section>
-  <footer class="appFooter">
-
+  </main>
+  <footer class="appFooter row">
+    <hr/>
+    <small>Footer goes here</small>
   </footer>
 </div>

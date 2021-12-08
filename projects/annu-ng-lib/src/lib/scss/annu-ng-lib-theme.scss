@@ -83,30 +83,40 @@ a {
   }
 }
 
-  img {
-    max-width: 100%;
-  }
+img {
+  max-width: 100%;
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    color: var(--anu-primaryNormal);
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: var(--anu-primaryNormal);
+}
 
-  p {
-    margin-bottom: 1em;
-    color: var(--anu-accentNormal);
-  }
+p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--anu-accentNormal);
+}
+
+small {
+  font-size: 0.8rem;
+}
+
+span {
+  font-size: 1rem;
+}
 
 ul,
 ol {
   margin-top: 0;
+  padding-inline-start: 2rem;
 }
 
 ul {
@@ -135,6 +145,7 @@ table {
 }
 
 hr {
+  width: 100%;
   height: 2px;
   padding: 0;
   margin: 1rem 0;
@@ -181,6 +192,12 @@ input[type="text"], textarea {
   width: 100%;
 }
 
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
 [class*='col-'] {
   transition: width 0.2s;
 }
@@ -190,31 +207,23 @@ input[type="text"], textarea {
 }
 
 .row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  @include row;
 
   @include large {
       &-lg {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
+        @include row;
       }
   }
 
   @include medium {
       &-md {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
+        @include row;
       }
   }
 
   @include small {
       &-sm {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
+        @include row;
       }
   }
 }
@@ -238,5 +247,59 @@ input[type="text"], textarea {
       @include small {
           @include box-sizes;
       }
+  }
+}
+
+// alignment classes
+.left {
+  align-items: flex-start;
+  text-align: left;
+}
+.right {
+  align-items: flex-end;
+  text-align: right;
+}
+.center {
+  align-items: center;
+  text-align: center;
+}
+.top {
+  justify-content: flex-start;
+  vertical-align: top;
+}
+.bottom {
+  justify-content: flex-end;
+  vertical-align: bottom;
+}
+.middle {
+  justify-content: center;
+  vertical-align: middle;
+}
+
+// spacing
+.spacing {
+  padding: 1rem;
+}
+
+//hidden 
+.hidden {
+  display: none!important;
+
+  &-lg {
+    @include large {
+      display: none!important;
+    }
+  }
+
+  &-md {
+    @include medium {
+      display: none!important;
+    }
+  }
+
+  &-sm {
+    @include small {
+      display: none!important;
+    }
   }
 }
