@@ -1,0 +1,72 @@
+// Breakpoints
+$large-breakpoint: 64em !default;
+$medium-breakpoint: 42em !default;
+$error: red;
+$warning: green;
+$success: orange;
+
+@mixin large {
+  @media screen and (min-width: #{$large-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media screen and (max-width: #{$medium-breakpoint}) {
+    @content;
+  }
+}
+
+@function boxSize($i) {
+  @return $i * 100%/12;
+}
+
+@mixin box-sizes {
+  &-1 {
+    width: boxSize(1);
+  }
+
+  &-2 {
+      width: boxSize(2);
+  }
+
+  &-3 {
+      width: boxSize(3);
+  }
+
+  &-4 {
+      width: boxSize(4);
+  }
+
+  &-5 {
+      width: boxSize(5);
+  }
+
+  &-6 {
+      width: boxSize(6);
+  }
+  &-7 {
+      width: boxSize(7);
+  }
+  &-8 {
+      width: boxSize(8);
+  }
+  &-9 {
+      width: boxSize(9);
+  }
+  &-10 {
+      width: boxSize(10);
+  }
+  &-11 {
+      width: boxSize(11);
+  }
+  &-12 {
+      width: boxSize(12);
+  }
+}

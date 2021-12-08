@@ -1,6 +1,7 @@
 @import "normalize";
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 @import "mixins";
+// Import all fonts here, that has been refered from theme files.
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -158,6 +159,7 @@ input[type="text"], textarea {
   }
 }
 
+//  Error/Success/Warining
 .error {
   color: $error;
 }
@@ -168,4 +170,73 @@ input[type="text"], textarea {
 
 .warning {
   color: $warning;
+}
+
+// CSS Flex Layouts
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+[class*='col-'] {
+  transition: width 0.2s;
+}
+
+.nowrap {
+  flex-flow: nowrap;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @include large {
+      &-lg {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+  }
+
+  @include medium {
+      &-md {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+  }
+
+  @include small {
+      &-sm {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+  }
+}
+
+.col {
+  @include box-sizes;
+
+  &-lg {
+      @include large {
+          @include box-sizes;
+      }
+  }
+
+  &-md {
+      @include medium {
+          @include box-sizes;
+      }
+  }
+
+  &-sm {
+      @include small {
+          @include box-sizes;
+      }
+  }
 }

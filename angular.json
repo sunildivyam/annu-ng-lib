@@ -57,7 +57,7 @@
       },
       "root": "projects/annu-ng-lib-pages",
       "sourceRoot": "projects/annu-ng-lib-pages/src",
-      "prefix": "anu",
+      "prefix": "anu",      
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -75,6 +75,11 @@
             "styles": [
               "projects/annu-ng-lib-pages/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/annu-ng-lib/src/lib/scss/"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
