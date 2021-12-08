@@ -15,6 +15,7 @@ import { OverviewPageComponent } from './page-components/overview-page/overview-
 import { TabsPageComponent } from './page-components/tabs-page/tabs-page.component';
 import { ThemePreviewPageComponent } from './page-components/theme-preview-page/theme-preview-page.component';
 import { TogglePageComponent } from './page-components/toggle-page/toggle-page.component';
+import { LayoutPageComponent } from './page-components/layout-page/layout-page.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TogglePageComponent } from './page-components/toggle-page/toggle-page.c
     TabsPageComponent,
     ThemePreviewPageComponent,
     TogglePageComponent,
+    LayoutPageComponent,
   ],
   imports: [
     BrowserModule,

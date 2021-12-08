@@ -8,7 +8,8 @@ import { OverviewPageComponent,
   ColorPalettePageComponent,
   TabsPageComponent,
   ThemePreviewPageComponent,
-  TogglePageComponent } from './page-components';
+  TogglePageComponent,
+  LayoutPageComponent } from './page-components';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'},
@@ -20,4 +21,5 @@ export const routes: Routes = [
   { path: 'theme-picker', component: ThemePickerPageComponent, data: {title: 'Theme Picker'} },
   { path: 'tabs', component: TabsPageComponent, data: {title: 'Tabs'} },
   { path: 'toggle', component: TogglePageComponent, data: {title: 'Toggle'} },
+  { path: 'layout', component: LayoutPageComponent, data: {title: 'Layouts'} },
 ];
