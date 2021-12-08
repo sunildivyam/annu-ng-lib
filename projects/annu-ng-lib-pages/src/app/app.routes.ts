@@ -9,7 +9,8 @@ import { OverviewPageComponent,
   TabsPageComponent,
   ThemePreviewPageComponent,
   TogglePageComponent,
-  LayoutPageComponent } from './page-components';
+  LayoutPageComponent,
+  MenuPageComponent } from './page-components';
 
   const route:Route = {
 
@@ -32,4 +33,5 @@ export const routes: Routes = [
   { path: 'tabs', component: TabsPageComponent, data: {title: 'Tabs'} },
   { path: 'toggle', component: TogglePageComponent, data: {title: 'Toggle'} },
   { path: 'layout', component: LayoutPageComponent, data: {title: 'Layouts'} },
+  { path: 'menu', component: MenuPageComponent, data: {title: 'Menu'} },
 ];

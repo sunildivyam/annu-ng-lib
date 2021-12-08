@@ -16,6 +16,7 @@ import { TabsPageComponent } from './page-components/tabs-page/tabs-page.compone
 import { ThemePreviewPageComponent } from './page-components/theme-preview-page/theme-preview-page.component';
 import { TogglePageComponent } from './page-components/toggle-page/toggle-page.component';
 import { LayoutPageComponent } from './page-components/layout-page/layout-page.component';
+import { MenuPageComponent } from './page-components/menu-page/menu-page.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { LayoutPageComponent } from './page-components/layout-page/layout-page.c
     ThemePreviewPageComponent,
     TogglePageComponent,
     LayoutPageComponent,
+    MenuPageComponent,
   ],
   imports: [
     BrowserModule,
