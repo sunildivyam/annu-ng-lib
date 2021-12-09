@@ -202,10 +202,6 @@ input[type="text"], textarea {
   transition: width 0.2s;
 }
 
-.nowrap {
-  flex-flow: nowrap;
-}
-
 .row {
   @include row;
 
@@ -279,6 +275,16 @@ input[type="text"], textarea {
 // spacing
 .spacing {
   padding: 1rem;
+
+  &-horizontal {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  &-vertical {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 
 //hidden 
@@ -300,6 +306,29 @@ input[type="text"], textarea {
   &-sm {
     @include small {
       display: none!important;
+    }
+  }
+}
+
+// nowrap
+.nowrap {
+  flex-flow: nowrap!important;
+
+  &-lg {
+    @include large {
+      flex-flow: nowrap!important;
+    }
+  }
+
+  &-md {
+    @include medium {
+      flex-flow: nowrap!important;
+    }
+  }
+
+  &-sm {
+    @include small {
+      flex-flow: nowrap!important;
     }
   }
 }
