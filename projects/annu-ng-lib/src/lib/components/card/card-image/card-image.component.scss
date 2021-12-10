@@ -3,7 +3,6 @@
 :host {
     display: flex;
     flex-direction: column;
-    background-color: turquoise;
 
     @include large {
         width: 20rem;
