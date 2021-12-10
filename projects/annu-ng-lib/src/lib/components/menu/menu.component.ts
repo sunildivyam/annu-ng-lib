@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Route, Routes } from '@angular/router';
 
 @Component({
@@ -10,6 +10,7 @@ export class MenuComponent implements OnInit {
 @Input() items: Routes;
 @Input() heading: string;
 @Input() opened: boolean;
+@Output() selected = new EventEmitter<Route>();
 
   constructor() { }
 
@@ -21,6 +22,8 @@ export class MenuComponent implements OnInit {
   }
 
   public itemCliked(route: Route): void {
+    this.selected.emit(route);
+    
     if (this.opened) {
       this.toggleOpen(false);
     }
