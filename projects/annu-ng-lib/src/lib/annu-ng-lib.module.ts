@@ -11,6 +11,7 @@ import { ThemePreviewModule } from './components/theme-preview/theme-preview.mod
 import { HamburgerModule } from './components/hamburger/hamburger.module';
 import { ToggleModule } from './components/toggle/toggle.module';
 import { MenuModule } from './components/menu/menu.module';
+import { FooterNavModule } from './components/footer-nav/footer-nav.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MenuModule } from './components/menu/menu.module';
     HamburgerModule,
     ToggleModule,
     MenuModule,
+    FooterNavModule,
   ]
 })
 export class AnnuNgLibModule {

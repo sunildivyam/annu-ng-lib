@@ -4,19 +4,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AnnuNgLibModule, CardModule, ColorPaletteModule, TabsModule, ThemeModule, ThemePickerModule} from '@annu-ng-lib';
+import { AnnuNgLibModule } from '@annu-ng-lib';
 
 import { AppComponent } from './app.component';
-import { ThemePickerPageComponent } from './page-components/theme-picker-page/theme-picker-page.component';
-import { CardPageComponent } from './page-components/card-page/card-page.component';
-import { ThemePageComponent } from './page-components/theme-page/theme-page.component';
-import { ColorPalettePageComponent } from './page-components/color-palette-page/color-palette-page.component';
-import { OverviewPageComponent } from './page-components/overview-page/overview-page.component';
-import { TabsPageComponent } from './page-components/tabs-page/tabs-page.component';
-import { ThemePreviewPageComponent } from './page-components/theme-preview-page/theme-preview-page.component';
-import { TogglePageComponent } from './page-components/toggle-page/toggle-page.component';
-import { LayoutPageComponent } from './page-components/layout-page/layout-page.component';
-import { MenuPageComponent } from './page-components/menu-page/menu-page.component';
+import {
+  ThemePickerPageComponent,
+  CardPageComponent,
+  ThemePageComponent,
+  ColorPalettePageComponent,
+  OverviewPageComponent,
+  TabsPageComponent,
+  ThemePreviewPageComponent,
+  TogglePageComponent,
+  LayoutPageComponent,
+  MenuPageComponent,
+  FooterNavPageComponent,
+} from './page-components';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +35,7 @@ import { MenuPageComponent } from './page-components/menu-page/menu-page.compone
     TogglePageComponent,
     LayoutPageComponent,
     MenuPageComponent,
+    FooterNavPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,12 +43,7 @@ import { MenuPageComponent } from './page-components/menu-page/menu-page.compone
     BrowserAnimationsModule,
     ReactiveFormsModule,
     // annu-ng-lib - components modules
-    AnnuNgLibModule,  // main module
-    // CardModule,
-    // ThemeModule,
-    // ColorPaletteModule,
-    // TabsModule,
-    // ThemePickerModule,    
+    AnnuNgLibModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

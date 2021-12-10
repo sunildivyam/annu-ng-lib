@@ -15,7 +15,7 @@
 * Article Thumbnail
 
 ## App UI components
-* Pagination
+
 * Menu Navigation
 * Card
 * Color Palette
@@ -26,6 +26,8 @@
 * Theme Preview
 * Toggle Button
 * Typography
-* Aside Navigation
 * Footer navigation
+    ### Pending
+    * Pagination     
+    * Aside Navigation
 

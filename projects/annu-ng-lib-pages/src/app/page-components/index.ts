@@ -8,4 +8,4 @@ export * from './theme-preview-page/theme-preview-page.component';
 export * from './toggle-page/toggle-page.component';
 export * from './layout-page/layout-page.component';
 export * from './menu-page/menu-page.component';
-
+export * from './footer-nav-page/footer-nav-page.component';

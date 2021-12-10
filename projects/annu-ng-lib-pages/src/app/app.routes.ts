@@ -10,7 +10,8 @@ import { OverviewPageComponent,
   ThemePreviewPageComponent,
   TogglePageComponent,
   LayoutPageComponent,
-  MenuPageComponent } from './page-components';
+  MenuPageComponent,
+  FooterNavPageComponent } from './page-components';
 
   const route:Route = {
 
@@ -34,4 +35,5 @@ export const routes: Routes = [
   { path: 'toggle', component: TogglePageComponent, data: {title: 'Toggle'} },
   { path: 'layout', component: LayoutPageComponent, data: {title: 'Layouts'} },
   { path: 'menu', component: MenuPageComponent, data: {title: 'Menu'} },
+  { path: 'footer-nav', component: FooterNavPageComponent, data: {title: 'Footer Navigation'} },
 ];

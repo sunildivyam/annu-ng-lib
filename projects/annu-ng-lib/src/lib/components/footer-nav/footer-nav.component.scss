@@ -1,0 +1,40 @@
+@import '../../scss/mixins.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--anu-accentDark);
+    color: var(--anu-accentLighter);
+    margin-top: 2rem;
+
+    ul {
+        list-style: none;
+
+        li {
+            @include small {
+                margin-top: 1rem;
+                border: none;
+                text-align: center;
+            }
+
+            @include medium {
+                margin-top: 1rem;
+                border: none;
+                text-align: center;
+            }
+        }
+
+        li + li {            
+            border-left: 1px solid var(--anu-accentLighter);
+
+            @include small {
+                border: none;
+            }
+
+            @include medium {
+                border: none;
+            }
+        }
+    }
+}
