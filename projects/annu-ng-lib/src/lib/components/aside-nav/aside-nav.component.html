@@ -1,0 +1,11 @@
+<nav role="navigation" aria-label="aside navigation" class="annuAsideNav">
+    <section class="row center annuAsideNav_header">
+        <anu-hamburger class="hidden-lg hidden-md" [opened]="hamburgerOpened" (changed)="hamburgerChanged($event)">
+        </anu-hamburger>
+        <h2 class="">{{heading}}</h2>
+    </section>
+    <ul [ngClass]="{'opened': hamburgerOpened}" class="spacing-vertical">
+        <li *ngFor="let route of items"><a [routerLink]="route.path" routerLinkActive="active" (click)="navClicked($event, route)">{{route.data?.title}}</a>
+        </li>
+    </ul>
+</nav>

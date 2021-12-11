@@ -13,6 +13,7 @@ import { ToggleModule } from './components/toggle/toggle.module';
 import { MenuModule } from './components/menu/menu.module';
 import { FooterNavModule } from './components/footer-nav/footer-nav.module';
 import { PaginationModule } from './components/pagination/pagination.module';
+import { AsideNavModule } from './components/aside-nav/aside-nav.module';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PaginationModule } from './components/pagination/pagination.module';
     ToggleModule,
     MenuModule,
     FooterNavModule,
-    PaginationModule
+    PaginationModule,
+    AsideNavModule,
   ]
 })
 export class AnnuNgLibModule {

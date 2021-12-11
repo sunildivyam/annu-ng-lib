@@ -19,8 +19,9 @@ import {
   LayoutPageComponent,
   MenuPageComponent,
   FooterNavPageComponent,
+  PaginationPageComponent,
+  AsideNavPageComponent,
 } from './page-components';
-import { PaginationPageComponent } from './page-components/pagination-page/pagination-page.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { PaginationPageComponent } from './page-components/pagination-page/pagin
     MenuPageComponent,
     FooterNavPageComponent,
     PaginationPageComponent,
+    AsideNavPageComponent,
   ],
   imports: [
     BrowserModule,
