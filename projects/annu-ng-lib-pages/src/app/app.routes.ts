@@ -11,7 +11,8 @@ import { OverviewPageComponent,
   TogglePageComponent,
   LayoutPageComponent,
   MenuPageComponent,
-  FooterNavPageComponent } from './page-components';
+  FooterNavPageComponent,
+  PaginationPageComponent } from './page-components';
 
   const route:Route = {
 
@@ -36,4 +37,5 @@ export const routes: Routes = [
   { path: 'layout', component: LayoutPageComponent, data: {title: 'Layouts'} },
   { path: 'menu', component: MenuPageComponent, data: {title: 'Menu'} },
   { path: 'footer-nav', component: FooterNavPageComponent, data: {title: 'Footer Navigation'} },
+  { path: 'pagination', component: PaginationPageComponent, data: {title: 'Pagination'} },
 ];

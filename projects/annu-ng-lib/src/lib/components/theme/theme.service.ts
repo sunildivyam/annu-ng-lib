@@ -44,7 +44,6 @@ export class ThemeService {
     const cssVar = this.getCssVar(name, value);
     if (cssVar) {
       document.documentElement.style.setProperty(cssVar.name, cssVar.value);
-      console.log(document.head.childNodes);
       // getComputedStyle(document.documentElement).getPropertyValue(name);
     }
   }

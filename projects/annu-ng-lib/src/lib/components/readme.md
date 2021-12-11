@@ -27,7 +27,7 @@
 * Toggle Button
 * Typography
 * Footer navigation
+* Pagination     
     ### Pending
-    * Pagination     
     * Aside Navigation
 

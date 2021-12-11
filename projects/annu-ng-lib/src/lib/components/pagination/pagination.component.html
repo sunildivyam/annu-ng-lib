@@ -1,0 +1,5 @@
+<ul class="annuPagination center">
+    <li *ngIf="previousPage"><a [href]="pageLink(previousPage)" (click)="previousClicked($event)"><span>≪</span> Previous</a></li>
+    <li *ngFor="let page of rangePages"><a [href]="pageLink(activePage)" (click)="pageClicked($event, page)" [ngClass]="{'active': page === activePage}">{{page}}</a></li>
+    <li *ngIf="nextPage"><a [href]="pageLink(nextPage)" (click)="nextClicked($event)">Next <span>≫</span></a></li>
+</ul>

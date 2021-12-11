@@ -12,4 +12,4 @@ export * from './components/hamburger';
 export * from './components/toggle';
 export * from './components/menu';
 export * from './components/footer-nav';
-
+export * from './components/pagination';

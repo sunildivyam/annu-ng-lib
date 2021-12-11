@@ -12,6 +12,7 @@ import { HamburgerModule } from './components/hamburger/hamburger.module';
 import { ToggleModule } from './components/toggle/toggle.module';
 import { MenuModule } from './components/menu/menu.module';
 import { FooterNavModule } from './components/footer-nav/footer-nav.module';
+import { PaginationModule } from './components/pagination/pagination.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { FooterNavModule } from './components/footer-nav/footer-nav.module';
     ToggleModule,
     MenuModule,
     FooterNavModule,
+    PaginationModule
   ]
 })
 export class AnnuNgLibModule {
