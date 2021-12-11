@@ -62,6 +62,7 @@
 
 .annuMenu {
     position: relative;
+    overflow-x: clip;
     
     a  {
         color: var(--anu-accentDeepLight);
