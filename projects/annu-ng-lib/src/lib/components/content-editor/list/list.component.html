@@ -1,0 +1,13 @@
+<ul *ngIf="value.subType === 'ul'" >
+    <anu-content-element [editorElement]="value" [fullTree]="fullTree"></anu-content-element>
+</ul>
+
+<ol *ngIf="value.subType === 'ol'">
+    <anu-content-element  [editorElement]="value" [fullTree]="fullTree"></anu-content-element>
+</ol>
+
+<!-- <ul *ngIf="value.subType === 'ul'" contenteditable [(ngModel)]="value.text" (keydown.enter)="enterPressed($event)"
+    (keydown.backspace)="backspacePressed($event)" [name]="value.name" [focus]="value?.focused"
+    (blur)="contentChanged()">
+    <anu-content-element [items]="value.items"></anu-content-element>
+</ul> -->

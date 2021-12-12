@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { EDITOR_ROOT_ELEMENT } from './constants';
 import { EditorElement } from './content-editor.interface';
 
 @Component({
@@ -7,30 +8,8 @@ import { EditorElement } from './content-editor.interface';
   styleUrls: ['./content-editor.component.scss']
 })
 export class ContentEditorComponent implements OnInit {
-  contents: Array<EditorElement> = [
-    {
-      type: 'h',
-      subType: '1',
-      text: 'Sample Para text Heading1.',
-      name: this.getEditorElementName('h1')
-    },
-    {
-      type: 'h',
-      subType: '3',
-      text: 'Sample Para text Heading3.',
-      name: this.getEditorElementName('h3')
-    },
-    {
-      type: 'p',
-      text: 'Sample Para text content.',
-      name: this.getEditorElementName('p1')
-    },
-    {
-      type: 'p',
-      text: 'Sample Para text content.2',
-      name: this.getEditorElementName('p2')
-    }
-  ];
+  @Output() changed = new EventEmitter<EditorElement>();
+  editorElement: EditorElement = EDITOR_ROOT_ELEMENT;
   constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -41,19 +20,27 @@ export class ContentEditorComponent implements OnInit {
   }
 
   private addNewEditorElement(el: EditorElement) {
-    const index = this.contents.indexOf(el);
+    const index = this.editorElement.items.indexOf(el);
     const oldEl = { ...el };
-    this.contents.forEach(elm => elm.focused = false);
+    this.editorElement.items.forEach(elm => elm.focused = false);
 
-    this.contents.splice(index + 1, 0, {
+    this.editorElement.items.splice(index + 1, 0, {
       type: oldEl.type,
       subType: oldEl.subType,
       text: '',
       name: this.getEditorElementName(oldEl.type),
       focused: true
     } as EditorElement);
+  }
 
+  private removeEditorElement(el: EditorElement) {
+    const index = this.editorElement.items.indexOf(el);
+    if (index === 0) {
+      return;
+    }
 
+    this.editorElement.items.splice(index, 1);
+    this.editorElement.items[index - 1].focused = true;
   }
 
   public enterKeyPressed(el: EditorElement) {
@@ -61,7 +48,12 @@ export class ContentEditorComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  public backspaceKeyPressed(el: EditorElement) {
+    this.removeEditorElement(el);
+    this.cdr.detectChanges();
+  }
+
   public contentChanged(el: EditorElement) {
-    // TODO:-
+    this.changed.emit(this.editorElement);
   }
 }

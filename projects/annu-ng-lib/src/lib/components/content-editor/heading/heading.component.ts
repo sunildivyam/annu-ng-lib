@@ -7,8 +7,10 @@ import { EditorElement } from '../content-editor.interface';
   styleUrls: ['./heading.component.scss']
 })
 export class HeadingComponent implements OnInit {
-  @Input() value: EditorElement;
+  @Input() value: EditorElement = {} as EditorElement;
+  @Input() fullTree: EditorElement = {} as EditorElement;
   @Output() enterKeyPressed = new EventEmitter<EditorElement>();
+  @Output() backspaceKeyPressed = new EventEmitter<EditorElement>();
   @Output() changed = new EventEmitter<EditorElement>();
 
   constructor() { }
@@ -21,6 +23,13 @@ export class HeadingComponent implements OnInit {
     this.enterKeyPressed.emit(value);
   }
 
+  public backspacePressed(event: any): void {
+    if (!this.value.text) {
+      event.preventDefault();
+      this.backspaceKeyPressed.emit(this.value);
+    }
+  }
+  
   public contentChanged() {
     this.changed.emit(this.value);
   }

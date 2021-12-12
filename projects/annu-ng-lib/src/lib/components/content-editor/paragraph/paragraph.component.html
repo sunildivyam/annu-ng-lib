@@ -1,2 +1,3 @@
-<p contenteditable [(ngModel)]="value.text" (keydown.enter)="enterPressed($event, value)" [name]="value.name"
-    [focus]="value?.focused" (blur)="contentChanged()"></p>
+<p contenteditable [(ngModel)]="value.text" (keydown.enter)="enterPressed($event)"
+    (keydown.backspace)="backspacePressed($event)" [name]="value.name" [focus]="value?.focused"
+    (blur)="contentChanged()"></p>

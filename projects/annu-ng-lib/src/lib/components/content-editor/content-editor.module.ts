@@ -6,15 +6,32 @@ import { FormsModule } from '@angular/forms';
 import { ContenteditableValueAccessorDirective } from './contenteditable-value-accessor.directive';
 import { FocusDirective } from './focus.directive';
 import { HeadingComponent } from './heading/heading.component';
+import { ListItemComponent } from './list-item/list-item.component';
+import { ContentElementComponent } from './content-element/content-element.component';
+import { ListComponent } from './list/list.component';
 
 
 
 @NgModule({
-  declarations: [ContentEditorComponent, ParagraphComponent, ContenteditableValueAccessorDirective, FocusDirective, HeadingComponent],
+  declarations: [ContentEditorComponent,
+    ParagraphComponent,
+    ContenteditableValueAccessorDirective,
+    FocusDirective,
+    HeadingComponent,
+    ListItemComponent,
+    ContentElementComponent,
+    ListComponent],
   imports: [
     CommonModule,
     FormsModule
   ],
-  exports: [ContentEditorComponent, ParagraphComponent, ContenteditableValueAccessorDirective, FocusDirective, HeadingComponent],
+  exports: [ContentEditorComponent,
+    ParagraphComponent,
+    ContenteditableValueAccessorDirective,
+    FocusDirective,
+    HeadingComponent,
+    ListItemComponent,
+    ContentElementComponent,
+    ListComponent],
 })
 export class ContentEditorModule { }

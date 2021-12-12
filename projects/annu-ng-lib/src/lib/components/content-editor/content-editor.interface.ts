@@ -2,6 +2,7 @@ export interface EditorElement {
     type: string;
     subType?: string;
     name: string;
-    text: string;
+    text?: string;
     focused?: boolean;
+    items?: Array<EditorElement>;
 };

@@ -1,0 +1,10 @@
+<ng-container *ngFor="let el of editorElement.items">
+    <anu-paragraph *ngIf="el.type==='p'" [value]="el" (changed)="contentChanged($event)"
+        (enterKeyPressed)="enterKeyPressed($event)" (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-paragraph>
+    <anu-heading *ngIf="el.type==='h'" [value]="el" (changed)="contentChanged($event)"
+        (enterKeyPressed)="enterKeyPressed($event)" (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-heading>
+    <anu-list *ngIf="el.type==='list'" [value]="el" (changed)="contentChanged($event)"
+        (enterKeyPressed)="enterKeyPressed($event)" (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-list>
+    <anu-list-item *ngIf="el.type==='li'" [value]="el" (changed)="contentChanged($event)"
+        (enterKeyPressed)="enterKeyPressed($event)" (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-list-item>    
+</ng-container>

@@ -121,6 +121,10 @@ ul,
 ol {
   margin-top: 0;
   padding-inline-start: 2rem;
+
+  li {
+    @include contenteditableStyle;
+  }
 }
 
 ul {

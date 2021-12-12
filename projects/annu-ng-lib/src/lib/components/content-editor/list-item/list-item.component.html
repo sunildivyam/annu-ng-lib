@@ -1,0 +1,8 @@
+<li *ngIf="!value.items?.length" contenteditable [(ngModel)]="value.text" (keydown.enter)="enterPressed($event)"
+    (keydown.backspace)="backspacePressed($event)" [name]="value.name" [focus]="value?.focused"
+    (blur)="contentChanged()">
+</li>
+
+<li *ngIf="value.items?.length">
+    <anu-content-element [editorElement]="value" [fullTree]="fullTree"></anu-content-element>
+</li>
