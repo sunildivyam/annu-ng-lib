@@ -1,0 +1,4 @@
+<ng-container *ngFor="let el of contents">
+    <anu-paragraph *ngIf="el.type==='p'" [value]="el" (changed)="contentChanged($event)" (enterKeyPressed)="enterKeyPressed($event)"></anu-paragraph>
+    <anu-heading *ngIf="el.type==='h'" [value]="el" (changed)="contentChanged($event)" (enterKeyPressed)="enterKeyPressed($event)"></anu-heading>
+</ng-container>

@@ -21,6 +21,7 @@ import {
   FooterNavPageComponent,
   PaginationPageComponent,
   AsideNavPageComponent,
+  ContentEditorPageComponent,
 } from './page-components';
 
 
@@ -40,6 +41,7 @@ import {
     FooterNavPageComponent,
     PaginationPageComponent,
     AsideNavPageComponent,
+    ContentEditorPageComponent,
   ],
   imports: [
     BrowserModule,

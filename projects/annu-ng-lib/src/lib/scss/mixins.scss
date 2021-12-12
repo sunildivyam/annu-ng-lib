@@ -86,3 +86,17 @@ $menu-modal: 9000;
     @include col(12);
   }
 }
+
+// conteneteditable styles
+@mixin contenteditableStyle {
+  &[contenteditable] {
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-left: 2px solid transparent;
+
+    &:focus-visible {
+      outline: none;
+      border-left-color: var(--anu-primaryNormal);
+    }
+  }
+}

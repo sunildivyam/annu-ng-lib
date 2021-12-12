@@ -16,6 +16,7 @@ import {
   FooterNavPageComponent,
   PaginationPageComponent,
   AsideNavPageComponent,
+  ContentEditorPageComponent,
 } from './page-components';
 
 const route: Route = {
@@ -43,4 +44,5 @@ export const routes: Routes = [
   { path: 'footer-nav', component: FooterNavPageComponent, data: { type: ROUTE_TYPES.components, title: 'Footer Navigation' } },
   { path: 'pagination', component: PaginationPageComponent, data: { type: ROUTE_TYPES.components, title: 'Pagination' } },
   { path: 'aside-nav', component: AsideNavPageComponent, data: { type: ROUTE_TYPES.components, title: 'Aside Navigation' } },
+  { path: 'content-editor', component: ContentEditorPageComponent, data: { type: ROUTE_TYPES.components, title: 'Content Editor' } },
 ];

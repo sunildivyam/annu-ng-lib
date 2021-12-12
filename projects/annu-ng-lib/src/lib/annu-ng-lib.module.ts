@@ -14,6 +14,7 @@ import { MenuModule } from './components/menu/menu.module';
 import { FooterNavModule } from './components/footer-nav/footer-nav.module';
 import { PaginationModule } from './components/pagination/pagination.module';
 import { AsideNavModule } from './components/aside-nav/aside-nav.module';
+import { ContentEditorModule } from './components/content-editor/content-editor.module';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { AsideNavModule } from './components/aside-nav/aside-nav.module';
     FooterNavModule,
     PaginationModule,
     AsideNavModule,
+    ContentEditorModule,
   ]
 })
 export class AnnuNgLibModule {

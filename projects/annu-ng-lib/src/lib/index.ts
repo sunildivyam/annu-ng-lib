@@ -13,3 +13,4 @@ export * from './components/toggle';
 export * from './components/menu';
 export * from './components/footer-nav';
 export * from './components/pagination';
+export * from './components/content-editor';
