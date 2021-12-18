@@ -72,6 +72,10 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
   private removeEditorElement(el: EditorElement) {
     // Find the parent of selected Element
     const parent = this.findParent(el, this.fullTree);
+    if (!parent) {
+      console.error('No Parent found or Element is Root element itself.');
+      return;
+    }
     const index = parent.children.indexOf(el);
     // remove selected child
     parent.children.splice(index, 1);
@@ -96,7 +100,6 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
   public backspaceKeyPressed(el: EditorElement) {
     this.removeEditorElement(el);
     this.cdr.detectChanges();
-    console.log(this.fullTree);
   }
 
   public contentChanged(el: EditorElement) {

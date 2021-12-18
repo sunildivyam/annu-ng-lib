@@ -1,5 +1,12 @@
+export interface Link {
+    href: string;
+    text: string;
+    title?: string;
+    target?: string;    
+};
+
 export interface EditorElementData {
-    url?: string;
+    href?: string;
     src?: string;
     alt?: string;
     text?: string;
