@@ -10,47 +10,9 @@ import { EditorElement } from './content-editor.interface';
 export class ContentEditorComponent implements OnInit {
   @Output() changed = new EventEmitter<EditorElement>();
   editorElement: EditorElement = EDITOR_ROOT_ELEMENT;
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  private getEditorElementName(elType: string): string {
-    return `${elType}-${Date.now()}`;
-  }
-
-  private addNewEditorElement(el: EditorElement) {
-    const index = this.editorElement.items.indexOf(el);
-    const oldEl = { ...el };
-    this.editorElement.items.forEach(elm => elm.focused = false);
-
-    this.editorElement.items.splice(index + 1, 0, {
-      type: oldEl.type,
-      subType: oldEl.subType,
-      text: '',
-      name: this.getEditorElementName(oldEl.type),
-      focused: true
-    } as EditorElement);
-  }
-
-  private removeEditorElement(el: EditorElement) {
-    const index = this.editorElement.items.indexOf(el);
-    if (index === 0) {
-      return;
-    }
-
-    this.editorElement.items.splice(index, 1);
-    this.editorElement.items[index - 1].focused = true;
-  }
-
-  public enterKeyPressed(el: EditorElement) {
-    this.addNewEditorElement(el);
-    this.cdr.detectChanges();
-  }
-
-  public backspaceKeyPressed(el: EditorElement) {
-    this.removeEditorElement(el);
-    this.cdr.detectChanges();
   }
 
   public contentChanged(el: EditorElement) {

@@ -1,13 +1,13 @@
-<h1 *ngIf="value.subType === '1'" contenteditable [(ngModel)]="value.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
+<h1 *ngIf="value.tagName === 'h1'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
     [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h1>
-<h2 *ngIf="value.subType === '2'" contenteditable [(ngModel)]="value.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
+<h2 *ngIf="value.tagName === 'h2'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
     [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h2>
-<h3 *ngIf="value.subType === '3'" contenteditable [(ngModel)]="value.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
+<h3 *ngIf="value.tagName === 'h3'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
     [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h3>
-<h4 *ngIf="value.subType === '4'" contenteditable [(ngModel)]="value.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
+<h4 *ngIf="value.tagName === 'h4'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
     [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h4>
-<h5 *ngIf="value.subType === '5'" contenteditable [(ngModel)]="value.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
+<h5 *ngIf="value.tagName === 'h5'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
     [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h5>
-<h6 *ngIf="value.subType === '6'" contenteditable [(ngModel)]="value.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
+<h6 *ngIf="value.tagName === 'h6'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
     [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h6>
     

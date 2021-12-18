@@ -8,7 +8,6 @@ import { FocusDirective } from './focus.directive';
 import { HeadingComponent } from './heading/heading.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { ContentElementComponent } from './content-element/content-element.component';
-import { ListComponent } from './list/list.component';
 
 
 
@@ -19,8 +18,7 @@ import { ListComponent } from './list/list.component';
     FocusDirective,
     HeadingComponent,
     ListItemComponent,
-    ContentElementComponent,
-    ListComponent],
+    ContentElementComponent,],
   imports: [
     CommonModule,
     FormsModule
@@ -31,7 +29,6 @@ import { ListComponent } from './list/list.component';
     FocusDirective,
     HeadingComponent,
     ListItemComponent,
-    ContentElementComponent,
-    ListComponent],
+    ContentElementComponent,],
 })
 export class ContentEditorModule { }

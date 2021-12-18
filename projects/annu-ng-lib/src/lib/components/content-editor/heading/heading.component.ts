@@ -24,7 +24,7 @@ export class HeadingComponent implements OnInit {
   }
 
   public backspacePressed(event: any): void {
-    if (!this.value.text) {
+    if (!this.value?.data?.text) {
       event.preventDefault();
       this.backspaceKeyPressed.emit(this.value);
     }

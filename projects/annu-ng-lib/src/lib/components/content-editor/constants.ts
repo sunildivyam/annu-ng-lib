@@ -1,75 +1,121 @@
 import { EditorElement } from "./content-editor.interface";
 
 export const EDITOR_ROOT_ELEMENT: EditorElement =
-{
-  type: 'root',
+{  
   name: 'root',
-  items: [
+  tagName: 'article',
+  isContainer: true,
+  children: [
     {
-      type: 'h',
-      subType: '1',
-      text: 'Sample Para text Heading1.',
-      name: 'h1'
+      name: 'h1-1234',
+      tagName: 'h1',
+      data: {
+        text: 'Sample Heading 1',
+      }      
     },
     {
-      type: 'h',
-      subType: '2',
-      text: 'Sample Para text Heading 2.',
-      name: 'h2'
+      name: 'h2-1234',
+      tagName: 'h2',
+      data: {
+        text: 'Sample Heading 2',
+      }      
     },
     {
-      type: 'p',
-      text: 'Sample Para text content.',
-      name: 'p1'
+      name: 'p-1234',
+      tagName: 'p',
+      data: {
+        text: 'Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
+      }      
     },
     {
-      type: 'list',
-      subType: 'ul',
-      text: 'Sample List',
-      name: 'list1',
-      items: [
+      name: 'h3-1234',
+      tagName: 'h3',
+      data: {
+        text: 'Sample Heading 3',
+      }      
+    },
+    {
+      name: 'p-1235',
+      tagName: 'p',
+      data: {
+        text: 'Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
+      }      
+    },
+    {
+      name: 'ol-12345',
+      tagName: 'ol',
+      isContainer: true,
+      children: [
         {
-          type: 'li',
-          text: 'List Item 1',
-          name: 'li1'
+          name: 'li-12365',
+          tagName: 'li',
+          data: {
+            text: 'Sample List Item 1',
+          }      
         },
         {
-          type: 'li',
-          text: 'List Item 2',
-          name: 'li2'
-        }
+          name: 'li-12375',
+          tagName: 'li',
+          data: {
+            text: 'Sample List Item 2',
+          }      
+        },
       ]
     },
     {
-      type: 'h',
-      subType: '3',
-      text: 'Sample Para text Heading 3',
-      name: 'h3'
+      name: 'h3-1236',
+      tagName: 'h3',
+      data: {
+        text: 'Sample Heading 3',
+      }      
     },
     {
-      type: 'list',
-      subType: 'ol',
-      text: 'Sample List',
-      name: 'list2',
-      items: [
+      name: 'ol-1234',
+      tagName: 'ol',
+      isContainer: true,
+      children: [
         {
-          type: 'li',
-          text: 'List Item 1',
-          name: 'ol-li1',
-          items: [
-            {
-              type: 'h',
-              subType: '2',
-              text: 'Sample Para text Heading 2.',
-              name: 'h2'
-            }
-          ]
+          name: 'li-1236',
+          tagName: 'li',
+          data: {
+            text: 'Sample List Item 1',
+          }      
         },
         {
-          type: 'li',
-          text: 'List Item 2',
-          name: 'ol-li2'
-        }
+          name: 'li-1237',
+          tagName: 'li',
+          data: {
+            text: 'Sample List Item 2',
+          }      
+        },
+      ]
+    },
+    {
+      name: 'h3-1237',
+      tagName: 'h3',
+      data: {
+        text: 'Sample Heading 3',
+      }      
+    },
+    {
+      name: 'ul-1234',
+      tagName: 'ul',
+      isContainer: true,
+      children: [
+        {
+          name: 'li-1234',
+          tagName: 'li',
+          data: {
+            text: 'Sample List Item 1',
+          }      
+        },
+        {
+          name: 'li-1235',
+          tagName: 'li',
+          data: {
+            text: 'Sample List Item 2',
+          }      
+        },
       ]
     },
   ]

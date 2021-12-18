@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EditorElement } from '../content-editor.interface';
 
 @Component({
@@ -6,7 +6,7 @@ import { EditorElement } from '../content-editor.interface';
   templateUrl: './content-element.component.html',
   styleUrls: ['./content-element.component.scss']
 })
-export class ContentElementComponent implements OnInit {
+export class ContentElementComponent implements OnInit, AfterContentChecked {
   @Input() editorElement: EditorElement = {} as EditorElement;
   @Input() fullTree: EditorElement = {} as EditorElement;
   @Output() changed = new EventEmitter<EditorElement>();
@@ -16,62 +16,87 @@ export class ContentElementComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterContentChecked() {
+    this.cdr.detectChanges();
+  }
+
   private getEditorElementName(elType: string): string {
     return `${elType}-${Date.now()}`;
   }
 
-  private addNewEditorElement(el: EditorElement) {
-    const index = this.editorElement.items.indexOf(el);
-    const oldEl = { ...el };
-    this.editorElement.items.forEach(elm => elm.focused = false);
+  private findParent(el: EditorElement, parent: EditorElement): EditorElement {
+    if (!parent.isContainer || !parent.children || !parent.children.length) {
+      return;
+    }
 
-    this.editorElement.items.splice(index + 1, 0, {
-      type: oldEl.type,
-      subType: oldEl.subType,
-      text: '',
-      name: this.getEditorElementName(oldEl.type),
-      focused: true
+    let foundParent: EditorElement;
+
+    for (let i = 0; i < parent.children.length; i++) {
+      const chEl = parent.children[i];
+
+      if (el.name === chEl.name) {
+        foundParent = parent;
+        break;
+      }
+
+      foundParent = this.findParent(el, chEl);
+      if (foundParent) {
+        break;
+      }
+    }
+
+    return foundParent;
+  }
+
+  private addNewEditorElement(el: EditorElement) {
+    const oldEl = { ...el };
+    const parent = this.findParent(el, this.fullTree);
+    const index = parent.children.indexOf(el);
+    //Remove focus from all other elements
+    parent.children.forEach(ch => ch.focused = false);
+
+    //Add element with focus
+    parent.children.splice(index + 1, 0, {
+      tagName: oldEl.tagName,
+      name: this.getEditorElementName(oldEl.tagName),
+      focused: true,
+      data: {
+        src: '',
+        url: '',
+        text: '',
+        alt: '',
+      }
     } as EditorElement);
   }
 
   private removeEditorElement(el: EditorElement) {
-    let index = this.editorElement.items.indexOf(el);
-
-    if (this.editorElement.items.length > 1) {
-      this.editorElement.items.splice(index, 1);
-      this.editorElement.items[index === 0 ? index : index - 1].focused = true;
+    // Find the parent of selected Element
+    const parent = this.findParent(el, this.fullTree);
+    const index = parent.children.indexOf(el);
+    // remove selected child
+    parent.children.splice(index, 1);
+    
+    if (parent.children.length) {
+      const nextOrPreviousItemIndex = index >= parent.children.length? index - 1 : index;
+      const childToFocus = parent.children[nextOrPreviousItemIndex];
+      if (childToFocus.isContainer && childToFocus.children && childToFocus.children.length) {
+        childToFocus.children[childToFocus.children.length - 1].focused = true;
+      } else {
+        childToFocus.focused = true;
+      }
     } else {
-      
+      this.removeEditorElement(parent);
     }
   }
 
-  // private removeRecursive(el: EditorElement, edItem: EditorElement) {
-  //   if (!edItem.items) return;
-  //   let index = edItem.items.indexOf(el);
-  //   if (index >= 0) {
-  //     if (edItem.items.length > 1) {
-  //       edItem.items.splice(index, 1);
-  //       edItem.items[index === 0 ? index : index - 1].focused = true;
-  //     } else {
-  //       edItem = null;
-  //     }
-  //   } else {
-  //     edItem.items.forEach(item => {
-  //       this.removeRecursive(el, item);
-  //     });
-  //   }
-  //   console.log(this.fullTree);
-  // }
-
   public enterKeyPressed(el: EditorElement) {
     this.addNewEditorElement(el);
-    this.cdr.detectChanges();
   }
 
   public backspaceKeyPressed(el: EditorElement) {
-    // this.removeRecursive(el, this.fullTree);
     this.removeEditorElement(el);
     this.cdr.detectChanges();
+    console.log(this.fullTree);
   }
 
   public contentChanged(el: EditorElement) {
