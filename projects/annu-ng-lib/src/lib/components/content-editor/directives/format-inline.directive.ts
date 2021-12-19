@@ -29,8 +29,6 @@ export class FormatInlineDirective implements OnInit, OnDestroy {
 
     const selectionRect = this.ceService.getSelectionRect(selection);    
     this.selected.emit({ text: selection.toString(), selection, selectionRect } as TextSelectionEvent);    
-
-    this.ceService.addLink(selection);
   }
 
   private handleSelectionChange(event: any) {

@@ -2,7 +2,7 @@ import { ContenteditableValueAccessorDirective } from './contenteditable-value-a
 
 describe('ContenteditableValueAccessorDirective', () => {
   it('should create an instance', () => {
-    const directive = new ContenteditableValueAccessorDirective();
+    const directive = new ContenteditableValueAccessorDirective());
     expect(directive).toBeTruthy();
   });
 });

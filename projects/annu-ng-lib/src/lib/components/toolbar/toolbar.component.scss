@@ -1,0 +1,35 @@
+.annuToolbar {
+    nav {
+        display: flex;
+    }
+
+    ul {
+        display: inline-block;
+        list-style-type: none;
+        white-space: nowrap;
+        padding: 0;
+        margin: 0;
+        background-color: var(--anu-primaryLightest);
+        border: 1px solid var(--anu-primaryNormal);
+        border-radius: 0.5rem;
+        box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-backgroundNormal);
+
+        li {
+            display: inline-block;
+
+            a {
+                display: inline-block;
+                padding: 0.5rem 1rem;
+                color: var(--anu-accentDarkest);
+
+                &:hover {
+                    background-color: var(--anu-primaryLight);
+                }
+            }
+        }
+
+        li + li {
+            border-left: 1px solid var(--anu-primaryLight);
+        }
+    }
+}

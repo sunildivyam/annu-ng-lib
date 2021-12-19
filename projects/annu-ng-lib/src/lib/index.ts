@@ -14,3 +14,5 @@ export * from './components/menu';
 export * from './components/footer-nav';
 export * from './components/pagination';
 export * from './components/content-editor';
+export * from './components/toolbar';
+export * from './components/modal';

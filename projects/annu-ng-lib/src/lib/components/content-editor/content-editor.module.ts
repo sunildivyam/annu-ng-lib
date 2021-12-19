@@ -9,6 +9,8 @@ import { HeadingComponent } from './heading/heading.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { ContentElementComponent } from './content-element/content-element.component';
 import { FormatInlineDirective } from './directives/format-inline.directive';
+import { ToolbarModule } from '../toolbar';
+import { ModalModule } from '../modal';
 
 
 
@@ -23,7 +25,9 @@ import { FormatInlineDirective } from './directives/format-inline.directive';
     FormatInlineDirective,],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ToolbarModule,
+    ModalModule
   ],
   exports: [ContentEditorComponent,
     ParagraphComponent,

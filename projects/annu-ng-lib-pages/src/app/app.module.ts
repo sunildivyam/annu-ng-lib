@@ -22,6 +22,8 @@ import {
   PaginationPageComponent,
   AsideNavPageComponent,
   ContentEditorPageComponent,
+  ToolbarPageComponent,
+  ModalPageComponent,
 } from './page-components';
 
 
@@ -42,6 +44,8 @@ import {
     PaginationPageComponent,
     AsideNavPageComponent,
     ContentEditorPageComponent,
+    ToolbarPageComponent,
+    ModalPageComponent,
   ],
   imports: [
     BrowserModule,

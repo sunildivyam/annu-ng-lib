@@ -345,12 +345,20 @@ input[type="text"], textarea {
   position: absolute;
   display: none;
   padding: 1rem;
-  margin-bottom: 1rem;
   border: 1px solid var(--anu-primaryNormal);
   border-radius: 1rem;
   height: auto;
+  transition: all 0.1s;
 
   &.opened {
     display: flex;
   }
+}
+
+.disable-select {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }

@@ -17,6 +17,8 @@ import {
   PaginationPageComponent,
   AsideNavPageComponent,
   ContentEditorPageComponent,
+  ToolbarPageComponent,
+  ModalPageComponent,
 } from './page-components';
 
 const route: Route = {
@@ -38,11 +40,13 @@ export const routes: Routes = [
   { path: 'theme-preview', component: ThemePreviewPageComponent, data: { type: ROUTE_TYPES.components, title: 'Preview Theme' } },
   { path: 'theme-picker', component: ThemePickerPageComponent, data: { type: ROUTE_TYPES.components, title: 'Theme Picker' } },
   { path: 'tabs', component: TabsPageComponent, data: { type: ROUTE_TYPES.components, title: 'Tabs' } },
-  { path: 'toggle', component: TogglePageComponent, data: { type: ROUTE_TYPES.components, title: 'Toggle' } },
-  { path: 'layout', component: LayoutPageComponent, data: { type: ROUTE_TYPES.components, title: 'Layouts' } },
   { path: 'menu', component: MenuPageComponent, data: { type: ROUTE_TYPES.components, title: 'Menu' } },
   { path: 'footer-nav', component: FooterNavPageComponent, data: { type: ROUTE_TYPES.components, title: 'Footer Navigation' } },
-  { path: 'pagination', component: PaginationPageComponent, data: { type: ROUTE_TYPES.components, title: 'Pagination' } },
   { path: 'aside-nav', component: AsideNavPageComponent, data: { type: ROUTE_TYPES.components, title: 'Aside Navigation' } },
+  { path: 'toolbar', component: ToolbarPageComponent, data: { type: ROUTE_TYPES.components, title: 'Toolbar' } },
+  { path: 'pagination', component: PaginationPageComponent, data: { type: ROUTE_TYPES.components, title: 'Pagination' } },
+  { path: 'toggle', component: TogglePageComponent, data: { type: ROUTE_TYPES.components, title: 'Toggle' } },
+  { path: 'layout', component: LayoutPageComponent, data: { type: ROUTE_TYPES.components, title: 'Layouts' } },
   { path: 'content-editor', component: ContentEditorPageComponent, data: { type: ROUTE_TYPES.components, title: 'Content Editor' } },
+  { path: 'modal', component: ModalPageComponent, data: { type: ROUTE_TYPES.components, title: 'Modal' } },
 ];

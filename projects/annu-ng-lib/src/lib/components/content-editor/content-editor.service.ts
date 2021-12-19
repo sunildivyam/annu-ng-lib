@@ -8,21 +8,21 @@ export class ContentEditorService {
 
   constructor() { }
   // Get the deepest Element node in the DOM tree that contains the entire range.
-	private getRangeContainer( range: Range ) : Node {
+  private getRangeContainer(range: Range): Node {
 
-		var container = range.commonAncestorContainer;
+    var container = range.commonAncestorContainer;
 
-		// If the selected node is a Text node, climb up to an element node - in Internet
-		// Explorer, the .contains() method only works with Element nodes.
-		while ( container.nodeName !== 'ANU-CONTENT-EDITOR' ) {
+    // If the selected node is a Text node, climb up to an element node - in Internet
+    // Explorer, the .contains() method only works with Element nodes.
+    while (container.nodeName !== 'ANU-CONTENT-EDITOR') {
 
-			container = container.parentNode;
+      container = container.parentNode;
 
-		}
+    }
 
-		return container;
+    return container;
 
-	}
+  }
 
   public getSelectionRect(selection: Selection): DOMRect | null {
     if (!selection || selection.type !== 'Range') {
@@ -44,11 +44,35 @@ export class ContentEditorService {
       rangeRect.width,
       rangeRect.height,
     );
-    
+
     return selectionRect;
   }
 
-  public addLink(selection: Selection) {
+
+  public saveSelection(selection: Selection): Array<Range> {
+    var ranges: Array<Range> = [];
+    for (var i = 0, len = selection.rangeCount; i < len; ++i) {
+      ranges.push(selection.getRangeAt(i));
+    }
+    
+    return ranges;
+  }
+
+  public restoreSelection(savedSel): Selection {
+    if (savedSel) {
+      const selection: Selection = document.getSelection();
+      selection.removeAllRanges();
+      for (var i = 0, len = savedSel.length; i < len; ++i) {
+        selection.addRange(savedSel[i]);
+      }
+      return selection;
+    }
+
+    return;
+  }
+
+
+  public addLink(selection: Selection, link: Link) {
     if (!selection || selection.type !== 'Range') {
       return;
     }
@@ -59,16 +83,10 @@ export class ContentEditorService {
     }
 
     const range = selection.getRangeAt(0);
-    const link: Link = {
-      href: 'https://google.com',
-      text: selectionText,
-      title: selectionText,
-      target: '_blank'
 
-    }
     // create a new Link
     var newLink = document.createElement("a");
-    var linkTextNode = document.createTextNode(link.text);
+    var linkTextNode = document.createTextNode(link.label);
     newLink.target = link.target;
     newLink.href = link.href;
     newLink.title = link.title;
@@ -79,6 +97,27 @@ export class ContentEditorService {
     range.insertNode(newLink);
   }
 
+  public addFormating(selection: Selection, tagName: string) {
+    if (!selection || selection.type !== 'Range') {
+      return;
+    }
+
+    const selectionText = selection.toString();
+    if (!selectionText) {
+      return;
+    }
+
+    const range = selection.getRangeAt(0);
+
+    // create a new Link
+    var newEl = document.createElement(tagName);
+    var textNode = document.createTextNode(selectionText);    
+    newEl.appendChild(textNode);
+
+    // replace selection with Link
+    range.deleteContents();
+    range.insertNode(newEl);
+  }
 
   private getEditorElementName(elType: string): string {
     return `${elType}-${Date.now()}`;

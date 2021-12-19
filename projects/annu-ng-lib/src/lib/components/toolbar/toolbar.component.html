@@ -1,0 +1,11 @@
+<nav role="toolbar" class="annuToolbar">
+    <ul>
+        <li *ngFor="let item of items">
+            <a [href]="item.href" [title]="item.title" (click)="itemClicked($event, item)">
+                <span *ngIf="item.icon" class="annuToolbar_icon" [innerHtml]="item.icon"></span>
+                <span *ngIf="item.iconImage" class="annuToolbar_iconimage"><img [src]="item.iconImage" [alt]="item.title"/></span>
+                <span *ngIf="item.label" class="annuToolbar_label">{{item.label}}</span>
+            </a>
+        </li>
+    </ul>
+</nav>

@@ -1,5 +1,24 @@
-<anu-content-element (anuFormatInline)="textSelected($event)" [editorElement]="editorElement" [fullTree]="editorElement"></anu-content-element>
+<anu-content-element (anuFormatInline)="textSelected($event)" [editorElement]="editorElement"
+    [fullTree]="editorElement"></anu-content-element>
 
-<div #popup [ngClass]="{'opened': isTextSelected}" class="popup" [style.top.px]="selectionRect.bottom" [style.left.px]="selectionRect.left">
-    Hello World
+<div #popup [ngClass]="{'opened': isTextSelected}" class="popup" [style.top.px]="selectionRect.bottom"
+    [style.left.px]="selectionRect.left">
+    <anu-toolbar [items]="formattingToolbar" (changed)="formattingToolbarSelected($event)"></anu-toolbar>
+    <anu-modal [opened]="toggleLinkForm">
+        <form [ngClass]="{'opened': toggleLinkForm}" class="container disable-select">
+            <label>Link href</label>
+            <input type="text" [(ngModel)]="link.href" name="link-href" />
+            <label>Link Label</label>
+            <input type="text" [(ngModel)]="link.label" name="link-label" />
+            <label>Title</label>
+            <input type="text" [(ngModel)]="link.title" name="link-title" />
+            <label>Target</label>
+            <input type="text" [(ngModel)]="link.target" name="link-target" />
+            <div class="row spacing">
+                <div class="col-6 center" ><a href="#" (click)="cancelLink($event)">Cancel</a></div>
+                <div class="col-6 center" ><a href="#" (click)="saveLink($event)">Save</a></div>                
+            </div>
+        </form>
+    </anu-modal>
+
 </div>
