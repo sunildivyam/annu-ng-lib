@@ -16,17 +16,17 @@
 <ng-container *ngIf="editorElement.isContainer">
     <article *ngIf="editorElement.tagName === 'article'">
         <ng-container *ngFor="let child of editorElement.children">
-            <anu-content-element [editorElement]="child" [fullTree]="fullTree"></anu-content-element>
+            <anu-content-element [editorElement]="child" [fullTree]="fullTree" (changed)="contentChanged($event)"></anu-content-element>
         </ng-container>
     </article>
     <ul *ngIf="editorElement.tagName === 'ul'">
         <ng-container *ngFor="let child of editorElement.children">
-            <anu-content-element [editorElement]="child" [fullTree]="fullTree"></anu-content-element>
+            <anu-content-element [editorElement]="child" [fullTree]="fullTree" (changed)="contentChanged($event)"></anu-content-element>
         </ng-container>
     </ul>
     <ol *ngIf="editorElement.tagName === 'ol'">
         <ng-container *ngFor="let child of editorElement.children">
-            <anu-content-element [editorElement]="child" [fullTree]="fullTree"></anu-content-element>
+            <anu-content-element [editorElement]="child" [fullTree]="fullTree" (changed)="contentChanged($event)"></anu-content-element>
         </ng-container>
     </ol>
 </ng-container>

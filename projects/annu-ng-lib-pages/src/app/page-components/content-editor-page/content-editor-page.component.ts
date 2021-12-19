@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditorElement } from '@annu-ng-lib';
 
 @Component({
   selector: 'anu-content-editor-page',
@@ -12,4 +13,8 @@ export class ContentEditorPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public contentChanged(editorElement: EditorElement): void {
+    console.log('Page');
+    console.log(editorElement);
+  }
 }
