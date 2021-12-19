@@ -340,3 +340,17 @@ input[type="text"], textarea {
     }
   }
 }
+
+.popup {
+  position: absolute;
+  display: none;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--anu-primaryNormal);
+  border-radius: 1rem;
+  height: auto;
+
+  &.opened {
+    display: flex;
+  }
+}

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ContentEditorComponent } from './content-editor.component';
 import { ParagraphComponent } from './paragraph/paragraph.component';
 import { FormsModule } from '@angular/forms';
-import { ContenteditableValueAccessorDirective } from './contenteditable-value-accessor.directive';
-import { FocusDirective } from './focus.directive';
+import { ContenteditableValueAccessorDirective } from './directives/contenteditable-value-accessor.directive';
+import { FocusDirective } from './directives/focus.directive';
 import { HeadingComponent } from './heading/heading.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { ContentElementComponent } from './content-element/content-element.component';
+import { FormatInlineDirective } from './directives/format-inline.directive';
 
 
 
@@ -18,7 +19,8 @@ import { ContentElementComponent } from './content-element/content-element.compo
     FocusDirective,
     HeadingComponent,
     ListItemComponent,
-    ContentElementComponent,],
+    ContentElementComponent,
+    FormatInlineDirective,],
   imports: [
     CommonModule,
     FormsModule
@@ -29,6 +31,7 @@ import { ContentElementComponent } from './content-element/content-element.compo
     FocusDirective,
     HeadingComponent,
     ListItemComponent,
-    ContentElementComponent,],
+    ContentElementComponent,
+    FormatInlineDirective,],
 })
 export class ContentEditorModule { }

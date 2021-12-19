@@ -20,3 +20,9 @@ export interface EditorElement {
     data?: EditorElementData;
     children?: Array<EditorElement>;
 };
+
+export interface TextSelectionEvent {
+    text: string;
+    selection: Selection;
+    selectionRect: DOMRect;
+}
