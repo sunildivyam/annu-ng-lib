@@ -362,3 +362,7 @@ input[type="text"], textarea {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
 }
+
+.shadow {
+  box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-backgroundNormal);
+}

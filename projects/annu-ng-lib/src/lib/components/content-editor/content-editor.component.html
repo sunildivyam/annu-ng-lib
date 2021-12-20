@@ -6,6 +6,7 @@
     <anu-toolbar [items]="formattingToolbar" (changed)="formattingToolbarSelected($event)"></anu-toolbar>
     <anu-modal [opened]="toggleLinkForm">
         <form [ngClass]="{'opened': toggleLinkForm}" class="container disable-select">
+            <h2>Add hyperlink</h2>
             <label>Link href</label>
             <input type="text" [(ngModel)]="link.href" name="link-href" />
             <label>Link Label</label>

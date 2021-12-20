@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, HostListener, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'anu-modal',
