@@ -12,6 +12,7 @@ export class ParagraphComponent implements OnInit {
   @Output() enterKeyPressed = new EventEmitter<EditorElement>();
   @Output() backspaceKeyPressed = new EventEmitter<EditorElement>();
   @Output() changed = new EventEmitter<EditorElement>();
+  @Output() focusin = new EventEmitter<EditorElement>();
 
   constructor() { }
 
@@ -30,7 +31,13 @@ export class ParagraphComponent implements OnInit {
     }
   }
 
-  public contentChanged() {
+  public onBlur(event: any) {
+    event.stopPropagation();
     this.changed.emit(this.value);
+  }
+
+  public onFocus(event: any) {
+    event.stopPropagation();
+    this.focusin.emit(this.value);    
   }
 }

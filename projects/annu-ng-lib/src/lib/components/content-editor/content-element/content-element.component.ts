@@ -12,6 +12,8 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
   @Input() fullTree: EditorElement = {} as EditorElement;
   @Output() changed = new EventEmitter<EditorElement>();
 
+  isToolbar: boolean = false;
+
   constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) { }
 
   ngOnInit(): void {
@@ -27,10 +29,27 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
 
   public backspaceKeyPressed(el: EditorElement) {
     this.ceService.removeEditorElement(el, this.fullTree);
-    this.cdr.detectChanges();
+    this.cdr.detectChanges();    
   }
 
-  public contentChanged(el: EditorElement) {
+  public focusin(editorElement: EditorElement) {
+    if (!this.editorElement.isContainer) {
+      this.ceService.setFocusOffAll(this.fullTree);
+    }
+
+    setTimeout(() => {
+      if (!this.editorElement.isContainer) {
+        this.editorElement.focused = true;
+      }
+    });
+  }
+
+  public onBlur(el: EditorElement) {
     this.changed.emit(this.editorElement);
+  }
+
+  public toggleToolbar(event, editorElement) {
+    event.preventDefault();
+    console.log('Clicked');
   }
 }

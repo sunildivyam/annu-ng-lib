@@ -1,13 +1,13 @@
 <h1 *ngIf="value.tagName === 'h1'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
-    [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h1>
+    [name]="value.name" [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)"></h1>
 <h2 *ngIf="value.tagName === 'h2'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
-    [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h2>
+    [name]="value.name" [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)"></h2>
 <h3 *ngIf="value.tagName === 'h3'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
-    [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h3>
+    [name]="value.name" [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)"></h3>
 <h4 *ngIf="value.tagName === 'h4'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
-    [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h4>
+    [name]="value.name" [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)"></h4>
 <h5 *ngIf="value.tagName === 'h5'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
-    [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h5>
+    [name]="value.name" [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)"></h5>
 <h6 *ngIf="value.tagName === 'h6'" contenteditable [(ngModel)]="value.data.text" (keydown.backspace)="backspacePressed($event)" (keydown.enter)="enterPressed($event, value)"
-    [name]="value.name" [focus]="value?.focused" (blur)="contentChanged()"></h6>
+    [name]="value.name" [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)"></h6>
     

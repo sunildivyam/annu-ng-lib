@@ -14,7 +14,6 @@ export class ContentEditorPageComponent implements OnInit {
   }
 
   public contentChanged(editorElement: EditorElement): void {
-    console.log('Page');
-    console.log(editorElement);
+    // console.log('Page');
   }
 }

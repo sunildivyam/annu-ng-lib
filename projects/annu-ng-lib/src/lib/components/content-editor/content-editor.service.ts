@@ -191,4 +191,13 @@ export class ContentEditorService {
       this.removeEditorElement(parent, fullTree);
     }
   }
+
+  public setFocusOffAll(fullTree: EditorElement) {
+    if (fullTree.focused) {
+      fullTree.focused = false;
+    }
+    if (fullTree.children && fullTree.children.length) {
+      fullTree.children.forEach(child => this.setFocusOffAll(child))
+    }    
+  }
 }
