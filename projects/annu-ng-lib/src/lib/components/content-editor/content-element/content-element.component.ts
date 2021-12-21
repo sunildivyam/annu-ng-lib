@@ -1,6 +1,6 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EditorElement } from '../content-editor.interface';
-import { ContentEditorService } from '../content-editor.service';
+import { ContentEditorService } from '../services/content-editor.service';
 
 @Component({
   selector: 'anu-content-element',
@@ -35,13 +35,8 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
   public focusin(editorElement: EditorElement) {
     if (!this.editorElement.isContainer) {
       this.ceService.setFocusOffAll(this.fullTree);
+      this.editorElement.focused = true;
     }
-
-    setTimeout(() => {
-      if (!this.editorElement.isContainer) {
-        this.editorElement.focused = true;
-      }
-    });
   }
 
   public onBlur(el: EditorElement) {

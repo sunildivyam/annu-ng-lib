@@ -1,39 +1,40 @@
-import { ChangeDetectorRef, Directive, EventEmitter, HostListener, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { TextSelectionEvent } from '../content-editor.interface';
-import { ContentEditorService } from '../content-editor.service';
+import { Directive, EventEmitter, HostListener, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { SelectionService } from '../services/selection.service';
 
 @Directive({
   selector: '[anuFormatInline]',
   outputs: ['selected: anuFormatInline']
 })
 export class FormatInlineDirective implements OnInit, OnDestroy {
-  selected = new EventEmitter<TextSelectionEvent>();
+  selected = new EventEmitter();
 
-  constructor(private ceService: ContentEditorService, private zone: NgZone) { 
-    this.handleSelectionChange = this.handleSelectionChange.bind(this);
+  constructor(private selService: SelectionService, private zone: NgZone) { 
+    this.handleDocumentSelectionChange = this.handleDocumentSelectionChange.bind(this);
   }
 
   public ngOnInit(): void {
     this.zone.runOutsideAngular(() => {
-      document.addEventListener('selectionchange', this.handleSelectionChange, false);
+      document.addEventListener('selectionchange', this.handleDocumentSelectionChange, false);
     })
   }
 
   public ngOnDestroy(): void {
-    document.removeEventListener('selectionchange', this.handleSelectionChange, false);
+    document.removeEventListener('selectionchange', this.handleDocumentSelectionChange, false);
+  }
+
+  public setSelection(selection: Selection) {    
+    this.selService.saveSelection(selection);
+    this.selected.emit();
   }
 
   @HostListener('mouseup', ['$event'])
-  public onClick(event: any) {
-    const selection = event.view.getSelection();
-
-    const selectionRect = this.ceService.getSelectionRect(selection);    
-    this.selected.emit({ text: selection.toString(), selection, selectionRect } as TextSelectionEvent);    
+  public onMouseUp(event: any) {
+    this.setSelection(event.view.getSelection());
   }
 
-  private handleSelectionChange(event: any) {
-    if (!event.target.getSelection().toString()) {      
-      this.selected.emit();
+  private handleDocumentSelectionChange(event: any) {
+    if (!event.target.getSelection().toString()) {          
+      // this.selected.emit();
     }
   }
 }

@@ -1,4 +1,4 @@
 <li contenteditable [(ngModel)]="value.data.text" (keydown.enter)="enterPressed($event)"
-    (keydown.backspace)="backspacePressed($event)" [name]="value.name" [focus]="value?.focused"
-    (blur)="onBlur($event)" (focusin)="onFocus($event)">
+    (anuFormatInline)="textSelected()" (keydown.backspace)="backspacePressed($event)" [name]="value.name"
+    [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)">
 </li>

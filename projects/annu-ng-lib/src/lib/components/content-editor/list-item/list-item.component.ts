@@ -40,4 +40,8 @@ export class ListItemComponent implements OnInit {
     event.stopPropagation();
     this.focusin.emit(this.value);
   }
+
+  public textSelected() {
+    // TODO
+  }
 }

@@ -40,4 +40,8 @@ export class HeadingComponent implements OnInit {
     event.stopPropagation();
     this.focusin.emit(this.value);
   }
+
+  public textSelected() {
+    // TODO
+  }
 }

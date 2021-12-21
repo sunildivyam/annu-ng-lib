@@ -1,4 +1,4 @@
-<anu-content-element (changed)="contentChanged($event)" (anuFormatInline)="textSelected($event)" [editorElement]="editorElement"
+<anu-content-element (changed)="contentChanged($event)" [editorElement]="editorElement"
     [fullTree]="editorElement" ></anu-content-element>
 
 <div #popup [ngClass]="{'opened': isTextSelected}" class="popup" [style.top.px]="selectionRect.bottom"

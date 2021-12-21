@@ -1,6 +1,7 @@
 import { ToolbarItem } from "../toolbar";
 import { EditorElement } from "./content-editor.interface";
 
+
 export const EDITOR_ROOT_ELEMENT: EditorElement =
 {
   name: 'root',

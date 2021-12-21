@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { TextSelectionEvent, EditorElement } from './content-editor.interface';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { EditorElement } from './content-editor.interface';
 import { EDITOR_ROOT_ELEMENT, TOOLBAR_FORMATTING } from './constants';
 import { ToolbarItem } from '../toolbar';
-import { ContentEditorService } from './content-editor.service';
+import { SelectionService } from './services/selection.service';
 import { Link } from '.';
 
 @Component({
@@ -17,8 +17,7 @@ export class ContentEditorComponent implements OnInit {
   selectionRect: DOMRect;
   isTextSelected: boolean = false;
   formattingToolbar: Array<ToolbarItem> = TOOLBAR_FORMATTING;
-  textSelection: Selection;
-  savedSelection: Array<Range> = [];
+  
   link: Link = {
     href: 'https://',
     label: '',
@@ -27,38 +26,33 @@ export class ContentEditorComponent implements OnInit {
   };
   toggleLinkForm: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) {
-    this.selectionRect = new DOMRect(100, 100);
+  constructor(private selService: SelectionService) {
+    this.selectionRect = new DOMRect(0, 0);    
+    this.selService.selection.subscribe(this.handleTextSelection);
+  }
+
+
+  handleTextSelection = (hasSelection: boolean) => {
+    this.isTextSelected = hasSelection;
+    if (hasSelection) {
+      setTimeout(() => {
+        this.selectionRect = this.selService.getSelectionRect();
+        if (this.selectionRect) this.selectionRect.y = this.selectionRect.top - this.popupEl.nativeElement.offsetHeight - this.selectionRect.height;
+      })
+    }
   }
 
   ngOnInit(): void {
   }
 
+  
   public contentChanged(el: EditorElement) {  
     this.changed.emit(this.editorElement);
   }
 
-  public textSelected(selectionEvent: TextSelectionEvent) {
-    if (selectionEvent && selectionEvent.text) {
-      this.isTextSelected = true;
-      this.selectionRect = selectionEvent.selectionRect;
-      this.textSelection = selectionEvent.selection;
-
-      setTimeout(() => {
-        this.selectionRect.y = this.selectionRect.top - this.popupEl.nativeElement.offsetHeight - this.selectionRect.height;
-      })
-    } else {
-      if (!this.toggleLinkForm) {
-        this.isTextSelected = false;
-      }
-      this.cdr.detectChanges();
-    }
-  }
-
   public saveLink(event: any): void {
     event.preventDefault();
-    this.textSelection = this.ceService.restoreSelection(this.savedSelection);
-    this.ceService.addLink(this.textSelection, this.link);
+    this.selService.addLink(this.link);
     this.toggleLinkForm = !this.toggleLinkForm;
     this.isTextSelected = false;
   }
@@ -66,33 +60,29 @@ export class ContentEditorComponent implements OnInit {
   public cancelLink(event: any): void {
     event.preventDefault();
     this.toggleLinkForm = !this.toggleLinkForm;
-    this.textSelection = this.ceService.restoreSelection(this.savedSelection);
   }
 
   public formattingToolbarSelected(toolbarItem: ToolbarItem): void {
     switch (toolbarItem.name) {
       case 'link':
-        const selectionText = this.textSelection.toString();
-        this.savedSelection = this.ceService.saveSelection(this.textSelection);
-
         this.link = {
           href: 'https://',
-          label: selectionText,
-          title: selectionText,
+          label: this.selService.selectionText,
+          title: this.selService.selectionText,
           target: '_blank'
         };
         this.toggleLinkForm = !this.toggleLinkForm;
         break;
       case 'bold':
-        this.ceService.addFormating(this.textSelection, 'b');
+        this.selService.addFormating('b');
         this.isTextSelected = false;
         break;
       case 'italic':
-        this.ceService.addFormating(this.textSelection, 'i');
+        this.selService.addFormating('i');
         this.isTextSelected = false;
         break;
       case 'underline':
-        this.ceService.addFormating(this.textSelection, 'u');
+        this.selService.addFormating('u');
         this.isTextSelected = false;
         break;
       default:
