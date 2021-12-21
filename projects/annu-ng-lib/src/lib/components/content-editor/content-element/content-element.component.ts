@@ -1,26 +1,40 @@
-import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ToolbarItem } from '@annu-ng-lib';
 import { EditorElement } from '../content-editor.interface';
 import { ContentEditorService } from '../services/content-editor.service';
+import { TOOLBAR_FORMATTING, TOOLBAR_STYLES } from '../constants';
 
 @Component({
   selector: 'anu-content-element',
   templateUrl: './content-element.component.html',
   styleUrls: ['./content-element.component.scss']
 })
-export class ContentElementComponent implements OnInit, AfterContentChecked {
+export class ContentElementComponent implements OnInit, AfterContentChecked, OnChanges {
   @Input() editorElement: EditorElement = {} as EditorElement;
   @Input() fullTree: EditorElement = {} as EditorElement;
   @Output() changed = new EventEmitter<EditorElement>();
 
   isToolbar: boolean = false;
+  styleToolbar: Array<ToolbarItem> = TOOLBAR_STYLES;
 
   constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) { }
 
   ngOnInit(): void {
+    this.setStyleToolbarItems();
   }
 
   ngAfterContentChecked() {
     this.cdr.detectChanges();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setStyleToolbarItems();    
+  }
+
+  private setStyleToolbarItems() {
+    if (this.editorElement.tagName === 'li') {
+      // this.styleToolbar = this.styleToolbar.filter(item => ['ul', 'ol'].includes(item.name))
+    }
   }
 
   public enterKeyPressed(el: EditorElement) {
@@ -36,6 +50,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
     if (!this.editorElement.isContainer) {
       this.ceService.setFocusOffAll(this.fullTree);
       this.editorElement.focused = true;
+      this.isToolbar = false;
     }
   }
 
@@ -45,6 +60,11 @@ export class ContentElementComponent implements OnInit, AfterContentChecked {
 
   public toggleToolbar(event, editorElement) {
     event.preventDefault();
-    console.log('Clicked');
+    this.isToolbar = !this.isToolbar;
+  }
+
+  public styleToolbarSelected(item: ToolbarItem) {   
+    this.ceService.replaceElement(this.editorElement, item.name, this.fullTree);
+    this.isToolbar = !this.isToolbar;
   }
 }

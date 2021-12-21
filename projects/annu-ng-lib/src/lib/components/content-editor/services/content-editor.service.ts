@@ -7,7 +7,7 @@ import { EditorElement, Link } from '../content-editor.interface';
 export class ContentEditorService {
 
   constructor() { }
-  
+
   private getEditorElementName(elType: string): string {
     return `${elType}-${Date.now()}`;
   }
@@ -58,6 +58,11 @@ export class ContentEditorService {
   }
 
   public removeEditorElement(el: EditorElement, fullTree: EditorElement) {
+    // if the element to remove is the only child of root, then do not remove
+    if (fullTree.children.length === 1) {
+      return;
+    }
+    
     // Find the parent of selected Element
     const parent = this.findParent(el, fullTree);
     if (!parent) {
@@ -87,6 +92,64 @@ export class ContentEditorService {
     }
     if (fullTree.children && fullTree.children.length) {
       fullTree.children.forEach(child => this.setFocusOffAll(child))
-    }    
+    }
+  }
+
+  public replaceElement(el: EditorElement, tagName: string, fullTree: EditorElement) {
+
+    if (el.tagName === 'li') {
+      const parent = this.findParent(el, fullTree);
+      if (['ol', 'ul'].includes(tagName)) {
+        if (parent.tagName !== tagName) {
+          parent.name = this.getEditorElementName(tagName);
+          parent.tagName = tagName;
+        }
+      } else {
+        // remove LI and add copy as new item below the parent List (ul/ol)
+        const newItem = { ...el };
+        newItem.tagName = tagName;
+        newItem.name = this.getEditorElementName(tagName);
+        const parentOfParent = this.findParent(parent, fullTree);
+        let indexOfParent = parentOfParent.children.indexOf(parent);
+        if (parent.children.length > 1) {
+          indexOfParent++;
+        }
+        this.removeEditorElement(el, fullTree);
+        this.setFocusOffAll(fullTree);
+        parentOfParent.children.splice(indexOfParent, 0, newItem);
+      }
+    } else {
+      if (['ol', 'ul'].includes(tagName)) {
+        const newListItem = { ...el };
+        newListItem.tagName = 'li';
+        newListItem.name = this.getEditorElementName('li');
+
+        el.tagName = tagName;
+        el.name = this.getEditorElementName(tagName);
+        el.isContainer = true;
+        el.children = [newListItem];
+        el.data = undefined;
+        el.focused = undefined;
+      } else {
+        el.tagName = tagName;
+        el.name = this.getEditorElementName(tagName);
+      }
+    }
+
+
+    /*
+      if source LI 
+        if  Bullet/Numbering 
+          find parent and change type to ol/ul
+        else   
+          hide toolbar icons => p/H1-H6
+      else 
+        if (target == ul/ol)
+          change name
+          isContainer = true
+          add one child LI and focus
+        else 
+          change name as is
+    */
   }
 }

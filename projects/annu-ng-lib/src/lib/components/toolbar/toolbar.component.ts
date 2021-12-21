@@ -8,6 +8,8 @@ import { ToolbarItem } from '.';
 })
 export class ToolbarComponent implements OnInit {
 @Input() items: Array<ToolbarItem> = [];
+@Input() isVertical: boolean = false;
+
 @Output() changed = new EventEmitter<ToolbarItem>();
 
   constructor() { }

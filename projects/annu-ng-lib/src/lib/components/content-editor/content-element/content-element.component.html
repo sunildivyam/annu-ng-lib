@@ -1,6 +1,7 @@
-<a *ngIf="!editorElement.isContainer" [ngClass]="{'visible': editorElement.focused}" href="#" class="toolbar-btn"
-    (click)="toggleToolbar($event, editorElement)">+</a>
-    
+<div *ngIf="!editorElement.isContainer" [ngClass]="{'visible': editorElement.focused}" class="row center nowrap styles-toolbar">
+    <a href="#" class="toolbar-btn" (click)="toggleToolbar($event, editorElement)">&#187;</a>
+    <anu-toolbar isVertical="true" [ngClass]="{'opened': isToolbar}" [items]="styleToolbar" (changed)="styleToolbarSelected($event)"></anu-toolbar>
+</div>
 <!-- Headings h1 - h6 -->
 <anu-heading *ngIf="['h1','h2','h3','h4','h5','h6'].includes(editorElement.tagName)" [value]="editorElement"
     (changed)="onBlur($event)" (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"

@@ -12,6 +12,7 @@
     background-color: var(--anu-backgroundLightest);    
     justify-content: flex-start;
     align-items: center;
+    z-index: #{$menu-modal};
 
     .annuModal {
         padding: 1rem;
