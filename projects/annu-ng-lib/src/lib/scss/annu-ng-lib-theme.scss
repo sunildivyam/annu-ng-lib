@@ -1,0 +1,368 @@
+@import "normalize";
+@import "mixins";
+// Import all fonts here, that has been refered from theme files.
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+html {
+  font-family: var(--anu-fontFamily);
+  font-size: var(--anu-fontSize);
+  line-height: 1.5;
+  letter-spacing: 0.05rem;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  color: var(--anu-accentNormal);
+}
+
+a {
+  color: var(--anu-primaryDark);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--anu-primaryNormal);
+  }
+}
+
+.btn {
+  display: inline-block;
+  color: var(--anu-accentDarker);
+  background-color: var(--anu-primaryNormal);
+  border: solid 0.001em var(--anu-primaryDark);
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  text-align: center;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: var(--anu-accentDarkest);
+    text-decoration: none;
+    background-color: var(--anu-primaryLight);
+    border-color: var(--anu-primaryNormal);
+  }
+
+  &.secondary {
+    color: var(--anu-accentDarker);
+    background-color: var(--anu-secondaryNormal);
+    border-color: var(--anu-secondaryDark);
+
+    &:hover {
+      color: var(--anu-accentDarkest);
+      background-color: var(--anu-secondaryLight);
+      border-color: var(--anu-secondaryNormal);
+    }
+  }
+
+  + .btn {
+    margin-left: 1rem;
+  }
+
+  @include large {
+    padding: 0.75rem 1rem;
+  }
+
+  @include medium {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  @include small {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+
+    + .btn {
+      margin-top: 1rem;
+      margin-left: 0;
+    }
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: var(--anu-primaryNormal);
+
+  @include contenteditableStyle;
+}
+
+p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--anu-accentNormal);
+
+  @include contenteditableStyle;
+}
+
+small {
+  font-size: 0.8rem;
+}
+
+span {
+  font-size: 1rem;
+}
+
+ul,
+ol {
+  margin-top: 0;
+  padding-inline-start: 2rem;
+
+  li {
+    @include contenteditableStyle;
+  }
+}
+
+ul {
+  list-style-type: circle;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all; // For Firefox to horizontally scroll wider tables.
+  -webkit-overflow-scrolling: touch;
+
+  th {
+    font-weight: bold;
+    background-color: var(--anu-primaryNormal);
+    color: var(--anu-accentDark);
+  }
+
+  th,
+  td {
+    padding: 0.5rem 1rem;
+    border: 0.002rem solid var(--anu-backgroundDark);
+  }
+}
+
+hr {
+  width: 100%;
+  height: 2px;
+  padding: 0;
+  margin: 1rem 0;
+  background-color: var(--anu-backgroundLighter);
+  border: 0;
+}
+
+label {
+  display: block;
+  width: 100%;
+  padding: 1em 0;
+}
+
+input[type="text"], textarea {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--anu-primaryLighter);
+
+  &:focus-visible {
+    outline-color: var(--anu-primaryNormal)
+  }
+}
+
+//  Error/Success/Warining
+.error {
+  color: $error;
+}
+
+.success {
+  color: $success;
+}
+
+.warning {
+  color: $warning;
+}
+
+// CSS Flex Layouts
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+[class*='col-'] {
+  transition: width 0.2s;
+}
+
+.row {
+  @include row;
+
+  @include large {
+      &-lg {
+        @include row;
+      }
+  }
+
+  @include medium {
+      &-md {
+        @include row;
+      }
+  }
+
+  @include small {
+      &-sm {
+        @include row;
+      }
+  }
+}
+
+.col {
+  @include box-sizes;
+
+  &-lg {
+      @include large {
+          @include box-sizes;
+      }
+  }
+
+  &-md {
+      @include medium {
+          @include box-sizes;
+      }
+  }
+
+  &-sm {
+      @include small {
+          @include box-sizes;
+      }
+  }
+}
+
+// alignment classes
+.left {
+  align-items: flex-start;
+  text-align: left;
+}
+.right {
+  align-items: flex-end;
+  text-align: right;
+}
+.center {
+  align-items: center;
+  text-align: center;
+}
+.top {
+  justify-content: flex-start;
+  vertical-align: top;
+}
+.bottom {
+  justify-content: flex-end;
+  vertical-align: bottom;
+}
+.middle {
+  justify-content: center;
+  vertical-align: middle;
+}
+
+// spacing
+.spacing {
+  padding: 1rem;
+
+  &-horizontal {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  &-vertical {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+//hidden 
+.hidden {
+  display: none!important;
+
+  &-lg {
+    @include large {
+      display: none!important;
+    }
+  }
+
+  &-md {
+    @include medium {
+      display: none!important;
+    }
+  }
+
+  &-sm {
+    @include small {
+      display: none!important;
+    }
+  }
+}
+
+// nowrap
+.nowrap {
+  flex-flow: nowrap!important;
+
+  &-lg {
+    @include large {
+      flex-flow: nowrap!important;
+    }
+  }
+
+  &-md {
+    @include medium {
+      flex-flow: nowrap!important;
+    }
+  }
+
+  &-sm {
+    @include small {
+      flex-flow: nowrap!important;
+    }
+  }
+}
+
+.popup {
+  position: absolute;
+  display: none;
+  padding: 1rem;
+  border: 1px solid var(--anu-primaryNormal);
+  border-radius: 1rem;
+  height: auto;
+  transition: all 0.1s;
+
+  &.opened {
+    display: flex;
+  }
+}
+
+.disable-select {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.shadow {
+  box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-backgroundNormal);
+}

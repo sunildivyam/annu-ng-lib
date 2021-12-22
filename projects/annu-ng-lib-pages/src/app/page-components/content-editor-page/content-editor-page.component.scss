@@ -1,0 +1,7 @@
+@import 'mixins';
+
+:host {    
+    @include small {
+        padding-left: 2rem;
+    }
+}

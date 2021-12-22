@@ -1,0 +1,6 @@
+<section class="annuTypography">
+    <section *ngFor="let typograph of typography">
+        <label>{{typograph.name}}</label>
+        <input type="text" [(ngModel)] = "typograph.value">
+    </section>
+  </section>

@@ -1,0 +1,42 @@
+<div *ngIf="!editorElement.isContainer" [ngClass]="{'visible': editorElement.focused}" class="row center nowrap styles-toolbar">
+    <a href="#" class="toolbar-btn" (click)="toggleToolbar($event, editorElement)">&#187;</a>
+    <anu-toolbar isVertical="true" [ngClass]="{'opened': isToolbar}" [items]="styleToolbar" (changed)="styleToolbarSelected($event)"></anu-toolbar>
+</div>
+<!-- Headings h1 - h6 -->
+<anu-heading *ngIf="['h1','h2','h3','h4','h5','h6'].includes(editorElement.tagName)" [value]="editorElement"
+    (changed)="onBlur($event)" (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"
+    (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-heading>
+
+<!-- Paragraph -->
+<anu-paragraph *ngIf="editorElement.tagName ==='p'" [value]="editorElement" (changed)="onBlur($event)"
+    (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"
+    (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-paragraph>
+
+<!-- List Item -->
+<anu-list-item *ngIf="editorElement.tagName ==='li'" [value]="editorElement" (changed)="onBlur($event)"
+    (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"
+    (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-list-item>
+
+<ng-container *ngIf="editorElement.isContainer">
+    <article *ngIf="editorElement.tagName === 'article'">
+        <ng-container *ngFor="let child of editorElement.children">
+            <anu-content-element [editorElement]="child" [fullTree]="fullTree" (changed)="onBlur($event)"
+                (focusin)="focusin($event)">
+            </anu-content-element>
+        </ng-container>
+    </article>
+    <ul *ngIf="editorElement.tagName === 'ul'">
+        <ng-container *ngFor="let child of editorElement.children">
+            <anu-content-element [editorElement]="child" [fullTree]="fullTree" (changed)="onBlur($event)"
+                (focusin)="focusin($event)">
+            </anu-content-element>
+        </ng-container>
+    </ul>
+    <ol *ngIf="editorElement.tagName === 'ol'">
+        <ng-container *ngFor="let child of editorElement.children">
+            <anu-content-element [editorElement]="child" [fullTree]="fullTree" (changed)="onBlur($event)"
+                (focusin)="focusin($event)">
+            </anu-content-element>
+        </ng-container>
+    </ol>
+</ng-container>

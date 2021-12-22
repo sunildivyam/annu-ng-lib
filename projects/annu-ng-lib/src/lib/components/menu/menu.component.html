@@ -1,0 +1,12 @@
+<nav role="navigation" class="annuMenu row spacing" aria-label="primary navigation">
+    <div class="col-lg-4 col-md-10 col-sm-10">
+        <a [routerLink]="'/'"><span class="app-title" aria-label="Application title">{{heading}}</span></a>
+    </div>
+    <div class="col-lg-8 col-md-2 col-sm-2 right">
+        <ul class="col-lg-12 col-md-8 col-sm-12" [ngClass]="{'opened': opened}">
+            <li *ngFor="let route of items"><a class="btn" [routerLink]="route.path" routerLinkActive="active"
+                    (click)="itemCliked(route)">{{route.data?.title}}</a></li>
+        </ul>
+        <anu-hamburger class="hidden-lg" [opened]="opened" (changed)="toggleOpen($event)"></anu-hamburger>
+    </div>
+</nav>

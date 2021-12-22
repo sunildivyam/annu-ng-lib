@@ -1,0 +1,10 @@
+<nav role="navigation" araia-label="Footer navigation" class="annuFooterNav container spacing">
+    <ul class="row-lg middle">
+        <li *ngIf="copyRightText" class="annuFooterNav_copyright spacing-horizontal"><small>{{copyRightText}}</small>
+        </li>
+        <li *ngFor="let route of items">
+            <a class="spacing-horizontal" [routerLink]="route.path" routerLinkActive="active"
+                (click)="itemCliked(route)">{{route.data?.title}}</a>
+        </li>
+    </ul>
+</nav>

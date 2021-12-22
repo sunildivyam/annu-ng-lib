@@ -1,47 +1,193 @@
-import { Theme } from '../interfaces';
+import { Theme } from '../components/theme/theme.interface';
 
-export const shadyGrey: Theme = {
-  name: 'shadyGrey',
-  description: 'Shady Grey',
-  vars: {
-    primaryDarkest: 'hsl(107, 4%, 10%)',
-    primaryDarker: 'hsl(107, 4%, 23%)',
-    primaryDark: 'hsl(107, 4%, 36%)',
-    primary: 'hsl(107, 4%, 49%)',
-    primaryLight: 'hsl(107, 4%, 62%)',
-    primaryLighter: 'hsl(107, 4%, 75%)',
-    primaryLightest: 'hsl(107, 4%, 88%)',
-    secondaryDarkest: 'hsl(120, 60%, 10%)',
-    secondaryDarker: 'hsl(120, 60%, 23%)',
-    secondaryDark: 'hsl(120, 60%, 36%)',
-    secondary: 'hsl(120, 60%, 49%)',
-    secondaryLight: 'hsl(120, 60%, 62%)',
-    secondaryLighter: 'hsl(120, 60%, 75%)',
-    secondaryLightest: 'hsl(120, 60%, 88%)',
-    accentDarkest: 'hsl(192, 100%, 10%)',
-    accentDarker: 'hsl(192, 100%, 23%)',
-    accentDark: 'hsl(192, 100%, 36%)',
-    accent: 'hsl(192, 100%, 49%)',
-    accentLight: 'hsl(192, 100%, 62%)',
-    accentLighter: 'hsl(192, 100%, 75%)',
-    accentLightest: 'hsl(192, 100%, 88%)',
-    background: 'hsl(107, 4%, 49%)',
-    backgroundDark: 'hsl(107, 4%, 36%)',
-    backgroundDarker: 'hsl(107, 4%, 23%)',
-    backgroundDarkest: 'hsl(107, 4%, 10%)',
-    backgroundLight: 'hsl(107, 4%, 62%)',
-    backgroundLighter: 'hsl(107, 4%, 75%)',
-    backgroundLightest: 'hsl(107, 4%, 88%)',
-    error: 'hsl(0, 90%, 50%)',
-    warn: 'hsl(50, 90%, 50%)',
-    success: 'hsl(120, 90%, 50%)',
-    fontFamily: 'Arial, Roboto',
-    lineHeight: '1.5',
-    characterSpacing: '100%',
-    fontSize: '140x',
-    borderRadius: '4px',
-    borderWidth: '1px',
-    spacing: '15px',
-    boxShadow: '2px 2px 2px grey'
-  }
-};
+const jsonTheme = `{
+  "name": "shadyGrey",
+  "title": "Shady Grey",
+  "description": "Shady Grey Theme",
+  "colorPalettes": [
+    {
+      "name": "primary",
+      "hue": 50,
+      "saturation": 26,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(50, 26%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(50, 26%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(50, 26%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(50, 26%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(50, 26%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(50, 26%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(50, 26%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(50, 26%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(50, 26%, 99%)"
+        }
+      ]
+    },
+    {
+      "name": "secondary",
+      "hue": 38,
+      "saturation": 50,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(38, 50%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(38, 50%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(38, 50%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(38, 50%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(38, 50%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(38, 50%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(38, 50%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(38, 50%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(38, 50%, 99%)"
+        }
+      ]
+    },
+    {
+      "name": "accent",
+      "hue": 55,
+      "saturation": 54,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(55, 54%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(55, 54%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(55, 54%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(55, 54%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(55, 54%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(55, 54%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(55, 54%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(55, 54%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(55, 54%, 99%)"
+        }
+      ]
+    },
+    {
+      "name": "background",
+      "hue": 225,
+      "saturation": 100,
+      "colors": [
+        {
+          "name": "DeepDark",
+          "hsl": "hsl(225, 100%, 10%)"
+        },
+        {
+          "name": "Darkest",
+          "hsl": "hsl(225, 100%, 21.125%)"
+        },
+        {
+          "name": "Darker",
+          "hsl": "hsl(225, 100%, 32.25%)"
+        },
+        {
+          "name": "Dark",
+          "hsl": "hsl(225, 100%, 43.375%)"
+        },
+        {
+          "name": "Normal",
+          "hsl": "hsl(225, 100%, 54.5%)"
+        },
+        {
+          "name": "Light",
+          "hsl": "hsl(225, 100%, 65.625%)"
+        },
+        {
+          "name": "Lighter",
+          "hsl": "hsl(225, 100%, 76.75%)"
+        },
+        {
+          "name": "Lightest",
+          "hsl": "hsl(225, 100%, 87.875%)"
+        },
+        {
+          "name": "DeepLight",
+          "hsl": "hsl(225, 100%, 99%)"
+        }
+      ]
+    }
+  ],
+  "typography": [
+    {
+      "name": "fontFamily",
+      "value": "Open Sans"
+    },
+    {
+      "name": "fontSize",
+      "value": "14px"
+    }
+  ]
+}`;
+export const shadyGrey: Theme = JSON.parse(jsonTheme);
+

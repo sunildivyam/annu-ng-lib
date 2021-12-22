@@ -1,0 +1,49 @@
+$icon-mage-size: 2rem;
+
+nav.annuToolbar {
+    display: flex;
+
+    ul {
+        display: inline-block;
+        list-style-type: none;
+        white-space: nowrap;
+        width: max-content;
+        padding: 0;
+        margin: 0;
+        background-color: var(--anu-primaryLightest);
+        border: 1px solid var(--anu-primaryNormal);
+        border-radius: 0.5rem;
+
+        li {
+            display: inline-block;
+
+            a {
+                display: inline-block;
+                padding: 0.3rem 1rem;
+                color: var(--anu-accentDarkest);
+                vertical-align: middle;
+
+                &:hover {
+                    background-color: var(--anu-primaryLight);
+                }
+
+                img {
+                    width: #{$icon-mage-size};
+                    height: #{$icon-mage-size};
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        li + li {
+            border-left: 1px solid var(--anu-primaryLight);
+        }
+    }
+
+    &.vertical {
+        ul {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

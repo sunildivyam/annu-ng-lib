@@ -1,0 +1,99 @@
+@import '../../scss/mixins.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--anu-primaryNormal);
+    color: var(--anu-accentDeepLight);
+}
+
+.app-title {
+    font-weight: bold;
+
+    @include large {
+        font-size: 2rem;;
+    }
+
+    @include medium {
+        font-size: 1.8rem;;
+    }
+
+    @include small {
+        font-size: 1.5rem;;
+    }
+}
+
+@mixin menufloated {
+    position: absolute;
+    margin-top: 4.3rem;
+    padding: 1rem;
+    right: 0;
+    flex-direction: column;
+    background-color: var(--anu-primaryNormal);
+    border-bottom: 5px solid var(--anu-primaryLight);
+    border-top: none;
+    opacity: 0.92;
+    align-items: center;
+    z-index: #{$menu-z-index};
+    transform: translateX(100%);
+    transition: transform 0.5s;
+    
+    li {
+        width: 100%;
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    li + li {
+        margin-top: 0.5rem;
+
+        .btn {
+            border-top: 1px solid var(--anu-primaryLight);
+        }
+    }
+
+    &.opened {
+        transform: translateX(0);
+    }
+}
+
+.annuMenu {
+    position: relative;
+    overflow-x: clip;
+    
+    a  {
+        color: var(--anu-accentDeepLight);
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        
+        li {
+            a {
+                font-size: 1.3rem;
+                font-weight: bold;
+                border: none;
+            }
+        }
+
+        li + li {
+            margin-left: 0.5rem;
+        }
+
+        @include medium {
+            @include menufloated;
+        }
+
+        @include small {
+            @include menufloated;
+        }        
+    }
+}

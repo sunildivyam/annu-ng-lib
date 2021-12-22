@@ -1,17 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-import { AnnuNgLibModule } from 'annu-ng-lib';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ThemePickerPageComponent } from './page-components/theme-picker-page/theme-picker-page.component';
-import { CardPageComponent } from './page-components/card-page/card-page.component';
-import { ThemePageComponent } from './page-components/theme-page/theme-page.component';
-import { ColorPalettePageComponent } from './page-components/color-palette-page/color-palette-page.component';
-import { OverviewPageComponent } from './page-components/overview-page/overview-page.component';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AnnuNgLibModule } from '@annu-ng-lib';
+
+import { AppComponent } from './app.component';
+import {
+  ThemePickerPageComponent,
+  CardPageComponent,
+  ThemePageComponent,
+  ColorPalettePageComponent,
+  OverviewPageComponent,
+  TabsPageComponent,
+  ThemePreviewPageComponent,
+  TogglePageComponent,
+  LayoutPageComponent,
+  MenuPageComponent,
+  FooterNavPageComponent,
+  PaginationPageComponent,
+  AsideNavPageComponent,
+  ContentEditorPageComponent,
+  ToolbarPageComponent,
+  ModalPageComponent,
+  ArticlePageComponent,
+} from './page-components';
+
 
 @NgModule({
   declarations: [
@@ -20,14 +35,27 @@ import { OverviewPageComponent } from './page-components/overview-page/overview-
     CardPageComponent,
     ThemePageComponent,
     ColorPalettePageComponent,
-    OverviewPageComponent
+    OverviewPageComponent,
+    TabsPageComponent,
+    ThemePreviewPageComponent,
+    TogglePageComponent,
+    LayoutPageComponent,
+    MenuPageComponent,
+    FooterNavPageComponent,
+    PaginationPageComponent,
+    AsideNavPageComponent,
+    ContentEditorPageComponent,
+    ToolbarPageComponent,
+    ModalPageComponent,
+    ArticlePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AnnuNgLibModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // annu-ng-lib - components modules
+    AnnuNgLibModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { ThemeService } from '@annu-ng-lib';
+import { ROUTE_TYPES } from './constants';
 
 @Component({
   selector: 'anu-root',
@@ -8,9 +10,12 @@ import { Route, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'annu-ng-lib-pages';
-  routes: Array<Route>;
+  componentRoutes: Array<Route>;
+  mainRoutes: Array<Route>;
 
-  constructor(private router: Router) {
-    this.routes = router.config;
+  constructor(private router: Router, private themeService: ThemeService) {
+    this.componentRoutes = router.config.filter(r => r.data?.type === ROUTE_TYPES.components);
+    this.mainRoutes = router.config.filter(r => r.data?.type === ROUTE_TYPES.main);
+    this.themeService.setTheme('pureGold', false);
   }
 }
