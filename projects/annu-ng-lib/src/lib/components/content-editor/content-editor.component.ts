@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EditorElement } from './content-editor.interface';
 import { EDITOR_ROOT_ELEMENT, TOOLBAR_FORMATTING } from './constants';
 import { ToolbarItem } from '../toolbar';
@@ -11,13 +11,14 @@ import { Link } from '.';
   styleUrls: ['./content-editor.component.scss']
 })
 export class ContentEditorComponent implements OnInit {
+  @Input() value: EditorElement = { ...EDITOR_ROOT_ELEMENT };
   @ViewChild('popup', { static: true }) popupEl: ElementRef;
   @Output() changed = new EventEmitter<EditorElement>();
-  editorElement: EditorElement = EDITOR_ROOT_ELEMENT;
+
   selectionRect: DOMRect;
   isTextSelected: boolean = false;
   formattingToolbar: Array<ToolbarItem> = TOOLBAR_FORMATTING;
-  
+
   link: Link = {
     href: 'https://',
     label: '',
@@ -27,7 +28,7 @@ export class ContentEditorComponent implements OnInit {
   toggleLinkForm: boolean = false;
 
   constructor(private selService: SelectionService) {
-    this.selectionRect = new DOMRect(0, 0);    
+    this.selectionRect = new DOMRect(0, 0);
     this.selService.selection.subscribe(this.handleTextSelection);
   }
 
@@ -45,9 +46,9 @@ export class ContentEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
-  public contentChanged(el: EditorElement) {  
-    this.changed.emit(this.editorElement);
+
+  public contentChanged(el: EditorElement) {
+    this.changed.emit(this.value);
   }
 
   public saveLink(event: any): void {

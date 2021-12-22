@@ -33,7 +33,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
 
   private setStyleToolbarItems() {
     if (this.editorElement.tagName === 'li') {
-      // this.styleToolbar = this.styleToolbar.filter(item => ['ul', 'ol'].includes(item.name))
+      // this.styleToolbar = this.styleToolbar.filter(item => ['ul', 'ol'].includes(item.name)) // disable non list elements
     }
   }
 

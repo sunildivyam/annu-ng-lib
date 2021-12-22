@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorElement } from '@annu-ng-lib';
+import { EDITOR_ELEMENT } from './config';
 
 @Component({
   selector: 'anu-content-editor-page',
@@ -7,6 +8,7 @@ import { EditorElement } from '@annu-ng-lib';
   styleUrls: ['./content-editor-page.component.scss']
 })
 export class ContentEditorPageComponent implements OnInit {
+  editorElement: EditorElement = EDITOR_ELEMENT;
 
   constructor() { }
 

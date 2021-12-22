@@ -14,3 +14,4 @@ export * from './aside-nav-page/aside-nav-page.component';
 export * from './content-editor-page/content-editor-page.component';
 export * from './toolbar-page/toolbar-page.component';
 export * from './modal-page/modal-page.component';
+export * from './article-page/article-page.component';
