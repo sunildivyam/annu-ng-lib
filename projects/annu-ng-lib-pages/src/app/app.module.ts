@@ -25,6 +25,7 @@ import {
   ToolbarPageComponent,
   ModalPageComponent,
   ArticlePageComponent,
+  ArticleEditorPageComponent,
 } from './page-components';
 
 
@@ -48,6 +49,7 @@ import {
     ToolbarPageComponent,
     ModalPageComponent,
     ArticlePageComponent,
+    ArticleEditorPageComponent,
   ],
   imports: [
     BrowserModule,

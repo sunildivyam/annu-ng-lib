@@ -20,6 +20,7 @@ import { ModalModule } from './components/modal/modal.module';
 import { ArticleModule } from './components/article/article.module';
 import { ImageFormModule } from './components/image-form/image-form.module';
 import { LinkFormModule } from './components/link-form/link-form.module';
+import { ArticleEditorModule } from './components/article-editor/article-editor.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { LinkFormModule } from './components/link-form/link-form.module';
     ArticleModule,
     ImageFormModule,
     LinkFormModule,
+    ArticleEditorModule,
   ]
 })
 export class AnnuNgLibModule {

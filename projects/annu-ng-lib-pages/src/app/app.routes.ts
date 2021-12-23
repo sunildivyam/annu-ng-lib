@@ -20,6 +20,7 @@ import {
   ToolbarPageComponent,
   ModalPageComponent,
   ArticlePageComponent,
+  ArticleEditorPageComponent,
 } from './page-components';
 
 const route: Route = {
@@ -51,4 +52,5 @@ export const routes: Routes = [
   { path: 'content-editor', component: ContentEditorPageComponent, data: { type: ROUTE_TYPES.components, title: 'Content Editor' } },
   { path: 'modal', component: ModalPageComponent, data: { type: ROUTE_TYPES.components, title: 'Modal' } },
   { path: 'article', component: ArticlePageComponent, data: { type: ROUTE_TYPES.components, title: 'Article' } },
+  { path: 'article-editor', component: ArticleEditorPageComponent, data: { type: ROUTE_TYPES.components, title: 'Article Editor' } },
 ];

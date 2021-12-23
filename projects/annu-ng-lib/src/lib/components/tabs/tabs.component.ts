@@ -12,7 +12,7 @@ export class TabsComponent implements OnInit {
   @Input() rounded: boolean = false;
   @Input() spaced: boolean = false;
   @Input() vertical: boolean = false;
-  @Output() tabChanged = new EventEmitter<Tab>();
+  @Output() changed = new EventEmitter<Tab>();
 
   constructor() {
     this.tabs = []
@@ -24,7 +24,7 @@ export class TabsComponent implements OnInit {
     this.tabs.forEach(tab => {
       if (tab.name === selectedTab.name) {
         tab.active = true;
-        this.tabChanged.emit(tab);
+        this.changed.emit(tab);
       } else {
         tab.active = false;
       }

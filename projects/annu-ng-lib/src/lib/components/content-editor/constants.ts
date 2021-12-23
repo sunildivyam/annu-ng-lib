@@ -12,7 +12,7 @@ export const EDITOR_ROOT_ELEMENT: EditorElement =
       name: 'h1-1234',
       tagName: 'h1',
       data: {
-        text: 'Your Article or Content title will go here',
+        text: 'Example Article Title',
       }
     }
   ]

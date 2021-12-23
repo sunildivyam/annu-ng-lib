@@ -1,7 +1,7 @@
 <nav class="annuTabs" [ngClass]="{'vertical': vertical}">
-    <a href="" 
-    *ngFor="let tab of tabs" 
-    (click)="tabClicked($event, tab)" 
+    <a href=""
+    *ngFor="let tab of tabs"
+    (click)="tabClicked($event, tab)"
     class="annuTabs_tab"
     [ngClass]="{'active': tab.active, 'rounded': rounded, 'spaced': spaced}">
         {{tab.title}}
