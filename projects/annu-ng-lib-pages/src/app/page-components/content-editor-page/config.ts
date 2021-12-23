@@ -39,7 +39,7 @@ export const EDITOR_ELEMENT: EditorElement =
       name: 'p-1235',
       tagName: 'p',
       data: {
-        text: 'Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
+        text: 'Sample <b>Paragraph LOreaum</b> ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
       }
     },
     {
