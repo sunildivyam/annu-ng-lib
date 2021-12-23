@@ -37,6 +37,8 @@ export class SelectionService {
   }
 
   private isImageInSelection(selection: Selection) {
+    if (!selection || !selection.rangeCount) return false;
+
     const range = selection.getRangeAt(0);
 
     // check if selection contains an image, if yes then Image should also be the hyperlink.
@@ -75,7 +77,7 @@ export class SelectionService {
 
   public getSelectionRect(): DOMRect | null {
     const selection = this.restoreSelection(this.savedSelection);
-    if (!selection || selection.type !== 'Range') {
+    if (!selection || selection.type !== 'Range' || !selection.rangeCount) {
       return;
     }
 
@@ -103,7 +105,7 @@ export class SelectionService {
 
   public addLink(link: Link) {
     const selection = this.restoreSelection(this.savedSelection);
-    if (!selection || selection.type !== 'Range') {
+    if (!selection || selection.type !== 'Range' || !selection.rangeCount) {
       return;
     }
 
@@ -136,12 +138,12 @@ export class SelectionService {
 
   public addImage(image: ImageInfo) {
     const selection = this.restoreSelection(this.savedSelection);
-    if (!selection || selection.type !== 'Range') {
+    if (!selection || selection.type !== 'Range' || !selection.rangeCount) {
       return;
     }
 
     const selectionText = selection.toString();
-    if (!selectionText) {
+    if (!selectionText && !this.isImageInSelection(selection)) {
       return;
     }
 
@@ -160,7 +162,7 @@ export class SelectionService {
 
   public addFormating(tagName: string) {
     const selection = this.restoreSelection(this.savedSelection);
-    if (!selection || selection.type !== 'Range') {
+    if (!selection || selection.type !== 'Range' || !selection.rangeCount) {
       return;
     }
 
