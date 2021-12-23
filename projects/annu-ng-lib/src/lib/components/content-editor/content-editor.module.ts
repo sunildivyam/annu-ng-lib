@@ -12,6 +12,8 @@ import { FormatInlineDirective } from './directives/format-inline.directive';
 import { ToolbarModule } from '../toolbar';
 import { ModalModule } from '../modal';
 import { ImageComponent } from './image/image.component';
+import { ImageFormModule } from '../image-form';
+import { LinkFormModule } from '../link-form';
 
 
 
@@ -29,7 +31,9 @@ import { ImageComponent } from './image/image.component';
     CommonModule,
     FormsModule,
     ToolbarModule,
-    ModalModule
+    ModalModule,
+    ImageFormModule,
+    LinkFormModule
   ],
   exports: [ContentEditorComponent,
     ParagraphComponent,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EditorElement, Link, ImageInfo } from '../content-editor.interface';
+import { EditorElement} from '../content-editor.interface';
+import { ImageInfo } from '../../image-form';
 
 @Injectable({
   providedIn: 'root'

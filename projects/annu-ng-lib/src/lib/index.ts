@@ -16,3 +16,5 @@ export * from './components/pagination';
 export * from './components/content-editor';
 export * from './components/toolbar';
 export * from './components/modal';
+export * from './components/link-form';
+export * from './components/image-form';

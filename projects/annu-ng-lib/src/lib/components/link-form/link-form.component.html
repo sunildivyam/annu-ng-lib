@@ -1,0 +1,16 @@
+<form class="container disable-select">
+    <h2>Add hyperlink</h2>
+    <label>Link href</label>
+    <input type="text" [(ngModel)]="href" name="link-href" />
+    <label>Link Label</label>
+    <input type="text" [(ngModel)]="label" name="link-label" />
+    <label>Title</label>
+    <input type="text" [(ngModel)]="title" name="link-title" />
+    <label>Target</label>
+    <input type="text" [(ngModel)]="target" name="link-target" />
+
+    <div class="row spacing">
+        <div class="col-6 center"><a href="#" (click)="cancelClicked($event)">Cancel</a></div>
+        <div class="col-6 center"><a href="#" (click)="saveClicked($event)">Save</a></div>
+    </div>
+</form>

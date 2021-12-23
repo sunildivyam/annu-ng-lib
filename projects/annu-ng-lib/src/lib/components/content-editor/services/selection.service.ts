@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Link, ImageInfo } from '../content-editor.interface';
+import { Link} from '../../link-form';
+import { ImageInfo } from '../../image-form';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({

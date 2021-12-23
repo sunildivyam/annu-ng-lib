@@ -3,7 +3,8 @@ import { EditorElement } from './content-editor.interface';
 import { EDITOR_ROOT_ELEMENT, TOOLBAR_FORMATTING } from './constants';
 import { ToolbarItem } from '../toolbar';
 import { SelectionService } from './services/selection.service';
-import { Link, ImageInfo } from './content-editor.interface';
+import { Link } from '../link-form';
+import { ImageInfo } from '../image-form';
 
 @Component({
   selector: 'anu-content-editor',
@@ -58,27 +59,23 @@ export class ContentEditorComponent implements OnInit {
     this.changed.emit(this.value);
   }
 
-  public saveLink(event: any): void {
-    event.preventDefault();
-    this.selService.addLink(this.link);
+  public saveLink(link: Link): void {
+    this.selService.addLink(link);
     this.toggleLinkForm = !this.toggleLinkForm;
     this.isTextSelected = false;
   }
 
-  public saveImage(event: any): void {
-    event.preventDefault();
-    this.selService.addImage(this.imageInfo);
+  public saveImage(image: ImageInfo): void {
+    this.selService.addImage(image);
     this.toggleImageForm = !this.toggleImageForm;
     this.isTextSelected = false;
   }
 
-  public cancelLinkModal(event: any): void {
-    event.preventDefault();
+  public cancelLinkModal(): void {
     this.toggleLinkForm = !this.toggleLinkForm;
   }
 
-  public cancelImageModal(event: any): void {
-    event.preventDefault();
+  public cancelImageModal(): void {
     this.toggleImageForm = !this.toggleImageForm;
   }
 

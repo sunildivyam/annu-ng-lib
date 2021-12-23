@@ -1,6 +1,7 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ToolbarItem } from '@annu-ng-lib';
-import { EditorElement, ImageInfo } from '../content-editor.interface';
+import { EditorElement } from '../content-editor.interface';
+import { ImageInfo } from '../../image-form';
 import { ContentEditorService } from '../services/content-editor.service';
 import { TOOLBAR_FORMATTING, TOOLBAR_STYLES } from '../constants';
 
@@ -78,14 +79,12 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     }
   }
 
-  public cancelImageModal(event) {
-    event.preventDefault();
+  public cancelImageModal() {
     this.toggleImageForm = false;
   }
 
-  public saveImage(event) {
-    event.preventDefault();
-    this.ceService.replaceElement(this.editorElement, 'img', this.fullTree, this.imageInfo);
+  public saveImage(image: ImageInfo) {
+    this.ceService.replaceElement(this.editorElement, 'img', this.fullTree, image);
     this.toggleImageForm = false;
     this.isToolbar = !this.isToolbar;
   }

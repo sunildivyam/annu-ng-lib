@@ -54,17 +54,8 @@
 <!-- Image Form Modal-->
 <ng-container *ngIf="toggleImageForm">
     <anu-modal [opened]="toggleImageForm">
-        <form [ngClass]="{'opened': toggleImageForm}" class="container disable-select">
-            <h2>Add Image</h2>
-            <label>Image source</label>
-            <input type="text" [(ngModel)]="imageInfo.src" name="imageInfo-href" />
-            <label>Image alt text</label>
-            <input type="text" [(ngModel)]="imageInfo.alt" name="imageInfo-label" />
-
-            <div class="row spacing">
-                <div class="col-6 center"><a href="#" (click)="cancelImageModal($event)">Cancel</a></div>
-                <div class="col-6 center"><a href="#" (click)="saveImage($event)">Save</a></div>
-            </div>
-        </form>
+        <anu-image-form [src]="imageInfo.src" [alt]="imageInfo.alt" (cancel)="cancelImageModal()"
+            (save)="saveImage($event)">
+        </anu-image-form>
     </anu-modal>
 </ng-container>
