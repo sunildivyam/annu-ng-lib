@@ -6,7 +6,7 @@
     .styles-toolbar {
         position: absolute;
         padding: 0.5rem;
-        z-index: 1;        
+        z-index: 1;
         width: auto;
         visibility: hidden;
         transition: all 0.2s;
@@ -19,10 +19,10 @@
         }
     }
 
-    .toolbar-btn {        
+    .toolbar-btn {
         font-size: 3rem;
         padding: 0;
-        margin: -1.5rem 0 -1rem 0;      
+        margin: -1.5rem 0 -1rem 0;
     }
 
     anu-toolbar {
@@ -31,9 +31,17 @@
         margin-left: 2.5rem;
         transition: all 0.2s;
         transform: scaleX(0);
+        display: none;
 
         &.opened {
-            transform: scaleX(1);
+            display: block;
+            animation: slide 0.2s ease 0s forwards;
         }
     }
 }
+
+
+@keyframes slide {
+    from {transform: scaleX(0);}
+    to {transform: scaleX(1);}
+  }
