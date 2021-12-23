@@ -1,0 +1,16 @@
+:host {
+    overflow: hidden;
+
+
+    .tab-body {
+
+        .tab-item-body {
+            display: none;
+            flex-direction: column;
+
+            &.active {
+                display: flex;
+            }
+        }
+    }
+}

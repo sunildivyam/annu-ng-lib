@@ -21,10 +21,11 @@ export const EDITOR_ELEMENT: EditorElement =
       }
     },
     {
-      name: 'p-1234',
-      tagName: 'p',
+      name: 'img-1234',
+      tagName: 'img',
       data: {
-        text: 'Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
+        src: '/assets/start-your-business.jpg',
+        alt: 'Sample Image',
       }
     },
     {
@@ -38,7 +39,7 @@ export const EDITOR_ELEMENT: EditorElement =
       name: 'p-1235',
       tagName: 'p',
       data: {
-        text: 'Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
+        text: 'Sample <b>Paragraph LOreaum</b> ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text Sample Paragraph LOreaum ipsum text',
       }
     },
     {

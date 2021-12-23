@@ -1,7 +1,7 @@
 <div class="annuTheme">
 
   <section class="annuTheme_navs">
-    <anu-tabs [spaced]="true" [rounded]="false" [vertical]= "false" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
+    <anu-tabs [spaced]="true" [rounded]="false" [vertical]= "false" [activeTab]="selectedTab" [tabs]="tabs" (changed)="tabChanged($event)"></anu-tabs>
   </section>
 
   <section class="annuTheme_overview" *ngIf="selectedTab.name === 'overview'">

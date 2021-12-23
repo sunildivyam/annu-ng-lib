@@ -1,13 +1,18 @@
 # Library Components
-## Article forms components*ArticleForm
-* Paragraph
-* Headings
-* Bullets
-* Numbering
-* Link
-* Table
-* Image Upload
-* Article Thumbnail Image
+## Article forms components
+* Content Editor
+    * Paragraph
+    * Heading
+    * List Item (Bullets & Numbering)
+    * Image
+    * Content Element
+* Link Form
+* Image Form
+* Table - TODO
+* Image Upload - TODD
+* Article Editor - TODO
+    * Article Card
+    * Article Meta Info Editor
 
 ## Article App components
 * Article
@@ -27,6 +32,7 @@
 * Toggle Button
 * Typography
 * Footer navigation
-* Pagination 
+* Pagination
 * Aside Navigation
-
+* Toolbar
+* Modal

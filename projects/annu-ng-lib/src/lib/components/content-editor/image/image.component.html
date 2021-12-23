@@ -1,0 +1,3 @@
+<img contenteditable [src]="value?.data?.src" [alt]="value?.data?.alt" (keydown.enter)="enterPressed($event)" (anuFormatInline)="textSelected()"
+    (keydown.backspace)="backspacePressed($event)" [name]="value.name" [focus]="value?.focused" (focusin)="onFocus($event)"
+    (blur)="onBlur($event)"/>
