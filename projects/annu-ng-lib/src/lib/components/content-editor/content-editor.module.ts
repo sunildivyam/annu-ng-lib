@@ -11,6 +11,7 @@ import { ContentElementComponent } from './content-element/content-element.compo
 import { FormatInlineDirective } from './directives/format-inline.directive';
 import { ToolbarModule } from '../toolbar';
 import { ModalModule } from '../modal';
+import { ImageComponent } from './image/image.component';
 
 
 
@@ -22,7 +23,8 @@ import { ModalModule } from '../modal';
     HeadingComponent,
     ListItemComponent,
     ContentElementComponent,
-    FormatInlineDirective,],
+    FormatInlineDirective,
+    ImageComponent,],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,6 +38,7 @@ import { ModalModule } from '../modal';
     HeadingComponent,
     ListItemComponent,
     ContentElementComponent,
-    FormatInlineDirective,],
+    FormatInlineDirective,
+    ImageComponent],
 })
 export class ContentEditorModule { }

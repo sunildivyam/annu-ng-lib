@@ -1,7 +1,11 @@
-<div *ngIf="!editorElement.isContainer" [ngClass]="{'visible': editorElement.focused}" class="row center nowrap styles-toolbar">
+<div *ngIf="!editorElement.isContainer" [ngClass]="{'visible': editorElement.focused}"
+    class="row center nowrap styles-toolbar">
     <a href="#" class="toolbar-btn" (click)="toggleToolbar($event, editorElement)">&#187;</a>
-    <anu-toolbar isVertical="true" [ngClass]="{'opened': isToolbar}" [items]="styleToolbar" (changed)="styleToolbarSelected($event)"></anu-toolbar>
+    <anu-toolbar isVertical="true" [ngClass]="{'opened': isToolbar}" [items]="styleToolbar"
+        (changed)="styleToolbarSelected($event)"></anu-toolbar>
 </div>
+
+
 <!-- Headings h1 - h6 -->
 <anu-heading *ngIf="['h1','h2','h3','h4','h5','h6'].includes(editorElement.tagName)" [value]="editorElement"
     (changed)="onBlur($event)" (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"
@@ -17,6 +21,12 @@
     (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"
     (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-list-item>
 
+<!-- Image -->
+<anu-image *ngIf="editorElement.tagName ==='img'" [value]="editorElement" (changed)="onBlur($event)"
+    (focusin)="focusin($event)" (enterKeyPressed)="enterKeyPressed($event)"
+    (backspaceKeyPressed)="backspaceKeyPressed($event)" [fullTree]="fullTree"></anu-image>
+
+<!-- Container Elements -->
 <ng-container *ngIf="editorElement.isContainer">
     <article *ngIf="editorElement.tagName === 'article'">
         <ng-container *ngFor="let child of editorElement.children">
@@ -39,4 +49,22 @@
             </anu-content-element>
         </ng-container>
     </ol>
+</ng-container>
+
+<!-- Image Form Modal-->
+<ng-container *ngIf="toggleImageForm">
+    <anu-modal [opened]="toggleImageForm">
+        <form [ngClass]="{'opened': toggleImageForm}" class="container disable-select">
+            <h2>Add Image</h2>
+            <label>Image source</label>
+            <input type="text" [(ngModel)]="imageInfo.src" name="imageInfo-href" />
+            <label>Image alt text</label>
+            <input type="text" [(ngModel)]="imageInfo.alt" name="imageInfo-label" />
+
+            <div class="row spacing">
+                <div class="col-6 center"><a href="#" (click)="cancelImageModal($event)">Cancel</a></div>
+                <div class="col-6 center"><a href="#" (click)="saveImage($event)">Save</a></div>
+            </div>
+        </form>
+    </anu-modal>
 </ng-container>

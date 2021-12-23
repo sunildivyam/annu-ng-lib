@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Link } from '../content-editor.interface';
+import { Link, ImageInfo } from '../content-editor.interface';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class SelectionService {
   constructor() { }
   // Get the deepest Element node in the DOM tree that contains the entire range.
   private getRangeContainer(range: Range): Node {
-    let container = range.commonAncestorContainer;    
+    let container = range.commonAncestorContainer;
     // If the selected node is a Text node, climb up to an element node - in Internet
     // Explorer, the .contains() method only works with Element nodes.
     while (container && container.nodeName !== 'ANU-CONTENT-EDITOR') {
@@ -34,24 +34,24 @@ export class SelectionService {
 
     return;
   }
-  
-  
+
+
   public get selection() : Observable<boolean> {
     return this._selection.asObservable();
   }
-  
+
   public get selectionText() : string {
     this.restoreSelection(this.savedSelection);
     return document.getSelection().toString();
   }
-  
-  // You can save selection because when you focus on some other element, current selection gets lost, 
+
+  // You can save selection because when you focus on some other element, current selection gets lost,
   // so you can save it and restore it for processing.
   public saveSelection(selection: Selection) {
     var ranges: Array<Range> = [];
     for (var i = 0, len = selection.rangeCount; i < len; ++i) {
       ranges.push(selection.getRangeAt(i));
-    }    
+    }
     this.savedSelection = ranges;
     if (selection.toString()) {
       this._selection.next(true);
@@ -114,6 +114,30 @@ export class SelectionService {
     range.insertNode(newLink);
   }
 
+  public addImage(image: ImageInfo) {
+    const selection = this.restoreSelection(this.savedSelection);
+    if (!selection || selection.type !== 'Range') {
+      return;
+    }
+
+    const selectionText = selection.toString();
+    if (!selectionText) {
+      return;
+    }
+
+    const range = selection.getRangeAt(0);
+
+    // create a new Image
+    var newImage = document.createElement("img");
+    newImage.src = image.src;
+    newImage.alt = image.alt;
+    // newImage.appendChild(newImage);
+
+    // replace selection with Image
+    range.deleteContents();
+    range.insertNode(newImage);
+  }
+
   public addFormating(tagName: string) {
     const selection = this.restoreSelection(this.savedSelection);
     if (!selection || selection.type !== 'Range') {
@@ -129,7 +153,7 @@ export class SelectionService {
 
     // create a new formatting Element
     var newEl = document.createElement(tagName);
-    var textNode = document.createTextNode(selectionText);    
+    var textNode = document.createTextNode(selectionText);
     newEl.appendChild(textNode);
 
     // replace selection with new formatting element

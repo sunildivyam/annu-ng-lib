@@ -1,9 +1,10 @@
-<anu-content-element (changed)="contentChanged($event)" [editorElement]="value"
-    [fullTree]="value" ></anu-content-element>
+<anu-content-element (changed)="contentChanged($event)" [editorElement]="value" [fullTree]="value">
+</anu-content-element>
 
 <div #popup [ngClass]="{'opened': isTextSelected}" class="popup" [style.top.px]="selectionRect.bottom"
     [style.left.px]="selectionRect.left">
     <anu-toolbar [items]="formattingToolbar" (changed)="formattingToolbarSelected($event)"></anu-toolbar>
+    <!-- Link Form Modal-->
     <anu-modal [opened]="toggleLinkForm">
         <form [ngClass]="{'opened': toggleLinkForm}" class="container disable-select">
             <h2>Add hyperlink</h2>
@@ -15,11 +16,26 @@
             <input type="text" [(ngModel)]="link.title" name="link-title" />
             <label>Target</label>
             <input type="text" [(ngModel)]="link.target" name="link-target" />
+
             <div class="row spacing">
-                <div class="col-6 center" ><a href="#" (click)="cancelLink($event)">Cancel</a></div>
-                <div class="col-6 center" ><a href="#" (click)="saveLink($event)">Save</a></div>
+                <div class="col-6 center"><a href="#" (click)="cancelLinkModal($event)">Cancel</a></div>
+                <div class="col-6 center"><a href="#" (click)="saveLink($event)">Save</a></div>
             </div>
         </form>
     </anu-modal>
+    <!-- Image Form Modal-->
+    <anu-modal [opened]="toggleImageForm">
+        <form [ngClass]="{'opened': toggleImageForm}" class="container disable-select">
+            <h2>Add Image</h2>
+            <label>Image source</label>
+            <input type="text" [(ngModel)]="imageInfo.src" name="imageInfo-href" />
+            <label>Image alt text</label>
+            <input type="text" [(ngModel)]="imageInfo.alt" name="imageInfo-label" />
 
+            <div class="row spacing">
+                <div class="col-6 center"><a href="#" (click)="cancelImageModal($event)">Cancel</a></div>
+                <div class="col-6 center"><a href="#" (click)="saveImage($event)">Save</a></div>
+            </div>
+        </form>
+    </anu-modal>
 </div>

@@ -3,7 +3,7 @@ import { EditorElement } from './content-editor.interface';
 import { EDITOR_ROOT_ELEMENT, TOOLBAR_FORMATTING } from './constants';
 import { ToolbarItem } from '../toolbar';
 import { SelectionService } from './services/selection.service';
-import { Link } from '.';
+import { Link, ImageInfo } from './content-editor.interface';
 
 @Component({
   selector: 'anu-content-editor',
@@ -25,7 +25,14 @@ export class ContentEditorComponent implements OnInit {
     title: '',
     target: '_blank'
   };
+
+  imageInfo: ImageInfo = {
+    src: '',
+    alt: '',
+  };
+
   toggleLinkForm: boolean = false;
+  toggleImageForm: boolean = false;
 
   constructor(private selService: SelectionService) {
     this.selectionRect = new DOMRect(0, 0);
@@ -58,9 +65,21 @@ export class ContentEditorComponent implements OnInit {
     this.isTextSelected = false;
   }
 
-  public cancelLink(event: any): void {
+  public saveImage(event: any): void {
+    event.preventDefault();
+    this.selService.addImage(this.imageInfo);
+    this.toggleImageForm = !this.toggleImageForm;
+    this.isTextSelected = false;
+  }
+
+  public cancelLinkModal(event: any): void {
     event.preventDefault();
     this.toggleLinkForm = !this.toggleLinkForm;
+  }
+
+  public cancelImageModal(event: any): void {
+    event.preventDefault();
+    this.toggleImageForm = !this.toggleImageForm;
   }
 
   public formattingToolbarSelected(toolbarItem: ToolbarItem): void {
@@ -73,6 +92,13 @@ export class ContentEditorComponent implements OnInit {
           target: '_blank'
         };
         this.toggleLinkForm = !this.toggleLinkForm;
+        break;
+      case 'image':
+        this.imageInfo = {
+          src: 'https://',
+          alt: this.selService.selectionText,
+        };
+        this.toggleImageForm = !this.toggleImageForm;
         break;
       case 'bold':
         this.selService.addFormating('b');

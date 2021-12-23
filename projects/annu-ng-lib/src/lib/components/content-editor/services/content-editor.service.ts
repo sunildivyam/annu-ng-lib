@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EditorElement, Link } from '../content-editor.interface';
+import { EditorElement, Link, ImageInfo } from '../content-editor.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +62,7 @@ export class ContentEditorService {
     if (fullTree.children.length === 1) {
       return;
     }
-    
+
     // Find the parent of selected Element
     const parent = this.findParent(el, fullTree);
     if (!parent) {
@@ -95,7 +95,7 @@ export class ContentEditorService {
     }
   }
 
-  public replaceElement(el: EditorElement, tagName: string, fullTree: EditorElement) {
+  public replaceElement(el: EditorElement, tagName: string, fullTree: EditorElement, data: ImageInfo = null) {
 
     if (el.tagName === 'li') {
       const parent = this.findParent(el, fullTree);
@@ -109,6 +109,12 @@ export class ContentEditorService {
         const newItem = { ...el };
         newItem.tagName = tagName;
         newItem.name = this.getEditorElementName(tagName);
+        if (tagName === 'img' && data) {
+          newItem.data.src = data.src;
+          newItem.data.alt = data.alt;
+          newItem.data.text = undefined;
+        }
+
         const parentOfParent = this.findParent(parent, fullTree);
         let indexOfParent = parentOfParent.children.indexOf(parent);
         if (parent.children.length > 1) {
@@ -123,6 +129,11 @@ export class ContentEditorService {
         const newListItem = { ...el };
         newListItem.tagName = 'li';
         newListItem.name = this.getEditorElementName('li');
+        if (el.tagName === 'img') {
+          newListItem.data.text = newListItem.data.alt;
+          newListItem.data.alt = undefined;
+          newListItem.data.src = undefined;
+        }
 
         el.tagName = tagName;
         el.name = this.getEditorElementName(tagName);
@@ -131,6 +142,11 @@ export class ContentEditorService {
         el.data = undefined;
         el.focused = undefined;
       } else {
+        if (tagName === 'img' && data) {
+          el.data.src = data.src;
+          el.data.alt = data.alt;
+          el.data.text = undefined;
+        }
         el.tagName = tagName;
         el.name = this.getEditorElementName(tagName);
       }
@@ -138,17 +154,17 @@ export class ContentEditorService {
 
 
     /*
-      if source LI 
-        if  Bullet/Numbering 
+      if source LI
+        if  Bullet/Numbering
           find parent and change type to ol/ul
-        else   
+        else
           hide toolbar icons => p/H1-H6
-      else 
+      else
         if (target == ul/ol)
           change name
           isContainer = true
           add one child LI and focus
-        else 
+        else
           change name as is
     */
   }

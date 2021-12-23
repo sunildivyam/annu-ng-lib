@@ -1,6 +1,6 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ToolbarItem } from '@annu-ng-lib';
-import { EditorElement } from '../content-editor.interface';
+import { EditorElement, ImageInfo } from '../content-editor.interface';
 import { ContentEditorService } from '../services/content-editor.service';
 import { TOOLBAR_FORMATTING, TOOLBAR_STYLES } from '../constants';
 
@@ -16,6 +16,11 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
 
   isToolbar: boolean = false;
   styleToolbar: Array<ToolbarItem> = TOOLBAR_STYLES;
+  toggleImageForm: boolean = false;
+  imageInfo: ImageInfo = {
+    src: 'https://',
+    alt: ''
+  };
 
   constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) { }
 
@@ -28,7 +33,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setStyleToolbarItems();    
+    this.setStyleToolbarItems();
   }
 
   private setStyleToolbarItems() {
@@ -43,7 +48,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
 
   public backspaceKeyPressed(el: EditorElement) {
     this.ceService.removeEditorElement(el, this.fullTree);
-    this.cdr.detectChanges();    
+    this.cdr.detectChanges();
   }
 
   public focusin(editorElement: EditorElement) {
@@ -63,8 +68,25 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     this.isToolbar = !this.isToolbar;
   }
 
-  public styleToolbarSelected(item: ToolbarItem) {   
-    this.ceService.replaceElement(this.editorElement, item.name, this.fullTree);
+  public styleToolbarSelected(item: ToolbarItem) {
+    if (item.name === 'img') {
+      this.toggleImageForm = true;
+      this.imageInfo.alt = this.editorElement.data?.alt || this.editorElement.data?.text;
+    } else {
+      this.ceService.replaceElement(this.editorElement, item.name, this.fullTree);
+      this.isToolbar = !this.isToolbar;
+    }
+  }
+
+  public cancelImageModal(event) {
+    event.preventDefault();
+    this.toggleImageForm = false;
+  }
+
+  public saveImage(event) {
+    event.preventDefault();
+    this.ceService.replaceElement(this.editorElement, 'img', this.fullTree, this.imageInfo);
+    this.toggleImageForm = false;
     this.isToolbar = !this.isToolbar;
   }
 }

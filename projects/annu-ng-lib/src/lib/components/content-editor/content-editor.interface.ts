@@ -2,7 +2,12 @@ export interface Link {
     href: string;
     label: string;
     title?: string;
-    target?: string;    
+    target?: string;
+};
+
+export interface ImageInfo {
+    src: string;
+    alt: string;
 };
 
 export interface EditorElementData {
