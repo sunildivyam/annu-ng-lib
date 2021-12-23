@@ -35,6 +35,17 @@ export class SelectionService {
     return;
   }
 
+  private isImageInSelection(selection: Selection) {
+    const range = selection.getRangeAt(0);
+
+    // check if selection contains an image, if yes then Image should also be the hyperlink.
+    const fragment = range.cloneContents();
+    const imgs = fragment.querySelectorAll('img');
+
+    if (imgs && imgs.length) return true
+
+    return false;
+  }
 
   public get selection() : Observable<boolean> {
     return this._selection.asObservable();
@@ -53,7 +64,8 @@ export class SelectionService {
       ranges.push(selection.getRangeAt(i));
     }
     this.savedSelection = ranges;
-    if (selection.toString()) {
+
+    if (selection.toString() || this.isImageInSelection(selection)) {
       this._selection.next(true);
     } else {
       this._selection.next(false);
@@ -95,19 +107,26 @@ export class SelectionService {
     }
 
     const selectionText = selection.toString();
-    if (!selectionText) {
+    if (!selectionText && !this.isImageInSelection(selection)) {
       return;
     }
 
     const range = selection.getRangeAt(0);
 
+    // check if selection contains an image, if yes then Image should also be the hyperlink.
+    const fragment = range.cloneContents();
+    const imgs = fragment.querySelectorAll('img');
+    let linkContentNode: any = document.createTextNode(link.label);
+    if (imgs && imgs.length) {
+      linkContentNode = fragment;
+    }
+
     // create a new Link
     var newLink = document.createElement("a");
-    var linkTextNode = document.createTextNode(link.label);
     newLink.target = link.target;
     newLink.href = link.href;
     newLink.title = link.title;
-    newLink.appendChild(linkTextNode);
+    newLink.appendChild(linkContentNode);
 
     // replace selection with Link
     range.deleteContents();
