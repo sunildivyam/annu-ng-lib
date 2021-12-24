@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 import themes from '../../themes';
 import { PaletteColor, Typography, CssVar, ColorPalette } from './theme.interface';
@@ -15,8 +17,11 @@ const PALETTE_SHADES = ['DeepDark', 'Darkest', 'Darker', 'Dark', 'Normal', 'Ligh
 })
 export class ThemeService {
   private selectedThemeName: BehaviorSubject<string>;
+  private isBrowser: boolean;
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+
     this.selectedThemeName = new BehaviorSubject<string>('');
     this.selectedThemeName.subscribe(themeName => this.loadTheme(themeName));
   }
@@ -42,9 +47,9 @@ export class ThemeService {
   */
   private writeCssVarToDom(name: string, value: string = ''): void {
     const cssVar = this.getCssVar(name, value);
-    if (cssVar) {
-      document.documentElement.style.setProperty(cssVar.name, cssVar.value);
-      // getComputedStyle(document.documentElement).getPropertyValue(name);
+    if (cssVar && this.isBrowser) {
+      this.document.documentElement.style.setProperty(cssVar.name, cssVar.value);
+      // getComputedStyle(this.document.documentElement).getPropertyValue(name);
     }
   }
 
@@ -121,26 +126,31 @@ export class ThemeService {
   }
 
   public setTheme(themeName: string = '', forced: boolean = true): void {
-    if (forced) {
+
+    if (!forced) {
+      if (typeof window !== 'undefined') {
+        themeName = window.localStorage.getItem('selectedThemeName') || themeName;
+      }
+
       if (!themes[themeName]) {
         themeName = DEFAULT_THEME;
       }
-    } else {
-      themeName = window.localStorage.getItem('selectedThemeName');
-      if (!themes[themeName]) {
-        themeName = DEFAULT_THEME;
-      }
+    } else if (!themes[themeName]){
+      themeName = DEFAULT_THEME;
     }
 
-    window.localStorage.setItem('selectedThemeName', themeName);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('selectedThemeName', themeName);
+    }
+
     this.selectedThemeName.next(themeName);
   }
 
   public toggleInvert(invert: boolean): void {
     if (invert === true) {
-      document.documentElement.style.setProperty('filter', 'invert(1) brightness(0.6)');
+      this.document.documentElement.style.setProperty('filter', 'invert(1) brightness(0.6)');
     } else {
-      document.documentElement.style.setProperty('filter', '');
+      this.document.documentElement.style.setProperty('filter', '');
     }
   }
 

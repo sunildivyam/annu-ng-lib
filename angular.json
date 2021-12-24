@@ -62,7 +62,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/annu-ng-lib-pages",
+            "outputPath": "dist/annu-ng-lib-pages/browser",
             "index": "projects/annu-ng-lib-pages/src/index.html",
             "main": "projects/annu-ng-lib-pages/src/main.ts",
             "polyfills": "projects/annu-ng-lib-pages/src/polyfills.ts",
@@ -153,7 +153,8 @@
             "tsConfig": [
               "projects/annu-ng-lib-pages/tsconfig.app.json",
               "projects/annu-ng-lib-pages/tsconfig.spec.json",
-              "projects/annu-ng-lib-pages/e2e/tsconfig.json"
+              "projects/annu-ng-lib-pages/e2e/tsconfig.json",
+              "projects/annu-ng-lib-pages/tsconfig.server.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -170,6 +171,53 @@
             "production": {
               "devServerTarget": "annu-ng-lib-pages:serve:production"
             }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/annu-ng-lib-pages/server",
+            "main": "projects/annu-ng-lib-pages/server.ts",
+            "tsConfig": "projects/annu-ng-lib-pages/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/annu-ng-lib-pages/src/environments/environment.ts",
+                  "with": "projects/annu-ng-lib-pages/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "annu-ng-lib-pages:build",
+            "serverTarget": "annu-ng-lib-pages:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "annu-ng-lib-pages:build:production",
+              "serverTarget": "annu-ng-lib-pages:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "annu-ng-lib-pages:build:production",
+            "serverTarget": "annu-ng-lib-pages:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
