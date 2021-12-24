@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2, RendererStyleFlags2 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -16,12 +16,13 @@ const PALETTE_SHADES = ['DeepDark', 'Darkest', 'Darker', 'Dark', 'Normal', 'Ligh
   providedIn: 'root'
 })
 export class ThemeService {
+  private renderer: Renderer2;
   private selectedThemeName: BehaviorSubject<string>;
   private isBrowser: boolean;
 
-  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object, private rendererFactory: RendererFactory2) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-
+    this.renderer = this.rendererFactory.createRenderer(null, null);
     this.selectedThemeName = new BehaviorSubject<string>('');
     this.selectedThemeName.subscribe(themeName => this.loadTheme(themeName));
   }
@@ -47,9 +48,8 @@ export class ThemeService {
   */
   private writeCssVarToDom(name: string, value: string = ''): void {
     const cssVar = this.getCssVar(name, value);
-    if (cssVar && this.isBrowser) {
-      this.document.documentElement.style.setProperty(cssVar.name, cssVar.value);
-      // getComputedStyle(this.document.documentElement).getPropertyValue(name);
+    if (cssVar) {
+      this.renderer.setStyle(this.document.documentElement, cssVar.name, cssVar.value, RendererStyleFlags2.DashCase);
     }
   }
 
