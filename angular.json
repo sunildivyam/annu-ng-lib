@@ -67,7 +67,6 @@
             "main": "projects/annu-ng-lib-pages/src/main.ts",
             "polyfills": "projects/annu-ng-lib-pages/src/polyfills.ts",
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/annu-ng-lib-pages/src/favicon.ico",
               "projects/annu-ng-lib-pages/src/assets"
@@ -80,7 +79,13 @@
                 "projects/annu-ng-lib/src/lib/scss/"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -110,7 +115,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -177,7 +183,9 @@
           "options": {
             "outputPath": "dist/annu-ng-lib-pages/server",
             "main": "projects/annu-ng-lib-pages/server.ts",
-            "tsConfig": "projects/annu-ng-lib-pages/tsconfig.server.json"
+            "tsConfig": "projects/annu-ng-lib-pages/tsconfig.server.json",
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {
@@ -191,7 +199,8 @@
               "sourceMap": false,
               "optimization": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
