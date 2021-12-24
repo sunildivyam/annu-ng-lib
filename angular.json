@@ -33,18 +33,6 @@
             "tsConfig": "projects/annu-ng-lib/tsconfig.spec.json",
             "karmaConfig": "projects/annu-ng-lib/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/annu-ng-lib/tsconfig.lib.json",
-              "projects/annu-ng-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -150,20 +138,6 @@
               "projects/annu-ng-lib-pages/src/styles.scss"
             ],
             "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/annu-ng-lib-pages/tsconfig.app.json",
-              "projects/annu-ng-lib-pages/tsconfig.spec.json",
-              "projects/annu-ng-lib-pages/e2e/tsconfig.json",
-              "projects/annu-ng-lib-pages/tsconfig.server.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         },
         "e2e": {
