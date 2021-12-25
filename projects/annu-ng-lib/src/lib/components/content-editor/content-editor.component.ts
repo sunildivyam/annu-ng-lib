@@ -5,6 +5,7 @@ import { ToolbarItem } from '../toolbar';
 import { SelectionService } from './services/selection.service';
 import { Link } from '../link-form';
 import { ImageInfo } from '../image-form';
+import { Rectangle } from './content-editor.interface';
 
 @Component({
   selector: 'anu-content-editor',
@@ -16,7 +17,7 @@ export class ContentEditorComponent implements OnInit {
   @ViewChild('popup', { static: true }) popupEl: ElementRef;
   @Output() changed = new EventEmitter<EditorElement>();
 
-  selectionRect: DOMRect;
+  selectionRect: Rectangle;
   isTextSelected: boolean = false;
   formattingToolbar: Array<ToolbarItem> = TOOLBAR_FORMATTING;
 
@@ -36,7 +37,7 @@ export class ContentEditorComponent implements OnInit {
   toggleImageForm: boolean = false;
 
   constructor(private selService: SelectionService) {
-    this.selectionRect = new DOMRect(0, 0);
+    this.selectionRect = { top: 0, left: 0, bottom: 0, right: 0}
     this.selService.selection.subscribe(this.handleTextSelection);
   }
 
@@ -46,7 +47,9 @@ export class ContentEditorComponent implements OnInit {
     if (hasSelection) {
       setTimeout(() => {
         this.selectionRect = this.selService.getSelectionRect();
-        if (this.selectionRect) this.selectionRect.y = this.selectionRect.top - this.popupEl.nativeElement.offsetHeight - this.selectionRect.height;
+        if (this.selectionRect) {
+          this.selectionRect.top = this.selectionRect.top - this.popupEl.nativeElement.offsetHeight - this.selectionRect.height;
+        }
       })
     }
   }

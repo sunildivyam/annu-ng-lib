@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2, RendererStyleFlags2 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 import themes from '../../themes';
 import { PaletteColor, Typography, CssVar, ColorPalette } from './theme.interface';
@@ -9,16 +11,27 @@ const DEFAULT_THEME = 'default';
 const PALETTE_COLOR_COUNT = 8;
 const PALETTE_LIGHTNESS_START = 10;
 const PALETTE_SHADES = ['DeepDark', 'Darkest', 'Darker', 'Dark', 'Normal', 'Light', 'Lighter', 'Lightest', 'DeepLight'];
+const CSS_VARIABLES_PREFIX = '--anu-';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
+  private renderer: Renderer2;
   private selectedThemeName: BehaviorSubject<string>;
+  private isBrowser: boolean;
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object, private rendererFactory: RendererFactory2) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    this.renderer = this.rendererFactory.createRenderer(null, null);
     this.selectedThemeName = new BehaviorSubject<string>('');
     this.selectedThemeName.subscribe(themeName => this.loadTheme(themeName));
+  }
+
+  // Replaces all upperCase letters to lowercase precided with '-' dash
+  private camelCaseToDashCase(str: string): string {
+    if (!str) return '';
+    return str.split('').map(c => c === c.toUpperCase() ? `-${c.toLowerCase()}` : c).join('');
   }
 
   /*
@@ -30,7 +43,8 @@ export class ThemeService {
     }
 
     if (value) {
-      name = '--anu-' + name;
+
+      name = CSS_VARIABLES_PREFIX + this.camelCaseToDashCase(name);
       return { name, value } as CssVar;
     }
 
@@ -43,8 +57,7 @@ export class ThemeService {
   private writeCssVarToDom(name: string, value: string = ''): void {
     const cssVar = this.getCssVar(name, value);
     if (cssVar) {
-      document.documentElement.style.setProperty(cssVar.name, cssVar.value);
-      // getComputedStyle(document.documentElement).getPropertyValue(name);
+      this.renderer.setStyle(this.document.documentElement, cssVar.name, cssVar.value);
     }
   }
 
@@ -121,26 +134,31 @@ export class ThemeService {
   }
 
   public setTheme(themeName: string = '', forced: boolean = true): void {
-    if (forced) {
+
+    if (!forced) {
+      if (typeof window !== 'undefined') {
+        themeName = window.localStorage.getItem('selectedThemeName') || themeName;
+      }
+
       if (!themes[themeName]) {
         themeName = DEFAULT_THEME;
       }
-    } else {
-      themeName = window.localStorage.getItem('selectedThemeName');
-      if (!themes[themeName]) {
-        themeName = DEFAULT_THEME;
-      }
+    } else if (!themes[themeName]) {
+      themeName = DEFAULT_THEME;
     }
 
-    window.localStorage.setItem('selectedThemeName', themeName);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('selectedThemeName', themeName);
+    }
+
     this.selectedThemeName.next(themeName);
   }
 
   public toggleInvert(invert: boolean): void {
     if (invert === true) {
-      document.documentElement.style.setProperty('filter', 'invert(1) brightness(0.6)');
+      this.document.documentElement.style.setProperty('filter', 'invert(1) brightness(0.6)');
     } else {
-      document.documentElement.style.setProperty('filter', '');
+      this.document.documentElement.style.setProperty('filter', '');
     }
   }
 

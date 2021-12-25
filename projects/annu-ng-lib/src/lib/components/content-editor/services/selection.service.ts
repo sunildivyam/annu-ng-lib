@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Link} from '../../link-form';
 import { ImageInfo } from '../../image-form';
 import { Observable, Subject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { Rectangle } from '../content-editor.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ export class SelectionService {
   private savedSelection: Array<Range>;
   private _selection = new Subject<boolean>();
 
-  constructor() { }
+  constructor(@Inject(DOCUMENT) private document: Document) { }
+
   // Get the deepest Element node in the DOM tree that contains the entire range.
   private getRangeContainer(range: Range): Node {
     let container = range.commonAncestorContainer;
@@ -25,7 +28,7 @@ export class SelectionService {
 
   private restoreSelection(savedSel: Array<Range>): Selection {
     if (savedSel) {
-      const selection: Selection = document.getSelection();
+      const selection: Selection = this.document.getSelection();
       selection.removeAllRanges();
       for (var i = 0, len = savedSel.length; i < len; ++i) {
         selection.addRange(savedSel[i]);
@@ -56,7 +59,7 @@ export class SelectionService {
 
   public get selectionText() : string {
     this.restoreSelection(this.savedSelection);
-    return document.getSelection().toString();
+    return this.document.getSelection().toString();
   }
 
   // You can save selection because when you focus on some other element, current selection gets lost,
@@ -75,7 +78,7 @@ export class SelectionService {
     }
   }
 
-  public getSelectionRect(): DOMRect | null {
+  public getSelectionRect(): Rectangle | null {
     const selection = this.restoreSelection(this.savedSelection);
     if (!selection || selection.type !== 'Range' || !selection.rangeCount) {
       return;
@@ -92,12 +95,14 @@ export class SelectionService {
     }
     const rangeRect = range.getBoundingClientRect();
     const rangeContainerRect = rangeContainer.getBoundingClientRect();
-    const selectionRect: DOMRect = new DOMRect(
-      rangeRect.left - rangeContainerRect.left,
-      rangeRect.top - rangeContainerRect.top,
-      rangeRect.width,
-      rangeRect.height,
-    );
+    const selectionRect: Rectangle = {
+      left: rangeRect.left - rangeContainerRect.left,
+      top: rangeRect.top - rangeContainerRect.top,
+      bottom: rangeRect.top - rangeContainerRect.top + rangeRect.height,
+      right: rangeRect.left - rangeContainerRect.left + rangeRect.width,
+      width: rangeRect.width,
+      height: rangeRect.height,
+    };
 
     return selectionRect;
   }
@@ -119,13 +124,13 @@ export class SelectionService {
     // check if selection contains an image, if yes then Image should also be the hyperlink.
     const fragment = range.cloneContents();
     const imgs = fragment.querySelectorAll('img');
-    let linkContentNode: any = document.createTextNode(link.label);
+    let linkContentNode: any = this.document.createTextNode(link.label);
     if (imgs && imgs.length) {
       linkContentNode = fragment;
     }
 
     // create a new Link
-    var newLink = document.createElement("a");
+    var newLink = this.document.createElement("a");
     newLink.target = link.target;
     newLink.href = link.href;
     newLink.title = link.title;
@@ -150,7 +155,7 @@ export class SelectionService {
     const range = selection.getRangeAt(0);
 
     // create a new Image
-    var newImage = document.createElement("img");
+    var newImage = this.document.createElement("img");
     newImage.src = image.src;
     newImage.alt = image.alt;
     // newImage.appendChild(newImage);
@@ -174,8 +179,8 @@ export class SelectionService {
     const range = selection.getRangeAt(0);
 
     // create a new formatting Element
-    var newEl = document.createElement(tagName);
-    var textNode = document.createTextNode(selectionText);
+    var newEl = this.document.createElement(tagName);
+    var textNode = this.document.createTextNode(selectionText);
     newEl.appendChild(textNode);
 
     // replace selection with new formatting element

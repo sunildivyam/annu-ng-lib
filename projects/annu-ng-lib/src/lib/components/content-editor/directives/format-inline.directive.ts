@@ -1,4 +1,5 @@
-import { Directive, EventEmitter, HostListener, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Directive, EventEmitter, HostListener, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { SelectionService } from '../services/selection.service';
 
 @Directive({
@@ -8,21 +9,21 @@ import { SelectionService } from '../services/selection.service';
 export class FormatInlineDirective implements OnInit, OnDestroy {
   selected = new EventEmitter();
 
-  constructor(private selService: SelectionService, private zone: NgZone) { 
+  constructor(private selService: SelectionService, private zone: NgZone, @Inject(DOCUMENT) private document: Document) {
     this.handleDocumentSelectionChange = this.handleDocumentSelectionChange.bind(this);
   }
 
   public ngOnInit(): void {
     this.zone.runOutsideAngular(() => {
-      document.addEventListener('selectionchange', this.handleDocumentSelectionChange, false);
+      this.document.addEventListener('selectionchange', this.handleDocumentSelectionChange, false);
     })
   }
 
   public ngOnDestroy(): void {
-    document.removeEventListener('selectionchange', this.handleDocumentSelectionChange, false);
+    this.document.removeEventListener('selectionchange', this.handleDocumentSelectionChange, false);
   }
 
-  public setSelection(selection: Selection) {    
+  public setSelection(selection: Selection) {
     this.selService.saveSelection(selection);
     this.selected.emit();
   }
@@ -33,7 +34,7 @@ export class FormatInlineDirective implements OnInit, OnDestroy {
   }
 
   private handleDocumentSelectionChange(event: any) {
-    if (!event.target.getSelection().toString()) {          
+    if (!event.target.getSelection().toString()) {
       // this.selected.emit();
     }
   }

@@ -13,3 +13,12 @@ export interface EditorElement {
     data?: EditorElementData;
     children?: Array<EditorElement>;
 };
+
+export interface Rectangle {
+    top: number;
+    left: number;
+    bottom: number;
+    right: number;
+    width?: number;
+    height?: number;
+}

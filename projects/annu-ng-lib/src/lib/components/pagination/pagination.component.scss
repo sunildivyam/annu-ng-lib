@@ -5,13 +5,13 @@
 
     a {
         padding: 0.5rem;
-        
+
         &:hover {
             text-decoration: underline;
         }
 
         &.active {
-            color: var(--anu-accentNormal);
+            color: var(--anu-accent-normal);
         }
     }
 }

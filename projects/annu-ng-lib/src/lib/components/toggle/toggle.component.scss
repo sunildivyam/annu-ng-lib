@@ -7,13 +7,13 @@ $annuToggleHeight: 1.5rem;
     padding: 0;
     width: $annuToggleWidth;
     height: $annuToggleHeight;
-  
+
   input {
     opacity: 0;
     width: 0;
     height: 0;
   }
-  
+
   .slider {
     position: absolute;
     cursor: pointer;
@@ -21,7 +21,7 @@ $annuToggleHeight: 1.5rem;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--anu-backgroundLightest);
+    background-color: var(--anu-background-lightest);
     -webkit-transition: .4s;
     transition: .4s;
 
@@ -32,33 +32,32 @@ $annuToggleHeight: 1.5rem;
       width: $annuToggleHeight;
       left: 0;
       bottom: 0;
-      background-color: var(--anu-primaryLightest);
+      background-color: var(--anu-primary-lightest);
       -webkit-transition: .4s;
       transition: .4s;
     }
 
     &.rounded {
       border-radius: 34px;
-  
+
       &:before {
           border-radius: 50%;
       }
     }
   }
-  
+
   input:checked + .slider {
-    background-color: var(--anu-backgroundLightest);
+    background-color: var(--anu-background-lightest);
   }
-  
+
   input:focus + .slider {
-    box-shadow: 0 0 1px var(--anu-backgroundLightest);
+    box-shadow: 0 0 1px var(--anu-background-lightest);
   }
-  
+
   input:checked + .slider:before {
-    background-color: var(--anu-primaryNormal);
+    background-color: var(--anu-primary-normal);
     -webkit-transform: translateX(calc(#{$annuToggleWidth} - #{$annuToggleHeight}));
     -ms-transform: translateX(calc(#{$annuToggleWidth} - #{$annuToggleHeight}));
     transform: translateX(calc(#{$annuToggleWidth} - #{$annuToggleHeight}));
   }
 }
-  
