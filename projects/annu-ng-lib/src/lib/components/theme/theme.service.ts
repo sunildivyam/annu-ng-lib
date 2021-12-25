@@ -57,7 +57,7 @@ export class ThemeService {
   private writeCssVarToDom(name: string, value: string = ''): void {
     const cssVar = this.getCssVar(name, value);
     if (cssVar) {
-      this.renderer.setStyle(this.document.documentElement, cssVar.name, cssVar.value);
+      this.renderer.setStyle(this.document.documentElement, cssVar.name, cssVar.value, RendererStyleFlags2.DashCase);
     }
   }
 
