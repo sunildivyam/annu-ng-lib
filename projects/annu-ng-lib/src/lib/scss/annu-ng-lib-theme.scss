@@ -7,8 +7,8 @@
   box-sizing: border-box;
 }
 html {
-  font-family: var(--anu-fontFamily);
-  font-size: var(--anu-fontSize);
+  font-family: var(--anu-font-family);
+  font-size: var(--anu-font-size);
   line-height: 1.5;
   letter-spacing: 0.05rem;
 }
@@ -16,44 +16,44 @@ html {
 body {
   padding: 0;
   margin: 0;
-  color: var(--anu-accentNormal);
+  color: var(--anu-accent-normal);
 }
 
 a {
-  color: var(--anu-primaryDark);
+  color: var(--anu-primary-dark);
   text-decoration: none;
 
   &:hover {
-    color: var(--anu-primaryNormal);
+    color: var(--anu-primary-normal);
   }
 }
 
 .btn {
   display: inline-block;
-  color: var(--anu-accentDarker);
-  background-color: var(--anu-primaryNormal);
-  border: solid 0.001em var(--anu-primaryDark);
+  color: var(--anu-accent-darker);
+  background-color: var(--anu-primary-normal);
+  border: solid 0.001em var(--anu-primary-dark);
   border-radius: 0.3rem;
   font-size: 1rem;
   text-align: center;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s;
 
   &:hover {
-    color: var(--anu-accentDarkest);
+    color: var(--anu-accent-darkest);
     text-decoration: none;
-    background-color: var(--anu-primaryLight);
-    border-color: var(--anu-primaryNormal);
+    background-color: var(--anu-primary-light);
+    border-color: var(--anu-primary-normal);
   }
 
   &.secondary {
-    color: var(--anu-accentDarker);
-    background-color: var(--anu-secondaryNormal);
-    border-color: var(--anu-secondaryDark);
+    color: var(--anu-accent-darker);
+    background-color: var(--anu-secondary-normal);
+    border-color: var(--anu-secondary-dark);
 
     &:hover {
-      color: var(--anu-accentDarkest);
-      background-color: var(--anu-secondaryLight);
-      border-color: var(--anu-secondaryNormal);
+      color: var(--anu-accent-darkest);
+      background-color: var(--anu-secondary-light);
+      border-color: var(--anu-secondary-normal);
     }
   }
 
@@ -98,7 +98,7 @@ h6 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-weight: bold;
-  color: var(--anu-primaryNormal);
+  color: var(--anu-primary-normal);
 
   @include contenteditableStyle;
 }
@@ -106,7 +106,7 @@ h6 {
 p {
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: var(--anu-accentNormal);
+  color: var(--anu-accent-normal);
 
   @include contenteditableStyle;
 }
@@ -143,14 +143,14 @@ table {
 
   th {
     font-weight: bold;
-    background-color: var(--anu-primaryNormal);
-    color: var(--anu-accentDark);
+    background-color: var(--anu-primary-normal);
+    color: var(--anu-accent-dark);
   }
 
   th,
   td {
     padding: 0.5rem 1rem;
-    border: 0.002rem solid var(--anu-backgroundDark);
+    border: 0.002rem solid var(--anu-background-dark);
   }
 }
 
@@ -159,7 +159,7 @@ hr {
   height: 2px;
   padding: 0;
   margin: 1rem 0;
-  background-color: var(--anu-backgroundLighter);
+  background-color: var(--anu-background-lighter);
   border: 0;
 }
 
@@ -173,10 +173,10 @@ input[type="text"], textarea {
   display: block;
   width: 100%;
   padding: 1rem;
-  border: 1px solid var(--anu-primaryLighter);
+  border: 1px solid var(--anu-primary-lighter);
 
   &:focus-visible {
-    outline-color: var(--anu-primaryNormal)
+    outline-color: var(--anu-primary-normal)
   }
 }
 
@@ -347,7 +347,7 @@ input[type="text"], textarea {
   position: absolute;
   display: none;
   padding: 1rem;
-  border: 1px solid var(--anu-primaryNormal);
+  border: 1px solid var(--anu-primary-normal);
   border-radius: 1rem;
   height: auto;
   transition: all 0.1s;
@@ -366,5 +366,5 @@ input[type="text"], textarea {
 }
 
 .shadow {
-  box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-backgroundNormal);
+  box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-background-normal);
 }

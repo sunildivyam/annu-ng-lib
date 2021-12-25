@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: var(--anu-accentDark);
-    color: var(--anu-accentLighter);
+    background-color: var(--anu-accent-dark);
+    color: var(--anu-accent-lighter);
     margin-top: 2rem;
 
     ul {
@@ -25,8 +25,8 @@
             }
         }
 
-        li + li {            
-            border-left: 1px solid var(--anu-accentLighter);
+        li + li {
+            border-left: 1px solid var(--anu-accent-lighter);
 
             @include small {
                 border: none;

@@ -10,8 +10,8 @@ nav.annuToolbar {
         width: max-content;
         padding: 0;
         margin: 0;
-        background-color: var(--anu-primaryLightest);
-        border: 1px solid var(--anu-primaryNormal);
+        background-color: var(--anu-primary-lightest);
+        border: 1px solid var(--anu-primary-normal);
         border-radius: 0.5rem;
 
         li {
@@ -20,11 +20,11 @@ nav.annuToolbar {
             a {
                 display: inline-block;
                 padding: 0.3rem 1rem;
-                color: var(--anu-accentDarkest);
+                color: var(--anu-accent-darkest);
                 vertical-align: middle;
 
                 &:hover {
-                    background-color: var(--anu-primaryLight);
+                    background-color: var(--anu-primary-light);
                 }
 
                 img {
@@ -37,7 +37,7 @@ nav.annuToolbar {
         }
 
         li + li {
-            border-left: 1px solid var(--anu-primaryLight);
+            border-left: 1px solid var(--anu-primary-light);
         }
     }
 

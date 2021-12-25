@@ -3,28 +3,28 @@
 .annuTabs {
     display: flex;
     flex-direction: row;
-    border-bottom: solid 1px var(--anu-primaryDark);
+    border-bottom: solid 1px var(--anu-primary-dark);
 
     &_tab {
         text-decoration: none;
         padding: 0.5rem 1.5rem;
         margin-bottom: -1px;
-        border: solid 1px var(--anu-primaryDark);
+        border: solid 1px var(--anu-primary-dark);
         border-bottom: none;
-        background-color: var(--anu-primaryNormal);
-        color: var(--anu-accentDarkest);
+        background-color: var(--anu-primary-normal);
+        color: var(--anu-accent-darkest);
         text-align: center;
-        
+
         &:hover {
-            background-color: var(--anu-backgroundLighter);
-            color: var(--anu-accentDark)
+            background-color: var(--anu-background-lighter);
+            color: var(--anu-accent-dark)
         }
 
         &.active {
-            background-color: var(--anu-backgroundDeepLight);
+            background-color: var(--anu-background-deep-light);
         }
 
-        &.rounded {            
+        &.rounded {
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
         }
@@ -48,18 +48,18 @@
         flex-direction: column;
         margin-bottom: 0;
         border-bottom: none;
-        border-right: solid 1px var(--anu-primaryDark);
+        border-right: solid 1px var(--anu-primary-dark);
 
-        .annuTabs_tab { 
-            border: solid 1px var(--anu-primaryDark);  
-            
+        .annuTabs_tab {
+            border: solid 1px var(--anu-primary-dark);
+
             &.active {
                 border-right: none;
                 margin-right: -1px;
                 z-index: 1;
             }
 
-            &.rounded {            
+            &.rounded {
                 border-radius: 0.5rem;
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
@@ -72,7 +72,7 @@
         }
     }
 
-    
+
 
     @include small {
         justify-content: center;

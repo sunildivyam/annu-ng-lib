@@ -2,7 +2,7 @@
 
 .annuAsideNav {
     position: relative;
-    border-top: 1px solid var(--anu-primaryNormal);
+    border-top: 1px solid var(--anu-primary-normal);
 
     &_header {
 
@@ -21,10 +21,10 @@
             z-index: $aside-nav-z-index;
 
             &.opened {
-                background-color: var(--anu-secondaryLightest);
+                background-color: var(--anu-secondary-lightest);
                 transform: translateX(0);
             }
         }
     }
-    
+
 }
