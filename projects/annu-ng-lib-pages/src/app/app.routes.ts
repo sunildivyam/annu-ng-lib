@@ -30,10 +30,10 @@ const route: Route = {
 export const routes: Routes = [
   { path: '', redirectTo: '/overview', pathMatch: 'full' },
 
-  { path: 'start-business', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Start Business' } },
-  { path: 'franchise', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Franchise' } },
-  { path: 'Business-tools', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Business Tools' } },
-  { path: 'best-products', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Best Products' } },
+  { path: 'business-ideas', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Business Ideas' } },
+  { path: 'small-business', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Small Business' } },
+  { path: 'medium-business', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Medium Business' } },
+  { path: 'business-plans', component: LayoutPageComponent, data: { type: ROUTE_TYPES.main, title: 'Business Plans' } },
 
   { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.components, title: 'Getting Started' } },
   { path: 'card', component: CardPageComponent, data: { type: ROUTE_TYPES.components, title: 'Card' } },
