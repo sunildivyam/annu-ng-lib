@@ -1,0 +1,25 @@
+<h1>{{cmpInfo?.name}}</h1>
+<p [innerHtml]="cmpInfo?.description"></p>
+<anu-tabs [tabs]="tabs" (changed)="tabChanged($event)"></anu-tabs>
+
+<section *ngIf="activeTab.name === tabs[0].name">
+    <h2>Input Properties</h2>
+    <anu-component-props [props]="cmpInfo?.inputProps"></anu-component-props>
+    <h2>Output Properties / Events</h2>
+    <anu-component-props [props]="cmpInfo?.outputProps"></anu-component-props>
+    <h2>Properties</h2>
+    <anu-component-props [props]="cmpInfo?.props"></anu-component-props>
+    <h2>Methods</h2>
+    <anu-component-props [props]="cmpInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+    <h2>Usage Examples</h2>
+    <ng-content></ng-content>
+</section>
+<section *ngIf="activeTab.name === tabs[1].name">
+    Tab2
+</section>
+<section *ngIf="activeTab.name === tabs[2].name">
+    Tab3
+</section>
+<section *ngIf="activeTab.name === tabs[3].name">
+    Tab 4 Content
+</section>

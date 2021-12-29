@@ -40,7 +40,8 @@ $menu-modal: 9000;
 @mixin col($i) {
   display: flex;
   flex-direction: column;
-  width: boxSize($i);
+  width: calc(boxSize($i) - 1rem);
+  margin: 0.5rem;
 }
 
 @mixin box-sizes {

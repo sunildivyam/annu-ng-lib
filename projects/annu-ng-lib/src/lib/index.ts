@@ -18,3 +18,8 @@ export * from './components/toolbar';
 export * from './components/modal';
 export * from './components/link-form';
 export * from './components/image-form';
+export * from './components/docs';
+
+
+// Lib interfaces
+export * from './annu-ng-lib.interface';

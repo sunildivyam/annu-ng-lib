@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { ThemeService } from '@annu-ng-lib';
 import { ROUTE_TYPES } from './constants';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'anu-root',
@@ -19,6 +20,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeService.setTheme('pureGold', false);
+    this.themeService.setTheme(environment.themeName, false);
   }
 }

@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  libConfig: { docsJsonUrl: '/data/documentation.json' },
+  themeName: 'armyGreen',
 };

@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AnnuNgLibModule } from '@annu-ng-lib';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import {
@@ -57,7 +58,7 @@ import {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     // annu-ng-lib - components modules
-    AnnuNgLibModule,
+    AnnuNgLibModule.forRoot({ docsConfig: environment.libConfig}),
   ],
   providers: [],
   bootstrap: [AppComponent]

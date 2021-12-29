@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
+import { LibConfig } from './annu-ng-lib.interface';
 
 import { TabsModule } from './components/tabs/tabs.module';
 import { ColorPaletteModule } from './components/color-palette/color-palette.module';
@@ -21,6 +23,7 @@ import { ArticleModule } from './components/article/article.module';
 import { ImageFormModule } from './components/image-form/image-form.module';
 import { LinkFormModule } from './components/link-form/link-form.module';
 import { ArticleEditorModule } from './components/article-editor/article-editor.module';
+import { DocsModule } from './components/docs/docs.module';
 
 
 @NgModule({
@@ -49,10 +52,22 @@ import { ArticleEditorModule } from './components/article-editor/article-editor.
     ImageFormModule,
     LinkFormModule,
     ArticleEditorModule,
+    DocsModule,
   ]
 })
 export class AnnuNgLibModule {
-  constructor() {
+  constructor(@Optional() @SkipSelf() parentModule?: AnnuNgLibModule) {
+    if (parentModule) {
+      throw new Error('AnnuNgLibModule is already loaded. Import it in the appModule only');
+    }
+  }
 
+  static forRoot(libConfig: LibConfig): ModuleWithProviders<AnnuNgLibModule> {
+    return {
+      ngModule: AnnuNgLibModule,
+      providers: [
+        { provide: LibConfig, useValue: libConfig }
+      ]
+    };
   }
 }
