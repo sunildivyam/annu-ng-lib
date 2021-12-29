@@ -19,6 +19,7 @@ export * from './components/modal';
 export * from './components/link-form';
 export * from './components/image-form';
 export * from './components/docs';
+export * from './components/code-block';
 
 
 // Lib interfaces

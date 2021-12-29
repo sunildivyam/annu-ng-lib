@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { ColorPalette } from '../theme/theme.interface';
 
 /**
- * ColorPaletteComponent generates 9 shades of colors based on input property, <b>colorPalette.hue</b> and colorPalette.saturation, ranging from DeepDark ... Normal ... DeepLight.
+ * ColorPaletteComponent generates 9 shades of colors based on input property, <code>colorPalette.hue</code> and <code>colorPalette.saturation</code>, ranging from DeepDark ... Normal ... DeepLight.
  * Shades are generated based on calculated Lightness of the color.
  */
 @Component({

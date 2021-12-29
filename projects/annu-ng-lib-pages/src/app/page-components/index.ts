@@ -16,3 +16,4 @@ export * from './toolbar-page/toolbar-page.component';
 export * from './modal-page/modal-page.component';
 export * from './article-page/article-page.component';
 export * from './article-editor-page/article-editor-page.component';
+export * from './code-block-page/code-block-page.component';

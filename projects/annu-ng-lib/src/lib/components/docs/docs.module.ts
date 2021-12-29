@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentInfoComponent } from './component-info/component-info.component';
 import { TabsModule } from '../tabs';
 import { CardModule } from '../card';
+import { CodeBlockModule } from '../code-block';
 
 
 
@@ -17,7 +18,8 @@ import { CardModule } from '../card';
     CommonModule,
     HttpClientModule,
     TabsModule,
-    CardModule
+    CardModule,
+    CodeBlockModule
   ],
   exports: [
     ComponentPropsComponent,

@@ -13,8 +13,8 @@ export class ComponentInfoComponent implements OnInit, OnChanges {
   @Input() name: string = '';
 
   cmpInfo: ComponentInfo;
-  tabs = COMMPONENT_INFO_TABS;
-  activeTab = COMMPONENT_INFO_TABS[0];
+  tabs = COMMPONENT_INFO_TABS.map(t => ({...t}));
+  activeTab = this.tabs[0];
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
 
   constructor(private docService: DocsService) { }

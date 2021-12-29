@@ -7,9 +7,9 @@
                 <td colspan="3" [innerHtml]="prop.description"></td>
             </tr>
             <tr>
-                <td *ngIf="prop.type"><label>Type</label>{{prop.type}}</td>
+                <td *ngIf="prop.type"><label>Type</label><code>{{prop.type}}</code></td>
                 <td *ngIf="prop.defaultValue"><label>Default value</label>{{prop.defaultValue}}</td>
-                <td *ngIf="prop.returnType"><label>Return type</label>{{prop.returnType}}</td>
+                <td *ngIf="prop.returnType"><label>Return type</label><code>{{prop.returnType}}</code></td>
             </tr>
             <ng-container *ngIf="prop.args && prop.args.length">
                 <tr>
@@ -26,7 +26,7 @@
                                 </tr>
                                 <tr *ngFor="let arg of prop.args">
                                     <td>{{arg.name}}</td>
-                                    <td>{{arg.type}}</td>
+                                    <td><code>{{arg.type}}</code></td>
                                     <td>{{arg.defaultValue}}</td>
                                 </tr>
                             </tbody>

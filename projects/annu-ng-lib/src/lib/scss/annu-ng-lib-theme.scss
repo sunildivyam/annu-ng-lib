@@ -2,6 +2,16 @@
 @import "mixins";
 // Import all fonts here, that has been refered from theme files.
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+@import "~prismjs/themes/prism-okaidia";
+
+// Use any of the Prismjs themes for code highlighting:
+// @import "~prismjs/themes/prism";
+// @import "~prismjs/themes/prism-coy";
+// @import "~prismjs/themes/prism-dark";
+// @import "~prismjs/themes/prism-funky";
+// @import "~prismjs/themes/prism-solarizedlight";
+// @import "~prismjs/themes/prism-tomorrow";
+// @import "~prismjs/themes/prism-twilight";
 
 * {
   box-sizing: border-box;
@@ -367,4 +377,12 @@ input[type="text"], textarea {
 
 .shadow {
   box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-background-normal);
+}
+
+:not(pre) > code, .code {
+  background-color: var(--anu-accent-darker);
+  color: var(--anu-accent-deep-light);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 0.5rem;
 }
