@@ -1,6 +1,12 @@
-<anu-pagination 
-[activePage]="2" 
-[totalCount]="50"
-[pageSize] = "5"
-pageUrl="/category/test">
-</anu-pagination>
+<anu-component-info name="PaginationComponent">
+    <h3>Usage</h3>
+    <anu-code-block source='
+    <anu-pagination
+        [activePage]="2"
+        [totalCount]="50"
+        [pageSize]="5"
+        pageUrl="/category/test">
+    </anu-pagination>'></anu-code-block>
+    <h3>Resulted UI</h3>
+    <anu-pagination [activePage]="2" [totalCount]="50" [pageSize]="5" pageUrl="/category/test"></anu-pagination>
+</anu-component-info>

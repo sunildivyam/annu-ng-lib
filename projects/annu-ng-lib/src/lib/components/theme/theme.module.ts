@@ -6,6 +6,7 @@ import { ThemeComponent } from './theme.component';
 import { ColorPaletteModule } from '../color-palette/color-palette.module';
 import { TabsModule } from '../tabs';
 import { TypographyModule } from '../typography/typography.module';
+import { CodeBlockModule } from '../code-block';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TypographyModule } from '../typography/typography.module';
     FormsModule,
     ColorPaletteModule,
     TabsModule,
-    TypographyModule
+    TypographyModule,
+    CodeBlockModule
   ],
   exports: [ThemeComponent],
 })

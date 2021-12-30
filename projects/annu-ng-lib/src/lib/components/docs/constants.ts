@@ -7,8 +7,12 @@ export const COMMPONENT_INFO_TABS: Array<Tab> = [
         active: true,
     },
     {
+        name: 'usage',
+        title: 'Usage',
+    },
+    {
         name: 'typescript',
-        title: 'Typescript',
+        title: 'Ts',
     },
     {
         name: 'html',
@@ -16,7 +20,7 @@ export const COMMPONENT_INFO_TABS: Array<Tab> = [
     },
     {
         name: 'styles',
-        title: 'Styles',
+        title: 'Scss',
     }
 ];
 

@@ -1,4 +1,4 @@
-<div class="prop-container col-lg-6 col-md-12 col-sm-12" *ngFor="let prop of props">
+<div class="prop-container shadow col-lg-6 col-md-12 col-sm-12" *ngFor="let prop of props">
     <h3>{{type === propertyTypes.METHOD ? prop.name + '(...)': prop.name}}</h3>
     <small *ngIf="prop.accessModifier">{{prop.accessModifier}}</small>
     <table>

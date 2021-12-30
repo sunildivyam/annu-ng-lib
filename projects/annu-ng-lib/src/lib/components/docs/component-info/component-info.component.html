@@ -11,15 +11,23 @@
     <anu-component-props [props]="cmpInfo?.props"></anu-component-props>
     <h2 *ngIf="cmpInfo?.methods && cmpInfo?.methods.length">Methods</h2>
     <anu-component-props [props]="cmpInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
-    <h2>Usage Examples</h2>
+</section>
+
+<section *ngIf="activeTab.name === tabs[1].name">
     <ng-content></ng-content>
 </section>
-<section *ngIf="activeTab.name === tabs[1].name">
+
+<section *ngIf="activeTab.name === tabs[2].name">
+    <h2>{{cmpInfo.tsUrl}}</h2>
     <anu-code-block [source]="cmpInfo.tsSource"></anu-code-block>
 </section>
-<section *ngIf="activeTab.name === tabs[2].name">
+
+<section *ngIf="activeTab.name === tabs[3].name">
+    <h2>{{cmpInfo.templateUrl}}</h2>
     <anu-code-block [source]="cmpInfo.templateSource"></anu-code-block>
 </section>
-<section *ngIf="activeTab.name === tabs[3].name">
+
+<section *ngIf="activeTab.name === tabs[4].name">
+    <h2>{{cmpInfo.styleUrl}}</h2>
     <anu-code-block [source]="cmpInfo.styleSource"></anu-code-block>
 </section>

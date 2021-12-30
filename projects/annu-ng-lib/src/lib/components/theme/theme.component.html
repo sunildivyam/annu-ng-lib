@@ -38,17 +38,10 @@
   <section class="annuTheme_json" *ngIf="selectedTab.name === 'json'">
     <div class="annuTheme_json_code">
       <h3>Theme Json</h3>
-      <code>
-        <pre>
-          {{theme | json}}
-        </pre>
-      </code>
+      <anu-code-block [source]="theme | json" language="javascript"></anu-code-block>
+      <hr/>
       <h3>CSS Vars</h3>
-      <code>
-        <pre>
-          {{getCssVars(theme) | json}}
-        </pre>
-      </code>
+      <anu-code-block [source]="getCssVars(theme) | json" language="javascript"></anu-code-block>
     </div>
   </section>
 </div>

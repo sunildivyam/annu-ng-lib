@@ -10,7 +10,8 @@ export class TabsPageComponent implements OnInit {
   public tabs = [
     {
       name: 'tab1',
-      title: 'Tab 1'
+      title: 'Tab 1',
+      active: true
     } as Tab,
     {
       name: 'tab2',
@@ -22,11 +23,10 @@ export class TabsPageComponent implements OnInit {
       title: 'Tab 3'
     } as Tab
   ];
-  
-  public selectedTab: Tab
-  constructor() { 
-    this.selectedTab = this.tabs.find(t => t.active === true);
-  }
+
+  public selectedTab: Tab = this.tabs[0];
+
+  constructor() {}
 
   ngOnInit(): void {
   }
