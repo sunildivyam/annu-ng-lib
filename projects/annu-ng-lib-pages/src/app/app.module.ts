@@ -27,9 +27,10 @@ import {
   ModalPageComponent,
   ArticlePageComponent,
   ArticleEditorPageComponent,
-} from './page-components';
-import { CodeBlockPageComponent } from './page-components/code-block-page/code-block-page.component';
+  CodeBlockPageComponent,
+  MetaPageComponent,
 
+} from './page-components';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { CodeBlockPageComponent } from './page-components/code-block-page/code-b
     ArticlePageComponent,
     ArticleEditorPageComponent,
     CodeBlockPageComponent,
+    MetaPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -15,6 +15,6 @@ article: Article;
   }
 
   public articleChanged(article: Article) {
-    console.log('Saved - ', article?.name);
+    console.log('Saved - ', article?.metaInfo);
   }
 }

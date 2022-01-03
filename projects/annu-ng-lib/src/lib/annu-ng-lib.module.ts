@@ -25,6 +25,7 @@ import { LinkFormModule } from './components/link-form/link-form.module';
 import { ArticleEditorModule } from './components/article-editor/article-editor.module';
 import { DocsModule } from './components/docs/docs.module';
 import { CodeBlockModule } from './components/code-block/code-block.module';
+import { MetaModule } from './components/meta/meta.module';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { CodeBlockModule } from './components/code-block/code-block.module';
     ArticleEditorModule,
     DocsModule,
     CodeBlockModule,
+    MetaModule,
   ]
 })
 export class AnnuNgLibModule {

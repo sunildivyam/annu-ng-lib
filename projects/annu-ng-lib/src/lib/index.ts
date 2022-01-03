@@ -20,7 +20,7 @@ export * from './components/link-form';
 export * from './components/image-form';
 export * from './components/docs';
 export * from './components/code-block';
-
+export * from './components/meta';
 
 // Lib interfaces
 export * from './annu-ng-lib.interface';

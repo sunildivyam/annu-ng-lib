@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MetaService } from '../meta/meta.service';
 import { Article } from './article.interface';
 
 @Component({
@@ -9,9 +10,10 @@ import { Article } from './article.interface';
 export class ArticleComponent implements OnInit {
   @Input() value: Article = { name: 'default-article' };
 
-  constructor() { }
+  constructor(private metaService: MetaService) { }
 
   ngOnInit(): void {
+    this.metaService.setPageMeta(this.value?.metaInfo);
   }
 
 }

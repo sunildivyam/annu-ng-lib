@@ -25,4 +25,8 @@
             </anu-card-body>
         </anu-card>
     </section>
+
+    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'metainfo'}">
+        <anu-meta-form [metaInfo]="article?.metaInfo" (changed)="articleMetaChanged($event)"></anu-meta-form>
+    </section>
 </section>

@@ -6,6 +6,7 @@ import { ContentEditorModule } from '../content-editor/content-editor.module';
 import { CardModule } from '../card';
 import { ImageFormModule } from '../image-form';
 import { ModalModule } from '../modal';
+import { MetaModule } from '../meta';
 
 
 
@@ -18,6 +19,7 @@ import { ModalModule } from '../modal';
     CardModule,
     ImageFormModule,
     ModalModule,
+    MetaModule
   ],
   exports: [ArticleEditorComponent],
 })
