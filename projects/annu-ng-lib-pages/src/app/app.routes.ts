@@ -22,7 +22,8 @@ import {
   ArticlePageComponent,
   ArticleEditorPageComponent,
   CodeBlockPageComponent,
-  MetaPageComponent
+  MetaPageComponent,
+  HamburgerPageComponent,
 } from './page-components';
 
 const route: Route = {
@@ -57,4 +58,5 @@ export const routes: Routes = [
   { path: 'article-editor', component: ArticleEditorPageComponent, data: { type: ROUTE_TYPES.components, title: 'Article Editor' } },
   { path: 'code-block', component: CodeBlockPageComponent, data: { type: ROUTE_TYPES.components, title: 'Code Block' } },
   { path: 'meta', component: MetaPageComponent, data: { type: ROUTE_TYPES.components, title: 'Meta' } },
+  { path: 'hamburger', component: HamburgerPageComponent, data: { type: ROUTE_TYPES.components, title: 'Hamburger' } },
 ];

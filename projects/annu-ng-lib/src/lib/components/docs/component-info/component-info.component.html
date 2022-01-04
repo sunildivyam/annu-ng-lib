@@ -1,33 +1,35 @@
-<h1>{{cmpInfo?.name}}</h1>
-<p [innerHtml]="cmpInfo?.description"></p>
-<anu-tabs [tabs]="tabs" (changed)="tabChanged($event)"></anu-tabs>
+<article>
+    <h1>{{cmpInfo?.name}}</h1>
+    <p [innerHtml]="cmpInfo?.description"></p>
+    <anu-tabs [tabs]="tabs" (changed)="tabChanged($event)"></anu-tabs>
 
-<section *ngIf="activeTab.name === tabs[0].name">
-    <h2 *ngIf="cmpInfo?.inputProps && cmpInfo?.inputProps.length">Input Properties</h2>
-    <anu-component-props [props]="cmpInfo?.inputProps"></anu-component-props>
-    <h2 *ngIf="cmpInfo?.outputProps && cmpInfo?.outputProps.length">Output Properties / Events</h2>
-    <anu-component-props [props]="cmpInfo?.outputProps"></anu-component-props>
-    <h2 *ngIf="cmpInfo?.props && cmpInfo?.props.length">Properties</h2>
-    <anu-component-props [props]="cmpInfo?.props"></anu-component-props>
-    <h2 *ngIf="cmpInfo?.methods && cmpInfo?.methods.length">Methods</h2>
-    <anu-component-props [props]="cmpInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
-</section>
+    <section *ngIf="activeTab.name === tabs[0].name">
+        <h2 *ngIf="cmpInfo?.inputProps && cmpInfo?.inputProps.length">Input Properties</h2>
+        <anu-component-props [props]="cmpInfo?.inputProps"></anu-component-props>
+        <h2 *ngIf="cmpInfo?.outputProps && cmpInfo?.outputProps.length">Output Properties / Events</h2>
+        <anu-component-props [props]="cmpInfo?.outputProps"></anu-component-props>
+        <h2 *ngIf="cmpInfo?.props && cmpInfo?.props.length">Properties</h2>
+        <anu-component-props [props]="cmpInfo?.props"></anu-component-props>
+        <h2 *ngIf="cmpInfo?.methods && cmpInfo?.methods.length">Methods</h2>
+        <anu-component-props [props]="cmpInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+    </section>
 
-<section *ngIf="activeTab.name === tabs[1].name">
-    <ng-content></ng-content>
-</section>
+    <section *ngIf="activeTab.name === tabs[1].name">
+        <ng-content></ng-content>
+    </section>
 
-<section *ngIf="activeTab.name === tabs[2].name">
-    <h2>{{cmpInfo.tsUrl}}</h2>
-    <anu-code-block [source]="cmpInfo.tsSource"></anu-code-block>
-</section>
+    <section *ngIf="activeTab.name === tabs[2].name">
+        <h2>{{cmpInfo.tsUrl}}</h2>
+        <anu-code-block [source]="cmpInfo.tsSource"></anu-code-block>
+    </section>
 
-<section *ngIf="activeTab.name === tabs[3].name">
-    <h2>{{cmpInfo.templateUrl}}</h2>
-    <anu-code-block [source]="cmpInfo.templateSource"></anu-code-block>
-</section>
+    <section *ngIf="activeTab.name === tabs[3].name">
+        <h2>{{cmpInfo.templateUrl}}</h2>
+        <anu-code-block [source]="cmpInfo.templateSource"></anu-code-block>
+    </section>
 
-<section *ngIf="activeTab.name === tabs[4].name">
-    <h2>{{cmpInfo.styleUrl}}</h2>
-    <anu-code-block [source]="cmpInfo.styleSource"></anu-code-block>
-</section>
+    <section *ngIf="activeTab.name === tabs[4].name">
+        <h2>{{cmpInfo.styleUrl}}</h2>
+        <anu-code-block [source]="cmpInfo.styleSource"></anu-code-block>
+    </section>
+</article>

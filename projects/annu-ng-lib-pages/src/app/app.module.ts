@@ -29,6 +29,7 @@ import {
   ArticleEditorPageComponent,
   CodeBlockPageComponent,
   MetaPageComponent,
+  HamburgerPageComponent,
 
 } from './page-components';
 
@@ -55,6 +56,7 @@ import {
     ArticleEditorPageComponent,
     CodeBlockPageComponent,
     MetaPageComponent,
+    HamburgerPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

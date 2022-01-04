@@ -39,6 +39,22 @@
         }
     }
 
+    &.secondary {
+        .annuTabs_tab {
+            background-color: var(--anu-secondary-normal);
+            border: solid 1px var(--anu-secondary-dark);
+            border-bottom: none;
+
+            &:hover {
+                background-color: var(--anu-secondary-lighter);
+            }
+
+            &.active {
+                background-color: var(--anu-background-deep-light);
+            }
+        }
+    }
+
     &_tab.spaced + &_tab.spaced {
         margin-left: 0.5rem;
     }

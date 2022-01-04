@@ -12,6 +12,7 @@ export class TabsComponent implements OnInit {
   @Input() rounded: boolean = false;
   @Input() spaced: boolean = false;
   @Input() vertical: boolean = false;
+  @Input() secondary: false;
   @Output() changed = new EventEmitter<Tab>();
 
   constructor() {

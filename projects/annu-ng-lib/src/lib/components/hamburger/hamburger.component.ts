@@ -7,6 +7,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class HamburgerComponent implements OnInit {
 @Input() opened: boolean = false;
+@Input() secondary: boolean = false;
+
 @Output() changed = new EventEmitter<boolean>();
 
   constructor() { }
