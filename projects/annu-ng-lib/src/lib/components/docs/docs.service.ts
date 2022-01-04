@@ -1,13 +1,11 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable, Optional } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LibConfig } from '../../annu-ng-lib.interface';
 import { ACCESS_MODIFIERS } from './constants';
 import { ComponentProp, ComponentInfo, ComponentMethod } from './docs.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DocsService {
   url: string;
   componentsCache: Object = {};

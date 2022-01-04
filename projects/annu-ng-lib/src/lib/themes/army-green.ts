@@ -1,4 +1,4 @@
-import { Theme } from '../components/theme/theme.interface';
+import { Theme } from '../components/common-ui';
 
 const jsonTheme = `
 {

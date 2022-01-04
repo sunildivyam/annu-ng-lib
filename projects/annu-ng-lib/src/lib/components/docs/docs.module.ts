@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ComponentPropsComponent } from './component-props/component-props.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentInfoComponent } from './component-info/component-info.component';
-import { TabsModule } from '../tabs';
-import { CardModule } from '../card';
-import { CodeBlockModule } from '../code-block';
-
+import { TabsModule, CardModule, CodeBlockModule } from '../common-ui';
+import { DocsService } from './docs.service';
 
 
 @NgModule({
@@ -21,6 +19,7 @@ import { CodeBlockModule } from '../code-block';
     CardModule,
     CodeBlockModule
   ],
+  providers: [DocsService],
   exports: [
     ComponentPropsComponent,
     ComponentInfoComponent

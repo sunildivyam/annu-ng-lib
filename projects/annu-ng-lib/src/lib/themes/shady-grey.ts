@@ -1,4 +1,4 @@
-import { Theme } from '../components/theme/theme.interface';
+import { Theme } from '../components/common-ui';
 
 const jsonTheme = `{
   "name": "shadyGrey",
@@ -190,4 +190,3 @@ const jsonTheme = `{
   ]
 }`;
 export const shadyGrey: Theme = JSON.parse(jsonTheme);
-

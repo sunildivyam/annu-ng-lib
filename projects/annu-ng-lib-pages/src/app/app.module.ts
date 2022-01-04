@@ -32,6 +32,7 @@ import {
   HamburgerPageComponent,
 
 } from './page-components';
+import { ComponentInfoPageComponent } from './page-components/component-info-page/component-info-page.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {
     CodeBlockPageComponent,
     MetaPageComponent,
     HamburgerPageComponent,
+    ComponentInfoPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

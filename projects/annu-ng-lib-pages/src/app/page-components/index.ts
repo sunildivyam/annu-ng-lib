@@ -19,3 +19,4 @@ export * from './article-editor-page/article-editor-page.component';
 export * from './code-block-page/code-block-page.component';
 export * from './meta-page/meta-page.component';
 export * from './hamburger-page/hamburger-page.component';
+export * from './component-info-page/component-info-page.component';

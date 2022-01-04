@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Tab } from '@annu-ng-lib';
+import { Tab } from '../../common-ui';
 import { COMMPONENT_INFO_TABS, PROPERTY_TYPES } from '../constants';
 import { ComponentInfo } from '../docs.interface';
 import { DocsService } from '../docs.service';
