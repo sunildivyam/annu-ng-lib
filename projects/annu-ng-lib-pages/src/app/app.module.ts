@@ -30,9 +30,13 @@ import {
   CodeBlockPageComponent,
   MetaPageComponent,
   HamburgerPageComponent,
+  ComponentInfoPageComponent,
+  CategoryPageComponent,
+  CategoryEditorPageComponent,
 
 } from './page-components';
-import { ComponentInfoPageComponent } from './page-components/component-info-page/component-info-page.component';
+import { ArticleListPageComponent } from './page-components/article-list-page/article-list-page.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +63,9 @@ import { ComponentInfoPageComponent } from './page-components/component-info-pag
     MetaPageComponent,
     HamburgerPageComponent,
     ComponentInfoPageComponent,
+    CategoryPageComponent,
+    CategoryEditorPageComponent,
+    ArticleListPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

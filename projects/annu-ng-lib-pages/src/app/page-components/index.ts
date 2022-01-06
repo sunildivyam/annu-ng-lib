@@ -20,3 +20,6 @@ export * from './code-block-page/code-block-page.component';
 export * from './meta-page/meta-page.component';
 export * from './hamburger-page/hamburger-page.component';
 export * from './component-info-page/component-info-page.component';
+export * from './category-page/category-page.component';
+export * from './category-editor-page/category-editor-page.component';
+export * from './article-list-page/article-list-page.component';

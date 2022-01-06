@@ -3,6 +3,7 @@ import { Article } from '../article';
 import { EditorElement, EDITOR_ROOT_ELEMENT } from '../content-editor';
 import { ImageInfo, MetaInfo, Tab } from '../../common-ui';
 import { ARTICLE_EDITOR_TABS } from './constants';
+import { UtilsService } from '../../../services';
 
 @Component({
   selector: 'anu-article-editor',
@@ -23,15 +24,11 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     metaInfo: {}
   };
 
-  constructor() { }
-
-  private getNameFromTitle(title: string = ''): string {
-    return title.split(' ').join('-').toLocaleLowerCase();
-  }
+  constructor(private utils: UtilsService) { }
 
   private updateArticleAdditionalInfo() {
     // set article name
-    this.article.name = this.getNameFromTitle(this.title);
+    this.article.name = this.utils.toDashedString(this.title);
     // set article meta info based on content
     this.article.metaInfo = { ...this.article.metaInfo, title: this.title };
   }

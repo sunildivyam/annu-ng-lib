@@ -25,6 +25,9 @@ import {
   MetaPageComponent,
   HamburgerPageComponent,
   ComponentInfoPageComponent,
+  CategoryPageComponent,
+  CategoryEditorPageComponent,
+  ArticleListPageComponent,
 } from './page-components';
 
 const route: Route = {
@@ -60,9 +63,13 @@ export const routes: Routes = [
   { path: 'hamburger', component: HamburgerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Hamburger' } },
 
   // CMS Component Routes
-  { path: 'content-editor', component: ContentEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Content Editor' } },
   { path: 'article', component: ArticlePageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Article' } },
   { path: 'article-editor', component: ArticleEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Article Editor' } },
+  { path: 'article-list', component: ArticleListPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Article List' } },
+  { path: 'content-editor', component: ContentEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Content Editor' } },
+  { path: 'category', component: CategoryPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category' } },
+  { path: 'category-editor', component: CategoryEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category Editor' } },
+
 
   // Docs Component Routes
   { path: 'component-info', component: ComponentInfoPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Component Info' } },
