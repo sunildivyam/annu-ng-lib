@@ -28,6 +28,7 @@ import {
   CategoryPageComponent,
   CategoryEditorPageComponent,
   ArticleListPageComponent,
+  SpinnerPageComponent,
 
 } from './page-components';
 
@@ -57,6 +58,7 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/code-block', component: CodeBlockPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Code Block' } },
   { path: 'components/common-ui/meta', component: MetaPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Meta' } },
   { path: 'components/common-ui/hamburger', component: HamburgerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Hamburger' } },
+  { path: 'components/common-ui/spinner', component: SpinnerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Spinner' } },
 ]
 
 // CMS Component Routes

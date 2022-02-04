@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -34,6 +34,7 @@ import {
   CategoryPageComponent,
   CategoryEditorPageComponent,
   ArticleListPageComponent,
+  SpinnerPageComponent,
 
 } from './page-components';
 
@@ -66,12 +67,14 @@ import {
     CategoryPageComponent,
     CategoryEditorPageComponent,
     ArticleListPageComponent,
+    SpinnerPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     // annu-ng-lib - components modules
     AnnuNgLibModule.forRoot({ docsConfig: environment.libConfig}),
   ],

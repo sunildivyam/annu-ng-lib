@@ -19,3 +19,4 @@ export * from './link-form';
 export * from './image-form';
 export * from './code-block';
 export * from './meta';
+export * from './spinner';

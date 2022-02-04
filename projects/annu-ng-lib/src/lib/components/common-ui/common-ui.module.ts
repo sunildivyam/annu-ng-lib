@@ -20,6 +20,7 @@ import { ImageFormModule } from './image-form/image-form.module';
 import { LinkFormModule } from './link-form/link-form.module';
 import { CodeBlockModule } from './code-block/code-block.module';
 import { MetaModule } from './meta/meta.module';
+import { SpinnerModule } from './spinner/spinner.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { MetaModule } from './meta/meta.module';
     LinkFormModule,
     CodeBlockModule,
     MetaModule,
+    SpinnerModule
   ],
 })
 export class CommonUiModule { }
