@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
 
+
+/**
+ * UtilsService exports all the methods that provides some common utility.
+ *
+ * @export
+ * @class UtilsService
+ * @typedef {UtilsService}
+ */
 @Injectable({
   providedIn: 'root'
 })

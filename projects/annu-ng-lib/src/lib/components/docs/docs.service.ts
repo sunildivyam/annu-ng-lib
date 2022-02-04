@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LibConfig } from '../../annu-ng-lib.interface';
 import { ACCESS_MODIFIERS } from './constants';
-import { ComponentProp, ComponentInfo, ComponentMethod } from './docs.interface';
+import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo } from './docs.interface';
 
 @Injectable()
 export class DocsService {
   url: string;
   componentsCache: Object = {};
+  servicesCache: Object = {};
 
   constructor(private httpClient: HttpClient, private libConfig: LibConfig) {
     this.url = libConfig?.docsConfig?.docsJsonUrl || '';
@@ -56,7 +57,28 @@ export class DocsService {
     } as ComponentInfo;
   }
 
-  public getComponentInfo(name: string): Observable<Object> {
+  private parseServiceInfo(rawSvcInfo: any = {}): ServiceInfo {
+    return {
+      name: rawSvcInfo.name || '',
+      description: rawSvcInfo.description || '',
+      tsUrl: rawSvcInfo.file || '',
+      tsSource: rawSvcInfo.sourceCode || '',
+      inputProps: rawSvcInfo.inputsClass && rawSvcInfo.inputsClass.map(p => this.parseProp(p)) || [],
+      outputProps: rawSvcInfo.outputsClass && rawSvcInfo.outputsClass.map(p => this.parseProp(p)) || [],
+      props: rawSvcInfo.properties && rawSvcInfo.properties.map(p => this.parseProp(p)) || [],
+      methods: rawSvcInfo.methods && rawSvcInfo.methods.map(m => this.parseMethod(m)) || [],
+    } as ServiceInfo;
+  }
+
+  /**
+  * getComponentInfo() method fetches all the Components from docs json,
+  * parses and filters them and returns the Component Info for the specipfied component name.
+  *
+  * @public
+  * @param {string} name Name of the service to retrive information
+  * @returns {Observable<ComponentInfo>}
+  */
+  public getComponentInfo(name: string): Observable<ComponentInfo> {
     return new Observable(observer => {
       const cmpInfo = this.componentsCache[name];
       if (cmpInfo) {
@@ -66,6 +88,30 @@ export class DocsService {
           const cmp = res.components.find(c => c.name === name);
           this.componentsCache[name] = this.parseComponentInfo(cmp);
           observer.next(this.componentsCache[name]);
+        })
+      }
+    })
+  }
+
+
+  /**
+   * getServiceInfo() method fetches all the services from docs json,
+   * parses and filters them and returns the Service Info for the specipfied service name.
+   *
+   * @public
+   * @param {string} name Name of the service to retrive information
+   * @returns {Observable<Object>}
+   */
+  public getServiceInfo(name: string): Observable<Object> {
+    return new Observable(observer => {
+      const svcInfo = this.servicesCache[name];
+      if (svcInfo) {
+        observer.next(svcInfo);
+      } else {
+        this.httpClient.get(this.url).subscribe((res: any) => {
+          const svc = res.injectables.find(s => s.name === name);
+          this.servicesCache[name] = this.parseServiceInfo(svc);
+          observer.next(this.servicesCache[name]);
         })
       }
     })

@@ -37,3 +37,19 @@ export const PROPERTY_TYPES = {
     122: 'protected',
     123: 'public',
  };
+
+ export const SERVICE_INFO_TABS: Array<Tab> = [
+    {
+        name: 'overview',
+        title: 'Overview',
+        active: true,
+    },
+    {
+        name: 'playground',
+        title: 'Playground',
+    },
+    {
+        name: 'typescript',
+        title: 'Ts',
+    },
+];

@@ -37,11 +37,14 @@ import {
   SpinnerPageComponent,
 
 } from './page-components';
+import { UtilsServicePageComponent } from './page-services/utils-service-page/utils-service-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
+    // Components Pages
     ThemePickerPageComponent,
     CardPageComponent,
     ThemePageComponent,
@@ -68,6 +71,9 @@ import {
     CategoryEditorPageComponent,
     ArticleListPageComponent,
     SpinnerPageComponent,
+
+    // Service Pages
+    UtilsServicePageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

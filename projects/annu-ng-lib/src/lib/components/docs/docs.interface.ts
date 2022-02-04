@@ -33,3 +33,14 @@ export class ComponentInfo {
    props: Array<ComponentProp>;
    methods: Array<ComponentMethod>;
 }
+
+export class ServiceInfo {
+   name: string;
+   description: string;
+   tsUrl: string;
+   tsSource: string;
+   inputProps: Array<ComponentProp>;
+   outputProps: Array<ComponentProp>;
+   props: Array<ComponentProp>;
+   methods: Array<ComponentMethod>;
+}

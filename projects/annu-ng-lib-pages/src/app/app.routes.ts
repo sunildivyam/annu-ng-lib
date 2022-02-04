@@ -32,6 +32,12 @@ import {
 
 } from './page-components';
 
+// Services from Lib
+import {
+  UtilsServicePageComponent,
+} from './page-services';
+
+
   // Main Nav Routes
 export const mainRoutes = [
   { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } },
@@ -77,15 +83,45 @@ export const docsRoutes = [
   { path: 'components/docs/component-info', component: ComponentInfoPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Component Info' } },
 ];
 
+
+// App Services Routes
+export const appSvcRoutes = [
+  { path: 'services/app/utils', component: UtilsServicePageComponent, data: { type: ROUTE_TYPES.services.app, title: 'Utils Service' } },
+]
+
+// Common UI Services Routes
+export const commonUiSvcRoutes = [
+  // { path: 'services/common-ui/card', component: CardPageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Card' } },
+]
+
+// CMS Services Routes
+export const cmsSvcRoutes = [
+  // { path: 'services/cms/article', component: ArticlePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'Article' } },
+];
+
+// Docs Services Routes
+export const docsSvcRoutes = [
+  // { path: 'services/docs/component-info', component: ComponentInfoPageComponent, data: { type: ROUTE_TYPES.services.docs, title: 'Component Info' } },
+];
+
 export const routes: Routes = [
   { path: '', redirectTo: '/overview', pathMatch: 'full' },
-
+  // Main Routes
   ...mainRoutes,
 
+  // Components Routes
   ...commonUiRoutes,
 
   ...cmsRoutes,
 
   ...docsRoutes,
+
+  // Services Routes
+  ...appSvcRoutes,
+  ...commonUiSvcRoutes,
+
+  ...cmsSvcRoutes,
+
+  ...docsSvcRoutes,
 
 ];

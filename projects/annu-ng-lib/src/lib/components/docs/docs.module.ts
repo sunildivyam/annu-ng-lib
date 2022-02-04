@@ -5,12 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentInfoComponent } from './component-info/component-info.component';
 import { TabsModule, CardModule, CodeBlockModule } from '../common-ui';
 import { DocsService } from './docs.service';
+import { ServiceInfoComponent } from './service-info/service-info.component';
 
 
 @NgModule({
   declarations: [
     ComponentPropsComponent,
-    ComponentInfoComponent
+    ComponentInfoComponent,
+    ServiceInfoComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { DocsService } from './docs.service';
   providers: [DocsService],
   exports: [
     ComponentPropsComponent,
-    ComponentInfoComponent
+    ComponentInfoComponent,
+    ServiceInfoComponent
   ],
 })
 export class DocsModule { }
