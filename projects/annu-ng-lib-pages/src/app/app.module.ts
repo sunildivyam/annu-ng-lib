@@ -33,9 +33,9 @@ import {
   ComponentInfoPageComponent,
   CategoryPageComponent,
   CategoryEditorPageComponent,
+  ArticleListPageComponent,
 
 } from './page-components';
-import { ArticleListPageComponent } from './page-components/article-list-page/article-list-page.component';
 
 
 @NgModule({
