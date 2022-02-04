@@ -35,6 +35,12 @@ import {
 // Services from Lib
 import {
   UtilsServicePageComponent,
+  ContentEditorServicePageComponent,
+  DocsServicePageComponent,
+  HighlightServicePageComponent,
+  MetaServicePageComponent,
+  SelectionServicePageComponent,
+  ThemeServicePageComponent,
 } from './page-services';
 
 
@@ -91,17 +97,20 @@ export const appSvcRoutes = [
 
 // Common UI Services Routes
 export const commonUiSvcRoutes = [
-  // { path: 'services/common-ui/card', component: CardPageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Card' } },
+  { path: 'services/common-ui/highlight', component: HighlightServicePageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Highlight Service' } },
+  { path: 'services/common-ui/meta', component: MetaServicePageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Meta Service' } },
+  { path: 'services/common-ui/theme', component: ThemeServicePageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Theme Service' } },
 ]
 
 // CMS Services Routes
 export const cmsSvcRoutes = [
-  // { path: 'services/cms/article', component: ArticlePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'Article' } },
+  { path: 'services/cms/content-editor', component: ContentEditorServicePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'ContentEditor Service' } },
+  { path: 'services/cms/selection', component: SelectionServicePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'Selection Service' } },
 ];
 
 // Docs Services Routes
 export const docsSvcRoutes = [
-  // { path: 'services/docs/component-info', component: ComponentInfoPageComponent, data: { type: ROUTE_TYPES.services.docs, title: 'Component Info' } },
+  { path: 'services/docs/docs', component: DocsServicePageComponent, data: { type: ROUTE_TYPES.services.docs, title: 'Docs Service' } },
 ];
 
 export const routes: Routes = [
