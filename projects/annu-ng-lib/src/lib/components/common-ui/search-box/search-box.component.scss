@@ -1,0 +1,50 @@
+@import '.../../../../../scss/mixins.scss';
+
+:host {
+
+    input[type="text"] {
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+    }
+
+    .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        font-size: 2rem;
+        color: var(--anu-accent-deep-light);
+        margin-left: -2px;
+        padding: 0rem 1.5rem 0.3rem 1.5rem;
+    }
+
+    @include small {
+        input {
+            font-size: 1rem;
+        }
+
+        .btn {
+            font-size: 2rem;
+            width: auto;
+        }
+    }
+
+    @include medium {
+        input {
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            font-size: 2.5rem;
+        }
+    }
+
+    @include large {
+        input {
+            font-size: 1.7rem;
+        }
+
+        .btn {
+            font-size: 2.8rem;
+        }
+    }
+
+}

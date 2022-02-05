@@ -35,15 +35,20 @@ import {
   CategoryEditorPageComponent,
   ArticleListPageComponent,
   SpinnerPageComponent,
+  ServiceInfoPageComponent,
+  SearchBoxPageComponent,
 
 } from './page-components';
-import { UtilsServicePageComponent } from './page-services/utils-service-page/utils-service-page.component';
-import { ContentEditorServicePageComponent } from './page-services/content-editor-service-page/content-editor-service-page.component';
-import { DocsServicePageComponent } from './page-services/docs-service-page/docs-service-page.component';
-import { HighlightServicePageComponent } from './page-services/highlight-service-page/highlight-service-page.component';
-import { MetaServicePageComponent } from './page-services/meta-service-page/meta-service-page.component';
-import { SelectionServicePageComponent } from './page-services/selection-service-page/selection-service-page.component';
-import { ThemeServicePageComponent } from './page-services/theme-service-page/theme-service-page.component';
+
+import {
+  UtilsServicePageComponent,
+  ContentEditorServicePageComponent,
+  DocsServicePageComponent,
+  HighlightServicePageComponent,
+  MetaServicePageComponent,
+  SelectionServicePageComponent,
+  ThemeServicePageComponent,
+} from './page-services';
 
 
 @NgModule({
@@ -77,6 +82,8 @@ import { ThemeServicePageComponent } from './page-services/theme-service-page/th
     CategoryEditorPageComponent,
     ArticleListPageComponent,
     SpinnerPageComponent,
+    ServiceInfoPageComponent,
+    SearchBoxPageComponent,
 
     // Service Pages
     UtilsServicePageComponent,

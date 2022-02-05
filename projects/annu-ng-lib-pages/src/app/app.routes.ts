@@ -29,7 +29,8 @@ import {
   CategoryEditorPageComponent,
   ArticleListPageComponent,
   SpinnerPageComponent,
-
+  ServiceInfoPageComponent,
+  SearchBoxPageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -71,6 +72,7 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/meta', component: MetaPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Meta' } },
   { path: 'components/common-ui/hamburger', component: HamburgerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Hamburger' } },
   { path: 'components/common-ui/spinner', component: SpinnerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Spinner' } },
+  { path: 'components/common-ui/search-box', component: SearchBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'SearchBox' } },
 ]
 
 // CMS Component Routes
@@ -85,8 +87,8 @@ export const cmsRoutes = [
 
 // Docs Component Routes
 export const docsRoutes = [
-
   { path: 'components/docs/component-info', component: ComponentInfoPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Component Info' } },
+  { path: 'components/docs/service-info', component: ServiceInfoPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Service Info' } },
 ];
 
 

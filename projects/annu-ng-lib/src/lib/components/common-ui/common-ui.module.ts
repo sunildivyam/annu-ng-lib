@@ -21,12 +21,14 @@ import { LinkFormModule } from './link-form/link-form.module';
 import { CodeBlockModule } from './code-block/code-block.module';
 import { MetaModule } from './meta/meta.module';
 import { SpinnerModule } from './spinner/spinner.module';
+import { SearchBoxModule } from './search-box/search-box.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+
   ],
   exports: [
     TabsModule,
@@ -48,7 +50,8 @@ import { SpinnerModule } from './spinner/spinner.module';
     LinkFormModule,
     CodeBlockModule,
     MetaModule,
-    SpinnerModule
+    SpinnerModule,
+    SearchBoxModule
   ],
 })
 export class CommonUiModule { }

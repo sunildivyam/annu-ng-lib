@@ -24,3 +24,5 @@ export * from './category-page/category-page.component';
 export * from './category-editor-page/category-editor-page.component';
 export * from './article-list-page/article-list-page.component';
 export * from './spinner-page/spinner-page.component';
+export * from './service-info-page/service-info-page.component';
+export * from './search-box-page/search-box-page.component';

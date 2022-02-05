@@ -20,9 +20,9 @@ $fast: 0.5s;
     right: 0;
 
     .spinner {
-        border: $medium/$borderDivider solid var(--anu-primary-lightest);
+        border: calc($medium/$borderDivider) solid var(--anu-primary-lightest);
         border-radius: 50%;
-        border-top: $medium/$borderDivider solid var(--anu-primary-normal);
+        border-top: calc($medium/$borderDivider) solid var(--anu-primary-normal);
         width: $medium;
         height: $medium;
         -webkit-animation: spin $normal linear infinite; /* Safari */
@@ -43,19 +43,19 @@ $fast: 0.5s;
         &.sm {
             width: $small;
             height: $small;
-            border-width: $small/$borderDivider;
+            border-width: calc($small/$borderDivider);
         }
 
         &.md {
             width: $medium;
             height: $medium;
-            border-width: $medium/$borderDivider;
+            border-width: calc($medium/$borderDivider);
         }
 
         &.lg {
             width: $large;
             height: $large;
-            border-width: $large/$borderDivider;
+            border-width: calc($large/$borderDivider);
         }
 
         // Speed
