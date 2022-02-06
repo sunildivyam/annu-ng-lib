@@ -14,7 +14,7 @@ export class ComponentInfoComponent implements OnInit, OnChanges {
 
   cmpInfo: ComponentInfo;
   tabs = COMMPONENT_INFO_TABS.map(t => ({...t}));
-  activeTab = this.tabs[0];
+  activeTab = this.tabs[1];
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
 
   constructor(private docService: DocsService) { }

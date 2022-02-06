@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ComponentPropsComponent } from './component-props/component-props.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentInfoComponent } from './component-info/component-info.component';
-import { TabsModule, CardModule, CodeBlockModule } from '../common-ui';
+import { TabsModule, CardModule, CodeBlockModule, SearchBoxModule } from '../common-ui';
 import { DocsService } from './docs.service';
 import { ServiceInfoComponent } from './service-info/service-info.component';
 
@@ -19,7 +19,8 @@ import { ServiceInfoComponent } from './service-info/service-info.component';
     HttpClientModule,
     TabsModule,
     CardModule,
-    CodeBlockModule
+    CodeBlockModule,
+    SearchBoxModule
   ],
   providers: [DocsService],
   exports: [

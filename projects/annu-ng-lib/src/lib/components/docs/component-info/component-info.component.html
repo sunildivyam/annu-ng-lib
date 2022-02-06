@@ -1,7 +1,7 @@
 <article>
     <h1>{{cmpInfo?.name}}</h1>
     <p [innerHtml]="cmpInfo?.description"></p>
-    <anu-tabs [tabs]="tabs" (changed)="tabChanged($event)"></anu-tabs>
+    <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 
     <section *ngIf="activeTab.name === tabs[0].name">
         <h2 *ngIf="cmpInfo?.inputProps && cmpInfo?.inputProps.length">Input Properties</h2>
