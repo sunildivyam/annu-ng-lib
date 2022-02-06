@@ -65,4 +65,8 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
   public keywordsModelChanged(term: string):void {
     this.keywordsSubject.next(term);
   }
+
+  public clearSearch(): void {
+    this.keywordsSubject.next('');
+  }
 }
