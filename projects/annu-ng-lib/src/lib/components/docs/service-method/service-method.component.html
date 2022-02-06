@@ -18,5 +18,9 @@
     <label>{{arg.name}}</label>
     <textarea [(ngModel)]="arg.value"></textarea>
 </div>
-<hr/>
-<a href="#" class="btn" (click)="onChange($event)">Execute</a>
+
+<div class="row">
+    <div class="col-12 center">
+        <a href="#" class="btn" (click)="onChange($event)">Execute</a>
+    </div>
+</div>

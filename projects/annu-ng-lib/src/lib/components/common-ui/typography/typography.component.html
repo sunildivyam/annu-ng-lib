@@ -1,6 +1,26 @@
 <section class="annuTypography">
-    <section *ngFor="let typograph of typography">
-        <label>{{typograph.name}}</label>
-        <input type="text" [(ngModel)] = "typograph.value">
-    </section>
-  </section>
+    <div class="row">
+        <div class="col-6">
+            <label>Variable Name</label>
+        </div>
+        <div class="col-6">
+            <label>Variable Value</label>
+        </div>
+    </div>
+    <div class="row shadow spacing-around-vertical" *ngFor="let typograph of typography; let index = $index">
+        <div class="col-6">
+            <input type="text" [(ngModel)]="typograph.name" (blur)="typographyChanged()">
+        </div>
+        <div class="col-5">
+            <input type="text" [(ngModel)]="typograph.value"  (blur)="typographyChanged()">
+        </div>
+        <div class="col-1 center middle">
+            <a href="#" class="error remove-btn" (click)="removeTypography($event, index)">x</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 center">
+            <a href="#" class="btn primary" (click)="addTypography($event)" title="Add new variable">Add new variable</a>
+        </div>
+    </div>
+</section>

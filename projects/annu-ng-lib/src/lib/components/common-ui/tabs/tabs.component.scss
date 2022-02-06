@@ -76,7 +76,7 @@
             }
 
             &.rounded {
-                border-radius: 0.5rem;
+                border-radius: calc(var(--anu-border-radius)/2);
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
             }

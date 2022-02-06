@@ -32,7 +32,7 @@
   </section>
 
   <section class="annuTheme_typography" *ngIf="selectedTab.name === 'typography'">
-    <anu-typography [typography]="theme.typography"></anu-typography>
+    <anu-typography [typography]="typography" (changed)="typographyChanged($event)"></anu-typography>
   </section>
 
   <section class="annuTheme_json" *ngIf="selectedTab.name === 'json'">

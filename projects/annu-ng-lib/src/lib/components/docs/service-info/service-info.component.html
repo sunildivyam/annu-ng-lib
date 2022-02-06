@@ -16,7 +16,7 @@
         <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)" placeholder="service method name...">
         </anu-search-box>
 
-        <anu-card class="method-card" *ngFor="let fn of filteredMethods">
+        <anu-card class="method-card shadow" *ngFor="let fn of filteredMethods">
             <anu-card-title>
                 <h3>{{fn.name}}(...)</h3>
             </anu-card-title>

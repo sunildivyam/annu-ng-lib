@@ -17,7 +17,7 @@
     .annuModal {
         padding: 1rem;
         background-color: var(--anu-background-deep-light);
-        border-radius: 1rem;
+        border-radius: var(--anu-border-radius);
 
         @include large {
             margin: 2rem 0;

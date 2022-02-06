@@ -12,7 +12,7 @@ nav.annuToolbar {
         margin: 0;
         background-color: var(--anu-primary-lightest);
         border: 1px solid var(--anu-primary-normal);
-        border-radius: 0.5rem;
+        border-radius: calc(var(--anu-border-radius)/2);
 
         li {
             display: inline-block;

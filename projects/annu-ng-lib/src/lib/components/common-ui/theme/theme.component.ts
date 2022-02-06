@@ -59,6 +59,14 @@ const TYPOGRAPHY: Array<Typography> = [
     name: 'fontSize',
     value: '14px'
   } as Typography,
+  {
+    name: 'spacing',
+    value: '1rem',
+  } as Typography,
+  {
+    name: 'borderRadius',
+    value: '0.5rem',
+  } as Typography,
 ];
 
 @Component({
@@ -74,6 +82,7 @@ export class ThemeComponent {
   themeFromJson: string;
   isThemeFromJson: boolean = false;
   isJsonError: boolean = false;
+  typography: Array<Typography> = TYPOGRAPHY;
 
   constructor(private themeService: ThemeService) {
     this.selectedTab = this.tabs.find(tb => tb.active === true);
@@ -82,7 +91,7 @@ export class ThemeComponent {
       title: 'Default Theme',
       description: 'Default theme description',
       colorPalettes: COLOR_PALETTES,
-      typography: TYPOGRAPHY,
+      typography: this.typography,
     };
   }
 
@@ -104,9 +113,15 @@ export class ThemeComponent {
     this.isJsonError = false;
     try {
       this.theme = JSON.parse(this.themeFromJson);
+      this.typography = this.theme.typography.map(t => ({...t}));
       this.isThemeFromJson = false;
     } catch(er) {
       this.isJsonError = true;
     }
+  }
+
+  public typographyChanged(typography: Array<Typography>) {
+    // this.typography = typography;
+    this.theme.typography = typography;
   }
 }

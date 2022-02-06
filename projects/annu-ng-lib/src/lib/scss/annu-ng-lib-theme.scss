@@ -43,7 +43,7 @@ a {
   color: var(--anu-accent-darker);
   background-color: var(--anu-primary-normal);
   border: solid 0.001em var(--anu-primary-dark);
-  border-radius: 0.3rem;
+  border-radius: calc(var(--anu-border-radius)/2.5);
   font-size: 1rem;
   text-align: center;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s;
@@ -303,16 +303,30 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 
 // spacing
 .spacing {
-  padding: 1rem;
+  padding: var(--anu-spacing);
 
   &-horizontal {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--anu-spacing);
+    padding-right: var(--anu-spacing);
   }
 
   &-vertical {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: var(--anu-spacing);
+    padding-bottom: var(--anu-spacing);
+  }
+
+  &-around {
+    margin: var(--anu-spacing);
+
+    &-horizontal {
+      margin-left: var(--anu-spacing);
+      margin-right: var(--anu-spacing);
+    }
+
+    &-vertical {
+      margin-top: var(--anu-spacing);
+      margin-bottom: var(--anu-spacing);
+    }
   }
 }
 
@@ -367,7 +381,7 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
   display: none;
   padding: 1rem;
   border: 1px solid var(--anu-primary-normal);
-  border-radius: 1rem;
+  border-radius: var(--anu-border-radius);
   height: auto;
   transition: all 0.1s;
 
@@ -393,5 +407,5 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
   color: var(--anu-accent-deep-light);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: calc(var(--anu-border-radius)/2);
 }
