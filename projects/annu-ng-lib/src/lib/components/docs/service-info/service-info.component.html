@@ -11,11 +11,22 @@
     </section>
 
     <section *ngIf="activeTab.name === tabs[1].name">
-        <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)"></anu-search-box>
-        <div *ngFor="let fn of filteredMethods">
-            <h3>{{fn.name}}</h3>
-            <p [innerHtml]="fn.description"></p>
-        </div>
+        <p>You can run your service methods and see their output.
+            Below screen provides you the input boxes to enter your method argument values.</p>
+        <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)" placeholder="service method name...">
+        </anu-search-box>
+
+        <anu-card class="method-card" *ngFor="let fn of filteredMethods">
+            <anu-card-title>
+                <h3>{{fn.name}}(...)</h3>
+            </anu-card-title>
+            <anu-card-body>
+                <p [innerHtml]="fn.description"></p>
+                <anu-service-method [method]="fn" [parameters]="methodParameters"
+                    (changed)="methodParametersChanged($event, fn)"></anu-service-method>
+                <anu-code-block *ngIf="methodResponses[fn.name]" [source]="methodResponses[fn.name]"></anu-code-block>
+            </anu-card-body>
+        </anu-card>
     </section>
 
     <section *ngIf="activeTab.name === tabs[2].name">

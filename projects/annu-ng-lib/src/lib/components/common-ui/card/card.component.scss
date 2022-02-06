@@ -1,11 +1,16 @@
-.anu_card {
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+
+.anu_card, :host {
   display: flex;
   flex-direction: column;
   padding: 0px;
   color: var(--anu-accent-darker);
   border-radius: var(--anu-borderRadius);
   overflow: hidden;
-  box-shadow: var(--anu-boxShadow);
 }
 
 .anu_card_header {

@@ -37,6 +37,8 @@ export class ServiceInfoComponent implements OnInit {
   filteredMethods: Array<ComponentMethod> = [];
   searchKeys = ['name', 'description'];
   serviceInstance: any;
+  methodParameters: Array<any> = [];
+  methodResponses: Array<string> = [];
 
   constructor(private docService: DocsService, private injector: Injector) { }
 
@@ -63,5 +65,23 @@ export class ServiceInfoComponent implements OnInit {
 
   public onMethodSearch(filteredMethods: Array<ComponentMethod>): void {
     this.filteredMethods = filteredMethods;
+  }
+
+  public methodParametersChanged(params: Array<any>, method: ComponentMethod): void {
+    this.methodParameters = params;
+
+    const argValues = params.map(p => p.value);
+    const returnOfFunction = this.serviceInstance[method.name](...argValues);
+    if (method.returnType.includes('Observable')) {
+      returnOfFunction.subscribe(res => {
+        this.methodResponses[method.name] = JSON.stringify(res);
+      })
+    } else if (method.returnType.includes('Promise')) {
+      returnOfFunction.then(res => {
+        this.methodResponses[method.name] = JSON.stringify(res);
+      })
+    } else {
+      this.methodResponses[method.name] = JSON.stringify(returnOfFunction);
+    }
   }
 }

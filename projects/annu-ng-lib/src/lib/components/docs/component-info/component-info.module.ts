@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TabsModule, CardModule, CodeBlockModule } from '../../common-ui';
 import { ComponentInfoComponent } from './component-info.component';
+import { ComponentPropsModule } from '../component-props';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { ComponentInfoComponent } from './component-info.component';
     TabsModule,
     CardModule,
     CodeBlockModule,
+    ComponentPropsModule
   ],
   exports: [ComponentInfoComponent],
 })

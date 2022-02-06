@@ -1,6 +1,7 @@
 @import '.../../../../../scss/mixins.scss';
 
 :host {
+    display: flex;
 
     input[type="text"] {
         border-top-left-radius: 0.3rem;
