@@ -5,7 +5,7 @@ import { Subject, Subscription } from 'rxjs';
 const DEBOUNCE_TIME = 800;
 
 /**
- * SearchBox component allows to filter any objects from an array based on the passed keys.
+ * SearchBox component filters any objects from an array for the keywords and looks into passed keys of the objects.
  * Typeahead featured input box.
  *
  * @export
@@ -22,6 +22,7 @@ const DEBOUNCE_TIME = 800;
 export class SearchBoxComponent implements OnInit, OnDestroy {
   @Input() items: Array<Object> = [];
   @Input() keys: Array<string> = [];
+  @Input() placeholder: string = 'keywords...';
   @Output() changed = new EventEmitter<Array<Object>>();
 
   keywords: string = '';
