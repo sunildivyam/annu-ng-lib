@@ -26,3 +26,5 @@ export * from './article-list-page/article-list-page.component';
 export * from './spinner-page/spinner-page.component';
 export * from './service-info-page/service-info-page.component';
 export * from './search-box-page/search-box-page.component';
+export * from './component-props-page/component-props-page.component';
+export * from './service-method-page/service-method-page.component';

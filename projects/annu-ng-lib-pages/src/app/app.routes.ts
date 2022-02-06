@@ -31,6 +31,8 @@ import {
   SpinnerPageComponent,
   ServiceInfoPageComponent,
   SearchBoxPageComponent,
+  ComponentPropsPageComponent,
+  ServiceMethodPageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -89,6 +91,8 @@ export const cmsRoutes = [
 export const docsRoutes = [
   { path: 'components/docs/component-info', component: ComponentInfoPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Component Info' } },
   { path: 'components/docs/service-info', component: ServiceInfoPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Service Info' } },
+  { path: 'components/docs/component-props', component: ComponentPropsPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Component Properties' } },
+  { path: 'components/docs/service-method', component: ServiceMethodPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Service Methods' } },
 ];
 
 

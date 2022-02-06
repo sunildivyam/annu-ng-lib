@@ -37,6 +37,8 @@ import {
   SpinnerPageComponent,
   ServiceInfoPageComponent,
   SearchBoxPageComponent,
+  ComponentPropsPageComponent,
+  ServiceMethodPageComponent,
 
 } from './page-components';
 
@@ -84,6 +86,8 @@ import {
     SpinnerPageComponent,
     ServiceInfoPageComponent,
     SearchBoxPageComponent,
+    ComponentPropsPageComponent,
+    ServiceMethodPageComponent,
 
     // Service Pages
     UtilsServicePageComponent,
