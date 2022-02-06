@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComponentInfo } from '..';
 
+import { TabsModule, CardModule, CodeBlockModule } from '../../common-ui';
+import { ComponentInfoComponent } from './component-info.component';
 
 
 @NgModule({
-  declarations: [ComponentInfo],
+  declarations: [ComponentInfoComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    TabsModule,
+    CardModule,
+    CodeBlockModule,
   ],
-  exports: [ComponentInfo],
+  exports: [ComponentInfoComponent],
 })
 export class ComponentInfoModule { }

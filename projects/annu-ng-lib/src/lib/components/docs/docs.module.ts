@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { TabsModule, CardModule, CodeBlockModule, SearchBoxModule } from '../common-ui';
 import { DocsService } from './docs.service';
 import { ServiceMethodModule } from './service-method';
 import { ComponentInfoModule } from './component-info';
@@ -14,10 +13,6 @@ import { ServiceInfoModule } from './service-info';
   imports: [
     CommonModule,
     HttpClientModule,
-    TabsModule,
-    CardModule,
-    CodeBlockModule,
-    SearchBoxModule,
   ],
   providers: [DocsService],
   exports: [
