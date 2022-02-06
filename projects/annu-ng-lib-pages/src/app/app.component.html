@@ -7,14 +7,18 @@
   </header>
   <section class="appContent row">
     <section class="leftSideMenu col-sm-12 col-md-3 col-lg-2">
+      <!-- Components nav -->
       <anu-aside-nav heading="Components" [items]="componentsNavItems">
+      </anu-aside-nav>
+      <!-- Services nav -->
+      <anu-aside-nav class="hidden-md hidden-lg" heading="Services" [items]="servicesNavItems">
       </anu-aside-nav>
     </section>
     <main class="content col-sm-12 col-md-9 col-lg-8">
       <router-outlet></router-outlet>
     </main>
     <section class="rightSideMenu col-sm-12 col-md-12 col-lg-2">
-      <anu-aside-nav heading="Services" [items]="servicesNavItems">
+      <anu-aside-nav class="hidden-sm" heading="Services" [items]="servicesNavItems">
       </anu-aside-nav>
     </section>
   </section>
