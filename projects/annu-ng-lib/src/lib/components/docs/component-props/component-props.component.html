@@ -1,0 +1,39 @@
+<div class="prop-container shadow col-lg-6 col-md-12 col-sm-12" *ngFor="let prop of props">
+    <h3>{{type === propertyTypes.METHOD ? prop.name + '(...)': prop.name}}</h3>
+    <small *ngIf="prop.accessModifier">{{prop.accessModifier}}</small>
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="3" [innerHtml]="prop.description"></td>
+            </tr>
+            <tr>
+                <td *ngIf="prop.type"><label>Type</label><code>{{prop.type}}</code></td>
+                <td *ngIf="prop.defaultValue"><label>Default value</label>{{prop.defaultValue}}</td>
+                <td *ngIf="prop.returnType"><label>Return type</label><code>{{prop.returnType}}</code></td>
+            </tr>
+            <ng-container *ngIf="prop.args && prop.args.length">
+                <tr>
+                    <td colspan="3"><label>Arguments</label></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><label>Name</label></td>
+                                    <td><label>Type</label></td>
+                                    <td><label>Default value</label></td>
+                                </tr>
+                                <tr *ngFor="let arg of prop.args">
+                                    <td>{{arg.name}}</td>
+                                    <td><code>{{arg.type}}</code></td>
+                                    <td>{{arg.defaultValue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

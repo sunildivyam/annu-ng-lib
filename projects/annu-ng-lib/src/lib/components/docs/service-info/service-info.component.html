@@ -1,0 +1,36 @@
+<article>
+    <h1>{{svcInfo?.name}}</h1>
+    <p [innerHtml]="svcInfo?.description"></p>
+    <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+
+    <section *ngIf="activeTab.name === tabs[0].name">
+        <h2 *ngIf="svcInfo?.props && svcInfo?.props.length">Properties</h2>
+        <anu-component-props [props]="svcInfo?.props"></anu-component-props>
+        <h2 *ngIf="svcInfo?.methods && svcInfo?.methods.length">Methods</h2>
+        <anu-component-props [props]="svcInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+    </section>
+
+    <section *ngIf="activeTab.name === tabs[1].name">
+        <p>You can run your service methods and see their output.
+            Below screen provides you the input boxes to enter your method argument values.</p>
+        <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)" placeholder="service method name...">
+        </anu-search-box>
+
+        <anu-card class="method-card shadow" *ngFor="let fn of filteredMethods">
+            <anu-card-title>
+                <h3>{{fn.name}}(...)</h3>
+            </anu-card-title>
+            <anu-card-body>
+                <p [innerHtml]="fn.description"></p>
+                <anu-service-method [method]="fn" [parameters]="methodParameters"
+                    (changed)="methodParametersChanged($event, fn)"></anu-service-method>
+                <anu-code-block *ngIf="methodResponses[fn.name]" [source]="methodResponses[fn.name]"></anu-code-block>
+            </anu-card-body>
+        </anu-card>
+    </section>
+
+    <section *ngIf="activeTab.name === tabs[2].name">
+        <h2>{{svcInfo.tsUrl}}</h2>
+        <anu-code-block [source]="svcInfo.tsSource"></anu-code-block>
+    </section>
+</article>

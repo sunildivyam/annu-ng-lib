@@ -1,53 +1,43 @@
-<anu-tabs
-[activeTab]="selectedTab"
-[tabs]="tabs"
-(tabChanged)="tabChanged($event)"
-></anu-tabs>
-<h3>{{selectedTab.name}} Tab is selected</h3>
-<p>{{selectedTab.title}} Content</p>
+<anu-component-info name="TabsComponent">
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-tabs [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>'></anu-code-block>
+    <h3>Resulted UI</h3>
+    <anu-tabs [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
+    <h3>{{selectedTab.name}} Tab is selected</h3>
+    <p>{{selectedTab.title}} Content</p>
 
-<anu-tabs
-[spaced]="true"
-[activeTab]="selectedTab"
-[tabs]="tabs"
-(tabChanged)="tabChanged($event)"
-></anu-tabs>
-<h3>{{selectedTab.name}} Tab is selected</h3>
-<p>{{selectedTab.title}} Content</p>
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-tabs [spaced]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>'></anu-code-block>
+    <h2>Resulted UI</h2>
+    <anu-tabs [spaced]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
+    <h3>{{selectedTab.name}} Tab is selected</h3>
+    <p>{{selectedTab.title}} Content</p>
 
-<anu-tabs
-[rounded]="true"
-[activeTab]="selectedTab"
-[tabs]="tabs"
-(tabChanged)="tabChanged($event)"
-></anu-tabs>
-<h3>{{selectedTab.name}} Tab is selected</h3>
-<p>{{selectedTab.title}} Content</p>
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-tabs secondary="true" [rounded]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>'></anu-code-block>
+    <h2>Resulted UI</h2>
+    <anu-tabs secondary="true" [rounded]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
+    <h3>{{selectedTab.name}} Tab is selected</h3>
+    <p>{{selectedTab.title}} Content</p>
 
-<anu-tabs
-[rounded]="true"
-[spaced]="true"
-[activeTab]="selectedTab"
-[tabs]="tabs"
-(tabChanged)="tabChanged($event)"
-></anu-tabs>
-<h3>{{selectedTab.name}} Tab is selected</h3>
-<p>{{selectedTab.title}} Content</p>
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-tabs [rounded]="true" [spaced]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>'></anu-code-block>
+    <h2>Resulted UI</h2>
+    <anu-tabs [rounded]="true" [spaced]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
+    <h3>{{selectedTab.name}} Tab is selected</h3>
+    <p>{{selectedTab.title}} Content</p>
 
-<section class="verticalContainer">
-    <section>
-        <anu-tabs
-        [spaced]="true"
-        [rounded]="false"
-        [vertical]="true"
-        [activeTab]="selectedTab"
-        [tabs]="tabs"
-        (tabChanged)="tabChanged($event)"
-        ></anu-tabs>    
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-tabs [spaced]="true" [rounded]="false" [vertical]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>'></anu-code-block>
+    <h2>Resulted UI</h2>
+    <section class="verticalContainer">
+        <section>
+            <anu-tabs [spaced]="true" [rounded]="false" [vertical]="true" [activeTab]="selectedTab" [tabs]="tabs" (tabChanged)="tabChanged($event)"></anu-tabs>
+        </section>
+
+        <section>
+            <h3>{{selectedTab.name}} Vertical Tab is selected</h3>
+            <p>{{selectedTab.title}} Content</p>
+        </section>
     </section>
-
-    <section>        
-        <h3>{{selectedTab.name}} Vertical Tab is selected</h3>
-        <p>{{selectedTab.title}} Content</p>
-    </section>
-</section>
+</anu-component-info>

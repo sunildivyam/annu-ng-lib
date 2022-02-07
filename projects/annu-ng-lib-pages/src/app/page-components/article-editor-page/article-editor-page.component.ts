@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '@annu-ng-lib/components/article/article.interface';
+import { Article } from '@annu-ng-lib';
 
 @Component({
   selector: 'anu-article-editor-page',
@@ -15,6 +15,6 @@ article: Article;
   }
 
   public articleChanged(article: Article) {
-    console.log('Saved - ', article?.name);
+    console.log('Saved - ', article?.metaInfo);
   }
 }

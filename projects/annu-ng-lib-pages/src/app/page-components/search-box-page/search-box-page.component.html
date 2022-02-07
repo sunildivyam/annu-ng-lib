@@ -1,0 +1,18 @@
+<anu-component-info name="SearchBoxComponent">
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-search-box [items]="searchItems" [keys]="searchKeys" (changed)="onSearch($event)"></anu-search-box>'></anu-code-block>
+    <h3>Resulted UI</h3>
+    <anu-search-box [items]="searchItems" [keys]="searchKeys" (changed)="onSearch($event)"></anu-search-box>
+    <hr/>
+    <h4>Items found({{foundCount}})</h4>
+    <ng-container *ngFor="let item of filteredItems">
+        <anu-card class="col-12">
+            <anu-card-title>
+                <h4>{{item.title}}</h4>
+            </anu-card-title>
+            <anu-card-body>
+                <p>{{item.description}}</p>
+            </anu-card-body>
+        </anu-card>
+    </ng-container>
+</anu-component-info>

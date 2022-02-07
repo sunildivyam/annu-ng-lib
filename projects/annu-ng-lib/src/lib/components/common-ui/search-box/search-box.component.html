@@ -1,0 +1,6 @@
+<div class="input-container row nowrap">
+    <input type="text" [placeholder]="placeholder" [ngModel]="keywords"
+        (ngModelChange)="keywordsModelChanged($event)" />
+    <span *ngIf="!keywords.length" class="btn primary">⌕</span>
+    <span *ngIf="keywords.length" class="btn primary" (click)="clearSearch($event)">x</span>
+</div>

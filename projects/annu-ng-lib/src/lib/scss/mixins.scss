@@ -7,6 +7,7 @@ $success: orange;
 $menu-z-index: 1000;
 $aside-nav-z-index: 900;
 $menu-modal: 9000;
+$opacity: 0.92;
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {
@@ -40,7 +41,8 @@ $menu-modal: 9000;
 @mixin col($i) {
   display: flex;
   flex-direction: column;
-  width: boxSize($i);
+  width: calc(boxSize($i) - 1rem);
+  margin: 0.5rem;
 }
 
 @mixin box-sizes {

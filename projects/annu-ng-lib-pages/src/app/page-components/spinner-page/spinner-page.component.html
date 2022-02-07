@@ -1,0 +1,46 @@
+<anu-component-info name="SpinnerComponent">
+    <h3>Usage</h3>
+    <anu-code-block
+        source='<anu-spinner [show]="show" [theme]="theme" [size]="size" [speed]="speed" [fullscreen]="fullscreen"></anu-spinner>'>
+    </anu-code-block>
+    <h3>You can Play with properties</h3>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <label>
+                <input type="checkbox" name="show" [(ngModel)]="show" />
+                Show spinner
+            </label>
+            <label>
+                <input type="checkbox" name="fullscreen" [(ngModel)]="fullscreen" />
+                Fullscreen
+            </label>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <h4>Size</h4>
+            <label *ngFor="let sSize of sizes">
+                <input type="radio" name="size" [checked]="size === sSize" (click)="size = sSize" />
+                {{sSize}}
+            </label>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <h4>Them Color</h4>
+            <label *ngFor="let sTheme of themes">
+                <input type="radio" name="theme" [checked]="theme === sTheme" (click)="theme = sTheme" />
+                {{sTheme}}
+            </label>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <h4>Speed</h4>
+            <label *ngFor="let sSpeed of speeds">
+                <input type="radio" name="speed" [checked]="speed === sSpeed" (click)="speed = sSpeed" />
+                {{sSpeed}}
+            </label>
+        </div>
+    </div>
+    <div class="results">
+        <h3>Resulted UI</h3>
+        <anu-spinner [show]="show" [theme]="theme" [size]="size" [speed]="speed" [fullscreen]="fullscreen">
+        </anu-spinner>
+    </div>
+</anu-component-info>

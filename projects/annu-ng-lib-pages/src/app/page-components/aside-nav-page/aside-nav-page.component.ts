@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
-import { ROUTE_TYPES } from '../../constants';
+import { NavItem } from '@annu-ng-lib';
+import { commonUiRoutes } from '../../app.routes';
 
 @Component({
   selector: 'anu-aside-nav-page',
@@ -8,9 +9,10 @@ import { ROUTE_TYPES } from '../../constants';
   styleUrls: ['./aside-nav-page.component.scss']
 })
 export class AsideNavPageComponent implements OnInit {
-componentRoutes: Routes = [];
-  constructor(private router: Router) { 
-    this.componentRoutes = this.router.config.filter(r => r.data?.type === ROUTE_TYPES.components);
+  navItems: Array<NavItem> = [];
+
+  constructor(private router: Router) {
+    this.navItems = commonUiRoutes.map((r: Route) => ({ title: r.data.title, href: r.path } as NavItem));
   }
 
   ngOnInit(): void {

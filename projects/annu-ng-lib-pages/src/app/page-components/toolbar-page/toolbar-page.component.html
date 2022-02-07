@@ -1,2 +1,11 @@
-<h2>Toolbar Component</h2>
-<anu-toolbar [items]="formattingToolbar" (changed)="toolbarClicked($event)"></anu-toolbar>
+<anu-component-info name="ToolbarComponent">
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-toolbar [items]="formattingToolbar" (changed)="toolbarClicked($event)"></anu-toolbar>'></anu-code-block>
+    <h3>Resulted UI</h3>
+    <anu-toolbar [items]="formattingToolbar" (changed)="toolbarClicked($event)"></anu-toolbar>
+
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-toolbar isVertical="true" [items]="formattingToolbar" (changed)="toolbarClicked($event)"></anu-toolbar>'></anu-code-block>
+    <h3>Resulted UI</h3>
+    <anu-toolbar  isVertical="true"  [items]="formattingToolbar" (changed)="toolbarClicked($event)"></anu-toolbar>
+</anu-component-info>

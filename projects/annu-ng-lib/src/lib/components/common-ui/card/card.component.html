@@ -1,0 +1,16 @@
+<section class="anuCard container">
+  <section class="anuCard_image">
+    <ng-content select="['anu-card-image']"></ng-content>
+  </section>
+  <section class="anuCard_content spacing-horizontal">
+    <section class="anuCard_header">
+      <ng-content select="['anu-card-title']"></ng-content>
+    </section>
+    <section class="anuCard_body">
+      <ng-content select="['anu-card-body']"></ng-content>
+    </section>
+    <section class="anuCard_footer">
+      <ng-content select="['anu-card-footer']"></ng-content>
+    </section>
+  </section>
+</section>

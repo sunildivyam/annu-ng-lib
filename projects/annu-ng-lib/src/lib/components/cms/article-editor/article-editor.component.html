@@ -1,0 +1,32 @@
+<h2>Article Editor</h2>
+<p>/{{article?.name}}</p>
+<anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+
+<section class="container spacing tab-body">
+    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'article'}">
+        <anu-content-editor [value]="article?.body" (changed)="articleBodyChanged($event)"></anu-content-editor>
+    </section>
+
+    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'moreinfo'}">
+        <a href="#" (click)="changeImage($event)">Change image</a>
+        <anu-modal [opened]="toggleImageForm">
+            <anu-image-form [src]="article?.image?.src" [alt]="article?.image?.alt" (cancel)="cancelImageChange()"
+                (save)="saveImageChange($event)"></anu-image-form>
+        </anu-modal>
+        <anu-card>
+            <anu-card-image>
+                <img *ngIf="article?.image?.src" [src]="article?.image?.src" [alt]="article?.image?.alt" />
+            </anu-card-image>
+            <anu-card-title>
+                <h1 [innerHtml]="title"></h1>
+            </anu-card-title>
+            <anu-card-body>
+                <p [innerHtml]="summary"></p>
+            </anu-card-body>
+        </anu-card>
+    </section>
+
+    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'metainfo'}">
+        <anu-meta-form [metaInfo]="article?.metaInfo" (changed)="articleMetaChanged($event)"></anu-meta-form>
+    </section>
+</section>

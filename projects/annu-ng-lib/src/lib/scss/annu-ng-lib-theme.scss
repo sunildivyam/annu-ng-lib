@@ -2,6 +2,16 @@
 @import "mixins";
 // Import all fonts here, that has been refered from theme files.
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+@import "~prismjs/themes/prism-okaidia";
+
+// Use any of the Prismjs themes for code highlighting:
+// @import "~prismjs/themes/prism";
+// @import "~prismjs/themes/prism-coy";
+// @import "~prismjs/themes/prism-dark";
+// @import "~prismjs/themes/prism-funky";
+// @import "~prismjs/themes/prism-solarizedlight";
+// @import "~prismjs/themes/prism-tomorrow";
+// @import "~prismjs/themes/prism-twilight";
 
 * {
   box-sizing: border-box;
@@ -33,10 +43,11 @@ a {
   color: var(--anu-accent-darker);
   background-color: var(--anu-primary-normal);
   border: solid 0.001em var(--anu-primary-dark);
-  border-radius: 0.3rem;
+  border-radius: calc(var(--anu-border-radius)/2.5);
   font-size: 1rem;
   text-align: center;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
 
   &:hover {
     color: var(--anu-accent-darkest);
@@ -55,6 +66,13 @@ a {
       background-color: var(--anu-secondary-light);
       border-color: var(--anu-secondary-normal);
     }
+  }
+
+  &.disabled, &[disabled] {
+    color: var(--anu-accent-light);
+    background-color: var(--anu-accent-lighter);
+    border-color: var(--anu-accent-light);
+    pointer-events: none;
   }
 
   + .btn {
@@ -167,9 +185,10 @@ label {
   display: block;
   width: 100%;
   padding: 1em 0;
+  font-weight: bold;
 }
 
-input[type="text"], textarea {
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, select, option {
   display: block;
   width: 100%;
   padding: 1rem;
@@ -284,16 +303,30 @@ input[type="text"], textarea {
 
 // spacing
 .spacing {
-  padding: 1rem;
+  padding: var(--anu-spacing);
 
   &-horizontal {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--anu-spacing);
+    padding-right: var(--anu-spacing);
   }
 
   &-vertical {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: var(--anu-spacing);
+    padding-bottom: var(--anu-spacing);
+  }
+
+  &-around {
+    margin: var(--anu-spacing);
+
+    &-horizontal {
+      margin-left: var(--anu-spacing);
+      margin-right: var(--anu-spacing);
+    }
+
+    &-vertical {
+      margin-top: var(--anu-spacing);
+      margin-bottom: var(--anu-spacing);
+    }
   }
 }
 
@@ -348,7 +381,7 @@ input[type="text"], textarea {
   display: none;
   padding: 1rem;
   border: 1px solid var(--anu-primary-normal);
-  border-radius: 1rem;
+  border-radius: var(--anu-border-radius);
   height: auto;
   transition: all 0.1s;
 
@@ -367,4 +400,12 @@ input[type="text"], textarea {
 
 .shadow {
   box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-background-normal);
+}
+
+:not(pre) > code, .code {
+  background-color: var(--anu-accent-darker);
+  color: var(--anu-accent-deep-light);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: calc(var(--anu-border-radius)/2);
 }

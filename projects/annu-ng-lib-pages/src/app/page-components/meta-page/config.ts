@@ -1,0 +1,21 @@
+export const SAMPLE_PAGE_META = {
+    "title": "Sample Title",
+    "description": "Sample Description TextSample Description Text",
+    "keywords": "key1, key2, key3",
+    "robots": "index, follow",
+    "Content-Type": "text/html; charset=utf-8",
+    "language": "english",
+    "revisit-after": "7 days",
+    "author": "Sunil Kumar",
+    "type": "article",
+    "article:published_time": "2022-01-03T17:53:35.868Z",
+    "article:author": "Sunil Kumar",
+    "article:section": "business",
+    "article:tag": "key1, key2, key3",
+    "image": "image/url",
+    "url": "https://github.com/sunildivyam/annu-ng-lib",
+    "card": "summary_large_image",
+    "site_name": "AnnuNgLib",
+    "audio": "",
+    "video": ""
+};

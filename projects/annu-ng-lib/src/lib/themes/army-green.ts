@@ -1,4 +1,4 @@
-import { Theme } from '../components/theme/theme.interface';
+import { Theme } from '../components/common-ui';
 
 const jsonTheme = `
 {
@@ -187,6 +187,14 @@ const jsonTheme = `
     {
       "name": "fontSize",
       "value": "14px"
+    },
+    {
+      "name": "spacing",
+      "value": "1rem"
+    },
+    {
+      "name": "borderRadius",
+      "value": "1rem"
     }
   ]
 }`;

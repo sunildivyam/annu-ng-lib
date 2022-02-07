@@ -1,0 +1,26 @@
+<anu-card>
+    <anu-card-title>
+        <label>
+            <span>{{method.accessModifier}}</span>
+            <span> {{method.name}}(</span>
+            <span *ngFor="let arg of method.args; let index = $index">
+                <span>{{arg.name}}</span>
+                <span *ngIf="arg.type">: {{arg.type}}</span>
+                <span *ngIf="arg.defaultValue"> = {{arg.defaultValue}}</span>
+                <span *ngIf="arg.length >= index">,</span>
+            </span>
+            <span>)</span>
+            <span *ngIf="method.returnType">: {{method.returnType}}</span>
+        </label>
+    </anu-card-title>
+</anu-card>
+<div *ngFor="let arg of parameters; let index = $index">
+    <label>{{arg.name}}</label>
+    <textarea [(ngModel)]="arg.value"></textarea>
+</div>
+
+<div class="row">
+    <div class="col-12 center">
+        <a href="#" class="btn" (click)="onChange($event)">Execute</a>
+    </div>
+</div>

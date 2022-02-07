@@ -11,10 +11,12 @@
     "build:lib": "ng build annu-ng-lib",
     "docs": "npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json",
     "docs:serve": "npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json -s -w",
+    "docs:json": "npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json -e json -d dist/annu-ng-lib-pages/browser/data",
+    "docs:json:serve": "npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json -s -w -e json -d dist/annu-ng-lib-pages/browser/data",
     "dev:ssr": "ng run annu-ng-lib-pages:serve-ssr",
     "serve:ssr": "node dist/annu-ng-lib-pages/server/main.js",
-    "build:ssr": "ng build --configuration production && ng run annu-ng-lib-pages:server:production",
-    "prerender": "ng run annu-ng-lib-pages:prerender"
+    "build:ssr": "ng build --configuration production && ng run annu-ng-lib-pages:server:production && npm run docs:json",
+    "prerender": "ng run annu-ng-lib-pages:prerender  && npm run docs:json"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +31,7 @@
     "@angular/router": "~13.1.1",
     "@nguniversal/express-engine": "^13.0.1",
     "express": "^4.15.2",
+    "prismjs": "^1.25.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
