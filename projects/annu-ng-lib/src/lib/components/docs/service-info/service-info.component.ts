@@ -10,6 +10,7 @@ import { HighlightService } from '../../common-ui/code-block/highlight.service';
 import { SelectionService } from '../../cms/content-editor/services/selection.service';
 import { MetaService } from '../../common-ui/meta';
 import { ThemeService } from '../../common-ui/theme';
+import { ArticlesFirebaseService } from '../../../firebase';
 
 const LibServices = {
   UtilsService,
@@ -19,6 +20,7 @@ const LibServices = {
   MetaService,
   SelectionService,
   ThemeService,
+  ArticlesFirebaseService,
 };
 
 

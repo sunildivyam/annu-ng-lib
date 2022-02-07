@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes, RouterLink } from '@angular/router';
 import { AppConfig, NavItem, ThemeService } from '@annu-ng-lib';
 import { ROUTE_TYPES, appConfig } from './constants';
-import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes } from './app.routes';
+import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes, firebaseSvcRoutes } from './app.routes';
 
 @Component({
   selector: 'anu-root',
@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
       this.mapRoutesToNavItems(commonUiSvcRoutes, ROUTE_TYPES.services.commonUi),
       this.mapRoutesToNavItems(cmsSvcRoutes, ROUTE_TYPES.services.cms),
       this.mapRoutesToNavItems(docsSvcRoutes, ROUTE_TYPES.services.docs),
+      this.mapRoutesToNavItems(firebaseSvcRoutes, ROUTE_TYPES.services.firebase),
     );
 
     this.mainRoutes = mainRoutes;

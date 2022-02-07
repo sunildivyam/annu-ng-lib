@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AnnuNgLibModule } from '@annu-ng-lib';
+import { AnnuNgLibModule, FirebaseModule } from '@annu-ng-lib';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -50,8 +50,8 @@ import {
   MetaServicePageComponent,
   SelectionServicePageComponent,
   ThemeServicePageComponent,
+  ArticlesFirebaseServicePageComponent,
 } from './page-services';
-
 
 @NgModule({
   declarations: [
@@ -97,6 +97,7 @@ import {
     MetaServicePageComponent,
     SelectionServicePageComponent,
     ThemeServicePageComponent,
+    ArticlesFirebaseServicePageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -106,6 +107,7 @@ import {
     FormsModule,
     // annu-ng-lib - components modules
     AnnuNgLibModule.forRoot(environment.libConfig),
+    FirebaseModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

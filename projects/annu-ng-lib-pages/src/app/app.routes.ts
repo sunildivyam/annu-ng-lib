@@ -44,6 +44,7 @@ import {
   MetaServicePageComponent,
   SelectionServicePageComponent,
   ThemeServicePageComponent,
+  ArticlesFirebaseServicePageComponent,
 } from './page-services';
 
 
@@ -119,6 +120,11 @@ export const docsSvcRoutes = [
   { path: 'services/docs/docs', component: DocsServicePageComponent, data: { type: ROUTE_TYPES.services.docs, title: 'Docs Service' } },
 ];
 
+// Firebase Services Routes
+export const firebaseSvcRoutes = [
+  { path: 'services/firebase/articles-firebase', component: ArticlesFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'ArticlesFirebase Service' } },
+];
+
 export const routes: Routes = [
   { path: '', redirectTo: '/overview', pathMatch: 'full' },
   // Main Routes
@@ -133,10 +139,12 @@ export const routes: Routes = [
 
   // Services Routes
   ...appSvcRoutes,
+
   ...commonUiSvcRoutes,
 
   ...cmsSvcRoutes,
 
   ...docsSvcRoutes,
 
+  ...firebaseSvcRoutes,
 ];

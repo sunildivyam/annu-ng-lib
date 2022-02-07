@@ -13,7 +13,8 @@ export const ROUTE_TYPES = {
         app: 'Application Services',
         commonUi: 'Common UI Services',
         cms: 'CMS Services',
-        docs: 'Documentation Services'
+        docs: 'Documentation Services',
+        firebase: "Firebase Data Services",
     },
 };
 
