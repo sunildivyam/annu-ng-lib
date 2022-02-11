@@ -8,19 +8,34 @@
     color: var(--anu-accent-deep-light);
 }
 
-.app-title {
+.app-name {
     font-weight: bold;
 
     @include large {
-        font-size: 2rem;;
+        font-size: 2rem;
     }
 
     @include medium {
-        font-size: 1.8rem;;
+        font-size: 1.8rem;
     }
 
     @include small {
-        font-size: 1.5rem;;
+        font-size: 1.5rem;
+    }
+}
+
+.app-title {
+
+    @include large {
+        font-size: 1rem;
+    }
+
+    @include medium {
+        font-size: 0.8rem;
+    }
+
+    @include small {
+        font-size: 0.7rem;
     }
 }
 

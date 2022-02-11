@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes, RouterLink } from '@angular/router';
-import { NavItem, ThemeService } from '@annu-ng-lib';
-import { ROUTE_TYPES } from './constants';
-import { environment } from '../environments/environment';
+import { AppConfig, NavItem, ThemeService } from '@annu-ng-lib';
+import { ROUTE_TYPES, appConfig } from './constants';
 import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes } from './app.routes';
 
 @Component({
@@ -11,7 +10,7 @@ import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, appSvcRoutes, common
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'annu-ng-lib-pages';
+  appConfig: AppConfig = appConfig;
   componentsNavItems: Array<NavItem>;
   servicesNavItems: Array<NavItem>;
   mainRoutes: Array<Route>;
@@ -59,6 +58,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeService.setTheme(environment.themeName, false);
+    this.themeService.setTheme(this.appConfig.themeName, false);
   }
 }

@@ -22,6 +22,7 @@ import { CodeBlockModule } from './code-block/code-block.module';
 import { MetaModule } from './meta/meta.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SearchBoxModule } from './search-box/search-box.module';
+import { AppConfigModule } from './app-config/app-config.module';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { SearchBoxModule } from './search-box/search-box.module';
     CodeBlockModule,
     MetaModule,
     SpinnerModule,
-    SearchBoxModule
+    SearchBoxModule,
+    AppConfigModule,
   ],
 })
 export class CommonUiModule { }

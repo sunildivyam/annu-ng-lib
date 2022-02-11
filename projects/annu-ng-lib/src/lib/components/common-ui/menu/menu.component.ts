@@ -9,6 +9,7 @@ import { Route, Routes } from '@angular/router';
 export class MenuComponent implements OnInit {
 @Input() items: Routes;
 @Input() heading: string;
+@Input() subHeading: string;
 @Input() opened: boolean;
 @Output() selected = new EventEmitter<Route>();
 
@@ -16,14 +17,14 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   public toggleOpen(opened: boolean): void {
     this.opened = opened;
   }
 
   public itemCliked(route: Route): void {
     this.selected.emit(route);
-    
+
     if (this.opened) {
       this.toggleOpen(false);
     }

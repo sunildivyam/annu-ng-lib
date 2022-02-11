@@ -1,4 +1,4 @@
-import { Route, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ROUTE_TYPES } from './constants';
 
 // Components from Lib
