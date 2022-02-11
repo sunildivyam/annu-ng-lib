@@ -3,8 +3,8 @@ export interface Category {
     name?: string;
     title?: string;
     description?: string;
-    created?: Date;
-    updated?: Date;
+    created?: string;
+    updated?: string;
     userId?: string;    // User Id from Users
     isLive?: boolean;
 };

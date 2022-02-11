@@ -107,7 +107,6 @@ import {
     FormsModule,
     // annu-ng-lib - components modules
     AnnuNgLibModule.forRoot(environment.libConfig),
-    FirebaseModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

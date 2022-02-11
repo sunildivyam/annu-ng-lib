@@ -6,6 +6,7 @@ import { LibConfig } from './annu-ng-lib.interface';
 import { DocsModule } from './components/docs/docs.module';
 import { CommonUiModule } from './components/common-ui/common-ui.module';
 import { CmsModule } from './components/cms/cms.module';
+import { FirebaseModule } from './firebase';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { CmsModule } from './components/cms/cms.module';
     DocsModule,
     CommonUiModule,
     CmsModule,
+    FirebaseModule,
   ]
 })
 export class AnnuNgLibModule {

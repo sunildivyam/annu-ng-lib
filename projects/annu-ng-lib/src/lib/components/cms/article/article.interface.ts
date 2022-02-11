@@ -8,8 +8,8 @@ export interface Article {
     image?: ImageInfo,   // Thumbnail Image src
     body?: EditorElement;
     categories?: Array<string>;
-    created?: Date;
-    updated?: Date;
+    created?: string;
+    updated?: string;
     userId?: string;    // User Id from Users
     isLive?: boolean;   // true if published and live to web.
 }

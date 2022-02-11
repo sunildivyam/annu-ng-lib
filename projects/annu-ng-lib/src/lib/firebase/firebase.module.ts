@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FirebaseConfig } from './firebase.interface';
+import { LibConfig } from '../annu-ng-lib.interface';
 import { ArticlesFirebaseModule } from './articles';
 
 
@@ -22,7 +23,7 @@ export class FirebaseModule {
     return {
       ngModule: FirebaseModule,
       providers: [
-        { provide: FirebaseConfig, useValue: firebaseConfig }
+        { provide: LibConfig, useValue: {firebase: firebaseConfig} }
       ]
     };
   }
