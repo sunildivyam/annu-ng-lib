@@ -5,7 +5,9 @@
 
 export const environment = {
   production: false,
-  libConfig: { docsJsonUrl: '/data/documentation.json' },
+  libConfig: {
+    docsJsonUrl: '/data/documentation.json'
+  },
 };
 
 /*

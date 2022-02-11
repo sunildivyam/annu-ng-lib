@@ -105,7 +105,7 @@ import {
     ReactiveFormsModule,
     FormsModule,
     // annu-ng-lib - components modules
-    AnnuNgLibModule.forRoot({ docsConfig: environment.libConfig }),
+    AnnuNgLibModule.forRoot(environment.libConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]
