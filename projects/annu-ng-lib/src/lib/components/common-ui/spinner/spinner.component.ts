@@ -26,17 +26,17 @@ export class SpinnerComponent implements OnInit, OnChanges {
   /**
    * Changes the size of the spinner to one of the sm/md/lg.
    */
-  @Input() size: string;
+  @Input() size: string = 'md';
 
   /**
    * Changes the spinner color to primary or secondary theme.
    */
-  @Input() theme: string;
+  @Input() theme: string = 'primary';
 
   /**
    * Changes the spinner rotation speed to one of the slow/normal/fast.
    */
-   @Input() speed: string;
+   @Input() speed: string = 'normal';
 
   /**
    * Binds the <code>display</code> style property to the display class varibale, that is set when <code>show</code> Input property changes.
