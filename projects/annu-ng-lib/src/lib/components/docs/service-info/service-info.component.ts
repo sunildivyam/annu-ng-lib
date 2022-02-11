@@ -70,18 +70,27 @@ export class ServiceInfoComponent implements OnInit {
   public methodParametersChanged(params: Array<any>, method: ComponentMethod): void {
     this.methodParameters = params;
 
-    const argValues = params.map(p => p.value);
+    const argValues = params.map(p => {
+      let paramValue;
+      try {
+        paramValue = JSON.parse(p.value);
+      } catch (error: any) {
+        paramValue = p.value;
+      }
+
+      return paramValue;
+    });
     const returnOfFunction = this.serviceInstance[method.name](...argValues);
     if (method.returnType.includes('Observable')) {
       returnOfFunction.subscribe(res => {
-        this.methodResponses[method.name] = JSON.stringify(res);
+        this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
       })
     } else if (method.returnType.includes('Promise')) {
       returnOfFunction.then(res => {
-        this.methodResponses[method.name] = JSON.stringify(res);
+        this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
       })
     } else {
-      this.methodResponses[method.name] = JSON.stringify(returnOfFunction);
+      this.methodResponses[method.name] = JSON.stringify(returnOfFunction, null, '\t');
     }
   }
 }
