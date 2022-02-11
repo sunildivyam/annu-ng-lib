@@ -1,5 +1,5 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ToolbarItem } from '@annu-ng-lib';
+import { ToolbarItem } from '../../../common-ui';
 import { EditorElement } from '../content-editor.interface';
 import { ImageInfo } from '../../../common-ui';
 import { ContentEditorService } from '../services/content-editor.service';
