@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthFirebaseService } from '../../../firebase';
 
 @Component({
   selector: 'anu-login-status',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-status.component.scss']
 })
 export class LoginStatusComponent implements OnInit {
+  user: any;
 
-  constructor() { }
+  constructor(private authFireSvc: AuthFirebaseService) {
+
+  }
 
   ngOnInit(): void {
   }

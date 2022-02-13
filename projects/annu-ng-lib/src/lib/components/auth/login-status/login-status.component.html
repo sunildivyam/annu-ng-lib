@@ -1,1 +1,7 @@
-<p>login-status works!</p>
+<div *ngIf="user">
+    <span>{{user.displayName}}</span>
+    <a href="#" (click)="logoutClicked($event)">Logout</a>
+</div>
+<div *ngIf="!user">
+    <a href="#" (click)="loginClicked($event)">Sign In</a>
+</div>
