@@ -23,6 +23,7 @@ import { MetaModule } from './meta/meta.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SearchBoxModule } from './search-box/search-box.module';
 import { AppConfigModule } from './app-config/app-config.module';
+import { ErrorModule } from './error/error.module';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { AppConfigModule } from './app-config/app-config.module';
     SpinnerModule,
     SearchBoxModule,
     AppConfigModule,
+    ErrorModule,
   ],
 })
 export class CommonUiModule { }

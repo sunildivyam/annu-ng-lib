@@ -33,6 +33,7 @@ import {
   SearchBoxPageComponent,
   ComponentPropsPageComponent,
   ServiceMethodPageComponent,
+  ErrorPageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -77,6 +78,7 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/hamburger', component: HamburgerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Hamburger' } },
   { path: 'components/common-ui/spinner', component: SpinnerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Spinner' } },
   { path: 'components/common-ui/search-box', component: SearchBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'SearchBox' } },
+  { path: 'components/common-ui/error', component: ErrorPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Error' } },
 ]
 
 // CMS Component Routes

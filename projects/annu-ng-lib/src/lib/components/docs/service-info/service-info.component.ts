@@ -42,6 +42,7 @@ export class ServiceInfoComponent implements OnInit {
   serviceInstance: any;
   methodParameters: Array<any> = [];
   methodResponses: Array<string> = [];
+  methodErrors: Array<any> = [];
 
   constructor(private docService: DocsService, private injector: Injector) { }
 
@@ -86,11 +87,20 @@ export class ServiceInfoComponent implements OnInit {
     const returnOfFunction = this.serviceInstance[method.name](...argValues);
     if (method.returnType.includes('Observable')) {
       returnOfFunction.subscribe(res => {
+        delete this.methodErrors[method.name];
         this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
+      })
+      .catch(error => {
+        this.methodErrors[method.name] = error;
+        delete this.methodResponses[method.name];
       })
     } else if (method.returnType.includes('Promise')) {
       returnOfFunction.then(res => {
+        delete this.methodErrors[method.name];
         this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
+      }, error => {
+        this.methodErrors[method.name] = error;
+        delete this.methodResponses[method.name];
       })
     } else {
       this.methodResponses[method.name] = JSON.stringify(returnOfFunction, null, '\t');

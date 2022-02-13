@@ -97,11 +97,7 @@ export class AuthFirebaseService {
 
   public async logout(): Promise<boolean> {
     const auth = this.getFirebaseAuth();
-    try {
-      await auth.signOut();
-      return true;
-    } catch(error: any) {
-      return false;
-    }
+    await auth.signOut();
+    return true;
   }
 }

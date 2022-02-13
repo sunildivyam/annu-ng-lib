@@ -76,7 +76,7 @@ export class ArticlesFirebaseService {
 
       return category;
     } catch (error: any) {
-      return null;
+      throw error;
     }
   }
 
@@ -101,7 +101,7 @@ export class ArticlesFirebaseService {
 
       return category;
     } catch (error: any) {
-      return null;
+      throw error;
     }
   }
 
@@ -125,7 +125,7 @@ export class ArticlesFirebaseService {
 
       return true;
     } catch (error: any) {
-      return false;
+      throw error;
     }
   }
 
@@ -142,7 +142,7 @@ export class ArticlesFirebaseService {
       const db = getFirestore();
       const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.CATEGORIES, id));
       if (!querySnapshot.exists()) {
-        return null;
+        throw new Error('Category does not exist');
       }
 
       const category: Category = {
@@ -152,7 +152,7 @@ export class ArticlesFirebaseService {
 
       return category;
     } catch (error: any) {
-      return null;
+      throw error;
     }
   }
 
@@ -178,7 +178,7 @@ export class ArticlesFirebaseService {
 
       return categories;
     } catch (error: any) {
-      return [];
+      throw error;
     }
   }
 
@@ -194,7 +194,7 @@ export class ArticlesFirebaseService {
 
       return article;
     } catch (error: any) {
-      return null;
+      throw error;
     }
   }
 
@@ -208,7 +208,7 @@ export class ArticlesFirebaseService {
 
       return article;
     } catch (error: any) {
-      return null;
+      throw error;
     }
   }
 
@@ -222,7 +222,7 @@ export class ArticlesFirebaseService {
 
       return true;
     } catch (error: any) {
-      return false;
+      throw error;
     }
   }
 
@@ -231,7 +231,7 @@ export class ArticlesFirebaseService {
       const db = getFirestore();
       const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.ARTICLES, id));
       if (!querySnapshot.exists()) {
-        return null;
+        throw new Error('Article does not exist.');
       }
 
       const article: Article = {
@@ -241,7 +241,7 @@ export class ArticlesFirebaseService {
 
       return article;
     } catch (error: any) {
-      return null;
+      throw error;
     }
   }
 
@@ -268,7 +268,7 @@ export class ArticlesFirebaseService {
 
       return articles;
     } catch (error: any) {
-      return [];
+      throw error;
     }
   }
 
@@ -291,7 +291,7 @@ export class ArticlesFirebaseService {
 
       return articles;
     } catch (error: any) {
-      return [];
+      throw error;
     }
   }
 
@@ -312,7 +312,7 @@ export class ArticlesFirebaseService {
       await writeBatchRef.commit();
       return 'SUCCESSFUL Seeding Articles firestore';
     } catch (error: any) {
-      return 'Failed Seeding Articles firestore';
+      throw error;
     }
   }
 }

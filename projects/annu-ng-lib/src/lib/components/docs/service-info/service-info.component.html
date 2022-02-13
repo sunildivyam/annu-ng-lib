@@ -24,7 +24,8 @@
                 <p [innerHtml]="fn.description"></p>
                 <anu-service-method [method]="fn" [parameters]="methodParameters"
                     (changed)="methodParametersChanged($event, fn)"></anu-service-method>
-                <anu-code-block *ngIf="methodResponses[fn.name]" [source]="methodResponses[fn.name]"></anu-code-block>
+                    <anu-error *ngIf="methodErrors[fn.name]" [code]="methodErrors[fn.name].code" [message]="methodErrors[fn.name].message"></anu-error>
+                    <anu-code-block *ngIf="methodResponses[fn.name]" [source]="methodResponses[fn.name]"></anu-code-block>
             </anu-card-body>
         </anu-card>
     </section>
