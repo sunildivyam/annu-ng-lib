@@ -51,6 +51,7 @@ import {
   SelectionServicePageComponent,
   ThemeServicePageComponent,
   ArticlesFirebaseServicePageComponent,
+  AuthFirebaseServicePageComponent,
 } from './page-services';
 
 @NgModule({
@@ -98,6 +99,7 @@ import {
     SelectionServicePageComponent,
     ThemeServicePageComponent,
     ArticlesFirebaseServicePageComponent,
+    AuthFirebaseServicePageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -45,6 +45,7 @@ import {
   SelectionServicePageComponent,
   ThemeServicePageComponent,
   ArticlesFirebaseServicePageComponent,
+  AuthFirebaseServicePageComponent,
 } from './page-services';
 
 
@@ -123,6 +124,7 @@ export const docsSvcRoutes = [
 // Firebase Services Routes
 export const firebaseSvcRoutes = [
   { path: 'services/firebase/articles-firebase', component: ArticlesFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'ArticlesFirebase Service' } },
+  { path: 'services/firebase/auth-firebase', component: AuthFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'AuthFirebase Service' } },
 ];
 
 export const routes: Routes = [

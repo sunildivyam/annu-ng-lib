@@ -6,3 +6,4 @@ export * from './meta-service-page/meta-service-page.component';
 export * from './selection-service-page/selection-service-page.component';
 export * from './theme-service-page/theme-service-page.component';
 export * from './articles-firebase-service-page/articles-firebase-service-page.component';
+export * from './auth-firebase-service-page/auth-firebase-service-page.component';
