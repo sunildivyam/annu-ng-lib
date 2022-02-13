@@ -6,7 +6,8 @@ export const ROUTE_TYPES = {
         default: 'Components',
         commonUi: 'Common UI Components',
         cms: 'CMS Components',
-        docs: 'Documentation Components'
+        docs: 'Documentation Components',
+        auth: 'Authorization Components',
     },
     services: {
         default: 'Services',

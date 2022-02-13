@@ -34,6 +34,8 @@ import {
   ComponentPropsPageComponent,
   ServiceMethodPageComponent,
   ErrorPageComponent,
+  LoginPageComponent,
+  LoginStatusPageComponent
 } from './page-components';
 
 // Services from Lib
@@ -55,6 +57,12 @@ export const mainRoutes = [
   { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } },
   { path: 'documentation', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Documentation' } },
   { path: 'contact-us', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Contact Us' } },
+]
+
+// Auth Component Routes
+export const authRoutes = [
+  { path: 'components/auth/login', component: LoginPageComponent, data: { type: ROUTE_TYPES.components.auth, title: 'Login' } },
+  { path: 'components/auth/login-status', component: LoginStatusPageComponent, data: { type: ROUTE_TYPES.components.auth, title: 'Login Status' } },
 ]
 
 // Common UI Component Routes
@@ -140,6 +148,8 @@ export const routes: Routes = [
   ...cmsRoutes,
 
   ...docsRoutes,
+
+  ...authRoutes,
 
   // Services Routes
   ...appSvcRoutes,

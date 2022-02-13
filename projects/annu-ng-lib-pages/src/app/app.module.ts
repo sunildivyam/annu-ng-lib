@@ -40,6 +40,8 @@ import {
   ComponentPropsPageComponent,
   ServiceMethodPageComponent,
   ErrorPageComponent,
+  LoginPageComponent,
+  LoginStatusPageComponent,
 
 } from './page-components';
 
@@ -92,6 +94,8 @@ import {
     ComponentPropsPageComponent,
     ServiceMethodPageComponent,
     ErrorPageComponent,
+    LoginPageComponent,
+    LoginStatusPageComponent,
 
     // Service Pages
     UtilsServicePageComponent,
