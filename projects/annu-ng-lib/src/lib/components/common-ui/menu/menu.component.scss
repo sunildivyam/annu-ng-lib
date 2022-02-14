@@ -112,4 +112,9 @@
             width: 100%;
         }
     }
+
+    .extra-nav {
+        display: flex;
+        flex-direction: column;
+    }
 }

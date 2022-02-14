@@ -26,6 +26,7 @@ import { categories, articles } from './articles-firebase.seed';
 import { UtilsService } from '../../services';
 import { LibConfig } from '../../annu-ng-lib.interface';
 import { AuthFirebaseService } from '../auth';
+import { User } from 'firebase/auth';
 
 const FIREBASE_DOCS = {
   CATEGORIES: 'categories',
@@ -315,4 +316,5 @@ export class ArticlesFirebaseService {
       throw error;
     }
   }
+
 }

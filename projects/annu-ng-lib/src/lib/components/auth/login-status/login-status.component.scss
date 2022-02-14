@@ -1,0 +1,46 @@
+@import '../../../scss/mixins.scss';
+
+:host {
+    display: flex;
+
+    img, .image-container {
+        border-radius: 50%;
+        margin: 0;
+
+        @include small {
+            width: 10rem;
+            height: 10rem;
+        }
+
+        @include medium {
+            width: 10rem;
+            height: 10rem;
+        }
+
+        @include large {
+            width: 2.3rem;
+            height: 2.3rem;
+        }
+    }
+
+    .image-container {
+        border: 1px solid var(--anu-secondary-normal);
+        overflow: hidden;
+    }
+
+    a {
+        color: var(--anu-accent-darker);
+    }
+
+    .primary {
+        a {
+            color: var(--anu-primary-dark);
+        }
+    }
+
+    .secondary {
+        a {
+            color: var(--anu-secondary-dark);
+        }
+    }
+}
