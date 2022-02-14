@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginStatusComponent } from './login-status.component';
 import { RouterModule } from '@angular/router';
+import { SpinnerModule } from '../../common-ui';
 
 
 
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
+    SpinnerModule,
   ],
   exports: [
     LoginStatusComponent

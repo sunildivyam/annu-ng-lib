@@ -14,11 +14,11 @@ export class LoginStatusComponent implements OnInit {
   @Input() theme: string = '';
 
   user: any;
+  loading: boolean = false;
 
   constructor(private authFireSvc: AuthFirebaseService, private router: Router) {
     this.authFireSvc.authStateChanged().subscribe(u => {
       this.user = u;
-      console.log(u);
     });
   }
 
@@ -26,7 +26,9 @@ export class LoginStatusComponent implements OnInit {
   }
 
   private async logout(): Promise<void> {
+    this.loading = true;
     await this.authFireSvc.logout();
+    this.loading = false;
     this.router.navigate([this.loggedOutPageUrl])
   }
   public logoutClicked(event: any) {
