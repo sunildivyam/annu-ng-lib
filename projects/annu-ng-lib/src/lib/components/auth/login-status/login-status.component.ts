@@ -23,6 +23,7 @@ export class LoginStatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.authFireSvc.getCurrentUser();
   }
 
   private async logout(): Promise<void> {

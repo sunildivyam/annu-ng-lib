@@ -18,4 +18,11 @@ $provider-image-size: 2rem;
             margin: 0 0.5rem;
         }
     }
+
+
+    // firebase UI overrides
+
+    .firebaseui-container {
+        max-width: 100%;
+    }
 }
