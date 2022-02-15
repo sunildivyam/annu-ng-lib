@@ -7,6 +7,9 @@ export * from './components/auth';
 
 export * from './firebase';
 
+// Base64 Images
+export * from './images';
+
 //Global Services
 export * from './services';
 
