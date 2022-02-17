@@ -66,7 +66,7 @@ export class ArticlesFirebaseService {
    */
   public async addCategory(newCategory: Category, publish = false): Promise<Category> {
     const currentDate = this.utilsSvc.currentDate;
-    const category = { ...newCategory, userId: this.fireAuthSvc.getCurrentUserId(), created: currentDate, updated: currentDate, isLive: publish };
+    const category = { ...newCategory, userId: this.fireAuthSvc.getCurrentUserId(), created: currentDate, updated: currentDate, isLive: !!publish };
 
     try {
       const db = getFirestore();

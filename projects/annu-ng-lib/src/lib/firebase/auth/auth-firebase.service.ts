@@ -80,7 +80,6 @@ export class AuthFirebaseService {
 
     // After returning from the redirect when your app initializes you can obtain the result
     // let result = await getRedirectResult(auth);
-    console.log('result', result);
 
     if (result) {
       // This is the signed-in user
@@ -88,9 +87,6 @@ export class AuthFirebaseService {
       // This gives you a Google Access Token.
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      console.log('LOgged In: ', token);
-      console.log('USER: ', result.user);
-
     }
   }
 

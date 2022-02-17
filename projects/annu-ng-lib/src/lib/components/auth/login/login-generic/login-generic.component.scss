@@ -1,0 +1,28 @@
+$provider-image-size: 2rem;
+
+:host {
+    .provider-img {
+        margin: 0 0.7rem 0 0;
+        width: #{$provider-image-size};
+        height: #{$provider-image-size};
+    }
+
+    .providers {
+        a {
+            font-size: 1.3rem;
+        }
+    }
+
+    .tAndc {
+        a {
+            margin: 0 0.5rem;
+        }
+    }
+
+
+    // firebase UI overrides
+
+    .firebaseui-container {
+        max-width: 100%;
+    }
+}

@@ -2,6 +2,6 @@ import { FirebaseConfig } from "./firebase";
 
 export class LibConfig {
     docsJsonUrl?: string = '';
-    signInMethods?: Array<string> = [];
+    firebaseui?: any;
     firebase?: FirebaseConfig;
 }

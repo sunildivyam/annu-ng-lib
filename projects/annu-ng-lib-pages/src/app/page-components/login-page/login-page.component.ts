@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthFirebaseUiService } from '@annu-ng-lib';
 
 @Component({
   selector: 'anu-login-page',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authFireUiSvc: AuthFirebaseUiService) { }
 
   ngOnInit(): void {
+    this.authFireUiSvc.startAuthUI('#login-providers');
   }
 
 }

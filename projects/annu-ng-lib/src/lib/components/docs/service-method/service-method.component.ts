@@ -24,7 +24,7 @@ export class ServiceMethodComponent implements OnInit, OnChanges {
   }
 
   private initValues() {
-    this.parameters = this.method.args.map(arg => ({...arg}));
+    this.parameters = this.method.args.map(arg => ({...arg, value: arg.defaultValue}));
   }
 
   public onChange(event: any): void {

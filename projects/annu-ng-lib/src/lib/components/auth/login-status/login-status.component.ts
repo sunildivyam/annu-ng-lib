@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BASE64_AUTH } from '../../../images';
 import { AuthFirebaseService } from '../../../firebase';
 
 @Component({
@@ -15,6 +16,7 @@ export class LoginStatusComponent implements OnInit {
 
   user: any;
   loading: boolean = false;
+  userIcon: string = BASE64_AUTH.user;
 
   constructor(private authFireSvc: AuthFirebaseService, private router: Router) {
     this.authFireSvc.authStateChanged().subscribe(u => {
