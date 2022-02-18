@@ -77,23 +77,36 @@ export class ServiceInfoComponent implements OnInit {
     const argValues = params.map(p => {
       let paramValue;
       try {
-        paramValue = JSON.parse(p.value);
+        switch (p.type) {
+          case 'string':
+            paramValue = p.value === 'null' ? null: p.value;
+            break;
+          case 'number':
+            paramValue = parseInt(p.value);
+            break;
+          case 'boolean':
+            paramValue = Boolean(p.value);
+            break;
+          default:
+            paramValue = JSON.parse(p.value);
+        }
       } catch (error: any) {
         paramValue = p.value;
       }
 
       return paramValue;
     });
+
     const returnOfFunction = this.serviceInstance[method.name](...argValues);
     if (method.returnType.includes('Observable')) {
       returnOfFunction.subscribe(res => {
         delete this.methodErrors[method.name];
         this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
       })
-      .catch(error => {
-        this.methodErrors[method.name] = error;
-        delete this.methodResponses[method.name];
-      })
+        .catch(error => {
+          this.methodErrors[method.name] = error;
+          delete this.methodResponses[method.name];
+        })
     } else if (method.returnType.includes('Promise')) {
       returnOfFunction.then(res => {
         delete this.methodErrors[method.name];

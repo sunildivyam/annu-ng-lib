@@ -38,7 +38,7 @@ const FIREBASE_DOCS = {
 })
 export class ArticlesFirebaseService {
 
-  constructor(private libConfig: LibConfig, private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService) {}
+  constructor(private libConfig: LibConfig, private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService) { }
 
 
   /**
@@ -66,8 +66,16 @@ export class ArticlesFirebaseService {
    */
   public async addCategory(newCategory: Category, publish = false): Promise<Category> {
     const currentDate = this.utilsSvc.currentDate;
-    const category = { ...newCategory, userId: this.fireAuthSvc.getCurrentUserId(), created: currentDate, updated: currentDate, isLive: !!publish };
-
+    const category = {
+      ...newCategory,
+      userId: this.fireAuthSvc.getCurrentUserId(),
+      created: currentDate,
+      updated: currentDate,
+      isLive: !!publish
+    };
+    if (category.id) {
+      throw new Error(`This Category has an id - ${category.id}, so this Category may already exist, please check and try again.`);
+    }
     try {
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
@@ -93,6 +101,8 @@ export class ArticlesFirebaseService {
   public async setCategory(pCategory: Category): Promise<Category> {
     const currentDate = this.utilsSvc.currentDate;
     const category = { ...pCategory, updated: currentDate };
+    delete category.id;
+
     try {
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
@@ -138,12 +148,12 @@ export class ArticlesFirebaseService {
    * @param {string} id
    * @returns {Promise<Category>}
    */
-  public async getCategory(id: string): Promise<Category> {
+  public async getCategoryById(id: string): Promise<Category> {
     try {
       const db = getFirestore();
       const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.CATEGORIES, id));
       if (!querySnapshot.exists()) {
-        throw new Error('Category does not exist');
+        throw new Error(`Category with id- ${id} does not exist`);
       }
 
       const category: Category = {
@@ -157,23 +167,63 @@ export class ArticlesFirebaseService {
     }
   }
 
-  public async getCategories(userId: string, startPage = 0, pageSize = 5): Promise<Array<Category>> {
+  /**
+   * Reads a category based on a category name.
+   *
+   * @public
+   * @async
+   * @param {string} name
+   * @returns {Promise<Category>}
+   */
+  public async getCategoryByName(name: string): Promise<Category> {
+    try {
+      const db = getFirestore();
+      const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.CATEGORIES, name));
+      if (!querySnapshot.exists()) {
+        throw new Error(`Category with name- ${name} does not exist`);
+      }
+
+      const category: Category = {
+        id: querySnapshot.id,
+        ...querySnapshot.data(),
+      }
+
+      return category;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+
+  public async getCategories(userId: string, startPage = 0, pageSize = 5, isLive: boolean | null = true): Promise<Array<Category>> {
     try {
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
-      const queryRef = query(categoriesRef,
-        orderBy('updated'),
-        where('userId', '==', userId),
-        where('isLive', '==', true),
-        startAt(startPage),
-        limit(pageSize));
+      const queryArgs = [categoriesRef, orderBy('name')];
+
+      // if userid is given, then fetches categories of that user only, else will fetch all categories
+      if (userId) {
+        queryArgs.push(where('userId', '==', userId));
+      }
+
+      // add condition only when either true or false. if null, then not add condition, and fetch irrespective of isLive
+      if (isLive === true || isLive === false) {
+        queryArgs.push(where('isLive', '==', isLive));
+      }
+
+      if (startPage >=0 && pageSize >= 1) {
+        queryArgs.push(startAt(startPage));
+        queryArgs.push(limit(pageSize));
+      }
+
+      const queryRef =  query.apply(this, [...queryArgs]);
 
       const querySnapshot = await getDocs(queryRef);
       const categories: Array<Category> = [];
       querySnapshot.forEach((doc) => {
         categories.push({
           id: doc.id,
-          ...doc.data(),
+          ...doc.data() as any,
         });
       });
 
@@ -311,12 +361,14 @@ export class ArticlesFirebaseService {
       ...c,
       created: this.utilsSvc.currentDate,
       userId: this.fireAuthSvc.getCurrentUserId(),
-      updated: this.utilsSvc.currentDate }));
+      updated: this.utilsSvc.currentDate
+    }));
     getSeedsArticles(seedRecordCount).forEach(a => writeBatchRef.set(doc(articlesRef), {
       ...a,
       created: this.utilsSvc.currentDate,
       userId: this.fireAuthSvc.getCurrentUserId(),
-      metaInfo: { ...a.metaInfo, 'article:published_time': this.utilsSvc.currentDate } }));
+      metaInfo: { ...a.metaInfo, 'article:published_time': this.utilsSvc.currentDate }
+    }));
 
     try {
       await writeBatchRef.commit();
