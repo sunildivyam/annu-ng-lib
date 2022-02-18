@@ -95,6 +95,11 @@ export class AuthFirebaseService {
     return this.authState.asObservable();
   }
 
+  public async isUserAdmin(): Promise<boolean> {
+    const auth = this.getFirebaseAuth();
+    const idTokenResult = await auth.currentUser.getIdTokenResult();
+    return !!idTokenResult?.claims?.admin;
+  }
 
   public async logout(): Promise<boolean> {
     const auth = this.getFirebaseAuth();

@@ -22,7 +22,7 @@ import {
 } from 'firebase/firestore';
 
 import { Category, Article } from '../../components/cms';
-import { categories, articles } from './articles-firebase.seed';
+import { getSeedsCategories, getSeedsArticles } from './articles-firebase.seed';
 import { UtilsService } from '../../services';
 import { LibConfig } from '../../annu-ng-lib.interface';
 import { AuthFirebaseService } from '../auth';
@@ -305,9 +305,18 @@ export class ArticlesFirebaseService {
     const writeBatchRef: WriteBatch = writeBatch(db);
     const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
     const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
+    const seedRecordCount = 6;
 
-    categories.forEach(c => writeBatchRef.set(doc(categoriesRef), { ...c, created: this.utilsSvc.currentDate, updated: this.utilsSvc.currentDate }));
-    articles.forEach(a => writeBatchRef.set(doc(articlesRef), { ...a, created: this.utilsSvc.currentDate, metaInfo: { ...a.metaInfo, 'article:published_time': this.utilsSvc.currentDate } }));
+    getSeedsCategories(seedRecordCount).forEach(c => writeBatchRef.set(doc(categoriesRef), {
+      ...c,
+      created: this.utilsSvc.currentDate,
+      userId: this.fireAuthSvc.getCurrentUserId(),
+      updated: this.utilsSvc.currentDate }));
+    getSeedsArticles(seedRecordCount).forEach(a => writeBatchRef.set(doc(articlesRef), {
+      ...a,
+      created: this.utilsSvc.currentDate,
+      userId: this.fireAuthSvc.getCurrentUserId(),
+      metaInfo: { ...a.metaInfo, 'article:published_time': this.utilsSvc.currentDate } }));
 
     try {
       await writeBatchRef.commit();
