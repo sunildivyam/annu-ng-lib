@@ -85,10 +85,10 @@ export class ServiceInfoComponent implements OnInit {
             paramValue = parseInt(p.value);
             break;
           case 'boolean':
-            paramValue = Boolean(p.value);
+            paramValue = p.value === 'null' ? null: p.value === 'false' ? false : true;
             break;
           default:
-            paramValue = JSON.parse(p.value);
+            paramValue = p.value === 'null' ? null: JSON.parse(p.value);
         }
       } catch (error: any) {
         paramValue = p.value;
