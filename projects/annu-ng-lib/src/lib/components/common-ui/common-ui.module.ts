@@ -24,6 +24,7 @@ import { SpinnerModule } from './spinner/spinner.module';
 import { SearchBoxModule } from './search-box/search-box.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { ErrorModule } from './error/error.module';
+import { CollapsibleModule } from './collapsible/collapsible.module';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { ErrorModule } from './error/error.module';
     SearchBoxModule,
     AppConfigModule,
     ErrorModule,
+    CollapsibleModule,
   ],
 })
 export class CommonUiModule { }

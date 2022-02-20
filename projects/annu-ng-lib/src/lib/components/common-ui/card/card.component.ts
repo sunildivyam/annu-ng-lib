@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 
 /**
@@ -16,11 +16,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnChanges {
+  @Input() isRowLayout: boolean = false;
+  @HostBinding('class') rowLayout = '';
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+      this.rowLayout = this.isRowLayout ? 'nowrap': '';
   }
 
 }

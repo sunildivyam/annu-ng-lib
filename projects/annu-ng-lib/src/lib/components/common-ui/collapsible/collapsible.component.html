@@ -1,0 +1,6 @@
+<div class="collapsible-header" (click)="collapsed = !collapsed">
+    <ng-content select="anu-collapsible-header"></ng-content>
+</div>
+<div class="collapsible-content" [class.collapsed]="collapsed">
+    <ng-content select="anu-collapsible-content"></ng-content>
+</div>

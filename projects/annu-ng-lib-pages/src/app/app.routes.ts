@@ -35,7 +35,8 @@ import {
   ServiceMethodPageComponent,
   ErrorPageComponent,
   LoginPageComponent,
-  LoginStatusPageComponent
+  LoginStatusPageComponent,
+  CollapsiblePageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -87,6 +88,7 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/spinner', component: SpinnerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Spinner' } },
   { path: 'components/common-ui/search-box', component: SearchBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'SearchBox' } },
   { path: 'components/common-ui/error', component: ErrorPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Error' } },
+  { path: 'components/common-ui/collapsible', component: CollapsiblePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Collapsible' } },
 ]
 
 // CMS Component Routes

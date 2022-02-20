@@ -42,6 +42,7 @@ import {
   ErrorPageComponent,
   LoginPageComponent,
   LoginStatusPageComponent,
+  CollapsiblePageComponent,
 
 } from './page-components';
 
@@ -96,6 +97,7 @@ import {
     ErrorPageComponent,
     LoginPageComponent,
     LoginStatusPageComponent,
+    CollapsiblePageComponent,
 
     // Service Pages
     UtilsServicePageComponent,

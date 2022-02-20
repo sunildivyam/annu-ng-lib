@@ -346,7 +346,7 @@ export class ArticlesFirebaseService {
    * <strong>userId:</strong> filter by user id</br>
    * <strong>name:</strong> filter by name or array of names</br>
    * <strong>id:</strong> filter by id or array of ids</br>
-   * <strong>id:</strong> filter by articleCategory or array of articleCategories</br>
+   * <strong>articleCategoryId:</strong> filter by articleCategoryId or array of articleCategoryIds</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
    * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>

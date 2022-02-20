@@ -13,21 +13,42 @@
     <section *ngIf="activeTab.name === tabs[1].name">
         <p>You can run your service methods and see their output.
             Below screen provides you the input boxes to enter your method argument values.</p>
-        <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)" placeholder="service method name...">
+        <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)"
+            placeholder="service method name...">
         </anu-search-box>
+        <label>Results: {{filteredMethods.length}} of {{svcInfo?.methods.length || 0}}</label>
+        <ng-container *ngFor="let fn of filteredMethods">
+            <anu-card class="method-card shadow spacing-vertical">
+                <anu-card-body>
+                    <anu-collapsible [collapsed]="false">
+                        <anu-collapsible-header>
+                            <a href="javascript:void(0)"><h3>{{fn.name}}(...)</h3></a>
+                        </anu-collapsible-header>
+                        <anu-collapsible-content>
+                            <anu-card>
+                                <anu-card-body>
+                                    <p [innerHtml]="fn.description"></p>
+                                    <anu-service-method [method]="fn" [parameters]="methodParameters"
+                                        (changed)="methodParametersChanged($event, fn)"></anu-service-method>
+                                    <anu-error *ngIf="methodErrors[fn.name]" [code]="methodErrors[fn.name].code"
+                                        [message]="methodErrors[fn.name].message"></anu-error>
+                                    <anu-collapsible *ngIf="methodResponses[fn.name]">
+                                        <anu-collapsible-header>
+                                            <a href="javascript:void(0)">Method response</a>
+                                        </anu-collapsible-header>
+                                        <anu-collapsible-content>
+                                            <anu-code-block [source]="methodResponses[fn.name]">
+                                            </anu-code-block>
+                                        </anu-collapsible-content>
+                                    </anu-collapsible>
+                                </anu-card-body>
+                            </anu-card>
+                        </anu-collapsible-content>
+                    </anu-collapsible>
+                </anu-card-body>
+            </anu-card>
+        </ng-container>
 
-        <anu-card class="method-card shadow spacing-vertical" *ngFor="let fn of filteredMethods">
-            <anu-card-title>
-                <h3>{{fn.name}}(...)</h3>
-            </anu-card-title>
-            <anu-card-body>
-                <p [innerHtml]="fn.description"></p>
-                <anu-service-method [method]="fn" [parameters]="methodParameters"
-                    (changed)="methodParametersChanged($event, fn)"></anu-service-method>
-                    <anu-error *ngIf="methodErrors[fn.name]" [code]="methodErrors[fn.name].code" [message]="methodErrors[fn.name].message"></anu-error>
-                    <anu-code-block *ngIf="methodResponses[fn.name]" [source]="methodResponses[fn.name]"></anu-code-block>
-            </anu-card-body>
-        </anu-card>
     </section>
 
     <section *ngIf="activeTab.name === tabs[2].name">

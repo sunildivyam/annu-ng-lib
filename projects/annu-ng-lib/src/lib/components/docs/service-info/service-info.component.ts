@@ -79,16 +79,16 @@ export class ServiceInfoComponent implements OnInit {
       try {
         switch (p.type) {
           case 'string':
-            paramValue = p.value === 'null' ? null: p.value;
+            paramValue = p.value === 'null' ? null : p.value;
             break;
           case 'number':
             paramValue = parseInt(p.value);
             break;
           case 'boolean':
-            paramValue = p.value === 'null' ? null: p.value === 'false' ? false : true;
+            paramValue = p.value === 'null' ? null : p.value === 'false' ? false : true;
             break;
           default:
-            paramValue = p.value === 'null' ? null: JSON.parse(p.value);
+            paramValue = p.value === 'null' ? null : JSON.parse(p.value);
         }
       } catch (error: any) {
         paramValue = p.value;
@@ -119,4 +119,5 @@ export class ServiceInfoComponent implements OnInit {
       this.methodResponses[method.name] = JSON.stringify(returnOfFunction, null, '\t');
     }
   }
+
 }

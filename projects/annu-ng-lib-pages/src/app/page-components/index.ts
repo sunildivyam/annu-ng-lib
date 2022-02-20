@@ -31,3 +31,4 @@ export * from './service-method-page/service-method-page.component';
 export * from './error-page/error-page.component';
 export * from './login-page/login-page.component';
 export * from './login-status-page/login-status-page.component';
+export * from './collapsible-page/collapsible-page.component';
