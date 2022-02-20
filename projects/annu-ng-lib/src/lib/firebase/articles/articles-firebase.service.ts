@@ -11,18 +11,14 @@ import {
   deleteDoc,
   writeBatch,
   WriteBatch,
-  Timestamp,
   query,
   where,
-  QueryConstraint,
   orderBy,
   startAfter,
   startAt,
   limit,
   CollectionReference,
   DocumentData,
-  FieldPath,
-  OrderByDirection,
   endBefore,
   limitToLast,
 } from 'firebase/firestore';
@@ -32,23 +28,12 @@ import { getSeedsCategories, getSeedsArticles } from './articles-firebase.seed';
 import { UtilsService } from '../../services';
 import { LibConfig } from '../../annu-ng-lib.interface';
 import { AuthFirebaseService } from '../auth';
-import { User } from 'firebase/auth';
+import { QueryConfig } from '../firebase.interface';
 
 const FIREBASE_DOCS = {
   CATEGORIES: 'categories',
   ARTICLES: 'articles'
 }
-
-export interface QueryConfig {
-  userId?: string;
-  name?: string;
-  orderField?: string;
-  isDesc?: boolean;
-  isNextPages?: boolean;
-  startPage: any;
-  pageSize?: number;
-  isLive?: boolean | null;
-};
 
 
 /**
@@ -118,7 +103,7 @@ export class ArticlesFirebaseService {
     try {
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
-      const categoryRef = doc(categoriesRef, category.id);
+      const categoryRef = doc(categoriesRef, pCategory.id);
 
       await setDoc(categoryRef, category);
 
@@ -182,6 +167,8 @@ export class ArticlesFirebaseService {
   /**
    * Reads Categories based on where conditions, orderby, and pagination.</br>
    * <strong>userId:</strong> filter by user id</br>
+   * <strong>name:</strong> filter by name or array of names</br>
+   * <strong>id:</strong> filter by id or array of ids</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
    * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>
@@ -192,20 +179,14 @@ export class ArticlesFirebaseService {
    *
    * @public
    * @async
-   * @param {string} userId filter by user id
-   * @param {string} orderField name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.
-   * @param {string} isDesc  if true, orderBy field is sorted desc or asc order.
-   * @param {boolean} [isNextPages=true]  if true, pagination will be forward else backward direction
-   * @param {*} [startPage='']  startPage should have the value of the orderBy field of the first or last record of previously fetched records.
-   * @param {number} [pageSize=5] if pageSize is les that equal to 0, then no pagination will be done
-   * @param {(boolean | null)} [isLive=true]  if null, ignores filtering based on isLive. Otherwise filters documents that are published or unbulished based on true/false value.
+   * @param {QueryConfig} queryConfig filter using a query config
    * @returns {Promise<Array<Category>>}
    */
-  public async getCategories(userId: string, name: string, isLive: boolean | null = true, orderField: string, isDesc: boolean, isNextPages: boolean = true, startPage: any = '', pageSize: number = 5): Promise<Array<Category>> {
+  public async getCategories(queryConfig: QueryConfig): Promise<Array<Category>> {
     try {
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
-      const queryArgs = this.buildQuery(categoriesRef, { userId, name, isLive, orderField, isDesc, isNextPages, startPage, pageSize } as QueryConfig);
+      const queryArgs = this.buildQuery(categoriesRef, { ...queryConfig } as QueryConfig);
 
       const queryRef = query.apply(this, [...queryArgs]);
 
@@ -275,11 +256,12 @@ export class ArticlesFirebaseService {
     const currentDate = this.utilsSvc.currentDate;
     const article = { ...pArticle, updated: currentDate };
     delete article.id;
+    delete article.categoriesGroup;
 
     try {
       const db = getFirestore();
       const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
-      const articleRef = doc(articlesRef, article.id);
+      const articleRef = doc(articlesRef, pArticle.id);
 
       await setDoc(articleRef, article);
 
@@ -313,18 +295,24 @@ export class ArticlesFirebaseService {
     }
   }
 
+
   /**
    * Reads a article based on a article id.
+   * Add name of collectiongroup, where data population is needed, eg. categories.
+   * @date 20/2/2022 - 5:05:44 pm
    *
    * @public
    * @async
    * @param {string} id
+   * @param {Array<string>} [groupCollections=[]]
    * @returns {Promise<Article>}
    */
-  public async getArticleById(id: string): Promise<Article> {
+  public async getArticleById(id: string, groupCollections: Array<string> = []): Promise<Article> {
+
     try {
       const db = getFirestore();
-      const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.ARTICLES, id));
+      const articleRef = doc(db, FIREBASE_DOCS.ARTICLES, id);
+      const querySnapshot = await getDoc(articleRef);
       if (!querySnapshot.exists()) {
         throw new Error(`Article with id- ${id} does not exist`);
       }
@@ -332,6 +320,17 @@ export class ArticlesFirebaseService {
       const article: Article = {
         id: querySnapshot.id,
         ...querySnapshot.data(),
+      }
+
+      if (groupCollections && groupCollections.length) {
+        // Add conditions for other Collection Groups, if any
+        if (groupCollections.includes('categories')) {
+          const qConfig: QueryConfig = {
+            id: article.categories
+          };
+          const cats = await this.getCategories(qConfig);
+          article.categoriesGroup = cats;
+        }
       }
 
       return article;
@@ -342,8 +341,12 @@ export class ArticlesFirebaseService {
 
 
   /**
-   * Reads Categories based on where conditions, orderby, and pagination.</br>
+   * Reads Articles based on where conditions, orderby, and pagination.</br>
+   * This method can be used for various combination of queries, articles by userid, id/s, name/s, artcileCatgoryId/s, sorting, pagination etc.</br>
    * <strong>userId:</strong> filter by user id</br>
+   * <strong>name:</strong> filter by name or array of names</br>
+   * <strong>id:</strong> filter by id or array of ids</br>
+   * <strong>id:</strong> filter by articleCategory or array of articleCategories</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
    * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>
@@ -354,20 +357,14 @@ export class ArticlesFirebaseService {
    *
    * @public
    * @async
-   * @param {string} userId filter by user id
-   * @param {string} orderField name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.
-   * @param {string} isDesc  if true, orderBy field is sorted desc or asc order.
-   * @param {boolean} [isNextPages=true]  if true, pagination will be forward else backward direction
-   * @param {*} [startPage='']  startPage should have the value of the orderBy field of the first or last record of previously fetched records.
-   * @param {number} [pageSize=5] if pageSize is les that equal to 0, then no pagination will be done
-   * @param {(boolean | null)} [isLive=true]  if null, ignores filtering based on isLive. Otherwise filters documents that are published or unbulished based on true/false value.
+   * @param {QueryConfig} queryConfig filter by queryConfig.
    * @returns {Promise<Array<Article>>}
    */
-  public async getArticles(userId: string, name: string, isLive: boolean | null = true, orderField: string, isDesc: boolean, isNextPages: boolean = true, startPage: any = '', pageSize: number = 5): Promise<Array<Article>> {
+  public async getArticles(queryConfig: QueryConfig): Promise<Array<Article>> {
     try {
       const db = getFirestore();
       const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
-      const queryArgs = this.buildQuery(articlesRef, { userId, name, isLive, orderField, isDesc, isNextPages, startPage, pageSize } as QueryConfig);
+      const queryArgs = this.buildQuery(articlesRef, { ...queryConfig } as QueryConfig);
 
       const queryRef = query.apply(this, [...queryArgs]);
 
@@ -385,7 +382,6 @@ export class ArticlesFirebaseService {
       throw error;
     }
   }
-
 
   /**
    * seedDatabase() - populates the database with initial data.
@@ -436,7 +432,7 @@ export class ArticlesFirebaseService {
   public buildQuery(documentsRef: CollectionReference<DocumentData>, queryConfig: QueryConfig): Array<any> {
     const queryArgs: Array<any> = [documentsRef];
 
-    const { userId, name, isLive, orderField, isDesc, isNextPages, startPage, pageSize } = queryConfig;
+    const { userId, name, id, articleCategoryId, isLive, orderField, isDesc, isNextPages, startPage, pageSize } = queryConfig;
 
     // if userid is given, then fetches categories of that user only, else will fetch all categories
     if (userId) {
@@ -444,9 +440,19 @@ export class ArticlesFirebaseService {
     }
 
     if (name) {
-      queryArgs.push(where('name', '==', name));
+      const opr = name instanceof Array ? 'in' : '==';
+      queryArgs.push(where('name', opr, name));
     }
 
+    if (id) {
+      const opr = id instanceof Array ? 'in' : '==';
+      queryArgs.push(where('__name__', opr, id));
+    }
+
+    if (articleCategoryId) {
+      const opr = articleCategoryId instanceof Array ? 'array-contains-any' : 'array-contains';
+      queryArgs.push(where('categories', opr, articleCategoryId));
+    }
     // add condition only when either true or false. if null, then not add condition, and fetch irrespective of isLive
     if (isLive === true || isLive === false) {
       queryArgs.push(where('isLive', '==', isLive));
@@ -473,3 +479,5 @@ export class ArticlesFirebaseService {
     return queryArgs;
   }
 }
+
+//TODO: Add Group Queries.

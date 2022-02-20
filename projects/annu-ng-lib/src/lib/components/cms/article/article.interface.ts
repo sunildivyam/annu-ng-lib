@@ -1,5 +1,6 @@
 import { EditorElement } from "../content-editor";
 import { ImageInfo, MetaInfo } from "../../common-ui";
+import { Category } from "../category";
 
 export interface Article {
     id?: string;
@@ -8,6 +9,7 @@ export interface Article {
     image?: ImageInfo,   // Thumbnail Image src
     body?: EditorElement;
     categories?: Array<string>;
+    categoriesGroup?: Array<Category>;
     created?: string;
     updated?: string;
     userId?: string;    // User Id from Users
