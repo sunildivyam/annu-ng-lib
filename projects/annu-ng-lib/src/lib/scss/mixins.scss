@@ -28,7 +28,7 @@ $opacity: 0.92;
 }
 
 @function boxSize($i) {
-  @return $i * 100%/12;
+  @return calc($i * 100%/12);
 }
 
 @mixin row {

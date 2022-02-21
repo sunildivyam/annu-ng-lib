@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ProviderId } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
 import  'firebase/compat/auth';
-import { AuthFirebaseService } from '.';
+import { AuthFirebaseService } from './auth-firebase.service';
 
 import { LibConfig } from '../../annu-ng-lib.interface';
 
