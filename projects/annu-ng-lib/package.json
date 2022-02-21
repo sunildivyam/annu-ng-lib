@@ -6,6 +6,7 @@
     "@angular/core": "^10.0.9",
     "prismjs": "^1.26.0",
     "rxjs": "^7.5.4",
-    "firebase": "^9.6.6"
+    "firebase": "^9.6.6",
+    "firebaseui": "^6.0.0"
   }
 }

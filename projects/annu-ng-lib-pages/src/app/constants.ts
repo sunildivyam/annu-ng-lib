@@ -1,4 +1,4 @@
-import { AppConfig } from "@annu-ng-lib/components/common-ui";
+import { AppConfig } from "@annu/ng-lib/components/common-ui";
 
 export const ROUTE_TYPES = {
     main: 'Main',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes, RouterLink } from '@angular/router';
-import { AppConfig, NavItem, ThemeService } from '@annu-ng-lib';
+import { AppConfig, NavItem, ThemeService } from '@annu/ng-lib';
 import { ROUTE_TYPES, appConfig } from './constants';
 import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, authRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes, firebaseSvcRoutes } from './app.routes';
 

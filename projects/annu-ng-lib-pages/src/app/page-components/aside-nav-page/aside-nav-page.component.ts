@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
-import { NavItem } from '@annu-ng-lib';
+import { NavItem } from '@annu/ng-lib';
 import { commonUiRoutes } from '../../app.routes';
 
 @Component({

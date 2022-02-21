@@ -1,4 +1,4 @@
-import { LibConfig } from "@annu-ng-lib";
+import { LibConfig } from "@annu/ng-lib";
 import { firebaseAppConfig, firebaseui } from "../app/config/firebase.config";
 
 export const environment = {
@@ -6,6 +6,6 @@ export const environment = {
   libConfig: {
     docsJsonUrl: '/data/documentation.json',
     firebaseui: { ...firebaseui },
-    firebase: { ...firebaseAppConfig },
+    firebase: { ...firebaseAppConfig, apiKey: '' },
   } as LibConfig
 };

@@ -1,4 +1,4 @@
-import { FirebaseConfig, FIREBASE_AUTH_SIGNIN_METHODS } from "@annu-ng-lib";
+import { FirebaseConfig, FIREBASE_AUTH_SIGNIN_METHODS } from "@annu/ng-lib";
 export const firebaseui = {
     signInFlow: 'popup',  // redirect
     siteName: 'AnnuNgLib Components Library',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppConfig } from '@annu-ng-lib';
+import { AppConfig } from '@annu/ng-lib';
 import { appConfig } from '../../constants';
 
 @Component({

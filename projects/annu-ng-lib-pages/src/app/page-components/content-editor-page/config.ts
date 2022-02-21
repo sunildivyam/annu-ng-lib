@@ -1,4 +1,4 @@
-import { EditorElement } from '@annu-ng-lib';
+import { EditorElement } from '@annu/ng-lib';
 
 export const EDITOR_ELEMENT: EditorElement =
 {

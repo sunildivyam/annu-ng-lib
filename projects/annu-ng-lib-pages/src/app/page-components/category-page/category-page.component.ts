@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '@annu-ng-lib';
+import { Category } from '@annu/ng-lib';
 import { CATEGORY } from './config';
 
 

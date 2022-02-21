@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AnnuNgLibModule } from '@annu-ng-lib';
+import { AnnuNgLibModule } from '@annu/ng-lib';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';

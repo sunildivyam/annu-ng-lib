@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '@annu-ng-lib';
+import { Article } from '@annu/ng-lib';
 import { ARTICLES } from './config';
 
 @Component({

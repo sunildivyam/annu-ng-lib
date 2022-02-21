@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentProp } from '@annu-ng-lib';
+import { ComponentProp } from '@annu/ng-lib';
 
 @Component({
   selector: 'anu-component-props-page',
