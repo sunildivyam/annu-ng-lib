@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToolbarItem } from '@annu-ng-lib';
+import { ToolbarItem } from '@annu/ng-lib';
 
 @Component({
   selector: 'anu-toolbar-page',

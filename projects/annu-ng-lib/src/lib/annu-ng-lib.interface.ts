@@ -1,7 +1,7 @@
-export class LibConfig {
-    docsConfig: DocsConfig = { docsJsonUrl: ''};
-}
+import { FirebaseConfig } from "./firebase";
 
-export interface DocsConfig {
-    docsJsonUrl: string;
+export class LibConfig {
+    docsJsonUrl?: string = '';
+    firebaseui?: any;
+    firebase?: FirebaseConfig;
 }

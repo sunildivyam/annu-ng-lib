@@ -1,5 +1,5 @@
 <section class="article container" *ngFor="let item of items">
-    <anu-card>
+    <anu-card class="shadow spacing" [isRowLayout]="true">
         <anu-card-title>
             <a [routerLink]="[href, item.name]"><h2>{{item.metaInfo.title}}</h2></a>
         </anu-card-title>

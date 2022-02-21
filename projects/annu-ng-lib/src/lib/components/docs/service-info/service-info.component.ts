@@ -10,6 +10,7 @@ import { HighlightService } from '../../common-ui/code-block/highlight.service';
 import { SelectionService } from '../../cms/content-editor/services/selection.service';
 import { MetaService } from '../../common-ui/meta';
 import { ThemeService } from '../../common-ui/theme';
+import { ArticlesFirebaseService, AuthFirebaseService } from '../../../firebase';
 
 const LibServices = {
   UtilsService,
@@ -19,6 +20,8 @@ const LibServices = {
   MetaService,
   SelectionService,
   ThemeService,
+  ArticlesFirebaseService,
+  AuthFirebaseService,
 };
 
 
@@ -39,6 +42,7 @@ export class ServiceInfoComponent implements OnInit {
   serviceInstance: any;
   methodParameters: Array<any> = [];
   methodResponses: Array<string> = [];
+  methodErrors: Array<any> = [];
 
   constructor(private docService: DocsService, private injector: Injector) { }
 
@@ -70,18 +74,50 @@ export class ServiceInfoComponent implements OnInit {
   public methodParametersChanged(params: Array<any>, method: ComponentMethod): void {
     this.methodParameters = params;
 
-    const argValues = params.map(p => p.value);
+    const argValues = params.map(p => {
+      let paramValue;
+      try {
+        switch (p.type) {
+          case 'string':
+            paramValue = p.value === 'null' ? null : p.value;
+            break;
+          case 'number':
+            paramValue = parseInt(p.value);
+            break;
+          case 'boolean':
+            paramValue = p.value === 'null' ? null : p.value === 'false' ? false : true;
+            break;
+          default:
+            paramValue = p.value === 'null' ? null : JSON.parse(p.value);
+        }
+      } catch (error: any) {
+        paramValue = p.value;
+      }
+
+      return paramValue;
+    });
+
     const returnOfFunction = this.serviceInstance[method.name](...argValues);
     if (method.returnType.includes('Observable')) {
       returnOfFunction.subscribe(res => {
-        this.methodResponses[method.name] = JSON.stringify(res);
+        delete this.methodErrors[method.name];
+        this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
       })
+        .catch(error => {
+          this.methodErrors[method.name] = error;
+          delete this.methodResponses[method.name];
+        })
     } else if (method.returnType.includes('Promise')) {
       returnOfFunction.then(res => {
-        this.methodResponses[method.name] = JSON.stringify(res);
+        delete this.methodErrors[method.name];
+        this.methodResponses[method.name] = JSON.stringify(res, null, '\t');
+      }, error => {
+        this.methodErrors[method.name] = error;
+        delete this.methodResponses[method.name];
       })
     } else {
-      this.methodResponses[method.name] = JSON.stringify(returnOfFunction);
+      this.methodResponses[method.name] = JSON.stringify(returnOfFunction, null, '\t');
     }
   }
+
 }

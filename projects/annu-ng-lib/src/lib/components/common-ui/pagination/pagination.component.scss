@@ -1,7 +1,8 @@
-.annuPagination {
+:host {
     list-style: none;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 
     a {
         padding: 0.5rem;

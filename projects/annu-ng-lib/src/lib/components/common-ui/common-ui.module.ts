@@ -22,6 +22,9 @@ import { CodeBlockModule } from './code-block/code-block.module';
 import { MetaModule } from './meta/meta.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SearchBoxModule } from './search-box/search-box.module';
+import { AppConfigModule } from './app-config/app-config.module';
+import { ErrorModule } from './error/error.module';
+import { CollapsibleModule } from './collapsible/collapsible.module';
 
 
 @NgModule({
@@ -51,7 +54,10 @@ import { SearchBoxModule } from './search-box/search-box.module';
     CodeBlockModule,
     MetaModule,
     SpinnerModule,
-    SearchBoxModule
+    SearchBoxModule,
+    AppConfigModule,
+    ErrorModule,
+    CollapsibleModule,
   ],
 })
 export class CommonUiModule { }

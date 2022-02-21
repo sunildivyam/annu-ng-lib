@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Tab } from '@annu-ng-lib';
+import { Tab } from '@annu/ng-lib';
 
 @Component({
   selector: 'anu-tabs-page',

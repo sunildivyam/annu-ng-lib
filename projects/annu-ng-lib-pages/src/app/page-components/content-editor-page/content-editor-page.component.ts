@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EditorElement } from '@annu-ng-lib';
+import { EditorElement } from '@annu/ng-lib';
 import { EDITOR_ELEMENT } from './config';
 
 @Component({

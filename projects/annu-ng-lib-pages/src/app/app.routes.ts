@@ -1,4 +1,4 @@
-import { Route, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ROUTE_TYPES } from './constants';
 
 // Components from Lib
@@ -33,6 +33,10 @@ import {
   SearchBoxPageComponent,
   ComponentPropsPageComponent,
   ServiceMethodPageComponent,
+  ErrorPageComponent,
+  LoginPageComponent,
+  LoginStatusPageComponent,
+  CollapsiblePageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -44,6 +48,8 @@ import {
   MetaServicePageComponent,
   SelectionServicePageComponent,
   ThemeServicePageComponent,
+  ArticlesFirebaseServicePageComponent,
+  AuthFirebaseServicePageComponent,
 } from './page-services';
 
 
@@ -52,6 +58,12 @@ export const mainRoutes = [
   { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } },
   { path: 'documentation', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Documentation' } },
   { path: 'contact-us', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Contact Us' } },
+]
+
+// Auth Component Routes
+export const authRoutes = [
+  { path: 'components/auth/login', component: LoginPageComponent, data: { type: ROUTE_TYPES.components.auth, title: 'Login' } },
+  { path: 'components/auth/login-status', component: LoginStatusPageComponent, data: { type: ROUTE_TYPES.components.auth, title: 'Login Status' } },
 ]
 
 // Common UI Component Routes
@@ -75,6 +87,8 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/hamburger', component: HamburgerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Hamburger' } },
   { path: 'components/common-ui/spinner', component: SpinnerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Spinner' } },
   { path: 'components/common-ui/search-box', component: SearchBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'SearchBox' } },
+  { path: 'components/common-ui/error', component: ErrorPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Error' } },
+  { path: 'components/common-ui/collapsible', component: CollapsiblePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Collapsible' } },
 ]
 
 // CMS Component Routes
@@ -119,6 +133,12 @@ export const docsSvcRoutes = [
   { path: 'services/docs/docs', component: DocsServicePageComponent, data: { type: ROUTE_TYPES.services.docs, title: 'Docs Service' } },
 ];
 
+// Firebase Services Routes
+export const firebaseSvcRoutes = [
+  { path: 'services/firebase/articles-firebase', component: ArticlesFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'ArticlesFirebase Service' } },
+  { path: 'services/firebase/auth-firebase', component: AuthFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'AuthFirebase Service' } },
+];
+
 export const routes: Routes = [
   { path: '', redirectTo: '/overview', pathMatch: 'full' },
   // Main Routes
@@ -131,12 +151,16 @@ export const routes: Routes = [
 
   ...docsRoutes,
 
+  ...authRoutes,
+
   // Services Routes
   ...appSvcRoutes,
+
   ...commonUiSvcRoutes,
 
   ...cmsSvcRoutes,
 
   ...docsSvcRoutes,
 
+  ...firebaseSvcRoutes,
 ];

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes, RouterLink } from '@angular/router';
-import { NavItem, ThemeService } from '@annu-ng-lib';
-import { ROUTE_TYPES } from './constants';
-import { environment } from '../environments/environment';
-import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes } from './app.routes';
+import { AppConfig, NavItem, ThemeService } from '@annu/ng-lib';
+import { ROUTE_TYPES, appConfig } from './constants';
+import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, authRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes, firebaseSvcRoutes } from './app.routes';
 
 @Component({
   selector: 'anu-root',
@@ -11,7 +10,7 @@ import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, appSvcRoutes, common
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'annu-ng-lib-pages';
+  appConfig: AppConfig = appConfig;
   componentsNavItems: Array<NavItem>;
   servicesNavItems: Array<NavItem>;
   mainRoutes: Array<Route>;
@@ -21,6 +20,7 @@ export class AppComponent implements OnInit {
       this.mapRoutesToNavItems(commonUiRoutes, ROUTE_TYPES.components.commonUi),
       this.mapRoutesToNavItems(cmsRoutes, ROUTE_TYPES.components.cms),
       this.mapRoutesToNavItems(docsRoutes, ROUTE_TYPES.components.docs),
+      this.mapRoutesToNavItems(authRoutes, ROUTE_TYPES.components.auth),
     );
 
     this.servicesNavItems = [].concat(
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
       this.mapRoutesToNavItems(commonUiSvcRoutes, ROUTE_TYPES.services.commonUi),
       this.mapRoutesToNavItems(cmsSvcRoutes, ROUTE_TYPES.services.cms),
       this.mapRoutesToNavItems(docsSvcRoutes, ROUTE_TYPES.services.docs),
+      this.mapRoutesToNavItems(firebaseSvcRoutes, ROUTE_TYPES.services.firebase),
     );
 
     this.mainRoutes = mainRoutes;
@@ -59,6 +60,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeService.setTheme(environment.themeName, false);
+    this.themeService.setTheme(this.appConfig.themeName, false);
   }
 }

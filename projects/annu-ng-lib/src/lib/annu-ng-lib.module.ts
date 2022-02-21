@@ -6,18 +6,21 @@ import { LibConfig } from './annu-ng-lib.interface';
 import { DocsModule } from './components/docs/docs.module';
 import { CommonUiModule } from './components/common-ui/common-ui.module';
 import { CmsModule } from './components/cms/cms.module';
+import { AuthModule } from './components/auth/auth.module';
+import { FirebaseModule } from './firebase';
 
 
 @NgModule({
   declarations: [],
   imports: [
     BrowserModule,
-    CommonUiModule,
   ],
   exports: [
     DocsModule,
     CommonUiModule,
     CmsModule,
+    FirebaseModule,
+    AuthModule,
   ]
 })
 export class AnnuNgLibModule {

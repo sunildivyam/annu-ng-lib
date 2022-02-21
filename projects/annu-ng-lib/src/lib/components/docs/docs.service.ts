@@ -12,7 +12,7 @@ export class DocsService {
   servicesCache: Object = {};
 
   constructor(private httpClient: HttpClient, private libConfig: LibConfig) {
-    this.url = libConfig?.docsConfig?.docsJsonUrl || '';
+    this.url = this.libConfig?.docsJsonUrl || '';
   }
 
   private parseProp(cmpProp: any): ComponentProp {

@@ -7,7 +7,7 @@
             <label>Variable Value</label>
         </div>
     </div>
-    <div class="row shadow spacing-around-vertical" *ngFor="let typograph of typography; let index = $index">
+    <div class="row shadow spacing-around-vertical" *ngFor="let typograph of typography; let index = index">
         <div class="col-6">
             <input type="text" [(ngModel)]="typograph.name" (blur)="typographyChanged()">
         </div>

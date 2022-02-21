@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MetaInfo } from '@annu-ng-lib';
+import { MetaInfo } from '@annu/ng-lib';
 import { SAMPLE_PAGE_META } from './config';
 
 @Component({

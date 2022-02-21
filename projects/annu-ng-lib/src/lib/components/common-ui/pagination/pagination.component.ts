@@ -1,6 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Page } from './pagination.interface';
 
+
+/**
+ * Pagination component provides an UI for navigating through a bunch of pages of data. Provides previous, next and range of pages buttons for navigation.
+ *
+ * @date 21/2/2022 - 1:59:46 pm
+ *
+ * @export
+ * @class PaginationComponent
+ * @typedef {PaginationComponent}
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'anu-pagination',
   templateUrl: './pagination.component.html',
@@ -11,7 +22,7 @@ export class PaginationComponent implements OnInit {
   @Input() totalCount: number = 0;
   @Input() pageSize: number = 0;
   @Input() pageUrl: string;
-
+  @Input() showPageRange: boolean = true;
   @Output() changed = new EventEmitter<Page>();
 
   previousPage: number = 0;
@@ -22,10 +33,10 @@ export class PaginationComponent implements OnInit {
   constructor() { }
 
   private recalculatePagination(): void {
-    // set pageCount 
+    // set pageCount
     this.pageCount = Math.ceil(this.totalCount / this.pageSize);
     // set rangePages
-    this.rangePages = [];    
+    this.rangePages = [];
     for (let i = 1; i<= this.pageCount; i++) {
       this.rangePages.push(i);
     }
@@ -65,7 +76,7 @@ export class PaginationComponent implements OnInit {
 
     return `${this.pageUrl}/${pageNo}`;
   }
-  
+
   public previousClicked(event) {
     if (!this.pageUrl) {
       event.preventDefault();

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AnnuNgLibModule } from '@annu-ng-lib';
+import { AnnuNgLibModule } from '@annu/ng-lib';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -39,6 +39,10 @@ import {
   SearchBoxPageComponent,
   ComponentPropsPageComponent,
   ServiceMethodPageComponent,
+  ErrorPageComponent,
+  LoginPageComponent,
+  LoginStatusPageComponent,
+  CollapsiblePageComponent,
 
 } from './page-components';
 
@@ -50,6 +54,8 @@ import {
   MetaServicePageComponent,
   SelectionServicePageComponent,
   ThemeServicePageComponent,
+  ArticlesFirebaseServicePageComponent,
+  AuthFirebaseServicePageComponent,
 } from './page-services';
 
 
@@ -88,6 +94,10 @@ import {
     SearchBoxPageComponent,
     ComponentPropsPageComponent,
     ServiceMethodPageComponent,
+    ErrorPageComponent,
+    LoginPageComponent,
+    LoginStatusPageComponent,
+    CollapsiblePageComponent,
 
     // Service Pages
     UtilsServicePageComponent,
@@ -97,6 +107,8 @@ import {
     MetaServicePageComponent,
     SelectionServicePageComponent,
     ThemeServicePageComponent,
+    ArticlesFirebaseServicePageComponent,
+    AuthFirebaseServicePageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -105,7 +117,7 @@ import {
     ReactiveFormsModule,
     FormsModule,
     // annu-ng-lib - components modules
-    AnnuNgLibModule.forRoot({ docsConfig: environment.libConfig }),
+    AnnuNgLibModule.forRoot(environment.libConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,7 +7,7 @@ import { Route, Routes } from '@angular/router';
   styleUrls: ['./footer-nav.component.scss']
 })
 export class FooterNavComponent implements OnInit {
-@Input() copyRightText: string;
+@Input() copyrightText: string;
 @Input() items: Routes = [];
 @Output() selected = new EventEmitter<Route>();
   constructor() { }

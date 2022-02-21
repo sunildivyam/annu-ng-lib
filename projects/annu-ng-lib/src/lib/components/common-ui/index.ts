@@ -21,3 +21,6 @@ export * from './code-block';
 export * from './meta';
 export * from './spinner';
 export * from './search-box';
+export * from './app-config';
+export * from './error';
+export * from './collapsible';

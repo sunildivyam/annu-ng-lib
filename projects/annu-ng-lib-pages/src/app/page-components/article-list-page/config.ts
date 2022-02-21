@@ -1,5 +1,5 @@
 import { ARTICLE_ELEMENT } from '../article-page/config';
-import { Article } from '@annu-ng-lib';
+import { Article } from '@annu/ng-lib';
 
 const article: Article = {
     name: 'sample-article',

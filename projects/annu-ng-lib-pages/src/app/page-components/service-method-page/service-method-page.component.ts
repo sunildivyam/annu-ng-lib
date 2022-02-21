@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentMethod } from '@annu-ng-lib';
+import { ComponentMethod } from '@annu/ng-lib';
 
 @Component({
   selector: 'anu-service-method-page',

@@ -2,10 +2,16 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { LibConfig } from "@annu/ng-lib";
+import { firebaseAppConfig, firebaseui } from "../app/config/firebase.config";
+
 export const environment = {
   production: false,
-  libConfig: { docsJsonUrl: '/data/documentation.json' },
-  themeName: 'armyGreen',
+  libConfig: {
+    docsJsonUrl: '/data/documentation.json',
+    firebaseui: { ...firebaseui },
+    firebase: { ...firebaseAppConfig, apiKey: '' },
+  } as LibConfig
 };
 
 /*
