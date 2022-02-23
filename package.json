@@ -16,7 +16,9 @@
     "dev:ssr": "ng run annu-ng-lib-pages:serve-ssr",
     "serve:ssr": "node dist/annu-ng-lib-pages/server/main.js",
     "build:ssr": "ng build --configuration production && ng run annu-ng-lib-pages:server:production && npm run docs:json",
-    "prerender": "ng run annu-ng-lib-pages:prerender  && npm run docs:json"
+    "prerender": "ng run annu-ng-lib-pages:prerender  && npm run docs:json",
+    "build:cordova": "ng build --configuration production --output-path=./cordova/www/ && npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json -e json -d ./cordova/www/data",
+    "build:cordova:ssr": "ng build --configuration production --output-path=./cordova/www/ && ng run annu-ng-lib-pages:server:production --output-path=./cordova/www/ && npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json -e json -d ./cordova/www/data"
   },
   "private": true,
   "dependencies": {
