@@ -23,6 +23,7 @@ html {
   font-size: var(--anu-font-size);
   line-height: 1.5;
   letter-spacing: 0.05rem;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -281,22 +282,47 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 .left {
   align-items: flex-start;
   text-align: left;
+
+  &.row {
+    justify-content: flex-start;
+    text-align: left;
+  }
 }
 .right {
   align-items: flex-end;
   text-align: right;
+
+  &.row {
+    justify-content: flex-end;
+    text-align: right;
+  }
 }
 .center {
   align-items: center;
   text-align: center;
+
+  &.row {
+    justify-content: center;
+    text-align: center;
+  }
 }
 .top {
   justify-content: flex-start;
   vertical-align: top;
+
+  &.row {
+    align-items: flex-start;
+    text-align: top;
+  }
 }
 .bottom {
   justify-content: flex-end;
   vertical-align: bottom;
+
+  &.row {
+    align-items: flex-end;
+    vertical-align: bottom;
+  }
 }
 .middle {
   justify-content: center;
@@ -307,30 +333,300 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 .spacing {
   padding: var(--anu-spacing);
 
+  &-lg {
+    @include large {
+      padding: var(--anu-spacing);
+    }
+  }
+
+  &-md {
+    @include medium {
+      padding: var(--anu-spacing);
+    }
+  }
+
+  &-sm {
+    @include small {
+      padding: var(--anu-spacing);
+    }
+  }
+
   &-horizontal {
     padding-left: var(--anu-spacing);
     padding-right: var(--anu-spacing);
+
+    &-lg {
+      @include large {
+        padding-left: var(--anu-spacing);
+        padding-right: var(--anu-spacing);
+      }
+    }
+
+    &-md {
+      @include medium {
+        padding-left: var(--anu-spacing);
+        padding-right: var(--anu-spacing);
+      }
+    }
+
+    &-sm {
+      @include small {
+        padding-left: var(--anu-spacing);
+        padding-right: var(--anu-spacing);
+      }
+    }
   }
 
   &-vertical {
     padding-top: var(--anu-spacing);
     padding-bottom: var(--anu-spacing);
+
+    &-lg {
+      @include large {
+        padding-top: var(--anu-spacing);
+        padding-bottom: var(--anu-spacing);
+      }
+    }
+
+    &-md {
+      @include medium {
+        padding-top: var(--anu-spacing);
+        padding-bottom: var(--anu-spacing);
+      }
+    }
+
+    &-sm {
+      @include small {
+        padding-top: var(--anu-spacing);
+        padding-bottom: var(--anu-spacing);
+      }
+    }
   }
 
   &-around {
     margin: var(--anu-spacing);
 
+    &-lg {
+      @include large {
+        margin: var(--anu-spacing);
+      }
+    }
+
+    &-md {
+      @include medium {
+        margin: var(--anu-spacing);
+      }
+    }
+
+    &-sm {
+      @include small {
+        margin: var(--anu-spacing);
+      }
+    }
+
     &-horizontal {
       margin-left: var(--anu-spacing);
       margin-right: var(--anu-spacing);
+
+      &-lg {
+        @include large {
+          margin-left: var(--anu-spacing);
+          margin-right: var(--anu-spacing);
+        }
+      }
+
+      &-md {
+        @include medium {
+          margin-left: var(--anu-spacing);
+          margin-right: var(--anu-spacing);
+        }
+      }
+
+      &-sm {
+        @include small {
+          margin-left: var(--anu-spacing);
+          margin-right: var(--anu-spacing);
+        }
+      }
     }
 
     &-vertical {
       margin-top: var(--anu-spacing);
       margin-bottom: var(--anu-spacing);
+
+      &-lg {
+        @include large {
+          margin-top: var(--anu-spacing);
+          margin-bottom: var(--anu-spacing);
+        }
+      }
+
+      &-md {
+        @include medium {
+          margin-top: var(--anu-spacing);
+          margin-bottom: var(--anu-spacing);
+        }
+      }
+
+      &-sm {
+        @include small {
+          margin-top: var(--anu-spacing);
+          margin-bottom: var(--anu-spacing);
+        }
+      }
     }
   }
 }
+
+// spacing
+.no-spacing {
+  padding: 0!important;
+
+  &-lg {
+    @include large {
+      padding: 0!important;
+    }
+  }
+
+  &-md {
+    @include medium {
+      padding: 0!important;
+    }
+  }
+
+  &-sm {
+    @include small {
+      padding: 0!important;
+    }
+  }
+
+  &-horizontal {
+    padding-left: 0!important;
+    padding-right: 0!important;
+
+    &-lg {
+      @include large {
+        padding-left: 0!important;
+        padding-right: 0!important;
+      }
+    }
+
+    &-md {
+      @include medium {
+        padding-left: 0!important;
+        padding-right: 0!important;
+      }
+    }
+
+    &-sm {
+      @include small {
+        padding-left: 0!important;
+        padding-right: 0!important;
+      }
+    }
+  }
+
+  &-vertical {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+
+    &-lg {
+      @include large {
+        padding-top: 0!important;
+        padding-bottom: 0!important;
+      }
+    }
+
+    &-md {
+      @include medium {
+        padding-top: 0!important;
+        padding-bottom: 0!important;
+      }
+    }
+
+    &-sm {
+      @include small {
+        padding-top: 0!important;
+        padding-bottom: 0!important;
+      }
+    }
+  }
+
+  &-around {
+    margin: 0!important;
+
+    &-lg {
+      @include large {
+        margin: 0!important;
+      }
+    }
+
+    &-md {
+      @include medium {
+        margin: 0!important;
+      }
+    }
+
+    &-sm {
+      @include small {
+        margin: 0!important;
+      }
+    }
+
+    &-horizontal {
+      margin-left: 0!important;
+      margin-right: 0!important;
+
+      &-lg {
+        @include large {
+          margin-left: 0!important;
+          margin-right: 0!important;
+        }
+      }
+
+      &-md {
+        @include medium {
+          margin-left: 0!important;
+          margin-right: 0!important;
+        }
+      }
+
+      &-sm {
+        @include small {
+          margin-left: 0!important;
+          margin-right: 0!important;
+        }
+      }
+    }
+
+    &-vertical {
+      margin-top: 0!important;
+      margin-bottom: 0!important;
+
+      &-lg {
+        @include large {
+          margin-top: 0!important;
+          margin-bottom: 0!important;
+        }
+      }
+
+      &-md {
+        @include medium {
+          margin-top: 0!important;
+          margin-bottom: 0!important;
+        }
+      }
+
+      &-sm {
+        @include small {
+          margin-top: 0!important;
+          margin-bottom: 0!important;
+        }
+      }
+    }
+  }
+}
+
 
 //hidden
 .hidden {

@@ -37,4 +37,17 @@ export class UtilsService {
     return title.split(' ').join('-').toLocaleLowerCase();
   }
 
+
+  /**
+   * Scrolls the page to the desired top position.
+   * @date 25/2/2022 - 5:28:11 pm
+   *
+   * @public
+   * @param {number} top
+   */
+  public scrollTo(top: number = 0) {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: top});
+    }
+  }
 }
