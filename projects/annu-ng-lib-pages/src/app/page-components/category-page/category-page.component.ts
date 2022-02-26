@@ -18,4 +18,7 @@ export class CategoryPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public onUpdateClicked($event): void {
+    console.info('Update button clicked');
+  }
 }

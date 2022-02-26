@@ -1,2 +1,25 @@
-<h2 [innerHtml]="value?.title"></h2>
-<p [innerHtml]="value?.description"></p>
+<anu-card class="spacing-around-horizontal-lg spacing-around-vertical shadow  spacing-vertical">
+    <anu-card-title>
+        <h2 [innerHtml]="value.title"></h2>
+        <h3 [innerHtml]="value.shortTitle"></h3>
+        <small class="row nowrap stretch">
+            <div><strong>Updated:
+                </strong><span><small>{{utilsSvc.dateToLocalString(value.updated)}}</small></span></div>
+            <div><strong>Created:
+                </strong><span><small>{{utilsSvc.dateToLocalString(value.created)}}</small></span></div>
+        </small>
+    </anu-card-title>
+    <anu-card-body>
+        <p [innerHtml]="value.description"></p>
+    </anu-card-body>
+    <anu-card-footer>
+        <div class="row right">
+            <div class="spacing-around-horizontal">
+                <span [ngClass]="value.isLive ? 'success' : 'warning'">{{value.isLive ? 'Published' : 'Unpublished'}}</span>
+            </div>
+            <div *ngIf="updateHref">
+                <a [routerLink]="[updateHref]" (click)="updateBtnClicked($event)">Update</a>
+            </div>
+        </div>
+    </anu-card-footer>
+</anu-card>

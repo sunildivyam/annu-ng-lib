@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryEditorComponent } from './category-editor.component';
 import { ContentEditorModule } from '../content-editor';
 import { FormsModule } from '@angular/forms';
+import { ToggleModule } from '../../common-ui';
 
 
 
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     ContentEditorModule,
     FormsModule,
+    ToggleModule,
   ],
   exports: [
     CategoryEditorComponent

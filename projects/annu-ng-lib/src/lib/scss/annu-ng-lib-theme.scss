@@ -627,6 +627,50 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
   }
 }
 
+//stretch
+.stretch {
+  align-content: space-between;
+
+  &-lg {
+    @include large {
+      align-content: space-between;
+    }
+  }
+
+  &-md {
+    @include medium {
+      align-content: space-between;
+    }
+  }
+
+  &-sm {
+    @include small {
+      align-content: space-between;
+    }
+  }
+
+  &.row {
+    justify-content: space-between;
+
+    &-lg {
+      @include large {
+        justify-content: space-between;
+      }
+    }
+
+    &-md {
+      @include medium {
+        justify-content: space-between;
+      }
+    }
+
+    &-sm {
+      @include small {
+        justify-content: space-between;
+      }
+    }
+  }
+}
 
 //hidden
 .hidden {

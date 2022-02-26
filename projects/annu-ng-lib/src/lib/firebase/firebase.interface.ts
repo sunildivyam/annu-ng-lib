@@ -12,7 +12,6 @@ export class FirebaseConfig {
 
 export interface QueryConfig {
     userId?: string;
-    name?: string | Array<string>;
     id?: string | Array<string>;
     articleCategoryId?: string | Array<string>;
     orderField?: string;

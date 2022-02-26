@@ -1,11 +1,13 @@
-<form name="categoryEditor" (ngSubmit)="onChanged($event)">
-    <label>/{{pCategory?.name}}</label>
+<form name="categoryEditor" (ngSubmit)="save($event)">
     <p>
-        The Category title should not contain any style formatting.
-        So keep it short and simple. The above category name is auto-generated from title.
-        You can use this name in your content page urls or save in database as unique keys.
-        if you see any HTML tags in the name, then please remove any formatting from title.
+        <small><i>The Category title should not contain any style formatting. So keep it short and simple.</i></small>
     </p>
+    <label>/{{pCategory?.id}}</label>
     <h2 name="category-title" contenteditable [(ngModel)]="pCategory.title" (blur)="onChanged($event)" (ngModelChange)="titleChanged($event)"></h2>
+    <h3 name="category-short-title" contenteditable [(ngModel)]="pCategory.shortTitle" (blur)="onChanged($event)" (ngModelChange)="onChanged($event)"></h3>
     <p name="category-description" contenteditable [(ngModel)]="pCategory.description" (blur)="onChanged($event)"></p>
+    <label>published? <anu-toggle [rounded]="true" [checked]="pCategory.isLive" (changed)="isLiveChanged($event)"></anu-toggle></label>
+    <div class="container center">
+        <a class="btn" href="#" (click)="save($event)">Save</a>
+    </div>
 </form>

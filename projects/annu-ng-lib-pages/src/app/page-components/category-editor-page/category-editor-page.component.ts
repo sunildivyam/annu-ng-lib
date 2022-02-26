@@ -15,6 +15,10 @@ export class CategoryEditorPageComponent implements OnInit {
   }
 
   public categoryChanged(category: Category): void {
-    console.log(category);
+    console.info('Category changed.',category);
+  }
+
+  public onSave(category: Category): void {
+    console.info('Save clicked.', category);
   }
 }
