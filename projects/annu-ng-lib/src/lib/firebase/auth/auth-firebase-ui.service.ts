@@ -28,8 +28,9 @@ export class AuthFirebaseUiService {
         // or whether we leave that to developer to handle.
 
         if (successCb) {
-          successCb(authResult.user);
+          successCb(authResult.user, redirectUrl);
         }
+
         return true;
       },
       signInFailure: (error) => {

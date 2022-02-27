@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { IsLoggedInGuard } from '@annu/ng-lib';
 import { ROUTE_TYPES } from './constants';
 
 // Components from Lib
@@ -53,9 +54,9 @@ import {
 } from './page-services';
 
 
-  // Main Nav Routes
+// Main Nav Routes
 export const mainRoutes = [
-  { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } },
+  { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } /*, canActivate: [IsLoggedInGuard] */ },
   { path: 'documentation', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Documentation' } },
   { path: 'contact-us', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Contact Us' } },
 ]
@@ -68,7 +69,7 @@ export const authRoutes = [
 
 // Common UI Component Routes
 export const commonUiRoutes = [
-  { path: 'components/common-ui/card', component: CardPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Card' } },
+  { path: 'components/common-ui/card', component: CardPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Card' }},
   { path: 'components/common-ui/color-palette', component: ColorPalettePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Color Palette' } },
   { path: 'components/common-ui/theme', component: ThemePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Theme' } },
   { path: 'components/common-ui/theme-preview', component: ThemePreviewPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Preview Theme' } },

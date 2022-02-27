@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createUserWithEmailAndPassword, UserCredential, getAuth, GoogleAuthProvider, signInWithPopup, User, Auth, signInWithEmailAndPassword, ProviderId, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseApp, FirebaseError, getApps, initializeApp } from 'firebase/app';
 import { LibConfig } from '../../annu-ng-lib.interface';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AuthFirebaseService {
 
   constructor(private libConfig: LibConfig) {
     this.auth = this.getFirebaseAuth();
-    onAuthStateChanged(this.auth, (user: User) => this.authState.next(user));
+    onAuthStateChanged(this.getFirebaseAuth(), (user: User) => this.authState.next(user));
   }
 
   private getFirebaseApp(): FirebaseApp {
@@ -92,6 +92,7 @@ export class AuthFirebaseService {
 
 
   public authStateChanged(): Observable<User> {
+    const auth = this.getFirebaseAuth();
     return this.authState.asObservable();
   }
 

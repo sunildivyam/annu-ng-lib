@@ -25,7 +25,7 @@ import {
 
 import { Category, Article } from '../../components/cms';
 import { getSeedsCategories, getSeedsArticles } from './articles-firebase.seed';
-import { UtilsService } from '../../services';
+import { UtilsService } from '../../services/utils/utils.service';
 import { LibConfig } from '../../annu-ng-lib.interface';
 import { AuthFirebaseService } from '../auth';
 import { QueryConfig } from '../firebase.interface';
