@@ -13,7 +13,10 @@ export class AuthFirebaseService {
 
   constructor(private libConfig: LibConfig) {
     this.auth = this.getFirebaseAuth();
-    onAuthStateChanged(this.getFirebaseAuth(), (user: User) => this.authState.next(user));
+    onAuthStateChanged(this.getFirebaseAuth(), (user: User) => {
+      this.setLoggedInToLocalStorage(!!user)
+      this.authState.next(user)
+    });
   }
 
   private getFirebaseApp(): FirebaseApp {
@@ -92,7 +95,6 @@ export class AuthFirebaseService {
 
 
   public authStateChanged(): Observable<User> {
-    const auth = this.getFirebaseAuth();
     return this.authState.asObservable();
   }
 
@@ -106,5 +108,18 @@ export class AuthFirebaseService {
     const auth = this.getFirebaseAuth();
     await auth.signOut();
     return true;
+  }
+
+  public isLoggedInFromLocalStorage(): boolean {
+    if (typeof window !== 'undefined') {
+      const isLoggedIn = window.localStorage.getItem('isLoggedIn');
+      return isLoggedIn === 'true' ? true : false;
+    }
+  }
+
+  public setLoggedInToLocalStorage(isLoggedIn: boolean): void {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('isLoggedIn', '' + isLoggedIn);
+    }
   }
 }

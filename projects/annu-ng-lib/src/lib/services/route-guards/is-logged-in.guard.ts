@@ -33,8 +33,9 @@ export class IsLoggedInGuard implements CanActivate, CanActivateChild {
     return new Promise((resolve, reject) => {
       if (this.authFireSvc.isLoggedIn()) {
         resolve(true);
+      } else if(!this.authFireSvc.isLoggedInFromLocalStorage()) {
+        resolve(urlTree);
       } else {
-
         this.authFireSvc.authStateChanged().subscribe(user => {
           if (user) {
             resolve(true);
