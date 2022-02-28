@@ -5,6 +5,15 @@ import { ImageInfo, MetaInfo, Tab } from '../../common-ui';
 import { ARTICLE_EDITOR_TABS } from './constants';
 import { UtilsService } from '../../../services';
 
+const SAMPLE_ARTICLE = {
+  id: 'sample-article',
+  body: EDITOR_ROOT_ELEMENT,
+  metaInfo: {
+    title: EDITOR_ROOT_ELEMENT.children[0]?.data?.text,
+    description: EDITOR_ROOT_ELEMENT.children[1]?.data?.text,
+  }
+};
+
 @Component({
   selector: 'anu-article-editor',
   templateUrl: './article-editor.component.html',
@@ -13,40 +22,34 @@ import { UtilsService } from '../../../services';
 export class ArticleEditorComponent implements OnInit, OnChanges {
   @Input() value: Article;
   @Output() changed = new EventEmitter<Article>();
+  @Output() saveClicked = new EventEmitter<Article>();
 
   toggleImageForm: boolean = false;
   tabs: Array<Tab> = ARTICLE_EDITOR_TABS.map(t => ({ ...t }));
 
   activeTab = this.tabs[0];
-  article: Article = {
-    name: '',
-    body: EDITOR_ROOT_ELEMENT,
-    metaInfo: {}
-  };
+  article: Article;
+  sampleArticle: Article;
 
-  constructor(private utils: UtilsService) { }
-
-  private updateArticleAdditionalInfo() {
-    // set article name
-    this.article.name = this.utils.toDashedString(this.title);
-    // set article meta info based on content
-    this.article.metaInfo = { ...this.article.metaInfo, title: this.title };
+  constructor(private utils: UtilsService) {
+    this.sampleArticle = { ...SAMPLE_ARTICLE, created: utils.currentDate, updated: utils.currentDate };
+    this.article = { ...this.sampleArticle };
   }
 
-  public get title(): string {
-    return this.article?.body?.children[0]?.data?.text || '';
-  }
-
-  public get summary(): string {
-    return this.article?.body?.children[1]?.data?.text || '';
+  private initArticle() {
+    if (this.value) {
+      this.article = { ...this.value };
+    } else {
+      this.article = { ...this.sampleArticle };
+    }
   }
 
   ngOnInit(): void {
-    this.updateArticleAdditionalInfo();
+    this.initArticle();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.updateArticleAdditionalInfo();
+    this.initArticle();
   }
 
   public tabChanged(tab: Tab) {
@@ -54,20 +57,24 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   }
 
   public articleBodyChanged(body: EditorElement) {
-    this.article.body = body;
-    this.updateArticleAdditionalInfo();
-
-    this.changed.emit(this.article);
+    this.article = { ...this.article, body: { ...body } };
+    this.changed.emit({ ...this.article });
   }
 
   public articleMetaChanged(metaInfo: MetaInfo) {
-    this.article.metaInfo = metaInfo;
-    this.changed.emit(this.article);
+    this.article.id = this.utils.toDashedString(metaInfo.title);
+    this.article = { ...this.article, metaInfo: { ...metaInfo } };
+    this.changed.emit({ ...this.article });
   }
 
-  public changeImage(event: any) {
+  public changeImage(event: any, clear: boolean = false) {
     event.preventDefault();
-    this.toggleImageForm = !this.toggleImageForm;
+    if (clear === true) {
+      this.article.image = null;
+      this.changed.emit({ ...this.article });
+    } else {
+      this.toggleImageForm = !this.toggleImageForm;
+    }
   }
 
   public cancelImageChange() {
@@ -77,6 +84,11 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   public saveImageChange(image: ImageInfo) {
     this.article.image = image;
     this.toggleImageForm = !this.toggleImageForm;
-    this.changed.emit(this.article);
+    this.changed.emit({ ...this.article });
+  }
+
+  public saveArticle(event: any): void {
+    event.preventDefault();
+    this.saveClicked.emit({ ...this.article });
   }
 }

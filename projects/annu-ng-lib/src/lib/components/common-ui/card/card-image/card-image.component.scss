@@ -1,18 +1,5 @@
-@import '../../../../scss/mixins.scss';
 
 :host {
     display: flex;
     flex-direction: column;
-
-    @include large {
-        width: 20rem;
-    }
-
-    @include medium {
-        width: 20rem;
-    }
-
-    @include small {
-        width: 100%;
-    }
 }

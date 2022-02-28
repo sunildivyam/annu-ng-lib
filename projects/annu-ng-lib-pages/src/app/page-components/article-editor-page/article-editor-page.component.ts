@@ -7,7 +7,7 @@ import { Article } from '@annu/ng-lib';
   styleUrls: ['./article-editor-page.component.scss']
 })
 export class ArticleEditorPageComponent implements OnInit {
-article: Article;
+  article: Article;
 
   constructor() { }
 
@@ -16,5 +16,9 @@ article: Article;
 
   public articleChanged(article: Article) {
     console.log('Saved - ', article?.metaInfo);
+  }
+
+  public onSaveClicked(article: Article): void {
+    console.log('Saved - Clicked', article?.metaInfo);
   }
 }

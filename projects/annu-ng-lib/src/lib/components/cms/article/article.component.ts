@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MetaService } from '../../common-ui';
 import { Article } from './article.interface';
+import { UtilsService } from '../../../services';
 
 @Component({
   selector: 'anu-article',
@@ -8,12 +8,13 @@ import { Article } from './article.interface';
   styleUrls: ['./article.component.scss']
 })
 export class ArticleComponent implements OnInit {
-  @Input() value: Article = { name: 'default-article' };
+  @Input() value: Article | null;
+  @Input() updateHref: Array<string>;     // shows hyperlink to update page
+  @Input() readMoreHref: Array<string>;   // shows hyperlink to readmore page
+  @Input() titleHref: Array<string>;      // shows hyperlink to article full view page
+  @Input() showMetaInfo: boolean = true;  // if false, info like updated, created, published etc. will be hidden.
 
-  constructor(private metaService: MetaService) { }
+  constructor(public utilsSvc: UtilsService) { }
 
-  ngOnInit(): void {
-    this.metaService.setPageMeta(this.value?.metaInfo);
-  }
-
+  ngOnInit(): void {}
 }

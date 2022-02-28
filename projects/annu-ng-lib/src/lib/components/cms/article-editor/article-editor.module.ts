@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ArticleEditorComponent } from './article-editor.component';
 import { TabsModule, CardModule, ImageFormModule, ModalModule, MetaModule } from '../../common-ui';
 import { ContentEditorModule } from '../content-editor';
+import { ArticleModule } from '../article';
 
 @NgModule({
   declarations: [ArticleEditorComponent],
@@ -13,7 +14,8 @@ import { ContentEditorModule } from '../content-editor';
     CardModule,
     ImageFormModule,
     ModalModule,
-    MetaModule
+    MetaModule,
+    ArticleModule
   ],
   exports: [ArticleEditorComponent],
 })

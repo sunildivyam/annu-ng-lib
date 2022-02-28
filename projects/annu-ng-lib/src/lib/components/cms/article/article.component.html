@@ -1,3 +1,36 @@
-<div class="container">
-    <anu-article-element [value]="value?.body"></anu-article-element>
-</div>
+<anu-card [imageCssClasses]="['col-sm-12', 'col-md-4', 'col-lg-4']"
+    [contentCssClasses]="['col-sm-12', 'col-md-8', 'col-lg-8']"
+    class="spacing-around-horizontal-lg spacing-around-vertical shadow  nowrap-md nowrap-lg spacing-vertical">
+    <anu-card-image *ngIf="value?.image?.src">
+        <img [src]="value?.image?.src" [alt]="value?.image?.alt" />
+    </anu-card-image>
+    <anu-card-title>
+        <a *ngIf="titleHref" [routerLink]="titleHref">
+            <h2 [innerHtml]="value?.metaInfo?.title"></h2>
+        </a>
+        <h2 *ngIf="!titleHref" [innerHtml]="value?.metaInfo?.title"></h2>
+        <small *ngIf="showMetaInfo" class="row nowrap stretch">
+            <div><strong>Updated:
+                </strong><span><small>{{utilsSvc.dateToLocalString(value?.updated)}}</small></span></div>
+            <div><strong>Created:
+                </strong><span><small>{{utilsSvc.dateToLocalString(value?.created)}}</small></span></div>
+        </small>
+    </anu-card-title>
+    <anu-card-body>
+        <p [innerHtml]="value?.metaInfo?.description"></p>
+    </anu-card-body>
+    <anu-card-footer>
+        <div class="row right">
+            <div *ngIf="showMetaInfo" class="spacing-around-horizontal">
+                <span [ngClass]="value?.isLive ? 'success' : 'warning'">{{value?.isLive ? 'Published' :
+                    'Unpublished'}}</span>
+            </div>
+            <div class="spacing-around-horizontal" *ngIf="updateHref">
+                <a [routerLink]="updateHref">Update</a>
+            </div>
+            <div class="spacing-around-horizontal" *ngIf="readMoreHref">
+                <a [routerLink]="readMoreHref">Read more...</a>
+            </div>
+        </div>
+    </anu-card-footer>
+</anu-card>

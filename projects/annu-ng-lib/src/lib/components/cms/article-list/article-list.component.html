@@ -1,16 +1,3 @@
-<section class="article container" *ngFor="let item of items">
-    <anu-card class="shadow spacing" [isRowLayout]="true">
-        <anu-card-title>
-            <a [routerLink]="[href, item.name]"><h2>{{item.metaInfo.title}}</h2></a>
-        </anu-card-title>
-        <anu-card-body>
-            <p>{{item.metaInfo.description}}</p>
-        </anu-card-body>
-        <anu-card-footer>
-            <a [routerLink]="[href, item.name]">Read more...</a>
-        </anu-card-footer>
-        <anu-card-image>
-            <img [src]="item.metaInfo?.image" [alt]="item.metaInfo?.title" />
-        </anu-card-image>
-    </anu-card>
+<section class="article container" *ngFor="let article of items">
+    <anu-article [titleHref]="[href, article?.id]" [readMoreHref]="[href, article?.id]" [updateHref]="[href, article?.id]" [value]="article"></anu-article>
 </section>

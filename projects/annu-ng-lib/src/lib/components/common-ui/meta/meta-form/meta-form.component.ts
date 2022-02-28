@@ -59,9 +59,10 @@ export class MetaFormComponent implements OnInit, OnChanges {
     this.setValues(this.metaInfo);
   }
 
-  public metaChanged(event: any) {
-    event.preventDefault();
-    if (this.metaForm.invalid || !this.metaForm.dirty) return;
+  public metaChanged(event: any, isBlur: boolean = false) {
+    if (!isBlur) event.preventDefault();
+
+    // if (this.metaForm.invalid || !this.metaForm.dirty) return;
     this.changed.emit({ ...this.metaInfo });
   }
 

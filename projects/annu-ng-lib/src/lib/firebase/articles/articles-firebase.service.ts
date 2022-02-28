@@ -194,32 +194,10 @@ export class ArticlesFirebaseService {
    * @public
    * @async
    * @param {Article} newArticle
-   * @param {boolean} [publish=false]
    * @returns {Promise<Article>}
    */
-  public async addArticle(newArticle: Article, publish = false): Promise<Article> {
-    const currentDate = this.utilsSvc.currentDate;
-    const article = {
-      ...newArticle,
-      userId: this.fireAuthSvc.getCurrentUserId(),
-      created: currentDate,
-      updated: currentDate,
-      isLive: !!publish
-    };
-    if (article.id) {
-      throw new Error(`This Article has an id - ${article.id}, so this Article may already exist, please check and try again.`);
-    }
-    try {
-      const db = getFirestore();
-      const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
-
-      const articleRef = await addDoc(articlesRef, article);
-      article.id = articleRef.id;
-
-      return article;
-    } catch (error: any) {
-      throw error;
-    }
+  public async addArticle(newArticle: Article): Promise<Article> {
+    return await this.setArticle(newArticle);
   }
 
 
@@ -235,6 +213,8 @@ export class ArticlesFirebaseService {
   public async setArticle(pArticle: Article): Promise<Article> {
     const currentDate = this.utilsSvc.currentDate;
     const article = { ...pArticle, updated: currentDate };
+    if (!pArticle.created) article.created = currentDate;
+    if (!pArticle.userId) article.userId = this.fireAuthSvc.getCurrentUserId();
     delete article.id;
     delete article.categoriesGroup;
 
@@ -245,7 +225,7 @@ export class ArticlesFirebaseService {
 
       await setDoc(articleRef, article);
 
-      return article;
+      return { ...article, id: pArticle.id };
     } catch (error: any) {
       throw error;
     }

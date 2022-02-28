@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleListComponent } from './article-list.component';
-import { CardModule } from '../../common-ui/card';
 import { RouterModule } from '@angular/router';
+import { ArticleModule } from '../article';
 
 
 @NgModule({
@@ -11,8 +11,8 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    CardModule,
-    RouterModule
+    ArticleModule,
+    RouterModule,
   ],
   exports: [
     ArticleListComponent

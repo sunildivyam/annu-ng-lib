@@ -1,16 +1,10 @@
 <!-- <section class="anu_card"> -->
-  <section class="anu_card_image">
-    <ng-content select="['anu-card-image']"></ng-content>
-  </section>
-  <section class="anu_card_content spacing-horizontal">
-    <section class="anu_card_header">
-      <ng-content select="['anu-card-title']"></ng-content>
-    </section>
-    <section class="anu_card_body">
-      <ng-content select="['anu-card-body']"></ng-content>
-    </section>
-    <section class="anu_card_footer">
-      <ng-content select="['anu-card-footer']"></ng-content>
-    </section>
-  </section>
+<section class="anu_card_image" [ngClass]="imageCssClasses">
+  <ng-content select="['anu-card-image']"></ng-content>
+</section>
+<section class="anu_card_content" [ngClass]="contentCssClasses">
+  <ng-content select="['anu-card-title']"></ng-content>
+  <ng-content select="['anu-card-body']"></ng-content>
+  <ng-content select="['anu-card-footer']"></ng-content>
+</section>
 <!-- </section> -->

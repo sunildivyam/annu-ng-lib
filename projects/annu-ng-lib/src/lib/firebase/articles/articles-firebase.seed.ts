@@ -24,7 +24,7 @@ export const getSeedsArticles = (recordCount = 6): Array<Article> => {
     for (let i = 1; i <= recordCount; i++) {
         const id = `${mSeconds}-${i}`;
         article.push({
-            name: 'sample-article-' + id,
+            id: 'sample-article-' + id,
             image: {},
             metaInfo: {
                 "title": "Sample Article " + id,
