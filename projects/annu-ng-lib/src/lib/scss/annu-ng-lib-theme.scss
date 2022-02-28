@@ -201,6 +201,83 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
     outline-color: var(--anu-primary-normal)
   }
 }
+// Checkbox styling with border & with no border
+input[type="checkbox"] {
+    &:before{
+        position: relative;
+        display: block;
+        width: #{$checkbox_size};
+        height: #{$checkbox_size};
+        content: "";
+        background: var(--anu-primary-deep-light);
+        border: 1px solid var(--anu-primary-normal);
+        color: var(--anu-primary-normal);
+        font-size: #{$checkbox_size};
+    }
+
+    &:after{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: var(--anu-primary-deep-light);
+        border: 1px solid var(--anu-primary-normal);
+        color: var(--anu-primary-normal);
+        width: #{$checkbox_size};
+        height: #{$checkbox_size};
+        top: #{$checkbox_size * -1.12};
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &:checked:after{
+        background: var(--anu-primary-deep-light);
+        content: '\2713';
+        font-size: #{$checkbox_size};
+    }
+
+    &:disabled {
+        &::before {
+            background-color: var(--anu-accent-lighter);
+        }
+
+        :after{
+            background-color: var(--anu-accent-lighter);
+        }
+    }
+
+    &:not(:disabled) {
+        &:checked:hover:after {
+            background-color: var(--anu-primary-lighter);
+        }
+    }
+}
+
+input.no-border[type=checkbox] {
+    &:before{
+        border: none;
+    }
+
+    &:after{
+        border: none;
+        content: '\2713';
+        font-size: #{$checkbox_size};
+        color: var(--anu-accent-light);
+    }
+
+    &:not(:disabled) {
+        &:checked:hover:after {
+            background-color: transparent;
+        }
+    }
+
+    &:checked:after{
+        color: var(--anu-primary-normal);
+        font-size: #{$checkbox_size};
+    }
+}
+
 
 //  Error/Success/Warining
 .error {

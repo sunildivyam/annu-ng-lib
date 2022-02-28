@@ -38,7 +38,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
   }
 
   private setStyleToolbarItems() {
-    if (this.editorElement.tagName === 'li') {
+    if (this.editorElement?.tagName === 'li') {
       // this.styleToolbar = this.styleToolbar.filter(item => ['ul', 'ol'].includes(item.name)) // disable non list elements
     }
   }
@@ -53,7 +53,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
   }
 
   public focusin(editorElement: EditorElement) {
-    if (!this.editorElement.isContainer) {
+    if (!this.editorElement?.isContainer) {
       this.ceService.setFocusOffAll(this.fullTree);
       this.editorElement.focused = true;
       this.isToolbar = false;
@@ -72,7 +72,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
   public styleToolbarSelected(item: ToolbarItem) {
     if (item.name === 'img') {
       this.toggleImageForm = true;
-      this.imageInfo.alt = this.editorElement.data?.alt || this.editorElement.data?.text;
+      this.imageInfo.alt = this.editorElement?.data?.alt || this.editorElement?.data?.text;
     } else {
       this.ceService.replaceElement(this.editorElement, item.name, this.fullTree);
       this.isToolbar = !this.isToolbar;

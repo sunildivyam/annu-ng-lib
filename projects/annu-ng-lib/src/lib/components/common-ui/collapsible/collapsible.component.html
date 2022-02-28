@@ -1,4 +1,6 @@
-<div class="collapsible-header" (click)="collapsed = !collapsed">
+<div class="collapsible-header row nowrap" (click)="collapsed = !collapsed" [class.collapsed]="collapsed">
+    <span *ngIf="!collapsed" class="collapsible-icon">+</span>
+    <span *ngIf="collapsed" class="collapsible-icon">-</span>
     <ng-content select="anu-collapsible-header"></ng-content>
 </div>
 <div class="collapsible-content" [class.collapsed]="collapsed">

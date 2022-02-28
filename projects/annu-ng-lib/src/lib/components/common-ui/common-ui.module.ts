@@ -25,6 +25,7 @@ import { SearchBoxModule } from './search-box/search-box.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { ErrorModule } from './error/error.module';
 import { CollapsibleModule } from './collapsible/collapsible.module';
+import { MultiSelectBoxModule } from './multi-select-box/multi-select-box.module';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { CollapsibleModule } from './collapsible/collapsible.module';
     AppConfigModule,
     ErrorModule,
     CollapsibleModule,
+    MultiSelectBoxModule,
   ],
 })
 export class CommonUiModule { }

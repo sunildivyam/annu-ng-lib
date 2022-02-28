@@ -38,6 +38,7 @@ import {
   LoginPageComponent,
   LoginStatusPageComponent,
   CollapsiblePageComponent,
+  MultiSelectBoxPageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -90,6 +91,7 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/search-box', component: SearchBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'SearchBox' } },
   { path: 'components/common-ui/error', component: ErrorPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Error' } },
   { path: 'components/common-ui/collapsible', component: CollapsiblePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Collapsible' } },
+  { path: 'components/common-ui/multi-select-box', component: MultiSelectBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Multi Select Box' } },
 ]
 
 // CMS Component Routes

@@ -8,6 +8,10 @@
             flex-direction: column;
         }
 
+        &-header {
+            cursor: pointer;
+        }
+
         &-content {
             display: none;
             flex-direction: column;
@@ -15,6 +19,12 @@
             &.collapsed {
                 display: flex;
             }
+        }
+
+        &-icon {
+            color: var(--anu-primary-normal);
+            font-weight: bold;
+            margin-right: var(--anu-spacing);
         }
     }
 }

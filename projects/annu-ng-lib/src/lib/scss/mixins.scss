@@ -8,6 +8,7 @@ $menu-z-index: 1000;
 $aside-nav-z-index: 900;
 $menu-modal: 9000;
 $opacity: 0.92;
+$checkbox_size: 1.5rem;
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {

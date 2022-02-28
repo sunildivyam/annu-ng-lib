@@ -18,16 +18,42 @@
     </section>
 
     <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'moreinfo'}">
-        <div class="row">
-            <a class="spacing-around" href="#" (click)="changeImage($event)">Change image</a>
-            <a class="spacing-around" href="#" (click)="changeImage($event, true)">Remove image</a>
-        </div>
+        <anu-card class="shadow spacing spacing-around-vertical article-card">
+            <anu-card-body>
+                <div class="row center stretch">
+                    <div class="col-sm-12">
+                        <a class="spacing-around" href="#" (click)="changeImage($event)">Change image</a>
+                        <a class="spacing-around" href="#" (click)="changeImage($event, true)">Remove image</a>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>published? <anu-toggle [rounded]="true" [checked]="article?.isLive"
+                                (changed)="isLiveChanged($event)"></anu-toggle></label>
+                    </div>
+                </div>
+            </anu-card-body>
+        </anu-card>
+
+        <anu-article [value]="article"></anu-article>
+
+        <anu-card class="shadow spacing spacing-around-vertical article-card">
+            <anu-card-title>
+                <h2>Link Categories to your Article</h2>
+            </anu-card-title>
+            <anu-card-body>
+                <div class="row">
+                    <anu-multi-select-box keyField="id" labelField="title" [items]="categories"
+                        [selectedItems]="article?.categories" (changed)="onCategoriesChanged($event)">
+                    </anu-multi-select-box>
+                </div>
+            </anu-card-body>
+        </anu-card>
+
         <anu-modal [opened]="toggleImageForm">
             <anu-image-form [src]="article?.image?.src" [alt]="article?.image?.alt" (cancel)="cancelImageChange()"
                 (save)="saveImageChange($event)"></anu-image-form>
         </anu-modal>
 
-        <anu-article [value]="article"></anu-article>
+
     </section>
 
     <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'metainfo'}">

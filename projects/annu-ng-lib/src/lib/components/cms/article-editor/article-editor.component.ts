@@ -4,9 +4,9 @@ import { EditorElement, EDITOR_ROOT_ELEMENT } from '../content-editor';
 import { ImageInfo, MetaInfo, Tab } from '../../common-ui';
 import { ARTICLE_EDITOR_TABS } from './constants';
 import { UtilsService } from '../../../services';
+import { Category } from '../category';
 
 const SAMPLE_ARTICLE = {
-  id: 'sample-article',
   body: EDITOR_ROOT_ELEMENT,
   metaInfo: {
     title: EDITOR_ROOT_ELEMENT.children[0]?.data?.text,
@@ -21,6 +21,7 @@ const SAMPLE_ARTICLE = {
 })
 export class ArticleEditorComponent implements OnInit, OnChanges {
   @Input() value: Article;
+  @Input() categories: Array<Category> = [];
   @Output() changed = new EventEmitter<Article>();
   @Output() saveClicked = new EventEmitter<Article>();
 
@@ -32,7 +33,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   sampleArticle: Article;
 
   constructor(private utils: UtilsService) {
-    this.sampleArticle = { ...SAMPLE_ARTICLE, created: utils.currentDate, updated: utils.currentDate };
+    this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.toDashedString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.article = { ...this.sampleArticle };
   }
 
@@ -64,6 +65,16 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   public articleMetaChanged(metaInfo: MetaInfo) {
     this.article.id = this.utils.toDashedString(metaInfo.title);
     this.article = { ...this.article, metaInfo: { ...metaInfo } };
+    this.changed.emit({ ...this.article });
+  }
+
+  public onCategoriesChanged(selectedCategoryIds: Array<string>): void {
+    this.article = { ...this.article, categories: [...selectedCategoryIds] };
+    this.changed.emit({ ...this.article });
+  }
+
+  public isLiveChanged(isLive: boolean): void {
+    this.article = { ...this.article, isLive };
     this.changed.emit({ ...this.article });
   }
 

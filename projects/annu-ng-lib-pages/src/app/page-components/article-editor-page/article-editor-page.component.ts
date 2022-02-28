@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '@annu/ng-lib';
+import { Article, Category } from '@annu/ng-lib';
+import { SAMPLE_CATEGORIES } from './config';
 
 @Component({
   selector: 'anu-article-editor-page',
@@ -8,7 +9,7 @@ import { Article } from '@annu/ng-lib';
 })
 export class ArticleEditorPageComponent implements OnInit {
   article: Article;
-
+  categories: Array<Category> = [...SAMPLE_CATEGORIES];
   constructor() { }
 
   ngOnInit(): void {
