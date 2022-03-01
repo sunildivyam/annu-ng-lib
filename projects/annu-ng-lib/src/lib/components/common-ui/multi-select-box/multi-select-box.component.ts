@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class MultiSelectBoxComponent implements OnInit {
   @Input() items: Array<Object> = [];
-  @Input() selectedItems: Array<Object | string | number> = [];
+  @Input() selectedItems: Array<Object> = [];
   @Input() keyField: string = '';
   @Input() labelField: string = '';
 
@@ -21,31 +21,18 @@ export class MultiSelectBoxComponent implements OnInit {
   public isItemSelected(item: Object): boolean {
     if (!this.selectedItems) this.selectedItems = [];
 
-    return !!this.selectedItems.find(it => {
-      if (typeof it === 'object') {
-        return it[this.keyField] === item[this.keyField];
-      } else {
-        return it === item[this.keyField]
-      }
-    });
+    return !!this.selectedItems.find(it => it[this.keyField] === item[this.keyField]);
   }
 
   public onChanged(event: any, item: Object): void {
     if (!this.selectedItems) this.selectedItems = [];
 
     if (event.target.checked) {
-      const value = typeof item === 'object' ? { ...item } : item[this.keyField];
-      this.selectedItems.push(value);
+      this.selectedItems.push({ ...item });
     } else {
-      this.selectedItems = this.selectedItems.filter(it => {
-        if (typeof it === 'object') {
-          return it[this.keyField] !== item[this.keyField]
-        } else {
-          return it !== item[this.keyField]
-        }
-      });
+      this.selectedItems = this.selectedItems.filter(it => it[this.keyField] !== item[this.keyField]);
     }
 
-    this.changed.emit(this.selectedItems);
+    this.changed.emit([...this.selectedItems]);
   }
 }

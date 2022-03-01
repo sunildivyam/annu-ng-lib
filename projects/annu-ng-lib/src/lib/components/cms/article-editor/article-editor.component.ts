@@ -20,7 +20,7 @@ const SAMPLE_ARTICLE = {
   styleUrls: ['./article-editor.component.scss']
 })
 export class ArticleEditorComponent implements OnInit, OnChanges {
-  @Input() value: Article;
+  @Input() value: Article | null;
   @Input() categories: Array<Category> = [];
   @Output() changed = new EventEmitter<Article>();
   @Output() saveClicked = new EventEmitter<Article>();
@@ -31,6 +31,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   activeTab = this.tabs[0];
   article: Article;
   sampleArticle: Article;
+  selectedArticleCategories: Array<Object> = [];
 
   constructor(private utils: UtilsService) {
     this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.toDashedString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
@@ -43,6 +44,8 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     } else {
       this.article = { ...this.sampleArticle };
     }
+
+    this.selectedArticleCategories = this.article.categories?.map(cat => ({ id: cat }));
   }
 
   ngOnInit(): void {
@@ -68,8 +71,9 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     this.changed.emit({ ...this.article });
   }
 
-  public onCategoriesChanged(selectedCategoryIds: Array<string>): void {
-    this.article = { ...this.article, categories: [...selectedCategoryIds] };
+  public onCategoriesChanged(selectedCategories: Array<Category> = []): void {
+    this.article = { ...this.article, categories: selectedCategories?.map(cat => cat.id) };
+    this.selectedArticleCategories = [...selectedCategories];
     this.changed.emit({ ...this.article });
   }
 

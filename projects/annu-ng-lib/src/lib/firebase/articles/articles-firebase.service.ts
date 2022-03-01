@@ -368,6 +368,7 @@ export class ArticlesFirebaseService {
     getSeedsArticles(seedRecordCount).forEach(a => writeBatchRef.set(doc(articlesRef), {
       ...a,
       created: this.utilsSvc.currentDate,
+      updated: this.utilsSvc.currentDate,
       userId: this.fireAuthSvc.getCurrentUserId(),
       metaInfo: { ...a.metaInfo, 'article:published_time': this.utilsSvc.currentDate }
     }));

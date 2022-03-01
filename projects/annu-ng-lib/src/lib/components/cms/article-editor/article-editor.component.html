@@ -18,7 +18,7 @@
     </section>
 
     <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'moreinfo'}">
-        <anu-card class="shadow spacing spacing-around-vertical article-card">
+        <anu-card class="shadow spacing spacing-around-vertical moreinfo-card spacing-around-horizontal-md spacing-around-horizontal-lg">
             <anu-card-body>
                 <div class="row center stretch">
                     <div class="col-sm-12">
@@ -33,16 +33,16 @@
             </anu-card-body>
         </anu-card>
 
-        <anu-article [value]="article"></anu-article>
+        <anu-article class="spacing-around-horizontal-md spacing-around-horizontal-lg" [value]="article"></anu-article>
 
-        <anu-card class="shadow spacing spacing-around-vertical article-card">
+        <anu-card class="shadow spacing spacing-around-vertical moreinfo-card spacing-around-horizontal-md spacing-around-horizontal-lg">
             <anu-card-title>
                 <h2>Link Categories to your Article</h2>
             </anu-card-title>
             <anu-card-body>
                 <div class="row">
                     <anu-multi-select-box keyField="id" labelField="title" [items]="categories"
-                        [selectedItems]="article?.categories" (changed)="onCategoriesChanged($event)">
+                        [selectedItems]="selectedArticleCategories" (changed)="onCategoriesChanged($event)">
                     </anu-multi-select-box>
                 </div>
             </anu-card-body>
