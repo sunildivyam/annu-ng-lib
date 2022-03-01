@@ -7,6 +7,7 @@ import { ArticleEditorModule } from './article-editor/article-editor.module';
 import { CategoryModule } from './category/category.module';
 import { CategoryEditorModule } from './category-editor/category-editor.module';
 import { ArticleListModule } from './article-list/article-list.module';
+import { ArticleViewModule } from './article-view/article-view.module';
 
 @NgModule({
   declarations: [],
@@ -20,6 +21,7 @@ import { ArticleListModule } from './article-list/article-list.module';
     CategoryModule,
     CategoryEditorModule,
     ArticleListModule,
+    ArticleViewModule,
   ]
 })
 export class CmsModule { }

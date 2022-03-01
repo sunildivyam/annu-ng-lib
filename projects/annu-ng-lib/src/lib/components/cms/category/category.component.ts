@@ -8,8 +8,12 @@ import { Category } from '.';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  @Input() value: Category
-  @Input() updateHref: string = '';
+  @Input() value: Category | null = null;
+  @Input() updateHref: Array<string>;
+  @Input() showMetaInfo: boolean = true;
+  @Input() readMoreHref: Array<string>;   // shows hyperlink to readmore page
+  @Input() titleHref: Array<string>;      // shows hyperlink to article full view page
+
   @Output() updateClicked: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(public utilsSvc: UtilsService) { }

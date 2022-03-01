@@ -1,6 +1,6 @@
 <anu-card [imageCssClasses]="['col-sm-12', 'col-md-4', 'col-lg-4']"
     [contentCssClasses]="['col-sm-12', 'col-md-8', 'col-lg-8']"
-    class="spacing-around-vertical shadow  nowrap-md nowrap-lg spacing-vertical">
+    class="nowrap-md nowrap-lg">
     <anu-card-image *ngIf="value?.image?.src">
         <img [src]="value?.image?.src" [alt]="value?.image?.alt" />
     </anu-card-image>
@@ -19,7 +19,7 @@
     <anu-card-body>
         <p [innerHtml]="value?.metaInfo?.description"></p>
     </anu-card-body>
-    <anu-card-footer>
+    <anu-card-footer *ngIf="showMetaInfo || updateHref || readMoreHref">
         <div class="row right">
             <div *ngIf="showMetaInfo" class="spacing-around-horizontal">
                 <span [ngClass]="value?.isLive ? 'success' : 'warning'">{{value?.isLive ? 'Published' :

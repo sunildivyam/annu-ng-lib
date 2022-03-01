@@ -12,6 +12,11 @@
     <img [id]="value?.name" *ngIf="value?.tagName === 'img'" [src]="value?.data?.src" [alt]="value?.data?.alt"/>
 
     <ng-container *ngIf="value?.isContainer && value?.children && value?.children.length">
+        <div *ngIf="value?.tagName === 'div'">
+            <ng-container *ngFor="let child of value?.children">
+                <ng-container *ngTemplateOutlet="tree;context:{value:child}"></ng-container>
+            </ng-container>
+        </div>
         <article *ngIf="value?.tagName === 'article'">
             <ng-container *ngFor="let child of value?.children">
                 <ng-container *ngTemplateOutlet="tree;context:{value:child}"></ng-container>

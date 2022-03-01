@@ -6,3 +6,4 @@ export * from './article-list';
 export * from './content-editor';
 export * from './category';
 export * from './category-editor';
+export * from './article-view';

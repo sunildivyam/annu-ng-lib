@@ -1,24 +1,30 @@
-<anu-card class="shadow  spacing">
+<anu-card class="">
     <anu-card-title>
-        <h2 [innerHtml]="value.title"></h2>
-        <h3 [innerHtml]="value.shortTitle"></h3>
-        <small class="row nowrap stretch">
+        <a *ngIf="titleHref" [routerLink]="titleHref">
+            <h2 [innerHtml]="value?.title"></h2>
+        </a>
+        <h2 *ngIf="!titleHref" [innerHtml]="value?.title"></h2>
+        <h3 *ngIf="showMetaInfo" [innerHtml]="value?.shortTitle"></h3>
+        <small *ngIf="showMetaInfo" class="row nowrap stretch">
             <div><strong>Updated:
-                </strong><span><small>{{utilsSvc.dateToLocalString(value.updated)}}</small></span></div>
+                </strong><span><small>{{utilsSvc.dateToLocalString(value?.updated)}}</small></span></div>
             <div><strong>Created:
-                </strong><span><small>{{utilsSvc.dateToLocalString(value.created)}}</small></span></div>
+                </strong><span><small>{{utilsSvc.dateToLocalString(value?.created)}}</small></span></div>
         </small>
     </anu-card-title>
     <anu-card-body>
-        <p [innerHtml]="value.description"></p>
+        <p [innerHtml]="value?.description"></p>
     </anu-card-body>
-    <anu-card-footer>
+    <anu-card-footer *ngIf="showMetaInfo || updateHref || readMoreHref">
         <div class="row right">
-            <div class="spacing-around-horizontal">
-                <span [ngClass]="value.isLive ? 'success' : 'warning'">{{value.isLive ? 'Published' : 'Unpublished'}}</span>
+            <div *ngIf="showMetaInfo" class="spacing-around-horizontal">
+                <span [ngClass]="value?.isLive ? 'success' : 'warning'">{{value?.isLive ? 'Published' : 'Unpublished'}}</span>
             </div>
-            <div *ngIf="updateHref">
-                <a [routerLink]="[updateHref]" (click)="updateBtnClicked($event)">Update</a>
+            <div *ngIf="updateHref" class="spacing-around-horizontal">
+                <a [routerLink]="updateHref" (click)="updateBtnClicked($event)">Update</a>
+            </div>
+            <div *ngIf="readMoreHref" class="spacing-around-horizontal">
+                <a [routerLink]="readMoreHref">Read more...</a>
             </div>
         </div>
     </anu-card-footer>
