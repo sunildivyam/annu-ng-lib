@@ -2,9 +2,6 @@
 <p>/{{article?.id}}</p>
 <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 <section class="container tab-body">
-    <section class="row spacing-vertical right">
-        <a class="btn" href="#" (click)="saveArticle($event)">Save Article</a>
-    </section>
 
     <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'article'}">
         <anu-card class="shadow spacing article-card">

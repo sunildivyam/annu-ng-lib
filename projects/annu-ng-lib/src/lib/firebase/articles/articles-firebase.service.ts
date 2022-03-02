@@ -420,14 +420,14 @@ export class ArticlesFirebaseService {
 
     if (orderField && pageSize >= 1) {
       if (isNextPages) {
+        queryArgs.push(limit(pageSize));
         if (startPage) {
           queryArgs.push(startAfter(startPage));
-          queryArgs.push(limit(pageSize));
         }
       } else {
+        queryArgs.push(limitToLast(pageSize));
         if (startPage) {
           queryArgs.push(endBefore(startPage));
-          queryArgs.push(limitToLast(pageSize));
         }
       }
     }
