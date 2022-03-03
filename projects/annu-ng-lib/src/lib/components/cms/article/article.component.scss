@@ -1,4 +1,9 @@
 :host {
     display: flex;
     flex-direction: column;
+
+    .article-thumb {
+        border-radius: 50%;
+        border: 1px solid var(--anu-primary-normal);
+    }
 }

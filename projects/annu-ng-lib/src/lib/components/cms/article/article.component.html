@@ -2,12 +2,14 @@
     [contentCssClasses]="['col-sm-12', 'col-md-8', 'col-lg-8']"
     class="nowrap-md nowrap-lg">
     <anu-card-image *ngIf="value?.image?.src">
-        <img [src]="value?.image?.src" [alt]="value?.image?.alt" />
+        <a *ngIf="titleHref" [routerLink]="titleHref"><img [src]="value?.image?.src" [alt]="value?.image?.alt" /></a>
+        <img *ngIf="!titleHref" [src]="value?.image?.src" [alt]="value?.image?.alt" />
+    </anu-card-image>
+    <anu-card-image *ngIf="!value?.image?.src">
+        <div class="article-thumb col-12"></div>
     </anu-card-image>
     <anu-card-title>
-        <a *ngIf="titleHref" [routerLink]="titleHref">
-            <h2 [innerHtml]="value?.metaInfo?.title"></h2>
-        </a>
+        <h2><a *ngIf="titleHref" [routerLink]="titleHref">{{value?.metaInfo?.title}}</a></h2>
         <h2 *ngIf="!titleHref" [innerHtml]="value?.metaInfo?.title"></h2>
         <small *ngIf="showMetaInfo" class="row nowrap stretch">
             <div><strong>Updated:
@@ -17,7 +19,7 @@
         </small>
     </anu-card-title>
     <anu-card-body>
-        <p [innerHtml]="value?.metaInfo?.description"></p>
+        <p [innerHtml]="trimmedDescription"></p>
     </anu-card-body>
     <anu-card-footer *ngIf="showMetaInfo || updateHref || readMoreHref">
         <div class="row right">

@@ -8,12 +8,12 @@ import { NavItem } from '.';
   styleUrls: ['./aside-nav.component.scss']
 })
 export class AsideNavComponent implements OnInit {
-@Input() items: Array<NavItem> = [];
-@Input() heading: string;
+  @Input() items: Array<NavItem> = [];
+  @Input() heading: string;
 
-@Output() changed = new EventEmitter<NavItem>();
+  @Output() changed = new EventEmitter<NavItem>();
 
-hamburgerOpened: boolean = false;
+  hamburgerOpened: boolean = false;
 
   constructor() { }
 
