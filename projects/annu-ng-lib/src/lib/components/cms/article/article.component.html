@@ -6,7 +6,7 @@
         <img *ngIf="!titleHref" [src]="value?.image?.src" [alt]="value?.image?.alt" />
     </anu-card-image>
     <anu-card-image *ngIf="!value?.image?.src">
-        <div class="article-thumb col-12"></div>
+        <div class="article-thumb shadow"></div>
     </anu-card-image>
     <anu-card-title>
         <h2><a *ngIf="titleHref" [routerLink]="titleHref">{{value?.metaInfo?.title}}</a></h2>

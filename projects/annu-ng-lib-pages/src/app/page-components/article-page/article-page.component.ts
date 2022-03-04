@@ -8,7 +8,7 @@ import { ARTICLE } from './config';
   styleUrls: ['./article-page.component.scss']
 })
 export class ArticlePageComponent implements OnInit {
-  article: Article = { ...ARTICLE }
+  article: Article = { ...ARTICLE, image: null }
   constructor() { }
 
   ngOnInit(): void {

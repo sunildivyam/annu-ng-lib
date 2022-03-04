@@ -14,3 +14,8 @@ export interface Article {
     userId?: string;    // User Id from Users
     isLive?: boolean;   // true if published and live to web.
 }
+
+export interface CategoryGroup {
+    category: Category;
+    articles: Array<Article>;
+}
