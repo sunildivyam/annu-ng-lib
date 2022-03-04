@@ -1,4 +1,15 @@
-<nav role="navigation" aria-label="aside navigation" class="annuAsideNav">
+<nav role="navigation" aria-label="aside navigation">
+    <div class="row">
+        <!-- <anu-hamburger class="hidden-lg hidden-md" [opened]="hamburgerOpened" (changed)="hamburgerChanged($event)">
+        </anu-hamburger> -->
+        <h2 class="">{{heading}}</h2>
+    </div>
+    <div class="row">
+        <ng-content select="['anu-aside-nav-item']" #navItems></ng-content>
+    </div>
+</nav>
+
+<nav *ngIf="items && items.length" role="navigation" aria-label="aside navigation" class="annuAsideNav">
     <section class="row annuAsideNav_header">
         <anu-hamburger class="hidden-lg hidden-md" [opened]="hamburgerOpened" (changed)="hamburgerChanged($event)">
         </anu-hamburger>

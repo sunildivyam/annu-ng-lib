@@ -6,6 +6,6 @@ export const environment = {
   libConfig: {
     docsJsonUrl: '/data/documentation.json',
     firebaseui: { ...firebaseui },
-    firebase: { ...firebaseAppConfig, apiKey: '' },
+    firebase: { ...firebaseAppConfig, apiKey: 'AIzaSyDlzVES09CQFxt8oJI0u2srZFpH12wOAKk' },
   } as LibConfig
 };

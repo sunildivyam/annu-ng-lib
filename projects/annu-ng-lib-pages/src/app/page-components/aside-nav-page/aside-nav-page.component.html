@@ -4,6 +4,17 @@
         source='<anu-aside-nav heading="Components" [items]="navItems" (changed)="navClicked($event)"></anu-aside-nav>'>
     </anu-code-block>
     <h3>Resulted UI</h3>
-    <anu-aside-nav heading="Components" [items]="navItems" (changed)="navClicked($event)">
+
+    <anu-aside-nav heading="Components" (changed)="navClicked($event)">
+        <anu-aside-nav-item *ngFor="let item of navItems" >
+            <a *ngIf="!item.separator && !item.disabled" [routerLink]="[item.href]" routerLinkActive="active"
+                (click)="navClicked($event, item)">{{item.title}}</a>
+            <span *ngIf="item.disabled">{{item.title}}</span>
+            <label *ngIf="item.separator">{{item.title}}</label>
+        </anu-aside-nav-item>
     </anu-aside-nav>
+
+    <!-- Older version -->
+    <!-- <anu-aside-nav heading="Components" [items]="navItems" (changed)="navClicked($event)">
+    </anu-aside-nav> -->
 </anu-component-info>

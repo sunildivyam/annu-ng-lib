@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ContentChildren } from '@angular/core';
 import { Route } from '@angular/router';
 import { NavItem } from '.';
 
@@ -8,7 +8,9 @@ import { NavItem } from '.';
   styleUrls: ['./aside-nav.component.scss']
 })
 export class AsideNavComponent implements OnInit {
-  @Input() items: Array<NavItem> = [];
+  @ContentChildren('anu-aside-nav-item') navItems: QueryList<HTMLElement>;
+
+  @Input() items: Array<NavItem> | null;
   @Input() heading: string;
 
   @Output() changed = new EventEmitter<NavItem>();
@@ -18,6 +20,7 @@ export class AsideNavComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.navItems);
   }
 
   public navClicked(event: any, item: NavItem) {
