@@ -1,3 +1,48 @@
+@import '../../../scss/mixins.scss';
+
+@mixin mx-drawer-content-pushed {
+    position: static;
+}
+
+@mixin mx-drawer-relative {
+    position: absolute;
+    max-width: 100%;
+}
+
+@mixin mx-drawer-window {
+    position: fixed;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@mixin mx-drawer-top {
+    top: 0;
+    left: 0;
+    transform-origin: top center;
+    transform: scaleY(0);
+}
+
+@mixin mx-drawer-right {
+    top: 0;
+    right: 0;
+    transform-origin: center right;
+    transform: scaleX(0);
+}
+
+@mixin mx-drawer-bottom {
+    bottom: 0;
+    left: 0;
+    transform-origin: bottom center;
+    transform: scaleY(0);
+}
+
+@mixin mx-drawer-left {
+    top: 0;
+    left: 0;
+    transform-origin: center left;
+    transform: scaleX(0);
+}
+
 :host {
     display: flex;
     flex-direction: column;
@@ -8,62 +53,193 @@
         &-open {
             &.drawer-top {
                 transform: scaleY(1);
+
+                &-sm, &-md, &-lg {
+                    transform: scaleY(1);
+                }
+
             }
 
             &.drawer-right {
                 transform: scaleX(1);
+
+                &-sm, &-md, &-lg {
+                    transform: scaleX(1);
+                }
+
             }
 
             &.drawer-bottom {
                 transform: scaleY(1);
+
+                &-sm, &-md, &-lg {
+                    transform: scaleY(1);
+                }
+
             }
 
             &.drawer-left {
                 transform: scaleX(1);
+
+                &-sm, &-md, &-lg {
+                    transform: scaleX(1);
+                }
+
             }
         }
 
         &-content-pushed {
-            position: static;
+            @include mx-drawer-content-pushed;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-content-pushed;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-content-pushed;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-content-pushed;
+                }
+            }
         }
 
         &-relative {
-            position: absolute;
-            max-width: 100%;
+            @include mx-drawer-relative;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-relative;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-relative;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-relative;
+                }
+            }
         }
 
         &-window {
-            position: fixed;
-            max-width: 100%;
-            max-width: 100%;
+            @include mx-drawer-window;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-window;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-window;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-window;
+                }
+            }
         }
 
         &-top {
-            top: 0;
-            left: 0;
-            transform-origin: top center;
-            transform: scaleY(0);
+            @include mx-drawer-top;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-top;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-top;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-top;
+                }
+            }
         }
 
         &-right {
-            top: 0;
-            right: 0;
-            transform-origin: center right;
-            transform: scaleX(0);
+            @include mx-drawer-right;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-right;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-right;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-right;
+                }
+            }
         }
 
         &-bottom {
-            bottom: 0;
-            left: 0;
-            transform-origin: bottom center;
-            transform: scaleY(0);
+            @include mx-drawer-bottom;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-bottom;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-bottom;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-bottom;
+                }
+            }
         }
 
         &-left {
-            top: 0;
-            left: 0;
-            transform-origin: center left;
-            transform: scaleX(0);
+            @include mx-drawer-left;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-left;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-left;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-left;
+                }
+            }
         }
     }
 }
