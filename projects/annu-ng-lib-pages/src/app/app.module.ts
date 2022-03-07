@@ -44,6 +44,8 @@ import {
   LoginStatusPageComponent,
   CollapsiblePageComponent,
   MultiSelectBoxPageComponent,
+  ArticleViewPageComponent,
+  DrawerPageComponent,
 
 } from './page-components';
 
@@ -58,7 +60,6 @@ import {
   ArticlesFirebaseServicePageComponent,
   AuthFirebaseServicePageComponent,
 } from './page-services';
-import { ArticleViewPageComponent } from './page-components/article-view-page/article-view-page.component';
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import { ArticleViewPageComponent } from './page-components/article-view-page/ar
     CollapsiblePageComponent,
     MultiSelectBoxPageComponent,
     ArticleViewPageComponent,
+    DrawerPageComponent,
 
     // Service Pages
     UtilsServicePageComponent,

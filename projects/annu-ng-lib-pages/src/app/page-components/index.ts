@@ -34,3 +34,4 @@ export * from './login-status-page/login-status-page.component';
 export * from './collapsible-page/collapsible-page.component';
 export * from './multi-select-box-page/multi-select-box-page.component';
 export * from './article-view-page/article-view-page.component';
+export * from './drawer-page/drawer-page.component';
