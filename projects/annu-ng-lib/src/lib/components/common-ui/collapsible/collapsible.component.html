@@ -1,8 +1,8 @@
-<div class="collapsible-header row nowrap" (click)="collapsed = !collapsed" [class.collapsed]="collapsed">
-    <span *ngIf="!collapsed" class="collapsible-icon">+</span>
-    <span *ngIf="collapsed" class="collapsible-icon">-</span>
-    <ng-content select="anu-collapsible-header"></ng-content>
+<div class="row nowrap">
+    <anu-hamburger [opened]="collapsed" [isHamburgerStyle]="false" (changed)="toggle($event)" [ngClass]="hamBurgerClassNames">
+        <ng-content select="anu-collapsible-header"></ng-content>
+    </anu-hamburger>
 </div>
-<div class="collapsible-content" [class.collapsed]="collapsed">
+<anu-drawer [opened]="collapsed" class="drawer-content-pushed drawer-top">
     <ng-content select="anu-collapsible-content"></ng-content>
-</div>
+</anu-drawer>
