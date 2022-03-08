@@ -28,9 +28,9 @@ import { DRAWER_POSITIONS } from './drawer.constants';
 })
 export class DrawerComponent implements OnInit {
   /**
-   * Property open shows or hides the drawer based on value true/false;
+   * Property opened shows or hides the drawer based on value true/false;
    */
-  @Input() open: boolean = false;
+  @Input() opened: boolean = false;
 
   /**
    * position shows the drawer top/right/bottom/left from the relative parent or from the screen based on DRAWER_POSITIONS values.
@@ -43,7 +43,7 @@ export class DrawerComponent implements OnInit {
   // @Input() overlay: string = DRAWER_OVERLAYS.PUSH_CONTENT;
 
 
-  @HostBinding('class.drawer-open') get isOpenMethod() { return this.open; }
+  @HostBinding('class.drawer-opened') get isOpenMethod() { return this.opened; }
   // @HostBinding('class') get isPositionMethod() {
   //   let classNames = '';
   //   if (this.position) classNames += 'drawer-' + this.position + ' ';
