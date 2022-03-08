@@ -7,6 +7,7 @@
         </div>
 </div>
 
-<div *ngIf="heading" class="hamburger-header spacing-horizontal">
+<div class="hamburger-header">
     {{heading}}
+    <ng-content></ng-content>
 </div>
