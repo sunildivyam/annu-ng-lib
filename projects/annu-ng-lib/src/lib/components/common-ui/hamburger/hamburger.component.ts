@@ -1,15 +1,49 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 
+
+/**
+ * Hamburger component shows a hamburger icon button and optionally a <code>heading</code> text along.
+ * An Expand button style can also be shown, if you set <code>isHamburgerStyle</code> property to false.
+ * Passing <code>size-sm/-md/-lg</code> classes, enables to resize accordingly.
+ * @date 8/3/2022 - 5:53:16 pm
+ *
+ * @export
+ * @class HamburgerComponent
+ * @typedef {HamburgerComponent}
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'anu-hamburger',
   templateUrl: './hamburger.component.html',
   styleUrls: ['./hamburger.component.scss']
 })
 export class HamburgerComponent implements OnInit {
-@Input() opened: boolean = false;
-@Input() secondary: boolean = false;
 
-@Output() changed = new EventEmitter<boolean>();
+  /**
+   * Enables toggle open/close states.
+   */
+  @Input() opened: boolean = false;
+  /**
+   * Sets optional heading text, that can be shown along icon.
+   */
+  @Input() heading: string = '';
+  /**
+   * Enables hamburger style icon or Expand/collapse icons.
+   */
+  @Input() isHamburgerStyle: boolean = true;
+
+  /**
+   * <code>changed</code> event is emitted, when opened state changes/toggles.
+   */
+  @Output() changed = new EventEmitter<boolean>();
+  /**
+   * toggles hamburger-opened css class, when opened state changes/toggles.
+   */
+  @HostBinding('class.hamburger-opened') openedMethod() { return this.opened; }
+  /**
+   * Click host event listener when host is clicked.
+   */
+  @HostListener('click') toggleMethod() { this.toggle() }
 
   constructor() { }
 
