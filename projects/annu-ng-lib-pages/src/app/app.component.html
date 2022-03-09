@@ -1,7 +1,7 @@
 <div class="appContainer container" role="main">
   <header class="appHeader row">
-    <anu-menu [items]="mainRoutes" [heading]="appConfig.name" [subHeading]="appConfig.title">
-      <anu-login-status theme="" loginPageUrl="/components/auth/login" profilePageUrl="/profile"
+    <anu-menu (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainRoutes" [heading]="appConfig.name" [subHeading]="appConfig.title">
+      <anu-login-status (profileClicked)="loginStatusClicked()" (signOutClicked)="loginStatusClicked()" (signInClicked)="loginStatusClicked()" theme="" loginPageUrl="/components/auth/login" profilePageUrl="/profile"
         loggedOutPageUrl="/components/auth/login"></anu-login-status>
     </anu-menu>
   </header>

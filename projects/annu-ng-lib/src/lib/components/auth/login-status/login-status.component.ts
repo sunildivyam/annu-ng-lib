@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BASE64_AUTH } from '../../../images';
 import { AuthFirebaseService } from '../../../firebase';
@@ -13,6 +13,10 @@ export class LoginStatusComponent implements OnInit {
   @Input() profilePageUrl: string = '';
   @Input() loggedOutPageUrl: string = '';
   @Input() theme: string = '';
+
+  @Output() signInClicked: EventEmitter<void> = new EventEmitter<void>();
+  @Output() signOutClicked: EventEmitter<void> = new EventEmitter<void>();
+  @Output() profileClicked: EventEmitter<void> = new EventEmitter<void>();
 
   user: any;
   loading: boolean = false;
@@ -34,8 +38,18 @@ export class LoginStatusComponent implements OnInit {
     this.loading = false;
     this.router.navigate([this.loggedOutPageUrl])
   }
+
+  public loggedInProfileClicked(event: any) {
+    this.profileClicked.emit();
+  }
+
+  public loginClicked(event: any) {
+    this.signInClicked.emit();
+  }
+
   public logoutClicked(event: any) {
     event.preventDefault();
+    this.signOutClicked.emit();
     this.logout();
   }
 }
