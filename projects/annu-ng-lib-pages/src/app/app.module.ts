@@ -46,6 +46,7 @@ import {
   MultiSelectBoxPageComponent,
   ArticleViewPageComponent,
   DrawerPageComponent,
+  CategoryArticlesListPageComponent,
 
 } from './page-components';
 
@@ -104,6 +105,7 @@ import {
     MultiSelectBoxPageComponent,
     ArticleViewPageComponent,
     DrawerPageComponent,
+    CategoryArticlesListPageComponent,
 
     // Service Pages
     UtilsServicePageComponent,

@@ -41,6 +41,7 @@ import {
   MultiSelectBoxPageComponent,
   ArticleViewPageComponent,
   DrawerPageComponent,
+  CategoryArticlesListPageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -106,6 +107,7 @@ export const cmsRoutes = [
   { path: 'components/cms/category', component: CategoryPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category' } },
   { path: 'components/cms/category-editor', component: CategoryEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category Editor' } },
   { path: 'components/cms/article-view', component: ArticleViewPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Article View' } },
+  { path: 'components/cms/category-articles-list', component: CategoryArticlesListPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category Articles List' } },
 ];
 
 // Docs Component Routes
