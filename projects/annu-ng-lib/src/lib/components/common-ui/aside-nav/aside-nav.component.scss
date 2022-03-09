@@ -1,20 +1,6 @@
 @import '../../../scss/mixins.scss';
 
-.annuAsideNav {
-    position: relative;
-    border-top: 1px solid var(--anu-primary-normal);
-
-    &_header {
-
-        h2 {
-            margin: 0;
-            padding: 0.4rem 1rem;
-        }
-    }
-
-    ul {
-        opacity: #{$opacity};
-    }
+:host {
 
     .separator {
         list-style: none;
@@ -22,18 +8,31 @@
         padding: 0 0.5rem;
     }
 
-    @include small {
-        ul {
-            position: absolute;
-            width: 100%;
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-            z-index: $aside-nav-z-index;
+    li {
+        margin: 0.5rem 0;
+    }
 
-            &.opened {
-                background-color: var(--anu-secondary-lightest);
-                transform: translateX(0);
+    &.aside-nav-collapsible {
+        &.aside-nav-opened {
+            .aside-nav-header {
+                display: none!important;
             }
         }
+
+        .aside-nav-header-non-collapsible {
+            display: none!important;
+        }
+
+        .aside-nav-header-inside-drawer {
+            display: flex;
+        }
+
+        .aside-nav-header {
+            display: flex;
+        }
+    }
+
+    .aside-nav-header-inside-drawer, .aside-nav-header {
+        display: none;
     }
 }
