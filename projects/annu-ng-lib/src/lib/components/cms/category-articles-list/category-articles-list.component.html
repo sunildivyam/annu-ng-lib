@@ -1,14 +1,11 @@
-<ng-container *ngIf="!error">
-    <h4 class="" [ngClass]="headerClassNames">
-        <a [routerLink]="[href, category?.id]">{{category?.title}}</a>
-    </h4>
-    <ul class="spacing-vertical" [ngClass]="listClassNames">
-        <li class="" *ngFor="let art of categoryArticles">
-            <a [routerLink]="[href, category?.id, art?.id]">{{art?.metaInfo?.title}}</a>
-        </li>
-    </ul>
-    <div class="row right">
-        {{category?.title}} - <a [routerLink]="[href, category?.id]">Read more...</a>
-    </div>
-</ng-container>
-<anu-error *ngIf="error" [code]="error?.code" [message]="error?.message"></anu-error>
+<h4 class="" [ngClass]="headerClassNames">
+    <a [routerLink]="[href, category?.id]">{{category?.title}}</a>
+</h4>
+<ul class="spacing-vertical" [ngClass]="listClassNames">
+    <li class="" *ngFor="let art of articles">
+        <a [routerLink]="[href, category?.id, art?.id]">{{art?.metaInfo?.title}}</a>
+    </li>
+</ul>
+<div class="row right">
+    {{category?.title}} - <a [routerLink]="[href, category?.id]">Read more...</a>
+</div>

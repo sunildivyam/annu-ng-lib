@@ -16,6 +16,6 @@ export interface Article {
 }
 
 export interface CategoryGroup {
-    category: Category;
-    articles: Array<Article>;
+    category?: Category;
+    articles?: Array<Article>;
 }
