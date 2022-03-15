@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-import { BrowserModule, TransferState } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { LibConfig } from './annu-ng-lib.interface';
 
@@ -21,8 +21,7 @@ import { FirebaseModule } from './firebase';
     CmsModule,
     FirebaseModule,
     AuthModule,
-  ],
-  providers: [TransferState]
+  ]
 })
 export class AnnuNgLibModule {
   constructor(@Optional() @SkipSelf() parentModule?: AnnuNgLibModule) {
