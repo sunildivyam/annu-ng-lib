@@ -1,0 +1,19 @@
+<anu-component-info name="DrawerComponent">
+    <h3>Usage</h3>
+    <anu-code-block source='<anu-drawer [open]="isOpen"></anu-drawer>'></anu-code-block>
+    <h3>Resulted UI</h3>
+    <a href="javascript:void(0)" (click)="isOpen = !isOpen">{{isOpen ? 'Hide': 'Show'}}</a>
+    <div class="relative spacing primary-lightest">
+        <p>Above text</p>
+        <anu-drawer class="background-deep-dark-bg accent-lightest shadow spacing drawer-relative drawer-left" [opened]="isOpen">
+            <h2> Hello World drawer content</h2>
+            <h2> Hello World drawer content</h2>
+            <h2> Hello World drawer content</h2>
+            <h2> Hello World drawer content</h2>
+            <h2> Hello World drawer content</h2>
+            <h2> Hello World drawer content</h2>
+        </anu-drawer>
+
+        <p>Below text</p>>
+    </div>
+</anu-component-info>

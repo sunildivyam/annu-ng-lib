@@ -3,18 +3,21 @@
     <ng-container *ngFor="let prop of metaProps">
         <div class="col-lg-6 col-12 bottom">
             <label>{{prop.label}} <span *ngIf="prop.required" class="error">*</span></label>
-            <span *ngIf="metaForm.controls[prop.name].invalid && metaForm.controls[prop.name].dirty" class="error">{{ prop.error || (prop.required ? 'required': 'invalid value')}}</span>
-            <input *ngIf="!prop.allowedValues" [name]="prop.name" [formControlName]="prop.name" type="text" />
-            <select *ngIf="prop.allowedValues" [name]="prop.name" [formControlName]="prop.name">
+            <span *ngIf="metaForm.controls[prop.name].invalid && metaForm.controls[prop.name].dirty" class="error">{{
+                prop.error || (prop.required ? 'required': 'invalid value')}}</span>
+            <input *ngIf="!prop.allowedValues" [name]="prop.name" [formControlName]="prop.name" type="text"
+                (blur)="metaChanged($event, true)" />
+            <select *ngIf="prop.allowedValues" [name]="prop.name" [formControlName]="prop.name"
+                (blur)="metaChanged($event, true)">
                 <option *ngFor="let op of prop.allowedValues" [value]="op.name">{{op.label}}</option>
             </select>
         </div>
     </ng-container>
 
     <div class="row middle">
-        <input class="btn col-lg-3 col-md-2 col-sm-12 center" [disabled]="metaForm.invalid || !metaForm.dirty"
-            type="submit" value="Save">
-        <input class="btn col-lg-3 col-md-2 col-sm-12 center" type="button" value="Preview"
+        <!-- <input class="btn col-lg-3 col-md-2 col-sm-12 center" [disabled]="metaForm.invalid || !metaForm.dirty"
+            type="submit" value="Save"> -->
+        <input class="btn col-lg-3 col-md-4 col-sm-12 center" type="button" value="Preview Meta Tags"
             (click)="previewMetaTags($event)">
     </div>
 </form>
@@ -24,7 +27,10 @@
     <code><pre>
 <ng-container *ngFor="let tag of metaTags">
 {{tag}}</ng-container>
-
+</pre></code>
+    <h2>metaInfo JSON</h2>
+    <code><pre>
+{{metaInfoJsonStr}}
 </pre></code>
     <hr />
     <a class="center" href="#" (click)="closeMetaTags($event)">Close</a>

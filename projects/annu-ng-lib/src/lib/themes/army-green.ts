@@ -195,6 +195,10 @@ const jsonTheme = `
     {
       "name": "borderRadius",
       "value": "1rem"
+    },
+    {
+      "name": "siteWidth",
+      "value": "1080px"
     }
   ]
 }`;

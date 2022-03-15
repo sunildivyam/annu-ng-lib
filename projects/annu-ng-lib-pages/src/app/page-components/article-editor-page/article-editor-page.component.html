@@ -1,6 +1,6 @@
 <anu-component-info name="ArticleEditorComponent">
     <h3>Usage</h3>
-    <anu-code-block source='<anu-article-editor [value]="article" (changed)="articleChanged($event)"></anu-article-editor>'></anu-code-block>
+    <anu-code-block source='<anu-article-editor [categories]="categories" [value]="article" (changed)="articleChanged($event)" (saveClicked)="onSaveClicked($event)"></anu-article-editor>'></anu-code-block>
     <h3>Resulted UI</h3>
-    <anu-article-editor [value]="article" (changed)="articleChanged($event)"></anu-article-editor>
+    <anu-article-editor [categories]="categories" [value]="article" (changed)="articleChanged($event)" (saveClicked)="onSaveClicked($event)"></anu-article-editor>
 </anu-component-info>

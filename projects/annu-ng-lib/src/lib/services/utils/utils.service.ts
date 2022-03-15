@@ -66,4 +66,12 @@ export class UtilsService {
       window.scrollTo({ top: top });
     }
   }
+
+  public getTrimmedStringByChars(str: string, count: number = 0): string {
+    if (!str || typeof str !== 'string' || !count || count <= 0) {
+      return str;
+    }
+
+    return str.substring(0, count) + '...';
+  }
 }

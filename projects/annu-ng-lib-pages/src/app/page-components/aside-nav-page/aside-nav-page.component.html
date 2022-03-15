@@ -4,6 +4,19 @@
         source='<anu-aside-nav heading="Components" [items]="navItems" (changed)="navClicked($event)"></anu-aside-nav>'>
     </anu-code-block>
     <h3>Resulted UI</h3>
-    <anu-aside-nav heading="Components" [items]="navItems" (changed)="navClicked($event)">
+
+    <anu-aside-nav class="relative" (changed)="navClicked($event)" [drawerClassNames]="['drawer-relative', 'drawer-left', 'primary-normal-bg', 'accent-deep-light', 'spacing']">
+        <ul>
+            <li *ngFor="let item of navItems">
+                <a *ngIf="!item.separator && !item.disabled" [routerLink]="[item.href]" routerLinkActive="active"
+                    (click)="navClicked($event, item)">{{item.title}}</a>
+                <span *ngIf="item.disabled">{{item.title}}</span>
+                <label *ngIf="item.separator">{{item.title}}</label>
+
+            </li>
+        </ul>
+        <anu-aside-nav-header class="outside">Sample aside heading</anu-aside-nav-header>
+        <anu-aside-nav-header class="outside-non-collapsible">Sample aside heading</anu-aside-nav-header>
+        <anu-aside-nav-header class="inside">Sample aside heading</anu-aside-nav-header>
     </anu-aside-nav>
 </anu-component-info>

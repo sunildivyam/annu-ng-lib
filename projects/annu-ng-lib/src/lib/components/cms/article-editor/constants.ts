@@ -2,15 +2,15 @@ import { Tab } from "../../common-ui";
 
 export const ARTICLE_EDITOR_TABS: Array<Tab> = [
     {
+        name: 'metainfo',
+        title: 'Article Info',
+    } as Tab,
+    {
         name: 'article',
-        title: 'Article',
+        title: 'Content',
     } as Tab,
     {
         name: 'moreinfo',
         title: 'More Info',
     } as Tab,
-    {
-        name: 'metainfo',
-        title: 'Meta Info',
-    } as Tab
 ];

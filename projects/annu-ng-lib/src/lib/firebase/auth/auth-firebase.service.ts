@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createUserWithEmailAndPassword, UserCredential, getAuth, GoogleAuthProvider, signInWithPopup, User, Auth, signInWithEmailAndPassword, ProviderId, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseApp, FirebaseError, getApps, initializeApp } from 'firebase/app';
 import { LibConfig } from '../../annu-ng-lib.interface';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,10 @@ export class AuthFirebaseService {
 
   constructor(private libConfig: LibConfig) {
     this.auth = this.getFirebaseAuth();
-    onAuthStateChanged(this.auth, (user: User) => this.authState.next(user));
+    onAuthStateChanged(this.getFirebaseAuth(), (user: User) => {
+      this.setLoggedInToLocalStorage(!!user)
+      this.authState.next(user)
+    });
   }
 
   private getFirebaseApp(): FirebaseApp {
@@ -105,5 +108,18 @@ export class AuthFirebaseService {
     const auth = this.getFirebaseAuth();
     await auth.signOut();
     return true;
+  }
+
+  public isLoggedInFromLocalStorage(): boolean {
+    if (typeof window !== 'undefined') {
+      const isLoggedIn = window.localStorage.getItem('isLoggedIn');
+      return isLoggedIn === 'true' ? true : false;
+    }
+  }
+
+  public setLoggedInToLocalStorage(isLoggedIn: boolean): void {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('isLoggedIn', '' + isLoggedIn);
+    }
   }
 }

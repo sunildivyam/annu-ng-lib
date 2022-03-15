@@ -1,0 +1,27 @@
+@import '../../../scss/mixins.scss';
+
+:host {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    width: 100%;
+
+    .multi-select-item {
+        width: auto;
+        border: 1px solid var(--anu-primary-lighter);
+        font-weight: normal;
+        text-align: left;
+        cursor: pointer;
+
+        &.selected {
+            border: 1px solid var(--anu-primary-normal);
+            font-weight: bold;
+            color: var(--anu-primary-normal);
+        }
+
+        &:hover {
+            border-color: var(--anu-primary-normal);
+            color: var(--anu-primary-normal);
+        }
+    }
+}

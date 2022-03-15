@@ -1,6 +1,6 @@
 // Breakpoints
-$large-breakpoint: 64em !default;
-$medium-breakpoint: 42em !default;
+$large-breakpoint: 1024px !default;        // 64em !default;
+$medium-breakpoint: 768px !default;         // 42em !default;
 $error: red;
 $warning: orange;
 $success: green;
@@ -8,6 +8,7 @@ $menu-z-index: 1000;
 $aside-nav-z-index: 900;
 $menu-modal: 9000;
 $opacity: 0.92;
+$checkbox_size: 1.5rem;
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {
@@ -16,13 +17,13 @@ $opacity: 0.92;
 }
 
 @mixin medium {
-  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint}) {
+  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint - 1}) {
     @content;
   }
 }
 
 @mixin small {
-  @media screen and (max-width: #{$medium-breakpoint}) {
+  @media screen and (max-width: #{$medium-breakpoint - 1}) {
     @content;
   }
 }

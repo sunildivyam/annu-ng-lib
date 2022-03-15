@@ -43,6 +43,10 @@ import {
   LoginPageComponent,
   LoginStatusPageComponent,
   CollapsiblePageComponent,
+  MultiSelectBoxPageComponent,
+  ArticleViewPageComponent,
+  DrawerPageComponent,
+  CategoryArticlesListPageComponent,
 
 } from './page-components';
 
@@ -98,6 +102,10 @@ import {
     LoginPageComponent,
     LoginStatusPageComponent,
     CollapsiblePageComponent,
+    MultiSelectBoxPageComponent,
+    ArticleViewPageComponent,
+    DrawerPageComponent,
+    CategoryArticlesListPageComponent,
 
     // Service Pages
     UtilsServicePageComponent,

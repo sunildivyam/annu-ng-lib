@@ -1,0 +1,303 @@
+@import '../../../scss/mixins.scss';
+$max-transition-size: 5000px;
+
+@mixin mx-drawer-content-pushed {
+    position: static;
+}
+
+@mixin mx-drawer-relative {
+    position: absolute;
+    z-index: #{$aside-nav-z-index};
+}
+
+@mixin mx-drawer-window {
+    position: fixed;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: #{$aside-nav-z-index};
+    overflow: auto;
+}
+
+@mixin mx-drawer-top {
+    top: 0;
+    left: 0;
+    transform-origin: top center;
+    max-height: 0;
+    transform: scaleY(0);
+}
+
+@mixin mx-drawer-right {
+    top: 0;
+    right: 0;
+    transform-origin: center right;
+    max-width: 0;
+    transform: scaleX(0);
+}
+
+@mixin mx-drawer-bottom {
+    bottom: 0;
+    left: 0;
+    transform-origin: bottom center;
+    max-height: 0;
+    transform: scaleY(0);
+}
+
+@mixin mx-drawer-left {
+    top: 0;
+    left: 0;
+    transform-origin: center left;
+    max-width: 0;
+    transform: scaleX(0);
+}
+
+@mixin mx-window-opened-max-size {
+    &.drawer {
+        &-opened {
+            &.drawer-top {
+                max-height: 100%;
+
+                &-sm, &-md, &-lg {
+                    max-height: 100%;
+                }
+            }
+
+            &.drawer-right {
+                max-width: 100%;
+
+                &-sm, &-md, &-lg {
+                    max-width: 100%;
+                }
+            }
+
+            &.drawer-bottom {
+                max-height: 100%;
+
+                &-sm, &-md, &-lg {
+                    max-height: 100%;
+                }
+            }
+
+            &.drawer-left {
+                max-width: 100%;
+
+                &-sm, &-md, &-lg {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    transition: all 0.5s;
+    transition-property: max-height, max-width, transform;
+
+    &.drawer {
+        &-opened {
+            &.drawer-top {
+                max-height: #{$max-transition-size};
+                transform: scaleY(1);
+
+                &-sm, &-md, &-lg {
+                    max-height: #{$max-transition-size};
+                    transform: scaleY(1);
+                }
+
+            }
+
+            &.drawer-right {
+                max-width: #{$max-transition-size};
+                transform: scaleX(1);
+
+                &-sm, &-md, &-lg {
+                    max-width: #{$max-transition-size};
+                    transform: scaleX(1);
+                }
+
+            }
+
+            &.drawer-bottom {
+                max-height: #{$max-transition-size};
+                transform: scaleY(1);
+
+                &-sm, &-md, &-lg {
+                    max-height: #{$max-transition-size};
+                    transform: scaleY(1);
+                }
+
+            }
+
+            &.drawer-left {
+                max-width: #{$max-transition-size};
+                transform: scaleX(1);
+
+                &-sm, &-md, &-lg {
+                    max-width: #{$max-transition-size};
+                    transform: scaleX(1);
+                }
+
+            }
+        }
+
+        &-content-pushed {
+            @include mx-drawer-content-pushed;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-content-pushed;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-content-pushed;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-content-pushed;
+                }
+            }
+        }
+
+        &-relative {
+            @include mx-drawer-relative;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-relative;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-relative;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-relative;
+                }
+            }
+        }
+
+        &-window {
+            @include mx-drawer-window;
+            @include mx-window-opened-max-size;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-window;
+                    @include mx-window-opened-max-size;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-window;
+                    @include mx-window-opened-max-size;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-window;
+                    @include mx-window-opened-max-size;
+                }
+            }
+        }
+
+        &-top {
+            @include mx-drawer-top;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-top;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-top;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-top;
+                }
+            }
+        }
+
+        &-right {
+            @include mx-drawer-right;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-right;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-right;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-right;
+                }
+            }
+        }
+
+        &-bottom {
+            @include mx-drawer-bottom;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-bottom;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-bottom;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-bottom;
+                }
+            }
+        }
+
+        &-left {
+            @include mx-drawer-left;
+
+            &-sm {
+                @include small {
+                    @include mx-drawer-left;
+                }
+            }
+
+            &-md {
+                @include medium {
+                    @include mx-drawer-left;
+                }
+            }
+
+            &-lg {
+                @include large {
+                    @include mx-drawer-left;
+                }
+            }
+        }
+    }
+}

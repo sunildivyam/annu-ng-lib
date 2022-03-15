@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
   error: any;
 
   constructor(private authFireUiSvc: AuthFirebaseUiService, private authFireSvc: AuthFirebaseService) {
-    this.successCb = (user) => {
+    this.successCb = (user, returnUrl) => {
       // todo: use the user info, if needed.
-      this.onSuccess.emit(user);
+      this.onSuccess.emit({ user, returnUrl });
     };
 
     this.errorCb = (error) => {
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       this.onUiShown.emit();
     };
 
-    this.authFireSvc.authStateChanged().subscribe( () => {
+    this.authFireSvc.authStateChanged().subscribe(() => {
       this.isLoggedIn = this.authFireSvc.isLoggedIn();
       this.error = null;
 
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   }
 
   public showfirebaseUi(): void {
-  this.authFireUiSvc.startAuthUI(`#${this.firebaseUiElementId}`, this.successCb , this.errorCb, this.uiShownCb);
+    this.authFireUiSvc.startAuthUI(`#${this.firebaseUiElementId}`, this.successCb, this.errorCb, this.uiShownCb);
   }
 
   ngOnInit(): void {

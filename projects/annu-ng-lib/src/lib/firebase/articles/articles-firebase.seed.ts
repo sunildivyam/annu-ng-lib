@@ -6,10 +6,11 @@ export const getSeedsCategories = (recordCount = 6): Array<Category> => {
     for (let i = 1; i <= recordCount; i++) {
         const id = `${mSeconds}-${i}`;
         categories.push({
-            name: 'sample-category-' + id,
+            id: 'sample-category-title-' + id,
             description: `Sample Category ${id} description text`,
-            title: 'Sample Category ' + id,
-            isLive: true,
+            shortTitle: 'Sample Category short title ' + id,
+            title: 'Sample Category title' + id,
+            isLive: false,
         } as Category)
     }
 
@@ -23,7 +24,7 @@ export const getSeedsArticles = (recordCount = 6): Array<Article> => {
     for (let i = 1; i <= recordCount; i++) {
         const id = `${mSeconds}-${i}`;
         article.push({
-            name: 'sample-article-' + id,
+            id: 'sample-article-' + id,
             image: {},
             metaInfo: {
                 "title": "Sample Article " + id,

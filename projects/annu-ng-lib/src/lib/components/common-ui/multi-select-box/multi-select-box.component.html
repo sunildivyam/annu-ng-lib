@@ -1,0 +1,5 @@
+<ng-container *ngFor="let item of items">
+    <label class="multi-select-item row nowrap spacing spacing-around center" [ngClass]="{'selected shadow': isItemSelected(item)}">
+        {{item[labelField]}}
+        <input class="no-border" [name]="item[keyField]" type="checkbox" [checked]="isItemSelected(item)" (change)="onChanged($event, item)"></label>
+</ng-container>

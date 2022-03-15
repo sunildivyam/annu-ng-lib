@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   componentsNavItems: Array<NavItem>;
   servicesNavItems: Array<NavItem>;
   mainRoutes: Array<Route>;
+  isMainNavOpen: boolean = false;
 
   constructor(private router: Router, private themeService: ThemeService) {
     this.componentsNavItems = [].concat(
@@ -61,5 +62,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeService.setTheme(this.appConfig.themeName, false);
+  }
+
+  public loginStatusClicked(): void {
+    this.isMainNavOpen = !this.isMainNavOpen;
+  }
+
+  public mainMenuOpenStatusChanged(opened: boolean): void {
+    this.isMainNavOpen = opened;
   }
 }

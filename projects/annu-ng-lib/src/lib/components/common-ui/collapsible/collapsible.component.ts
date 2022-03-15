@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'anu-collapsible',
@@ -6,11 +6,17 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./collapsible.component.scss']
 })
 export class CollapsibleComponent implements OnInit {
-@Input() collapsed: boolean = true;
+  @Input() collapsed: boolean = true;
+  @Input() hamBurgerClassNames: Array<string> = [''];
+  @Output() changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  public toggle(opened: boolean): void {
+    this.collapsed = opened;
+    this.changed.emit(this.collapsed);
+  }
 }

@@ -8,8 +8,15 @@
 
     <h3>Usage</h3>
     <anu-code-block
-        source='<anu-hamburger secondary="true" [opened]="opened" (changed)="toggled($event)"></anu-hamburger>'>
+        source='<anu-hamburger class="size-md primary-normal-bg accent-deep-light"  heading="Sample title" [isHamburgerStyle]="false" [opened]="opened" (changed)="toggled($event)"></anu-hamburger>'>
     </anu-code-block>
     <h3>Resulted UI</h3>
-    <anu-hamburger secondary="true" [opened]="opened" (changed)="toggled($event)"></anu-hamburger>
+    <anu-hamburger class="size-md primary-normal-bg accent-deep-light" heading="Sample title" [isHamburgerStyle]="false" [opened]="opened" (changed)="toggled($event)"></anu-hamburger>
+
+    <h3>Usage - Content Projection</h3>
+    <anu-code-block
+        source='<anu-hamburger class="size-md primary-normal-bg accent-deep-light"  [isHamburgerStyle]="false" [opened]="opened" (changed)="toggled($event)"><h3>Projected content</h3></anu-hamburger>'>
+    </anu-code-block>
+    <h3>Resulted UI</h3>
+    <anu-hamburger class="size-md primary-normal-bg accent-deep-light" [isHamburgerStyle]="false" [opened]="opened" (changed)="toggled($event)"><h3>Projected content</h3></anu-hamburger>
 </anu-component-info>

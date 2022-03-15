@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
 @Input() subHeading: string;
 @Input() opened: boolean;
 @Output() selected = new EventEmitter<Route>();
+@Output() openStatusChanged = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -20,6 +21,7 @@ export class MenuComponent implements OnInit {
 
   public toggleOpen(opened: boolean): void {
     this.opened = opened;
+    this.openStatusChanged.emit(this.opened);
   }
 
   public itemCliked(route: Route): void {

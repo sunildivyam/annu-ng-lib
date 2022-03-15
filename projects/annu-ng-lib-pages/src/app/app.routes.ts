@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { IsLoggedInGuard } from '@annu/ng-lib';
 import { ROUTE_TYPES } from './constants';
 
 // Components from Lib
@@ -37,6 +38,10 @@ import {
   LoginPageComponent,
   LoginStatusPageComponent,
   CollapsiblePageComponent,
+  MultiSelectBoxPageComponent,
+  ArticleViewPageComponent,
+  DrawerPageComponent,
+  CategoryArticlesListPageComponent,
 } from './page-components';
 
 // Services from Lib
@@ -53,9 +58,9 @@ import {
 } from './page-services';
 
 
-  // Main Nav Routes
+// Main Nav Routes
 export const mainRoutes = [
-  { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } },
+  { path: 'overview', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Getting Started' } /*, canActivate: [IsLoggedInGuard] */ },
   { path: 'documentation', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Documentation' } },
   { path: 'contact-us', component: OverviewPageComponent, data: { type: ROUTE_TYPES.main, title: 'Contact Us' } },
 ]
@@ -68,7 +73,7 @@ export const authRoutes = [
 
 // Common UI Component Routes
 export const commonUiRoutes = [
-  { path: 'components/common-ui/card', component: CardPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Card' } },
+  { path: 'components/common-ui/card', component: CardPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Card' }},
   { path: 'components/common-ui/color-palette', component: ColorPalettePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Color Palette' } },
   { path: 'components/common-ui/theme', component: ThemePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Theme' } },
   { path: 'components/common-ui/theme-preview', component: ThemePreviewPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Preview Theme' } },
@@ -89,6 +94,8 @@ export const commonUiRoutes = [
   { path: 'components/common-ui/search-box', component: SearchBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'SearchBox' } },
   { path: 'components/common-ui/error', component: ErrorPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Error' } },
   { path: 'components/common-ui/collapsible', component: CollapsiblePageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Collapsible' } },
+  { path: 'components/common-ui/multi-select-box', component: MultiSelectBoxPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Multi Select Box' } },
+  { path: 'components/common-ui/drawer', component: DrawerPageComponent, data: { type: ROUTE_TYPES.components.commonUi, title: 'Drawer' } },
 ]
 
 // CMS Component Routes
@@ -99,6 +106,8 @@ export const cmsRoutes = [
   { path: 'components/cms/content-editor', component: ContentEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Content Editor' } },
   { path: 'components/cms/category', component: CategoryPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category' } },
   { path: 'components/cms/category-editor', component: CategoryEditorPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category Editor' } },
+  { path: 'components/cms/article-view', component: ArticleViewPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Article View' } },
+  { path: 'components/cms/category-articles-list', component: CategoryArticlesListPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Category Articles List' } },
 ];
 
 // Docs Component Routes

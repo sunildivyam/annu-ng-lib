@@ -5,6 +5,7 @@
 @import "~prismjs/themes/prism-okaidia";
 
 @import 'firebaseui/dist/firebaseui.css';
+@import 'color-classes';
 
 // Use any of the Prismjs themes for code highlighting:
 // @import "~prismjs/themes/prism";
@@ -32,8 +33,18 @@ body {
   color: var(--anu-accent-normal);
 }
 
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > * {
+      max-width: var(--anu-site-width);
+  }
+}
+
 a {
-  color: var(--anu-primary-dark);
+  color: var(--anu-primary-darkest);
   text-decoration: none;
 
   &:hover {
@@ -107,7 +118,7 @@ a {
 img {
   display: block;
   max-width: 100%;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 h1,
@@ -119,7 +130,7 @@ h6 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-weight: bold;
-  color: var(--anu-primary-normal);
+  color: var(--anu-primary-darker);
 
   @include contenteditableStyle;
 }
@@ -201,6 +212,83 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
     outline-color: var(--anu-primary-normal)
   }
 }
+// Checkbox styling with border & with no border
+input[type="checkbox"] {
+    &:before{
+        position: relative;
+        display: block;
+        width: #{$checkbox_size};
+        height: #{$checkbox_size};
+        content: "";
+        background: var(--anu-primary-deep-light);
+        border: 1px solid var(--anu-primary-normal);
+        color: var(--anu-primary-normal);
+        font-size: #{$checkbox_size};
+    }
+
+    &:after{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: var(--anu-primary-deep-light);
+        border: 1px solid var(--anu-primary-normal);
+        color: var(--anu-primary-normal);
+        width: #{$checkbox_size};
+        height: #{$checkbox_size};
+        top: #{$checkbox_size * -1.12};
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &:checked:after{
+        background: var(--anu-primary-deep-light);
+        content: '\2713';
+        font-size: #{$checkbox_size};
+    }
+
+    &:disabled {
+        &::before {
+            background-color: var(--anu-accent-lighter);
+        }
+
+        :after{
+            background-color: var(--anu-accent-lighter);
+        }
+    }
+
+    &:not(:disabled) {
+        &:checked:hover:after {
+            background-color: var(--anu-primary-lighter);
+        }
+    }
+}
+
+input.no-border[type=checkbox] {
+    &:before{
+        border: none;
+    }
+
+    &:after{
+        border: none;
+        content: '\2713';
+        font-size: #{$checkbox_size};
+        color: var(--anu-accent-light);
+    }
+
+    &:not(:disabled) {
+        &:checked:hover:after {
+            background-color: transparent;
+        }
+    }
+
+    &:checked:after{
+        color: var(--anu-primary-normal);
+        font-size: #{$checkbox_size};
+    }
+}
+
 
 //  Error/Success/Warining
 .error {
@@ -281,52 +369,41 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 // alignment classes
 .left {
   align-items: flex-start;
-  text-align: left;
 
   &.row {
     justify-content: flex-start;
-    text-align: left;
   }
 }
 .right {
   align-items: flex-end;
-  text-align: right;
 
   &.row {
     justify-content: flex-end;
-    text-align: right;
   }
 }
 .center {
   align-items: center;
-  text-align: center;
 
   &.row {
     justify-content: center;
-    text-align: center;
   }
 }
 .top {
   justify-content: flex-start;
-  vertical-align: top;
 
   &.row {
     align-items: flex-start;
-    text-align: top;
   }
 }
 .bottom {
   justify-content: flex-end;
-  vertical-align: bottom;
 
   &.row {
     align-items: flex-end;
-    vertical-align: bottom;
   }
 }
 .middle {
   justify-content: center;
-  vertical-align: middle;
 }
 
 // spacing
@@ -627,6 +704,28 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
   }
 }
 
+//stretch
+.stretch {
+  justify-content: space-between;
+
+  &-lg {
+    @include large {
+      justify-content: space-between;
+    }
+  }
+
+  &-md {
+    @include medium {
+      justify-content: space-between;
+    }
+  }
+
+  &-sm {
+    @include small {
+      justify-content: space-between;
+    }
+  }
+}
 
 //hidden
 .hidden {
@@ -706,4 +805,80 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border-radius: calc(var(--anu-border-radius)/2);
+}
+
+.text {
+  &-center {
+    text-align: center;
+
+    &-sm {
+      text-align: center;
+    }
+
+    &-md {
+      text-align: center;
+    }
+
+    &-lg {
+      text-align: center;
+    }
+  }
+
+  &-left {
+    text-align: left;
+
+    &-sm {
+      text-align: left;
+    }
+
+    &-md {
+      text-align: left;
+    }
+
+    &-lg {
+      text-align: left;
+    }
+  }
+
+  &-right {
+    text-align: right;
+
+    &-sm {
+      text-align: right;
+    }
+
+    &-md {
+      text-align: right;
+    }
+
+    &-lg {
+      text-align: right;
+    }
+  }
+
+  &-justify {
+    text-align: justify;
+
+    &-sm {
+      text-align: justify;
+    }
+
+    &-md {
+      text-align: justify;
+    }
+
+    &-lg {
+      text-align: justify;
+    }
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.border {
+  &-round {
+      border-radius: var(--anu-border-radius);
+  }
 }

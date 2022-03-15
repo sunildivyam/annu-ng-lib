@@ -5,14 +5,21 @@ import { EditorElement } from "./content-editor.interface";
 export const EDITOR_ROOT_ELEMENT: EditorElement =
 {
   name: 'root',
-  tagName: 'article',
+  tagName: 'div',
   isContainer: true,
   children: [
     {
-      name: 'h1-1234',
-      tagName: 'h1',
+      name: 'h2-1234',
+      tagName: 'h2',
       data: {
-        text: 'Example Article Title',
+        text: 'Example heading text',
+      }
+    },
+    {
+      name: 'p-1234',
+      tagName: 'p',
+      data: {
+        text: 'Example description text',
       }
     }
   ]

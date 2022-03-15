@@ -1,11 +1,45 @@
-<form name="categoryEditor" (ngSubmit)="onChanged($event)">
-    <label>/{{pCategory?.name}}</label>
-    <p>
-        The Category title should not contain any style formatting.
-        So keep it short and simple. The above category name is auto-generated from title.
-        You can use this name in your content page urls or save in database as unique keys.
-        if you see any HTML tags in the name, then please remove any formatting from title.
-    </p>
-    <h2 name="category-title" contenteditable [(ngModel)]="pCategory.title" (blur)="onChanged($event)" (ngModelChange)="titleChanged($event)"></h2>
-    <p name="category-description" contenteditable [(ngModel)]="pCategory.description" (blur)="onChanged($event)"></p>
-</form>
+<h2>Category Editor</h2>
+<p>/{{category?.id}}</p>
+<anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+<section class="container tab-body">
+
+    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'moreinfo'}">
+        <anu-card class="shadow spacing spacing-around-vertical moreinfo-card spacing-around-horizontal-md spacing-around-horizontal-lg">
+            <anu-card-body>
+                <div class="row">
+                    <label>Short Title</label>
+                    <input type="text" name="category-short-title" [(ngModel)]="category.shortTitle" (blur)="onShortTitleChanged($event)" (ngModelChange)="onShortTitleChanged($event)"/>
+                </div>
+                <div class="row center stretch">
+                    <div class="col-sm-12">
+                        <a class="spacing-around" href="#" (click)="changeImage($event)">Change image</a>
+                        <a class="spacing-around" href="#" (click)="changeImage($event, true)">Remove image</a>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="spacing-horizontal">published? <anu-toggle [rounded]="true" [checked]="category?.isLive"
+                                (changed)="isLiveChanged($event)"></anu-toggle></label>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="spacing-horizontal">Featured? <anu-toggle [rounded]="true" [checked]="category?.isFeatured"
+                                (changed)="isFeaturedChanged($event)"></anu-toggle></label>
+                    </div>
+                </div>
+            </anu-card-body>
+        </anu-card>
+
+        <anu-category class="spacing-around-horizontal-md spacing-around-horizontal-lg" [value]="category" showMetaInfo="true"></anu-category>
+
+        <anu-modal [opened]="toggleImageForm">
+            <anu-image-form [src]="category?.image?.src" [alt]="category?.image?.alt" (cancel)="cancelImageChange()"
+                (save)="saveImageChange($event)"></anu-image-form>
+        </anu-modal>
+    </section>
+
+    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'metainfo'}">
+        <anu-meta-form [metaInfo]="category?.metaInfo" (changed)="categoryMetaChanged($event)"></anu-meta-form>
+    </section>
+
+    <section class="row spacing-vertical right">
+        <a class="btn" href="#" (click)="saveCategory($event)">Save Category</a>
+    </section>
+</section>

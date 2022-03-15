@@ -186,6 +186,18 @@ const jsonTheme = `{
     {
       "name": "fontSize",
       "value": "14px"
+    },
+    {
+      "name": "spacing",
+      "value": "1rem"
+    },
+    {
+      "name": "borderRadius",
+      "value": "1rem"
+    },
+    {
+      "name": "siteWidth",
+      "value": "1080px"
     }
   ]
 }`;

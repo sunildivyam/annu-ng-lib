@@ -1,5 +1,13 @@
-<div class="annuHamburger" (click)="toggle()" [ngClass]="{'opened': opened, 'secondary': secondary}">
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
+<div class="hamburger-icon">
+        <div *ngIf="!opened" class="hamburger-icon-normal">
+           {{isHamburgerStyle ? '&#9776;' : '&#10010;'}}
+        </div>
+        <div *ngIf="opened" class="hamburger-icon-opened">
+            {{isHamburgerStyle ? '&#10006;' : '&#9866;'}}
+        </div>
+</div>
+
+<div class="hamburger-header">
+    {{heading}}
+    <ng-content></ng-content>
 </div>

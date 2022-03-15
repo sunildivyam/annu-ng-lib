@@ -32,3 +32,7 @@ export * from './error-page/error-page.component';
 export * from './login-page/login-page.component';
 export * from './login-status-page/login-status-page.component';
 export * from './collapsible-page/collapsible-page.component';
+export * from './multi-select-box-page/multi-select-box-page.component';
+export * from './article-view-page/article-view-page.component';
+export * from './drawer-page/drawer-page.component';
+export * from './category-articles-list-page/category-articles-list-page.component';

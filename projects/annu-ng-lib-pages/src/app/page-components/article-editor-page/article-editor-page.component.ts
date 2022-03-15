@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '@annu/ng-lib';
+import { Article, Category } from '@annu/ng-lib';
+import { SAMPLE_CATEGORIES } from './config';
 
 @Component({
   selector: 'anu-article-editor-page',
@@ -7,8 +8,8 @@ import { Article } from '@annu/ng-lib';
   styleUrls: ['./article-editor-page.component.scss']
 })
 export class ArticleEditorPageComponent implements OnInit {
-article: Article;
-
+  article: Article;
+  categories: Array<Category> = [...SAMPLE_CATEGORIES];
   constructor() { }
 
   ngOnInit(): void {
@@ -16,5 +17,9 @@ article: Article;
 
   public articleChanged(article: Article) {
     console.log('Saved - ', article?.metaInfo);
+  }
+
+  public onSaveClicked(article: Article): void {
+    console.log('Saved - Clicked', article);
   }
 }

@@ -1,18 +1,9 @@
 :host {
   display: flex;
   flex-direction: column;
-  background-color: var(--anu-primary-lightest);
 }
 
-.anu_card_header {
-  background-color: var(--anu-primary);
-  background: linear-gradient(90deg, var(--anu-primary) 0%, var(--anu-primary-light) 35%, var(--anu-primary-lighter) 100%);
-  color: var(--anu-accent-darkest);
-  font-family: var(--anu-font-family);
-}
-
-.anu_card_footer {
-  background-color: var(--anu-primary);
-  background: linear-gradient(90deg, var(--anu-primary) 0%, var(--anu-primary-light) 35%, var(--anu-primary-lighter) 100%);
-  color: var(--anu-accent-darkest);
+.anu_card_image, .anu_card_content {
+  display: flex;
+  flex-direction: column;
 }

@@ -16,9 +16,9 @@
         <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)"
             placeholder="service method name...">
         </anu-search-box>
-        <label>Results: {{filteredMethods.length}} of {{svcInfo?.methods.length || 0}}</label>
+        <label>Results: {{filteredMethods?.length || 0}} of {{svcInfo?.methods?.length || 0}}</label>
         <ng-container *ngFor="let fn of filteredMethods">
-            <anu-card class="method-card shadow spacing-vertical">
+            <anu-card class="method-card shadow spacing">
                 <anu-card-body>
                     <anu-collapsible [collapsed]="false">
                         <anu-collapsible-header>

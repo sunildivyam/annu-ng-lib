@@ -113,7 +113,7 @@ export class ContentEditorService {
         if (tagName === 'img' && data) {
           newItem.data.src = data.src;
           newItem.data.alt = data.alt;
-          newItem.data.text = undefined;
+          delete newItem.data.text;
         }
 
         const parentOfParent = this.findParent(parent, fullTree);
@@ -132,21 +132,21 @@ export class ContentEditorService {
         newListItem.name = this.getEditorElementName('li');
         if (el.tagName === 'img') {
           newListItem.data.text = newListItem.data.alt;
-          newListItem.data.alt = undefined;
-          newListItem.data.src = undefined;
+          delete newListItem.data.alt;
+          delete newListItem.data.src;
         }
 
         el.tagName = tagName;
         el.name = this.getEditorElementName(tagName);
         el.isContainer = true;
         el.children = [newListItem];
-        el.data = undefined;
-        el.focused = undefined;
+        delete el.data;
+        delete el.focused;
       } else {
         if (tagName === 'img' && data) {
           el.data.src = data.src;
           el.data.alt = data.alt;
-          el.data.text = undefined;
+          delete el.data.text;
         }
         el.tagName = tagName;
         el.name = this.getEditorElementName(tagName);

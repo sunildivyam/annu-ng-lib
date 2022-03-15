@@ -18,6 +18,9 @@ import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from 
 })
 export class CardComponent implements OnChanges {
   @Input() isRowLayout: boolean = false;
+  @Input() imageCssClasses: Array<string> = [];
+  @Input() contentCssClasses: Array<string> = [];
+
   @HostBinding('class') rowLayout = '';
 
   constructor() { }

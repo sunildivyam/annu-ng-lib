@@ -1,15 +1,32 @@
-<nav role="navigation" aria-label="aside navigation" class="annuAsideNav">
-    <section class="row annuAsideNav_header">
-        <anu-hamburger class="hidden-lg hidden-md" [opened]="hamburgerOpened" (changed)="hamburgerChanged($event)">
+<nav role="navigation" aria-label="aside navigation">
+    <div class="row aside-nav-header">
+        <anu-hamburger class="size-md" [opened]="opened" [ngClass]="hamburgerClassNames"
+            [isHamburgerStyle]="isHamburgerStyle" (changed)="hamburgerChanged($event)">
+            <ng-container *ngIf="heading">{{heading}}</ng-container>
+            <ng-content select="anu-aside-nav-header.outside"></ng-content>
         </anu-hamburger>
-        <h2 class="">{{heading}}</h2>
-    </section>
-    <ul [ngClass]="{'opened': hamburgerOpened}" class="spacing-vertical">
-        <li *ngFor="let item of items" [ngClass]="{'separator': item.separator}">
-            <a *ngIf="!item.separator && !item.disabled" [routerLink]="[item.href]" routerLinkActive="active"
-                (click)="navClicked($event, item)">{{item.title}}</a>
-            <span *ngIf="item.disabled">{{item.title}}</span>
-            <label *ngIf="item.separator">{{item.title}}</label>
-        </li>
-    </ul>
+    </div>
+    <div class="row aside-nav-header-non-collapsible">
+        <ng-container *ngIf="heading">{{heading}}</ng-container>
+        <ng-content select="anu-aside-nav-header.outside-non-collapsible"></ng-content>
+    </div>
+    <div class="drawer-container">
+        <anu-drawer [opened]="opened" [ngClass]="drawerClassNames">
+            <anu-hamburger class="size-md aside-nav-header-inside-drawer" [opened]="opened"
+                [ngClass]="hamburgerClassNames" [isHamburgerStyle]="isHamburgerStyle"
+                (changed)="hamburgerChanged($event)">
+                <ng-container *ngIf="heading">{{heading}}</ng-container>
+                <ng-content select="anu-aside-nav-header.inside"></ng-content>
+            </anu-hamburger>
+            <ul *ngIf="items && items.length" class="spacing-vertical">
+                <li *ngFor="let item of items" [ngClass]="{'separator': item.separator}">
+                    <a *ngIf="!item.separator && !item.disabled" [routerLink]="[item.href]" routerLinkActive="active"
+                        (click)="navClicked($event, item)">{{item.title}}</a>
+                    <ng-container *ngIf="item.disabled">{{item.title}}</ng-container>
+                    <label *ngIf="item.separator">{{item.title}}</label>
+                </li>
+            </ul>
+            <ng-content></ng-content>
+        </anu-drawer>
+    </div>
 </nav>

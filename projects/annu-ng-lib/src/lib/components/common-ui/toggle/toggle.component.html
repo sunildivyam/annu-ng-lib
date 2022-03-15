@@ -1,4 +1,4 @@
 <label class="annuToggle">
-    <input type="checkbox" (change)="toggled($event)"/>
+    <input type="checkbox" [checked]="checked" (change)="toggled($event)"/>
     <span class="slider" [ngClass]="{'rounded': rounded}"></span>
 </label>

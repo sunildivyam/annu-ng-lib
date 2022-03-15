@@ -21,6 +21,7 @@ export class MetaFormComponent implements OnInit, OnChanges {
   public metaForm: FormGroup;
   public toggleModal: boolean = false;
   public metaTags: Array<string> = [];
+  public metaInfoJsonStr: string = '';
 
   constructor(private fb: FormBuilder, private metaService: MetaService) {
     this.changed = new EventEmitter<MetaInfo>();
@@ -59,9 +60,10 @@ export class MetaFormComponent implements OnInit, OnChanges {
     this.setValues(this.metaInfo);
   }
 
-  public metaChanged(event: any) {
-    event.preventDefault();
-    if (this.metaForm.invalid || !this.metaForm.dirty) return;
+  public metaChanged(event: any, isBlur: boolean = false) {
+    if (!isBlur) event.preventDefault();
+
+    // if (this.metaForm.invalid || !this.metaForm.dirty) return;
     this.changed.emit({ ...this.metaInfo });
   }
 
@@ -69,6 +71,7 @@ export class MetaFormComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.toggleModal = true;
     this.metaTags = this.metaService.getTagsAsString(this.metaInfo);
+    this.metaInfoJsonStr = JSON.stringify(this.metaInfo, null, '\t');
   }
 
   public closeMetaTags(event: any) {

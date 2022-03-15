@@ -18,7 +18,7 @@ export class AuthFirebaseUiService {
     const auth = firebase.app().auth();
 
     const firebaseui = await import('firebaseui');
-    const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
+    const ui = firebaseui.auth && (firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth));
 
     const uiConfig = {...this.libConfig.firebaseui, callbacks: {
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
@@ -28,8 +28,9 @@ export class AuthFirebaseUiService {
         // or whether we leave that to developer to handle.
 
         if (successCb) {
-          successCb(authResult.user);
+          successCb(authResult.user, redirectUrl);
         }
+
         return true;
       },
       signInFailure: (error) => {
@@ -47,6 +48,6 @@ export class AuthFirebaseUiService {
       }
     }};
 
-    ui.start(elementId, uiConfig);
+    ui && ui.start(elementId, uiConfig);
   }
 }
