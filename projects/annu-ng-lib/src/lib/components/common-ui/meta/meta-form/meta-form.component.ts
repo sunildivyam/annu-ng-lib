@@ -21,6 +21,7 @@ export class MetaFormComponent implements OnInit, OnChanges {
   public metaForm: FormGroup;
   public toggleModal: boolean = false;
   public metaTags: Array<string> = [];
+  public metaInfoJsonStr: string = '';
 
   constructor(private fb: FormBuilder, private metaService: MetaService) {
     this.changed = new EventEmitter<MetaInfo>();
@@ -70,6 +71,7 @@ export class MetaFormComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.toggleModal = true;
     this.metaTags = this.metaService.getTagsAsString(this.metaInfo);
+    this.metaInfoJsonStr = JSON.stringify(this.metaInfo, null, '\t');
   }
 
   public closeMetaTags(event: any) {
