@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { HomeViewRouteData } from './articles-route-resolvers.interface';
+import { HomeViewRouteData } from '../articles-route-resolvers.interface';
 
 import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
@@ -13,9 +13,18 @@ import { Category } from '../../../components/cms';
 
 const DEFAULT_PAGE_SIZE = 5;
 
-@Injectable({
-  providedIn: 'root'
-})
+/**
+ * Articles Home view data resolver.
+ * This requires BrowserTransferStateModule to be imported in app module and
+ * ServerTransferStateModule in to the server.app module.
+ * @date 15/3/2022 - 10:48:34 pm
+ *
+ * @export
+ * @class HomeViewRouteResolver
+ * @typedef {HomeViewRouteResolver}
+ * @implements {Resolve<HomeViewRouteData>}
+ */
+@Injectable()
 export class HomeViewRouteResolver implements Resolve<HomeViewRouteData> {
 
   routeData: HomeViewRouteData = {};

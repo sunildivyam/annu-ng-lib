@@ -8,9 +8,7 @@ import { Injectable } from '@angular/core';
  * @class UtilsService
  * @typedef {UtilsService}
  */
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UtilsService {
 
   constructor() { }

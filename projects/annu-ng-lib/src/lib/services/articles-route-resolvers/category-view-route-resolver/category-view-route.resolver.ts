@@ -4,20 +4,29 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { CategoryViewRouteData } from './articles-route-resolvers.interface';
+import { CategoryViewRouteData, HomeViewRouteData } from '../articles-route-resolvers.interface';
 
 import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
 import { CategoryGroup } from '../../../components/cms';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
-import { HomeViewRouteData } from './articles-route-resolvers.interface';
-import { ARTICLES_ROUTE_RESOLVER_DATA_KEYS } from './articles-route-resolvers.constants';
+
+import { ARTICLES_ROUTE_RESOLVER_DATA_KEYS } from '../articles-route-resolvers.constants';
 
 const DEFAULT_PAGE_SIZE = 5;
 
-@Injectable({
-  providedIn: 'root'
-})
+/**
+* Category view data resolver.
+ * This requires BrowserTransferStateModule to be imported in app module and
+ * ServerTransferStateModule in to the server.app module.
+ * @date 15/3/2022 - 10:51:12 pm
+ *
+ * @export
+ * @class CategoryViewRouteResolver
+ * @typedef {CategoryViewRouteResolver}
+ * @implements {Resolve<CategoryViewRouteData>}
+ */
+@Injectable()
 export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData> {
 
   routeData: CategoryViewRouteData = {};
