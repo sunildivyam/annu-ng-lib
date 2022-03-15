@@ -2,8 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryEditorComponent } from './category-editor.component';
 import { ContentEditorModule } from '../content-editor';
+import { TabsModule,
+  CardModule,
+  ImageFormModule,
+  ModalModule,
+  MetaModule,
+  MultiSelectBoxModule,
+  ToggleModule, } from '../../common-ui';
+import { CategoryModule } from '../category';
 import { FormsModule } from '@angular/forms';
-import { ToggleModule } from '../../common-ui';
 
 
 
@@ -13,9 +20,16 @@ import { ToggleModule } from '../../common-ui';
   ],
   imports: [
     CommonModule,
-    ContentEditorModule,
     FormsModule,
+    TabsModule,
+    ContentEditorModule,
+    CardModule,
+    ImageFormModule,
+    ModalModule,
+    MetaModule,
+    MultiSelectBoxModule,
     ToggleModule,
+    CategoryModule,
   ],
   exports: [
     CategoryEditorComponent

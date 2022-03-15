@@ -20,6 +20,6 @@ export class ArticleEditorPageComponent implements OnInit {
   }
 
   public onSaveClicked(article: Article): void {
-    console.log('Saved - Clicked', article?.metaInfo);
+    console.log('Saved - Clicked', article);
   }
 }

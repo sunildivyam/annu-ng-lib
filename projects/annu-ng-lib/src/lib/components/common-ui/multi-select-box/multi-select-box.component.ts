@@ -6,25 +6,25 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./multi-select-box.component.scss']
 })
 export class MultiSelectBoxComponent implements OnInit {
-  @Input() items: Array<Object> = [];
-  @Input() selectedItems: Array<Object> = [];
+  @Input() items: Array<any> = [];
+  @Input() selectedItems: Array<any> = [];
   @Input() keyField: string = '';
   @Input() labelField: string = '';
 
-  @Output() changed: EventEmitter<Array<Object>> = new EventEmitter<Array<Object>>();
+  @Output() changed: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public isItemSelected(item: Object): boolean {
+  public isItemSelected(item: any): boolean {
     if (!this.selectedItems) this.selectedItems = [];
 
     return !!this.selectedItems.find(it => it[this.keyField] === item[this.keyField]);
   }
 
-  public onChanged(event: any, item: Object): void {
+  public onChanged(event: any, item: any): void {
     if (!this.selectedItems) this.selectedItems = [];
 
     if (event.target.checked) {

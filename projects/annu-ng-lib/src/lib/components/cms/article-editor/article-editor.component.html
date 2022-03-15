@@ -38,7 +38,7 @@
             </anu-card-title>
             <anu-card-body>
                 <div class="row">
-                    <anu-multi-select-box keyField="id" labelField="title" [items]="categories"
+                    <anu-multi-select-box keyField="id" labelField="title" [items]="categoriesMultiSelectItems"
                         [selectedItems]="selectedArticleCategories" (changed)="onCategoriesChanged($event)">
                     </anu-multi-select-box>
                 </div>

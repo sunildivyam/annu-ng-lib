@@ -1,31 +1,58 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UtilsService } from '../../../services';
-import { Category } from '.';
+import { Category } from './category.interface';
 
 @Component({
   selector: 'anu-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit {
-  @Input() value: Category | null = null;
-  @Input() updateHref: Array<string>;
-  @Input() showMetaInfo: boolean = true;
-  @Input() readMoreHref: Array<string>;   // shows hyperlink to readmore page
-  @Input() titleHref: Array<string>;      // shows hyperlink to article full view page
+export class CategoryComponent implements OnInit, OnChanges {
+  /**
+   * Trims the description to the given character count and adds ... to the end of the text.
+   */
+   @Input() value: Category | null;
+   /**
+    * shows hyperlink to update page
+    */
+   @Input() updateHref: Array<string>;
+   /**
+    * shows hyperlink to readmore page
+    */
+   @Input() readMoreHref: Array<string>;
+   /**
+    * shows hyperlink to article full view page
+    */
+   @Input() titleHref: Array<string>;
+   /**
+    * if false, info like updated, created, published etc. will be hidden.
+    */
+   @Input() showMetaInfo: boolean = true;
+   /**
+    * Trims the description to the given character count and adds ... to the end of the text.
+    */
+   @Input() descriptionCharCount: number = 0;
 
-  @Output() updateClicked: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(public utilsSvc: UtilsService) { }
+   trimmedDescription: string = '';
 
-  ngOnInit(): void {
-  }
+   constructor(public utilsSvc: UtilsService) { }
 
-  public updateBtnClicked(event: any): void {
-    if (!this.updateHref) {
-      event.preventDefault();
-    }
+   ngOnInit(): void {
+     this.trimDescription();
+   }
 
-    this.updateClicked.emit();
-  }
+   ngOnChanges(changes: SimpleChanges): void {
+     this.trimDescription();
+   }
+
+   private trimDescription() {
+     const desc = this.value?.metaInfo?.description;
+
+     if (this.descriptionCharCount && this.descriptionCharCount > 0) {
+       this.trimmedDescription = this.utilsSvc.getTrimmedStringByChars(desc, this.descriptionCharCount);
+     } else {
+       this.trimmedDescription = desc;
+     }
+   }
 }

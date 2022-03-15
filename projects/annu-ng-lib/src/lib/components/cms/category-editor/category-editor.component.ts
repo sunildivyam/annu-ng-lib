@@ -1,8 +1,19 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UtilsService } from '../../../services';
 import { Category } from '../category';
+import { CATEGORY_EDITOR_TABS } from './category-editor.constants';
+import { ImageInfo, MetaInfo, Tab } from '../../common-ui';
 
-const SAMPLE_CATEGORY = { id: 'sample-category-title', isLive: false, shortTitle: 'Sample Category Short Title', title: 'Sample Category Title', description: 'Sample category description text' };
+const SAMPLE_CATEGORY = {
+  id: 'sample-category-title',
+  isLive: false,
+  isFeatured: false,
+  shortTitle: 'Sample Category Short Title',
+  metaInfo: {
+    title: 'Sample Category Title',
+    description: 'Sample category description text'
+  }
+};
 
 @Component({
   selector: 'anu-category-editor',
@@ -14,35 +25,80 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   @Output() changed = new EventEmitter<Category>();
   @Output() saveClicked = new EventEmitter<Category>();
 
-  public pCategory: Category;
+  toggleImageForm: boolean = false;
+  tabs: Array<Tab> = CATEGORY_EDITOR_TABS.map(t => ({ ...t }));
+
+  activeTab = this.tabs[0];
+  category: Category;
+  sampleCategory: Category;
 
   constructor(private utils: UtilsService) {
-    this.value = { ...SAMPLE_CATEGORY };
+    this.sampleCategory = { ...SAMPLE_CATEGORY, created: utils.currentDate, updated: utils.currentDate };
+    this.category = { ...this.sampleCategory };
+  }
+
+  private initCategory() {
+    if (this.value) {
+      this.category = { ...this.value };
+    } else {
+      this.category = { ...this.sampleCategory };
+    }
   }
 
   ngOnInit(): void {
-    this.pCategory = this.value ? { ...this.value } : { ...SAMPLE_CATEGORY };
+    this.initCategory();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.pCategory = this.value ? { ...this.value } : { ...SAMPLE_CATEGORY };
+    this.initCategory();
   }
 
-  public onChanged(event: any): void {
-    this.changed.emit({ ...this.pCategory });
+  public tabChanged(tab: Tab) {
+    this.activeTab = tab;
   }
 
-  public titleChanged(event: any): void {
-    this.pCategory.id = this.utils.toDashedString(this.pCategory.title);
+  public categoryMetaChanged(metaInfo: MetaInfo) {
+    this.category.id = this.utils.toDashedString(metaInfo.title);
+    this.category = { ...this.category, metaInfo: { ...metaInfo } };
+    this.changed.emit({ ...this.category });
   }
 
   public isLiveChanged(isLive: boolean): void {
-    this.pCategory.isLive = isLive;
-    this.changed.emit({ ...this.pCategory });
+    this.category = { ...this.category, isLive };
+    this.changed.emit({ ...this.category });
   }
 
-  public save(event: any): void {
+  public isFeaturedChanged(isFeatured: boolean): void {
+    this.category = { ...this.category, isFeatured };
+    this.changed.emit({ ...this.category });
+  }
+
+  public onShortTitleChanged(event: any): void {
+    this.changed.emit({ ...this.category });
+  }
+
+  public changeImage(event: any, clear: boolean = false) {
     event.preventDefault();
-    this.saveClicked.emit({ ...this.pCategory });
+    if (clear === true) {
+      this.category.image = null;
+      this.changed.emit({ ...this.category });
+    } else {
+      this.toggleImageForm = !this.toggleImageForm;
+    }
+  }
+
+  public cancelImageChange() {
+    this.toggleImageForm = !this.toggleImageForm;
+  }
+
+  public saveImageChange(image: ImageInfo) {
+    this.category.image = image;
+    this.toggleImageForm = !this.toggleImageForm;
+    this.changed.emit({ ...this.category });
+  }
+
+  public saveCategory(event: any): void {
+    event.preventDefault();
+    this.saveClicked.emit({ ...this.category });
   }
 }

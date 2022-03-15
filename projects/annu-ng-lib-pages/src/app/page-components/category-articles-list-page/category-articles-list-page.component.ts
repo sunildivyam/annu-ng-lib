@@ -7,7 +7,7 @@ import { Category } from '@annu/ng-lib';
   styleUrls: ['./category-articles-list-page.component.scss']
 })
 export class CategoryArticlesListPageComponent implements OnInit {
-  category: Category = { id: 'start-manufacturing-business', title: 'Start Manufacturing Business' };
+  category: Category = { id: 'start-manufacturing-business', metaInfo: { title: 'Start Manufacturing Business' }};
 
   constructor() { }
 

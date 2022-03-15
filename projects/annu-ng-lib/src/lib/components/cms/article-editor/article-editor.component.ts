@@ -31,7 +31,8 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   activeTab = this.tabs[0];
   article: Article;
   sampleArticle: Article;
-  selectedArticleCategories: Array<Object> = [];
+  selectedArticleCategories: Array<any> = [];
+  categoriesMultiSelectItems: Array<any> = [];
 
   constructor(private utils: UtilsService) {
     this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.toDashedString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
@@ -46,6 +47,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     }
 
     this.selectedArticleCategories = this.article.categories?.map(cat => ({ id: cat }));
+    this.categoriesMultiSelectItems = this.categories?.map(cat => ({ id: cat?.id, title: cat?.metaInfo?.title }));
   }
 
   ngOnInit(): void {
@@ -71,8 +73,8 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     this.changed.emit({ ...this.article });
   }
 
-  public onCategoriesChanged(selectedCategories: Array<Category> = []): void {
-    this.article = { ...this.article, categories: selectedCategories?.map(cat => cat.id) };
+  public onCategoriesChanged(selectedCategories: Array<any> = []): void {
+    this.article = { ...this.article, categories: selectedCategories?.map(cat => cat?.id) };
     this.selectedArticleCategories = [...selectedCategories];
     this.changed.emit({ ...this.article });
   }
