@@ -48,5 +48,6 @@ export const appConfig: AppConfig = {
         "site_name": "AnnuNgLib Pages",
         "audio": "",
         "video": ""
-    }
+    },
+    mainMenuItems: [],
   };

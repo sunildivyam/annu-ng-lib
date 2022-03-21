@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Route, Routes } from '@angular/router';
+import { MenuItem } from './menu.interface';
 
 @Component({
   selector: 'anu-menu',
@@ -7,11 +7,14 @@ import { Route, Routes } from '@angular/router';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-@Input() items: Routes;
+@Input() items: Array<MenuItem> = [];
 @Input() heading: string;
+@Input() headingHref: Array<string> = [];
 @Input() subHeading: string;
+@Input() subHeadingHref: Array<string> = [];
+
 @Input() opened: boolean;
-@Output() selected = new EventEmitter<Route>();
+@Output() selected = new EventEmitter<MenuItem>();
 @Output() openStatusChanged = new EventEmitter<boolean>();
 
   constructor() { }
@@ -24,8 +27,8 @@ export class MenuComponent implements OnInit {
     this.openStatusChanged.emit(this.opened);
   }
 
-  public itemCliked(route: Route): void {
-    this.selected.emit(route);
+  public itemCliked(menuItem: MenuItem): void {
+    this.selected.emit(menuItem);
 
     if (this.opened) {
       this.toggleOpen(false);

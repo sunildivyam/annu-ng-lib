@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes, RouterLink } from '@angular/router';
-import { AppConfig, NavItem, ThemeService } from '@annu/ng-lib';
+import { AppConfig, MenuItem, NavItem, ThemeService } from '@annu/ng-lib';
 import { ROUTE_TYPES, appConfig } from './constants';
 import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, authRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes, firebaseSvcRoutes } from './app.routes';
 
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   appConfig: AppConfig = appConfig;
   componentsNavItems: Array<NavItem>;
   servicesNavItems: Array<NavItem>;
-  mainRoutes: Array<Route>;
+  mainMenuItems: Array<MenuItem>;
   isMainNavOpen: boolean = false;
 
   constructor(private router: Router, private themeService: ThemeService) {
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
       this.mapRoutesToNavItems(firebaseSvcRoutes, ROUTE_TYPES.services.firebase),
     );
 
-    this.mainRoutes = mainRoutes;
+    this.mainMenuItems = mainRoutes.map(r => ({title: r.data.title, href: [r.path]}));
   }
 
   private sortNavItemsFn(a, b): number {

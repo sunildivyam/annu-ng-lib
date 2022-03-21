@@ -1,5 +1,6 @@
 import { MetaInfo } from "../components/common-ui/meta";
 import { FirebaseConfig } from "../firebase/firebase.interface";
+import { MenuItem } from "../components/common-ui/menu/menu.interface";
 
 export interface AppConfig {
     name: string;
@@ -11,6 +12,7 @@ export interface AppConfig {
     tNcUrl: string;
     privacyPolicyUrl: string;
     metaInfo: MetaInfo;
+    mainMenuItems: Array<MenuItem>;
 }
 
 

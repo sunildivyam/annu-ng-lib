@@ -26,7 +26,6 @@ import {
 import { Category, Article } from '../../components/cms';
 import { getSeedsCategories, getSeedsArticles } from './articles-firebase.seed';
 import { UtilsService } from '../../services/utils/utils.service';
-import { LibConfig } from '../../app-config/app-config.interface';
 import { AuthFirebaseService } from '../auth';
 import { QueryConfig } from '../firebase.interface';
 
@@ -49,7 +48,7 @@ const FIREBASE_DOCS = {
 })
 export class ArticlesFirebaseService {
 
-  constructor(private libConfig: LibConfig, private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService) { }
+  constructor(private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService) { }
 
   /**
    * Adds a new category for the logged in user.
