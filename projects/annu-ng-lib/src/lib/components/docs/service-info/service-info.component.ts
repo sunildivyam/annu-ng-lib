@@ -1,15 +1,15 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { Tab } from '../../common-ui';
-import { ComponentMethod, ServiceInfo } from '..';
+import { ComponentMethod, ServiceInfo } from '../docs.interface';
 import { PROPERTY_TYPES, SERVICE_INFO_TABS } from '../constants';
 
 import { DocsService } from '../docs.service';
-import { UtilsService } from '../../../services';
+import { UtilsService } from '../../../services/utils';
 import { ContentEditorService } from '../../cms/content-editor/services/content-editor.service';
 import { HighlightService } from '../../common-ui/code-block/highlight.service';
 import { SelectionService } from '../../cms/content-editor/services/selection.service';
 import { MetaService } from '../../common-ui/meta';
 import { ThemeService } from '../../common-ui/theme';
+import { Tab } from '../../common-ui/tabs';
 import { ArticlesFirebaseService, AuthFirebaseService } from '../../../firebase';
 
 const LibServices = {

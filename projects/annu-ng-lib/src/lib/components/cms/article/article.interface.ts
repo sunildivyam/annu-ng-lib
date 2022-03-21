@@ -1,6 +1,7 @@
 import { EditorElement } from "../content-editor";
-import { ImageInfo, MetaInfo } from "../../common-ui";
-import { Category } from "../category";
+import { ImageInfo } from "../../common-ui/image-form";
+import { MetaInfo } from "../../common-ui/meta";
+import { Category } from "../category/category.interface";
 
 export interface Article {
     id?: string;    // dash separated article id, that can be used as router path.has to be unique, based on article title.

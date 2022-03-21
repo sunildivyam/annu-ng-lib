@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ThemeComponent } from './theme.component';
-import { ColorPaletteModule } from '../color-palette/color-palette.module';
+import { ColorPaletteModule } from '../color-palette';
 import { TabsModule } from '../tabs';
-import { TypographyModule } from '../typography/typography.module';
+import { TypographyModule } from '../typography';
 import { CodeBlockModule } from '../code-block';
 
 

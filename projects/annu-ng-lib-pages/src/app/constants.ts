@@ -1,4 +1,4 @@
-import { AppConfig } from "@annu/ng-lib/components/common-ui";
+import { AppConfig } from "@annu/ng-lib";
 
 export const ROUTE_TYPES = {
     main: 'Main',
@@ -48,5 +48,6 @@ export const appConfig: AppConfig = {
         "site_name": "AnnuNgLib Pages",
         "audio": "",
         "video": ""
-    }
+    },
+    mainMenuItems: [],
   };

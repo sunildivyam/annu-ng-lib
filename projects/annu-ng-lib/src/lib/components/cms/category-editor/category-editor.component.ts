@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UtilsService } from '../../../services';
+import { UtilsService } from '../../../services/utils';
 import { Category } from '../category';
 import { CATEGORY_EDITOR_TABS } from './category-editor.constants';
-import { ImageInfo, MetaInfo, Tab } from '../../common-ui';
+import { ImageInfo } from '../../common-ui/image-form';
+import { MetaInfo } from '../../common-ui/meta';
+import { Tab } from '../../common-ui/tabs';
 
 const SAMPLE_CATEGORY = {
   id: 'sample-category-title',

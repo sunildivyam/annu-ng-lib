@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Category } from '../category';
-import { Article } from '../article';
+import { Category } from '../category/category.interface';
+import { Article } from '../article/article.interface';
 
 @Component({
   selector: 'anu-category-articles-list',

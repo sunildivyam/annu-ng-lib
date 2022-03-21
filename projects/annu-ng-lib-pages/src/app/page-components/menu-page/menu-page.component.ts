@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Routes } from '@angular/router';
+import { MenuItem } from '@annu/ng-lib';
 import { mainRoutes } from '../../app.routes';
 
 @Component({
@@ -8,10 +8,10 @@ import { mainRoutes } from '../../app.routes';
   styleUrls: ['./menu-page.component.scss']
 })
 export class MenuPageComponent implements OnInit {
-  routes: Routes;
+  menuItems: Array<MenuItem>;
 
-  constructor(private router: Router) {
-    this.routes = mainRoutes
+  constructor() {
+    this.menuItems = mainRoutes.map(r => ({title: r.data.title, href: [r.path]}));
   }
 
   ngOnInit(): void {

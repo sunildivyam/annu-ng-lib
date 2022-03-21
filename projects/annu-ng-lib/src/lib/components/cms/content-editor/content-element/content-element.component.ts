@@ -1,7 +1,7 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ToolbarItem } from '../../../common-ui';
+import { ToolbarItem } from '../../../common-ui/toolbar';
 import { EditorElement } from '../content-editor.interface';
-import { ImageInfo } from '../../../common-ui';
+import { ImageInfo } from '../../../common-ui/image-form';
 import { ContentEditorService } from '../services/content-editor.service';
 import { TOOLBAR_FORMATTING, TOOLBAR_STYLES } from '../constants';
 

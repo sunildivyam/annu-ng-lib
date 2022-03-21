@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Typography } from '../theme/theme.interface';
+import { Typography } from './typography.interface';
 
 @Component({
   selector: 'anu-typography',

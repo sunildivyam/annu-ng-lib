@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Route, Routes } from '@angular/router';
+import { MenuItem } from '../menu';
 
 @Component({
   selector: 'anu-footer-nav',
@@ -8,14 +9,14 @@ import { Route, Routes } from '@angular/router';
 })
 export class FooterNavComponent implements OnInit {
 @Input() copyrightText: string;
-@Input() items: Routes = [];
-@Output() selected = new EventEmitter<Route>();
+@Input() items: Array<MenuItem> = [];
+@Output() selected = new EventEmitter<MenuItem>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public itemCliked(route: Route): void {
-    this.selected.emit(route);
+  public itemCliked(item: MenuItem): void {
+    this.selected.emit(item);
   }
 }

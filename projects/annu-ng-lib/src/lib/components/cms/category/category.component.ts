@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UtilsService } from '../../../services';
+import { UtilsService } from '../../../services/utils';
 import { Category } from './category.interface';
 
 @Component({

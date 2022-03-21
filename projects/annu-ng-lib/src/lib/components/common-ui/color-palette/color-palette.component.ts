@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ThemeService } from '../theme/theme.service';
 import { FormControl } from '@angular/forms';
-import { ColorPalette } from '../theme/theme.interface';
+import { ColorPalette } from './color-palette.interface';
 
 /**
  * ColorPaletteComponent generates 9 shades of colors based on input property, <code>colorPalette.hue</code> and <code>colorPalette.saturation</code>, ranging from DeepDark ... Normal ... DeepLight.

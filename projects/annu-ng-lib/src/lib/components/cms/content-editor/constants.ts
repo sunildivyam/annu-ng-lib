@@ -1,4 +1,4 @@
-import { ToolbarItem } from "../../common-ui";
+import { ToolbarItem } from "../../common-ui/toolbar";
 import { EditorElement } from "./content-editor.interface";
 
 

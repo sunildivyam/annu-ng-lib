@@ -1,19 +1,5 @@
-export interface PaletteColor {
-  name: string; // names eg. normal, dark, darker etc..
-  hsl: string
-}
-
-export interface ColorPalette {
-  name: string;
-  hue: number;
-  saturation: number;
-  colors: Array<PaletteColor>
-}
-
-export interface Typography {
-  name: string;
-  value: string;
-}
+import { ColorPalette } from "../color-palette";
+import { Typography } from '../typography';
 
 export interface CssVar {
   name: string;

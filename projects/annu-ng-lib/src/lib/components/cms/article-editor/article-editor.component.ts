@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Article } from '../article';
+import { Article } from '../article/article.interface';
 import { EditorElement, EDITOR_ROOT_ELEMENT } from '../content-editor';
-import { ImageInfo, MetaInfo, Tab } from '../../common-ui';
+import { ImageInfo } from '../../common-ui/image-form';
+import { MetaInfo } from '../../common-ui/meta';
+import { Tab } from '../../common-ui/tabs';
 import { ARTICLE_EDITOR_TABS } from './constants';
-import { UtilsService } from '../../../services';
-import { Category } from '../category';
+import { UtilsService } from '../../../services/utils';
+import { Category } from '../category/category.interface';
 
 const SAMPLE_ARTICLE = {
   body: EDITOR_ROOT_ELEMENT,

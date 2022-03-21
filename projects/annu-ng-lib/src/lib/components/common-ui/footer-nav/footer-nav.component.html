@@ -2,9 +2,9 @@
     <ul class="row-lg middle">
         <li *ngIf="copyrightText" class="annuFooterNav_copyright spacing-horizontal"><small>{{copyrightText}}</small>
         </li>
-        <li *ngFor="let route of items">
-            <a class="spacing-horizontal" [routerLink]="route.path" routerLinkActive="active"
-                (click)="itemCliked(route)">{{route.data?.title}}</a>
+        <li *ngFor="let item of items">
+            <a class="spacing-horizontal" [routerLink]="item.href" routerLinkActive="active"
+                (click)="itemCliked(item)">{{item.title}}</a>
         </li>
     </ul>
 </nav>

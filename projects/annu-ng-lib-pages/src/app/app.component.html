@@ -1,6 +1,6 @@
 <div class="appContainer container" role="main">
   <header class="appHeader row">
-    <anu-menu (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainRoutes" [heading]="appConfig.name" [subHeading]="appConfig.metaInfo.title">
+    <anu-menu (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainMenuItems" [heading]="appConfig.name" [subHeading]="appConfig.metaInfo.title" [headingHref]="['./']" [subHeadingHref]="['./']">
       <anu-login-status (profileClicked)="loginStatusClicked()" (signOutClicked)="loginStatusClicked()" (signInClicked)="loginStatusClicked()" theme="" loginPageUrl="/components/auth/login" profilePageUrl="/profile"
         loggedOutPageUrl="/components/auth/login"></anu-login-status>
     </anu-menu>
@@ -37,7 +37,7 @@
     </section>
   </section>
   <footer class="appFooter row">
-    <anu-footer-nav class="spacing-vertical" [copyrightText]="appConfig.copyrightText" [items]="mainRoutes">
+    <anu-footer-nav class="spacing-vertical" [copyrightText]="appConfig.copyrightText" [items]="mainMenuItems">
     </anu-footer-nav>
   </footer>
 </div>

@@ -1,3 +1,1 @@
-export * from './drawer.module'
-export * from './drawer.component'
-export * from './drawer.constants';
+export * from './public-api';

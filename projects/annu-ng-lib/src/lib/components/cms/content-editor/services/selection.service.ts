@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Link, ImageInfo} from '../../../common-ui';
+import { Link } from '../../../common-ui/link-form';
+import { ImageInfo} from '../../../common-ui/image-form';
 import { Observable, Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { Rectangle } from '../content-editor.interface';

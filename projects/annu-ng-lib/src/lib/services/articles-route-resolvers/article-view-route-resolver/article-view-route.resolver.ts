@@ -5,15 +5,24 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 
-import { ArticleViewRouteData } from './articles-route-resolvers.interface';
+import { ArticleViewRouteData } from '../articles-route-resolvers.interface';
 
 import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
 
-@Injectable({
-  providedIn: 'root'
-})
+/**
+ * Article view data resolver.
+ * This requires BrowserTransferStateModule to be imported in app module and
+ * ServerTransferStateModule in to the server.app module.
+ * @date 15/3/2022 - 10:51:41 pm
+ *
+ * @export
+ * @class ArticleViewRouteResolver
+ * @typedef {ArticleViewRouteResolver}
+ * @implements {Resolve<ArticleViewRouteData>}
+ */
+@Injectable()
 export class ArticleViewRouteResolver implements Resolve<ArticleViewRouteData> {
 
   routeData: ArticleViewRouteData = {};

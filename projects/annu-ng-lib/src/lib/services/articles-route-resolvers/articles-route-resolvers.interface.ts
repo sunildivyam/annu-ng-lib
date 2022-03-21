@@ -1,4 +1,4 @@
-import { Category, Article, CategoryGroup } from "../../../components/cms";
+import { Category, Article, CategoryGroup } from "../../components/cms";
 
 export interface HomeViewRouteData {
     allCategoriesGroups?: Array<CategoryGroup>;

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import * as e from 'express';
-import { ComponentMethod } from '..';
+import { ComponentMethod } from '../docs.interface';
 
 @Component({
   selector: 'anu-service-method',

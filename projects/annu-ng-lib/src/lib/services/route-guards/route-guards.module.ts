@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IsLoggedInGuard } from './is-logged-in.guard';
 
 
 
@@ -7,6 +8,7 @@ import { CommonModule } from '@angular/common';
   declarations: [],
   imports: [
     CommonModule
-  ]
+  ],
+  providers: [IsLoggedInGuard],
 })
-export class AppConfigModule { }
+export class RouteGuardsModule { }

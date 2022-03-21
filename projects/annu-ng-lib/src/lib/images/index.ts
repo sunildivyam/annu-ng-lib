@@ -1,1 +1,1 @@
-export * from './images.constants';
+export * from './public-api';

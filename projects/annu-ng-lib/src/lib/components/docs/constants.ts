@@ -1,4 +1,4 @@
-import { Tab } from "../common-ui";
+import { Tab } from "../common-ui/tabs";
 
 export const COMMPONENT_INFO_TABS: Array<Tab> = [
     {

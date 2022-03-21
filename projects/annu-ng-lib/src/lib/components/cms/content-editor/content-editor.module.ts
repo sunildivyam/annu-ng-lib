@@ -9,7 +9,10 @@ import { HeadingComponent } from './heading/heading.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { ContentElementComponent } from './content-element/content-element.component';
 import { FormatInlineDirective } from './directives/format-inline.directive';
-import { ToolbarModule, ModalModule, ImageFormModule, LinkFormModule } from '../../common-ui';
+import { ToolbarModule } from '../../common-ui/toolbar';
+import { ModalModule } from '../../common-ui/modal';
+import { ImageFormModule } from '../../common-ui/image-form';
+import { LinkFormModule } from '../../common-ui/link-form';
 import { ImageComponent } from './image/image.component';
 
 
