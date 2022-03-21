@@ -3,7 +3,7 @@ import firebase from 'firebase/compat/app';
 import  'firebase/compat/auth';
 import { AuthFirebaseService } from './auth-firebase.service';
 
-import { LibConfig } from '../../annu-ng-lib.interface';
+import { LibConfig } from '../../app-config/app-config.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,2 +1,1 @@
-export * from './articles-firebase.module';
-export * from './articles-firebase.service';
+export * from './public-api';

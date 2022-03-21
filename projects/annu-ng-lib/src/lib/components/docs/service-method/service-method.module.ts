@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceMethodComponent } from './service-method.component';
-import { CardModule } from '../../common-ui';
+import { CardModule } from '../../common-ui/card';
 import { FormsModule } from '@angular/forms';
 
 

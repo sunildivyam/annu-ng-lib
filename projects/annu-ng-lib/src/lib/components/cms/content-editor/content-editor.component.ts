@@ -1,7 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EditorElement } from './content-editor.interface';
 import { EDITOR_ROOT_ELEMENT, TOOLBAR_FORMATTING } from './constants';
-import { ToolbarItem, Link, ImageInfo } from '../../common-ui';
+import { ToolbarItem } from '../../common-ui/toolbar';
+import { Link } from '../../common-ui/link-form';
+import { ImageInfo } from '../../common-ui/image-form';
 import { SelectionService } from './services/selection.service';
 import { Rectangle } from './content-editor.interface';
 

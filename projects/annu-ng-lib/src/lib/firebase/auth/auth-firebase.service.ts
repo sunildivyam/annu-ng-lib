@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createUserWithEmailAndPassword, UserCredential, getAuth, GoogleAuthProvider, signInWithPopup, User, Auth, signInWithEmailAndPassword, ProviderId, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseApp, FirebaseError, getApps, initializeApp } from 'firebase/app';
-import { LibConfig } from '../../annu-ng-lib.interface';
+import { LibConfig } from '../../app-config/app-config.interface';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({

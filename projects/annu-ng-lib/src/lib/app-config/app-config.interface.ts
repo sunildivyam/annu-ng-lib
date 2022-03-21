@@ -1,4 +1,5 @@
-import { MetaInfo } from "../meta";
+import { MetaInfo } from "../components/common-ui/meta";
+import { FirebaseConfig } from "../firebase/firebase.interface";
 
 export interface AppConfig {
     name: string;
@@ -10,4 +11,11 @@ export interface AppConfig {
     tNcUrl: string;
     privacyPolicyUrl: string;
     metaInfo: MetaInfo;
+}
+
+
+export class LibConfig {
+    docsJsonUrl?: string = '';
+    firebaseui?: any;
+    firebase?: FirebaseConfig;
 }

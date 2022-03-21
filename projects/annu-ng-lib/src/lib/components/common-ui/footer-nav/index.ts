@@ -1,2 +1,1 @@
-export * from './footer-nav.module';
-export * from './footer-nav.component';
+export * from './public-api';

@@ -1,2 +1,1 @@
-export * from './component-props.module';
-export * from './component-props.component';
+export * from './public-api';

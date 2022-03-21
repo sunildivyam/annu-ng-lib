@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { signInMethodInfo } from '../login.constants';
 import { BASE64_SOCIAL_MEDIA } from '../../../../images';
-import { LibConfig } from '../../../../annu-ng-lib.interface';
+import { LibConfig } from '../../../../app-config/app-config.interface';
 
 
 /**

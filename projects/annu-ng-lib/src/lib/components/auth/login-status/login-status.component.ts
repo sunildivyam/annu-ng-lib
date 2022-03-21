@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BASE64_AUTH } from '../../../images';
-import { AuthFirebaseService } from '../../../firebase';
+import { AuthFirebaseService } from '../../../firebase/auth/auth-firebase.service';
 
 @Component({
   selector: 'anu-login-status',

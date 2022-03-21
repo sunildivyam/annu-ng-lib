@@ -3,9 +3,9 @@ import { Inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2, RendererS
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
-import themes from '../../../themes';
-import { PaletteColor, Typography, CssVar, ColorPalette } from './theme.interface';
-import { Theme } from './theme.interface';
+import { themes } from '../../../themes';
+import { PaletteColor, ColorPalette } from '../color-palette';
+import { Theme, CssVar } from './theme.interface';
 
 const DEFAULT_THEME = 'default';
 const PALETTE_COLOR_COUNT = 8;

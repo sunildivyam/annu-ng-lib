@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FirebaseConfig } from './firebase.interface';
-import { LibConfig } from '../annu-ng-lib.interface';
+import { LibConfig } from '../app-config/app-config.interface';
 import { ArticlesFirebaseModule } from './articles';
 import { AuthFirebaseModule } from './auth/auth-firebase.module';
 import { initializeApp } from 'firebase/app';

@@ -22,7 +22,6 @@ import { CodeBlockModule } from './code-block/code-block.module';
 import { MetaModule } from './meta/meta.module';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SearchBoxModule } from './search-box/search-box.module';
-import { AppConfigModule } from './app-config/app-config.module';
 import { ErrorModule } from './error/error.module';
 import { CollapsibleModule } from './collapsible/collapsible.module';
 import { MultiSelectBoxModule } from './multi-select-box/multi-select-box.module';
@@ -57,7 +56,6 @@ import { DrawerModule } from './drawer/drawer.module';
     MetaModule,
     SpinnerModule,
     SearchBoxModule,
-    AppConfigModule,
     ErrorModule,
     CollapsibleModule,
     MultiSelectBoxModule,

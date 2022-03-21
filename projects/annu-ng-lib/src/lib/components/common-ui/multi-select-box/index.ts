@@ -1,2 +1,1 @@
-export * from './multi-select-box.module';
-export * from './multi-select-box.component';
+export * from './public-api';

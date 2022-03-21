@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article } from '..';
+import { Article } from '../article/article.interface';
 
 @Component({
   selector: 'anu-article-list',

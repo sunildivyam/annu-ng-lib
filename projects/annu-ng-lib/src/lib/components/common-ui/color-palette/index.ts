@@ -1,2 +1,1 @@
-export * from './color-palette.module';
-export * from './color-palette.component';
+export * from './public-api';

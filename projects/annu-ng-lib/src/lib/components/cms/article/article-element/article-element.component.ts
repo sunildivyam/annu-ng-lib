@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorElement } from '../../content-editor';
+import { EditorElement } from '../../content-editor/content-editor.interface';
 
 @Component({
   selector: 'anu-article-element, [anu-article-element]',

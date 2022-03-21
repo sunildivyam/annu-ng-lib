@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { ThemeService } from './theme.service';
-import { Theme, ColorPalette, Typography } from './theme.interface';
+import { Theme } from './theme.interface';
+import { Typography } from '../typography';
+
+import { ColorPalette } from '../color-palette';
+
 import { Tab } from '../tabs';
 
 const TABS = [

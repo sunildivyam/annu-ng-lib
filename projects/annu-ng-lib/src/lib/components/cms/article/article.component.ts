@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Article } from './article.interface';
-import { UtilsService } from '../../../services';
+import { UtilsService } from '../../../services/utils';
 
 @Component({
   selector: 'anu-article',

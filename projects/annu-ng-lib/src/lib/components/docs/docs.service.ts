@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LibConfig } from '../../annu-ng-lib.interface';
+import { LibConfig } from '../../app-config/app-config.interface';
 import { ACCESS_MODIFIERS } from './constants';
 import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo } from './docs.interface';
 

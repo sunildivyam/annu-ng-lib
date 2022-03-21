@@ -1,4 +1,4 @@
-import { Tab } from "../../common-ui";
+import { Tab } from "../../common-ui/tabs";
 
 export const ARTICLE_EDITOR_TABS: Array<Tab> = [
     {

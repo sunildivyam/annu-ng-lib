@@ -124,7 +124,8 @@ import {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    // annu-ng-lib - components modules
+
+    // annu-ng-lib - this imports all lib modules
     AnnuNgLibModule.forRoot(environment.libConfig),
   ],
   providers: [],
