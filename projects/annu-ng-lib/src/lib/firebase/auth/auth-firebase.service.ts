@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword, UserCredential, getAuth, GoogleAuthProvider, signInWithPopup, User, Auth, signInWithEmailAndPassword, ProviderId, onAuthStateChanged } from 'firebase/auth';
-import { FirebaseApp, FirebaseError, getApps, initializeApp } from 'firebase/app';
-import { LibConfig } from '../../app-config/app-config.interface';
+import { createUserWithEmailAndPassword, UserCredential, getAuth, GoogleAuthProvider, signInWithPopup, User, Auth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { Observable, Subject } from 'rxjs';
+import { CommonFirebaseService } from '../common-firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,7 @@ export class AuthFirebaseService {
   auth: Auth;
   authState: Subject<User> = new Subject<User>();
 
-  constructor(private libConfig: LibConfig) {
+  constructor(private commonFireSvc: CommonFirebaseService) {
     this.auth = this.getFirebaseAuth();
     onAuthStateChanged(this.getFirebaseAuth(), (user: User) => {
       this.setLoggedInToLocalStorage(!!user)
@@ -19,19 +18,12 @@ export class AuthFirebaseService {
     });
   }
 
-  private getFirebaseApp(): FirebaseApp {
-    const firebaseApps = getApps();
-    const firebaseApp = firebaseApps.length ? firebaseApps[0] : initializeApp(this.libConfig.firebase);
-
-    return firebaseApp;
-  }
-
   private getFirebaseAuth(): Auth {
     if (this.auth) {
       return this.auth;
     }
 
-    const app = this.getFirebaseApp();
+    const app = this.commonFireSvc.initOrGetFirebaseApp();
     const auth = getAuth(app);
 
     return auth;
