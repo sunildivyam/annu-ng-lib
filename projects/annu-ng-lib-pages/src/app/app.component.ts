@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router, Routes, RouterLink } from '@angular/router';
+import { Route, Router, Routes } from '@angular/router';
 import { AppConfig, MenuItem, NavItem, ThemeService } from '@annu/ng-lib';
 import { ROUTE_TYPES, appConfig } from './constants';
-import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, authRoutes, appSvcRoutes, commonUiSvcRoutes, cmsSvcRoutes, docsSvcRoutes, firebaseSvcRoutes } from './app.routes';
+import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, authRoutes } from './app.routes';
+import { DocsService } from '@annu/ng-lib/components/docs/docs.service';
 
 @Component({
   selector: 'anu-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   mainMenuItems: Array<MenuItem>;
   isMainNavOpen: boolean = false;
 
-  constructor(private router: Router, private themeService: ThemeService) {
+  constructor(private router: Router, private themeService: ThemeService, private docsService: DocsService) {
     this.componentsNavItems = [].concat(
       this.mapRoutesToNavItems(commonUiRoutes, ROUTE_TYPES.components.commonUi),
       this.mapRoutesToNavItems(cmsRoutes, ROUTE_TYPES.components.cms),
@@ -24,15 +25,11 @@ export class AppComponent implements OnInit {
       this.mapRoutesToNavItems(authRoutes, ROUTE_TYPES.components.auth),
     );
 
-    this.servicesNavItems = [].concat(
-      this.mapRoutesToNavItems(appSvcRoutes, ROUTE_TYPES.services.app),
-      this.mapRoutesToNavItems(commonUiSvcRoutes, ROUTE_TYPES.services.commonUi),
-      this.mapRoutesToNavItems(cmsSvcRoutes, ROUTE_TYPES.services.cms),
-      this.mapRoutesToNavItems(docsSvcRoutes, ROUTE_TYPES.services.docs),
-      this.mapRoutesToNavItems(firebaseSvcRoutes, ROUTE_TYPES.services.firebase),
-    );
+    this.docsService.getAllServices().subscribe(svcs => {
+      this.servicesNavItems = svcs.map(svc => ({ title: svc.name, href: `./services/${svc.name}` }))
+    });
 
-    this.mainMenuItems = mainRoutes.map(r => ({title: r.data.title, href: [r.path]}));
+    this.mainMenuItems = mainRoutes.map(r => ({ title: r.data.title, href: [r.path] }));
   }
 
   private sortNavItemsFn(a, b): number {

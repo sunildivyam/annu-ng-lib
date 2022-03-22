@@ -110,10 +110,31 @@ export class DocsService {
       } else {
         this.httpClient.get(this.url).subscribe((res: any) => {
           const svc = res.injectables.find(s => s.name === name);
-          this.servicesCache[name] = this.parseServiceInfo(svc);
-          observer.next(this.servicesCache[name]);
+          if (svc) {
+            this.servicesCache[name] = this.parseServiceInfo(svc);
+            observer.next(this.servicesCache[name]);
+          } else {
+            observer.next(null);
+          }
         })
       }
+    })
+  }
+
+
+  /**
+   * Gets all Services available in the library.
+   * @date 22/3/2022 - 10:09:32 pm
+   *
+   * @public
+   * @returns {Observable<Array<ServiceInfo>>}
+   */
+  public getAllServices(): Observable<Array<ServiceInfo>> {
+    return new Observable(observer => {
+      this.httpClient.get(this.url).subscribe((res: any) => {
+        const servicesInfo = res.injectables.map(svc => this.parseServiceInfo(svc)) || [];
+        observer.next(servicesInfo);
+      })
     })
   }
 }

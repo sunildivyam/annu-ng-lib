@@ -47,20 +47,8 @@ import {
   ArticleViewPageComponent,
   DrawerPageComponent,
   CategoryArticlesListPageComponent,
-
+  ServicePageComponent,
 } from './page-components';
-
-import {
-  UtilsServicePageComponent,
-  ContentEditorServicePageComponent,
-  DocsServicePageComponent,
-  HighlightServicePageComponent,
-  MetaServicePageComponent,
-  SelectionServicePageComponent,
-  ThemeServicePageComponent,
-  ArticlesFirebaseServicePageComponent,
-  AuthFirebaseServicePageComponent,
-} from './page-services';
 
 
 @NgModule({
@@ -107,16 +95,7 @@ import {
     DrawerPageComponent,
     CategoryArticlesListPageComponent,
 
-    // Service Pages
-    UtilsServicePageComponent,
-    ContentEditorServicePageComponent,
-    DocsServicePageComponent,
-    HighlightServicePageComponent,
-    MetaServicePageComponent,
-    SelectionServicePageComponent,
-    ThemeServicePageComponent,
-    ArticlesFirebaseServicePageComponent,
-    AuthFirebaseServicePageComponent,
+    ServicePageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

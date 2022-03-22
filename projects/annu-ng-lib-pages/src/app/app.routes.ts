@@ -42,21 +42,8 @@ import {
   ArticleViewPageComponent,
   DrawerPageComponent,
   CategoryArticlesListPageComponent,
+  ServicePageComponent,
 } from './page-components';
-
-// Services from Lib
-import {
-  UtilsServicePageComponent,
-  ContentEditorServicePageComponent,
-  DocsServicePageComponent,
-  HighlightServicePageComponent,
-  MetaServicePageComponent,
-  SelectionServicePageComponent,
-  ThemeServicePageComponent,
-  ArticlesFirebaseServicePageComponent,
-  AuthFirebaseServicePageComponent,
-} from './page-services';
-
 
 // Main Nav Routes
 export const mainRoutes = [
@@ -118,36 +105,6 @@ export const docsRoutes = [
   { path: 'components/docs/service-method', component: ServiceMethodPageComponent, data: { type: ROUTE_TYPES.components.docs, title: 'Service Method' } },
 ];
 
-
-// App Services Routes
-export const appSvcRoutes = [
-  { path: 'services/app/utils', component: UtilsServicePageComponent, data: { type: ROUTE_TYPES.services.app, title: 'Utils Service' } },
-]
-
-// Common UI Services Routes
-export const commonUiSvcRoutes = [
-  { path: 'services/common-ui/highlight', component: HighlightServicePageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Highlight Service' } },
-  { path: 'services/common-ui/meta', component: MetaServicePageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Meta Service' } },
-  { path: 'services/common-ui/theme', component: ThemeServicePageComponent, data: { type: ROUTE_TYPES.services.commonUi, title: 'Theme Service' } },
-]
-
-// CMS Services Routes
-export const cmsSvcRoutes = [
-  { path: 'services/cms/content-editor', component: ContentEditorServicePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'ContentEditor Service' } },
-  { path: 'services/cms/selection', component: SelectionServicePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'Selection Service' } },
-];
-
-// Docs Services Routes
-export const docsSvcRoutes = [
-  { path: 'services/docs/docs', component: DocsServicePageComponent, data: { type: ROUTE_TYPES.services.docs, title: 'Docs Service' } },
-];
-
-// Firebase Services Routes
-export const firebaseSvcRoutes = [
-  { path: 'services/firebase/articles-firebase', component: ArticlesFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'ArticlesFirebase Service' } },
-  { path: 'services/firebase/auth-firebase', component: AuthFirebaseServicePageComponent, data: { type: ROUTE_TYPES.services.firebase, title: 'AuthFirebase Service' } },
-];
-
 export const routes: Routes = [
   { path: '', redirectTo: '/overview', pathMatch: 'full' },
   // Main Routes
@@ -163,13 +120,6 @@ export const routes: Routes = [
   ...authRoutes,
 
   // Services Routes
-  ...appSvcRoutes,
 
-  ...commonUiSvcRoutes,
-
-  ...cmsSvcRoutes,
-
-  ...docsSvcRoutes,
-
-  ...firebaseSvcRoutes,
+  { path: 'services/:serviceName', component: ServicePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'Services' } },
 ];

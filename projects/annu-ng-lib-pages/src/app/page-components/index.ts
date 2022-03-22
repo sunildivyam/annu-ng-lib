@@ -36,3 +36,4 @@ export * from './multi-select-box-page/multi-select-box-page.component';
 export * from './article-view-page/article-view-page.component';
 export * from './drawer-page/drawer-page.component';
 export * from './category-articles-list-page/category-articles-list-page.component';
+export * from './service-page/service-page.component';

@@ -1,28 +1,9 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ComponentMethod, ServiceInfo } from '../docs.interface';
 import { PROPERTY_TYPES, SERVICE_INFO_TABS } from '../constants';
-
 import { DocsService } from '../docs.service';
-import { UtilsService } from '../../../services/utils';
-import { ContentEditorService } from '../../cms/content-editor/services/content-editor.service';
-import { HighlightService } from '../../common-ui/code-block/highlight.service';
-import { SelectionService } from '../../cms/content-editor/services/selection.service';
-import { MetaService } from '../../common-ui/meta';
-import { ThemeService } from '../../common-ui/theme';
 import { Tab } from '../../common-ui/tabs';
-import { ArticlesFirebaseService, AuthFirebaseService } from '../../../firebase';
-
-const LibServices = {
-  UtilsService,
-  ContentEditorService,
-  DocsService,
-  HighlightService,
-  MetaService,
-  SelectionService,
-  ThemeService,
-  ArticlesFirebaseService,
-  AuthFirebaseService,
-};
+import { LibServices } from '../lib-resources/lib-services';
 
 
 @Component({
@@ -43,11 +24,12 @@ export class ServiceInfoComponent implements OnInit {
   methodParameters: Array<any> = [];
   methodResponses: Array<string> = [];
   methodErrors: Array<any> = [];
+  loading: boolean = false;
 
   constructor(private docService: DocsService, private injector: Injector) { }
 
   ngOnInit(): void {
-    this.getServiceInfo();
+    // this.getServiceInfo();
   }
 
   ngOnChanges(): void {
@@ -55,11 +37,18 @@ export class ServiceInfoComponent implements OnInit {
   }
 
   private getServiceInfo() {
+    if (!this.name) return;
+    this.loading = true;
     this.docService.getServiceInfo(this.name).subscribe((svcInfo: ServiceInfo) => {
       this.svcInfo = svcInfo;
-      this.filteredMethods = this.svcInfo?.methods;
+      this.filteredMethods = this.svcInfo?.methods || [];
       // Set Service Instance
-      this.serviceInstance = this.injector.get<any>(LibServices[this.svcInfo.name]);
+      if (this.svcInfo) {
+        this.serviceInstance = this.injector.get<any>(LibServices[this.svcInfo.name]);
+      } else {
+        this.serviceInstance = null;
+      }
+      this.loading = false;
     });
   }
 

@@ -22,7 +22,9 @@
                 <anu-card-body>
                     <anu-collapsible [collapsed]="false">
                         <anu-collapsible-header>
-                            <a href="javascript:void(0)"><h3>{{fn.name}}(...)</h3></a>
+                            <a href="javascript:void(0)">
+                                <h3>{{fn.name}}(...)</h3>
+                            </a>
                         </anu-collapsible-header>
                         <anu-collapsible-content>
                             <anu-card>
@@ -52,7 +54,9 @@
     </section>
 
     <section *ngIf="activeTab.name === tabs[2].name">
-        <h2>{{svcInfo.tsUrl}}</h2>
-        <anu-code-block [source]="svcInfo.tsSource"></anu-code-block>
+        <h2>{{svcInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="svcInfo?.tsSource"></anu-code-block>
     </section>
 </article>
+<anu-spinner [show]="loading"></anu-spinner>
+<anu-error *ngIf="!svcInfo" [code]="404" [message]="'Service name not found - ' + name"></anu-error>
