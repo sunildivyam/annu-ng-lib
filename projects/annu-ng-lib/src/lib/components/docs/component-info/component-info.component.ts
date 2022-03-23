@@ -20,15 +20,14 @@ export class ComponentInfoComponent implements OnInit, OnChanges {
   constructor(private docService: DocsService) { }
 
   ngOnInit(): void {
-    this.getComponentInfo();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getComponentInfo();
   }
 
-  private getComponentInfo() {
-    this.docService.getComponentInfo(this.name).subscribe((cmpInfo: ComponentInfo) => this.cmpInfo = cmpInfo);
+  private async getComponentInfo() {
+    this.cmpInfo = await this.docService.getComponentInfo(this.name);
   }
 
   public tabChanged(tab: Tab) {

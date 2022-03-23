@@ -25,6 +25,7 @@ export class ServiceInfoComponent implements OnInit {
   methodResponses: Array<string> = [];
   methodErrors: Array<any> = [];
   loading: boolean = false;
+  error: any;
 
   constructor(private docService: DocsService, private injector: Injector) { }
 
@@ -36,11 +37,14 @@ export class ServiceInfoComponent implements OnInit {
     this.getServiceInfo();
   }
 
-  private getServiceInfo() {
+  private async getServiceInfo() {
     if (!this.name) return;
     this.loading = true;
-    this.docService.getServiceInfo(this.name).subscribe((svcInfo: ServiceInfo) => {
-      this.svcInfo = svcInfo;
+    this.error = null;
+
+    try {
+      this.svcInfo = await this.docService.getServiceInfo(this.name)
+
       this.filteredMethods = this.svcInfo?.methods || [];
       // Set Service Instance
       if (this.svcInfo) {
@@ -48,8 +52,13 @@ export class ServiceInfoComponent implements OnInit {
       } else {
         this.serviceInstance = null;
       }
+
       this.loading = false;
-    });
+    } catch (error: any) {
+      this.loading = false;
+      this.error = error;
+      this.serviceInstance = null;
+    }
   }
 
   public tabChanged(tab: Tab) {

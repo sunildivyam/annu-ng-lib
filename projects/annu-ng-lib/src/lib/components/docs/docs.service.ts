@@ -1,15 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { LibConfig } from '../../app-config/app-config.interface';
 import { ACCESS_MODIFIERS } from './constants';
-import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo } from './docs.interface';
+import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo, LibDocsInfo } from './docs.interface';
 
 @Injectable()
 export class DocsService {
   url: string;
-  componentsCache: Object = {};
-  servicesCache: Object = {};
+  libDocsCache: LibDocsInfo = {};
 
   constructor(private httpClient: HttpClient, private libConfig: LibConfig) {
     this.url = this.libConfig?.docsJsonUrl || '';
@@ -71,70 +71,122 @@ export class DocsService {
   }
 
   /**
+   * Gets docs info for all available resources in the library.
+   * @date 23/3/2022 - 1:25:35 pm
+   *
+   * @public
+   * @async
+   * @returns {Promise<LibDocsInfo>}
+   */
+  public async getLibDocsInfo(): Promise<LibDocsInfo> {
+    return new Promise((resolve, reject) => {
+      this.httpClient.get<any>(this.url)
+        .pipe(catchError(
+          (errorResponse: HttpErrorResponse) => {
+            this.libDocsCache.services = [];
+            this.libDocsCache.components = [];
+
+            reject(errorResponse);
+
+            return throwError(() => {
+              return errorResponse;
+            });
+          }
+        ))
+        .subscribe(docsResponse => {
+          this.libDocsCache.services = docsResponse.injectables.map(svc => this.parseServiceInfo(svc)) || [];
+          this.libDocsCache.components = docsResponse.components.map(cmp => this.parseComponentInfo(cmp)) || [];
+
+          resolve({ ...this.libDocsCache });
+        })
+    })
+  }
+
+
+  /**
   * getComponentInfo() method fetches all the Components from docs json,
   * parses and filters them and returns the Component Info for the specipfied component name.
   *
   * @public
   * @param {string} name Name of the service to retrive information
-  * @returns {Observable<ComponentInfo>}
+  * @returns {Promise<ComponentInfo>}
   */
-  public getComponentInfo(name: string): Observable<ComponentInfo> {
-    return new Observable(observer => {
-      const cmpInfo = this.componentsCache[name];
-      if (cmpInfo) {
-        observer.next(cmpInfo);
-      } else {
-        this.httpClient.get(this.url).subscribe((res: any) => {
-          const cmp = res.components.find(c => c.name === name);
-          this.componentsCache[name] = this.parseComponentInfo(cmp);
-          observer.next(this.componentsCache[name]);
-        })
-      }
-    })
-  }
+  public async getComponentInfo(name: string): Promise<ComponentInfo> {
+    const cmpInfo = this.libDocsCache.components && this.libDocsCache.components.length && this.libDocsCache.components.find(c => c.name === name);
 
+    if (cmpInfo) {
+      return { ...cmpInfo };
+    } else {
+      await this.getLibDocsInfo();
+      const cmpInfoFound = this.libDocsCache.components && this.libDocsCache.components.length && this.libDocsCache.components.find(c => c.name === name);
+      if (cmpInfoFound) {
+        return { ...cmpInfoFound };
+      } else {
+        throw new Error('Component not found - ' + name);
+      }
+    }
+  }
 
   /**
-   * getServiceInfo() method fetches all the services from docs json,
-   * parses and filters them and returns the Service Info for the specipfied service name.
-   *
-   * @public
-   * @param {string} name Name of the service to retrive information
-   * @returns {Observable<Object>}
-   */
-  public getServiceInfo(name: string): Observable<Object> {
-    return new Observable(observer => {
-      const svcInfo = this.servicesCache[name];
-      if (svcInfo) {
-        observer.next(svcInfo);
-      } else {
-        this.httpClient.get(this.url).subscribe((res: any) => {
-          const svc = res.injectables.find(s => s.name === name);
-          if (svc) {
-            this.servicesCache[name] = this.parseServiceInfo(svc);
-            observer.next(this.servicesCache[name]);
-          } else {
-            observer.next(null);
-          }
-        })
-      }
-    })
-  }
+    * getServiceInfo() method fetches all the Services from docs json,
+    * parses and filters them and returns the Service Info for the specipfied component name.
+    *
+    * @public
+    * @param {string} name Name of the service to retrive information
+    * @returns {Promise<ServiceInfo>}
+    */
+  public async getServiceInfo(name: string): Promise<ServiceInfo> {
+    const svcInfo = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
 
+    if (svcInfo) {
+      return { ...svcInfo };
+    } else {
+      await this.getLibDocsInfo();
+      const svcInfoFound = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
+      if (svcInfoFound) {
+        return { ...svcInfoFound };
+      } else {
+        throw new Error('Service not found - ' + name);
+      }
+    }
+  }
 
   /**
-   * Gets all Services available in the library.
-   * @date 22/3/2022 - 10:09:32 pm
-   *
-   * @public
-   * @returns {Observable<Array<ServiceInfo>>}
-   */
-  public getAllServices(): Observable<Array<ServiceInfo>> {
-    return new Observable(observer => {
-      this.httpClient.get(this.url).subscribe((res: any) => {
-        const servicesInfo = res.injectables.map(svc => this.parseServiceInfo(svc)) || [];
-        observer.next(servicesInfo);
-      })
-    })
+  * getAllComponents() method fetches all the Components from docs json.
+  *
+  * @public
+  * @returns {Promise<Array<ComponentInfo>>}
+  */
+  public async getAllComponents(): Promise<Array<ComponentInfo>> {
+    const allComponents = this.libDocsCache.components || [];
+
+    if (allComponents && allComponents.length) {
+      return [...allComponents];
+    } else {
+      await this.getLibDocsInfo();
+      const allComponentsFound = this.libDocsCache.components || [];
+
+      return [...allComponentsFound];
+    }
   }
+
+  /**
+  * getAllServices() method fetches all the Services from docs json.
+  *
+  * @public
+  * @returns {Promise<Array<ServiceInfo>>}
+  */
+  public async getAllServices(): Promise<Array<ServiceInfo>> {
+    const allServices = this.libDocsCache.services || [];
+
+    if (allServices && allServices.length) {
+      return [...allServices];
+    } else {
+      await this.getLibDocsInfo();
+      const allServicesFound = this.libDocsCache.services || [];
+
+      return [...allServicesFound];
+    }
+  }
+
 }

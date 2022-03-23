@@ -25,11 +25,16 @@ export class AppComponent implements OnInit {
       this.mapRoutesToNavItems(authRoutes, ROUTE_TYPES.components.auth),
     );
 
-    this.docsService.getAllServices().subscribe(svcs => {
-      this.servicesNavItems = svcs.map(svc => ({ title: svc.name, href: `./services/${svc.name}` }))
-    });
-
     this.mainMenuItems = mainRoutes.map(r => ({ title: r.data.title, href: [r.path] }));
+  }
+
+  private async getAllLibServices() {
+    try {
+    const svcs = await this.docsService.getAllServices();
+    this.servicesNavItems = svcs.map(svc => ({ title: svc.name, href: `./services/${svc.name}` }))
+    } catch(error: any) {
+      this.servicesNavItems = [];
+    }
   }
 
   private sortNavItemsFn(a, b): number {
@@ -59,6 +64,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeService.setTheme(this.appConfig.themeName, false);
+    this.getAllLibServices();
   }
 
   public loginStatusClicked(): void {

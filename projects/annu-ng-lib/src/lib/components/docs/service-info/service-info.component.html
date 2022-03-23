@@ -59,4 +59,4 @@
     </section>
 </article>
 <anu-spinner [show]="loading"></anu-spinner>
-<anu-error *ngIf="!svcInfo" [code]="404" [message]="'Service name not found - ' + name"></anu-error>
+<anu-error *ngIf="!svcInfo" [code]="error?.code || 404" [message]="error?.message || 'Service name not found - ' + name"></anu-error>

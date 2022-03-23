@@ -18,7 +18,7 @@ export interface ComponentMethod {
    accessModifier?: string;
 }
 
-export class ComponentInfo {
+export interface ComponentInfo {
    name: string;
    description: string;
    selector: string;
@@ -34,7 +34,7 @@ export class ComponentInfo {
    methods: Array<ComponentMethod>;
 }
 
-export class ServiceInfo {
+export interface ServiceInfo {
    name: string;
    description: string;
    tsUrl: string;
@@ -43,4 +43,29 @@ export class ServiceInfo {
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
    methods: Array<ComponentMethod>;
+}
+
+export interface InterfaceInfo {
+   name: string;
+   description: string;
+   tsUrl: string;
+   tsSource: string;
+}
+
+export interface GuardsInfo {
+   name: string;
+   description: string;
+   tsUrl: string;
+   tsSource: string;
+   inputProps: Array<ComponentProp>;
+   outputProps: Array<ComponentProp>;
+   props: Array<ComponentProp>;
+   methods: Array<ComponentMethod>;
+}
+
+export interface LibDocsInfo {
+   components?: Array<ComponentInfo>;
+   services?: Array<ServiceInfo>;
+   interfaces?: Array<InterfaceInfo>;
+   guards?: Array<GuardsInfo>;
 }
