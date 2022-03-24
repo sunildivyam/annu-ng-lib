@@ -6,6 +6,7 @@ import { ServiceMethodModule } from './service-method';
 import { ComponentInfoModule } from './component-info';
 import { ComponentPropsModule } from './component-props';
 import { ServiceInfoModule } from './service-info';
+import { ComponentUsageModule } from './component-usage/component-usage.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ServiceInfoModule } from './service-info';
     ComponentInfoModule,
     ComponentPropsModule,
     ServiceInfoModule,
+    ComponentUsageModule,
   ],
 })
 export class DocsModule { }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 /**
  * Spinner component shows a spinner, to let user know that something is loading or in progress.
@@ -48,7 +48,13 @@ export class SpinnerComponent implements OnInit, OnChanges {
    */
    @HostBinding('style.position') position = 'absolute';
 
-  constructor() { }
+  constructor(public injector: Injector) {
+    this.size = this.injector.get('size', this.size);
+    this.show = this.injector.get('show', this.show);
+    this.fullscreen = this.injector.get('fullscreen', this.fullscreen);
+    this.theme = this.injector.get('theme', this.theme);
+    this.speed = this.injector.get('speed', this.speed);
+  }
 
   /**
    * Initializes the display and position bound style properties.

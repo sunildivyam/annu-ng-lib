@@ -6,16 +6,20 @@ import { CardModule } from '../../common-ui/card';
 import { CodeBlockModule } from '../../common-ui/code-block';
 import { ComponentInfoComponent } from './component-info.component';
 import { ComponentPropsModule } from '../component-props';
+import { FormsModule } from '@angular/forms';
+import { ComponentUsageModule } from '../component-usage';
 
 
 @NgModule({
   declarations: [ComponentInfoComponent],
   imports: [
     CommonModule,
+    FormsModule,
     TabsModule,
     CardModule,
     CodeBlockModule,
-    ComponentPropsModule
+    ComponentPropsModule,
+    ComponentUsageModule,
   ],
   exports: [ComponentInfoComponent],
 })

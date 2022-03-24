@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
   mainMenuItems: Array<MenuItem>;
   isMainNavOpen: boolean = false;
 
+  componentsNavItemsNew: Array<NavItem>;
+
   constructor(private router: Router, private themeService: ThemeService, private docsService: DocsService) {
     this.componentsNavItems = [].concat(
       this.mapRoutesToNavItems(commonUiRoutes, ROUTE_TYPES.components.commonUi),
@@ -34,6 +36,15 @@ export class AppComponent implements OnInit {
     this.servicesNavItems = svcs.map(svc => ({ title: svc.name, href: `./services/${svc.name}` }))
     } catch(error: any) {
       this.servicesNavItems = [];
+    }
+  }
+
+  private async getAllLibComponents() {
+    try {
+    const cmps = await this.docsService.getAllComponents();
+    this.componentsNavItemsNew = cmps.map(cmp => ({ title: cmp.name, href: `./components-doc/${cmp.name}` }))
+    } catch(error: any) {
+      this.componentsNavItemsNew = [];
     }
   }
 
@@ -65,6 +76,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.themeService.setTheme(this.appConfig.themeName, false);
     this.getAllLibServices();
+    this.getAllLibComponents();
   }
 
   public loginStatusClicked(): void {

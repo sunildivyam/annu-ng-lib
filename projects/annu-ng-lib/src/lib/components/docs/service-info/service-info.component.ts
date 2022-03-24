@@ -72,28 +72,7 @@ export class ServiceInfoComponent implements OnInit {
   public methodParametersChanged(params: Array<any>, method: ComponentMethod): void {
     this.methodParameters = params;
 
-    const argValues = params.map(p => {
-      let paramValue;
-      try {
-        switch (p.type) {
-          case 'string':
-            paramValue = p.value === 'null' ? null : p.value;
-            break;
-          case 'number':
-            paramValue = parseInt(p.value);
-            break;
-          case 'boolean':
-            paramValue = p.value === 'null' ? null : p.value === 'false' ? false : true;
-            break;
-          default:
-            paramValue = p.value === 'null' ? null : JSON.parse(p.value);
-        }
-      } catch (error: any) {
-        paramValue = p.value;
-      }
-
-      return paramValue;
-    });
+    const argValues = params.map(p => this.docService.parsePropValue(p, p.value));
 
     const returnOfFunction = this.serviceInstance[method.name](...argValues);
     if (method.returnType.includes('Observable')) {

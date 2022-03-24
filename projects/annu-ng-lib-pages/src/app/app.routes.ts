@@ -43,6 +43,7 @@ import {
   DrawerPageComponent,
   CategoryArticlesListPageComponent,
   ServicePageComponent,
+  ComponentPageComponent,
 } from './page-components';
 
 // Main Nav Routes
@@ -120,6 +121,8 @@ export const routes: Routes = [
   ...authRoutes,
 
   // Services Routes
-
   { path: 'services/:serviceName', component: ServicePageComponent, data: { type: ROUTE_TYPES.services.cms, title: 'Services' } },
+
+  // Components Routes
+  { path: 'components-doc/:componentName', component: ComponentPageComponent, data: { type: ROUTE_TYPES.components.cms, title: 'Components' } },
 ];

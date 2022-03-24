@@ -70,6 +70,65 @@ export class DocsService {
     } as ServiceInfo;
   }
 
+
+  private stripSingleQuotedStr(str: string): string {
+    if (!str) return str;
+
+    if ((str.startsWith("'") && str.endsWith("'")) || (str.startsWith('\"') && str.endsWith('\"'))) {
+      str = str.substring(1);
+      str = str.substring(0, str.length -1);
+    }
+    console.log(str);
+    return str;
+  }
+
+  public parsePropValue(prop: ComponentProp, value: any): any {
+    let paramValue;
+    try {
+      switch (prop.type) {
+        case 'string':
+          paramValue = value === 'null' ? null : value;
+          break;
+        case 'number':
+          paramValue = parseInt(value);
+          break;
+        case 'boolean':
+          paramValue = value === 'null' ? null : value === 'false' ? false : Boolean(value);
+          break;
+        default:
+          paramValue = value === 'null' ? null : JSON.parse(value);
+      }
+    } catch (error: any) {
+      paramValue = value;
+    }
+
+    return paramValue;
+  }
+
+  public parsePropValueToStr(prop: ComponentProp, value: any): any {
+    let paramValue;
+    try {
+      switch (prop.type) {
+        case 'string':
+          paramValue = value === null ? 'null' : this.stripSingleQuotedStr(value);
+          break;
+        case 'number':
+          paramValue = value;
+          break;
+        case 'boolean':
+          paramValue = value === 'null' ? null : value === 'false' ? false : value;
+          break;
+        default:
+          paramValue = value === null ? 'null' : JSON.stringify(value, null, '\t');
+          paramValue = this.stripSingleQuotedStr(paramValue);
+      }
+    } catch (error: any) {
+      paramValue = value;
+    }
+
+    return paramValue;
+  }
+
   /**
    * Gets docs info for all available resources in the library.
    * @date 23/3/2022 - 1:25:35 pm
@@ -87,7 +146,6 @@ export class DocsService {
             this.libDocsCache.components = [];
 
             reject(errorResponse);
-
             return throwError(() => {
               return errorResponse;
             });
@@ -112,17 +170,33 @@ export class DocsService {
   * @returns {Promise<ComponentInfo>}
   */
   public async getComponentInfo(name: string): Promise<ComponentInfo> {
-    const cmpInfo = this.libDocsCache.components && this.libDocsCache.components.length && this.libDocsCache.components.find(c => c.name === name);
+    let cmpInfo;
+
+    if (!name) {
+      throw new Error('Component Name is Empty or Invalid');
+    }
+
+    if (this.libDocsCache.components && this.libDocsCache.components.length) {
+      cmpInfo = this.libDocsCache.components.find(c => c.name === name);
+    }
+
 
     if (cmpInfo) {
       return { ...cmpInfo };
     } else {
-      await this.getLibDocsInfo();
-      const cmpInfoFound = this.libDocsCache.components && this.libDocsCache.components.length && this.libDocsCache.components.find(c => c.name === name);
-      if (cmpInfoFound) {
-        return { ...cmpInfoFound };
-      } else {
-        throw new Error('Component not found - ' + name);
+      try {
+        await this.getLibDocsInfo();
+        if (this.libDocsCache.components && this.libDocsCache.components.length) {
+          cmpInfo = this.libDocsCache.components.find(c => c.name === name);
+        }
+
+        if (cmpInfo) {
+          return { ...cmpInfo };
+        } else {
+          throw new Error('Component not found - ' + name);
+        }
+      } catch (error: any) {
+        throw error;
       }
     }
   }
@@ -136,17 +210,25 @@ export class DocsService {
     * @returns {Promise<ServiceInfo>}
     */
   public async getServiceInfo(name: string): Promise<ServiceInfo> {
+    if (!name) {
+      throw new Error('Service Name is Empty or Invalid');
+    }
+
     const svcInfo = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
 
     if (svcInfo) {
       return { ...svcInfo };
     } else {
-      await this.getLibDocsInfo();
-      const svcInfoFound = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
-      if (svcInfoFound) {
-        return { ...svcInfoFound };
-      } else {
-        throw new Error('Service not found - ' + name);
+      try {
+        await this.getLibDocsInfo();
+        const svcInfoFound = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
+        if (svcInfoFound) {
+          return { ...svcInfoFound };
+        } else {
+          throw new Error('Service not found - ' + name);
+        }
+      } catch (error: any) {
+        throw error;
       }
     }
   }

@@ -48,6 +48,7 @@ import {
   DrawerPageComponent,
   CategoryArticlesListPageComponent,
   ServicePageComponent,
+  ComponentPageComponent,
 } from './page-components';
 
 
@@ -96,6 +97,7 @@ import {
     CategoryArticlesListPageComponent,
 
     ServicePageComponent,
+    ComponentPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

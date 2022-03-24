@@ -34,6 +34,13 @@
         [drawerClassNames]="['drawer-static', 'drawer-left']" [hamburgerClassNames]="['size-md']">
         <anu-aside-nav-header class="outside-non-collapsible"><h2>Services</h2></anu-aside-nav-header>
       </anu-aside-nav>
+
+      <!-- New Components -->
+      <anu-aside-nav [opened]="true" class="hidden-sm spacing" [isCollapsible]="false" [items]="componentsNavItemsNew"
+        [drawerClassNames]="['drawer-static', 'drawer-left']" [hamburgerClassNames]="['size-md']">
+        <anu-aside-nav-header class="outside-non-collapsible"><h2>Components</h2></anu-aside-nav-header>
+      </anu-aside-nav>
+
     </section>
   </section>
   <footer class="appFooter row">

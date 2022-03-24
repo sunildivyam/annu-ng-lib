@@ -26,7 +26,7 @@ export function app(): express.Express {
   // server.get('/api/**', (req, res) => { });
 
   // Serve JSON data
-  server.get('*.json', (req, res) => {
+  server.get('/data/*.json', (req, res) => {
     readFile(join(distFolder, req.url), {encoding: 'utf8'}, (err, json) => {
       if (err) {
         res.status(404).send('Requested resource does not exist');

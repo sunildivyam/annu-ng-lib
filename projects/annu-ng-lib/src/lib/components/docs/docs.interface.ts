@@ -69,3 +69,8 @@ export interface LibDocsInfo {
    interfaces?: Array<InterfaceInfo>;
    guards?: Array<GuardsInfo>;
 }
+
+export interface DocsData {
+   projectionContent?: any;
+   inputPropsValues?: any;
+}

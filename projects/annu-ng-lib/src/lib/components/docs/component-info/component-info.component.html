@@ -14,7 +14,9 @@
         <anu-component-props [props]="cmpInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
     </section>
 
-    <section *ngIf="activeTab.name === tabs[1].name">
+    <section class="usage" *ngIf="activeTab.name === tabs[1].name">
+        <!-- TODO: Remove this ng-content once usage component is done. -->
+        <anu-component-usage [componentInfo]="cmpInfo"></anu-component-usage>
         <ng-content></ng-content>
     </section>
 

@@ -1,0 +1,18 @@
+<h2>Usage</h2>
+<anu-code-block [source]="usageSource"></anu-code-block>
+
+<h2>Output</h2>
+<section class="output-container relative">
+    <ng-container *ngComponentOutlet="component; injector: componentInjector; content: componentContent"></ng-container>
+</section>
+
+<!-- Input Properties Form -->
+<h2>Input Properties</h2>
+<div class="row">
+    <div class="input-prop col-sm-12 col-md-3 col-lg-2" *ngFor="let prop of componentInfo?.inputProps">
+        <label>{{prop.name}}</label>
+        <anu-toggle *ngIf="prop.type === 'boolean'" [checked]="inputPropsValues[prop.name]" [rounded]="true" (changed)="inputPropsChanged($event, prop)"></anu-toggle>
+        <input *ngIf="['string', 'number'].includes(prop.type)"  type="text" [(ngModel)]="inputPropsValues[prop.name]" (blur)="inputPropsChanged($event, prop)">
+        <textarea *ngIf="!['string', 'number', 'boolean'].includes(prop.type)" [(ngModel)]="inputPropsValues[prop.name]" (blur)="inputPropsChanged($event, prop)"></textarea>
+    </div>
+</div>
