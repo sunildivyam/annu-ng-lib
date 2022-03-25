@@ -1,7 +1,10 @@
 <div class="appContainer container" role="main">
   <header class="appHeader row">
-    <anu-menu (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainMenuItems" [heading]="appConfig.name" [subHeading]="appConfig.metaInfo.title" [headingHref]="['./']" [subHeadingHref]="['./']">
-      <anu-login-status (profileClicked)="loginStatusClicked()" (signOutClicked)="loginStatusClicked()" (signInClicked)="loginStatusClicked()" theme="" loginPageUrl="/components/auth/login" profilePageUrl="/profile"
+    <anu-menu (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainMenuItems"
+      [heading]="appConfig.name" [subHeading]="appConfig.metaInfo.title" [headingHref]="['./']"
+      [subHeadingHref]="['./']">
+      <anu-login-status (profileClicked)="loginStatusClicked()" (signOutClicked)="loginStatusClicked()"
+        (signInClicked)="loginStatusClicked()" theme="" loginPageUrl="/components/auth/login" profilePageUrl="/profile"
         loggedOutPageUrl="/components/auth/login"></anu-login-status>
     </anu-menu>
   </header>
@@ -10,41 +13,52 @@
       <anu-theme-picker></anu-theme-picker>
     </section>
   </header>
-  <section class="appContent row">
-    <section class="leftSideMenu col-sm-12 col-md-3 col-lg-2">
-      <!-- Components nav -->
-      <anu-aside-nav [opened]="true" class="hidden-sm spacing" [isCollapsible]="false" [items]="componentsNavItems"
-        [drawerClassNames]="['drawer-static', 'drawer-left']" [hamburgerClassNames]="['size-md']">
-        <anu-aside-nav-header class="outside-non-collapsible"><h2>Components</h2></anu-aside-nav-header>
-      </anu-aside-nav>
-      <div class="row nowrap stretch hidden-lg hidden-md">
-        <anu-aside-nav [isHamburgerStyle]="false" [opened]="false" class="col-sm-6 relative" heading="Components" [items]="componentsNavItems"
-          [drawerClassNames]="['drawer-relative', 'drawer-top', 'shadow', 'secondary-lighter-bg', 'spacing']"
-          [hamburgerClassNames]="['size-md']"></anu-aside-nav>
-        <anu-aside-nav [isHamburgerStyle]="false" [opened]="false" class="col-sm-6 relative" heading="Services" [items]="servicesNavItems"
-          [drawerClassNames]="['drawer-relative', 'drawer-top', 'shadow', 'secondary-lighter-bg', 'spacing']"
-          [hamburgerClassNames]="['size-md']"></anu-aside-nav>
-      </div>
-    </section>
-    <main class="content col-sm-12 col-md-9 col-lg-8">
-      <router-outlet></router-outlet>
-    </main>
-    <section class="rightSideMenu col-sm-12 col-md-12 col-lg-2">
-      <anu-aside-nav [opened]="true" class="hidden-sm spacing" [isCollapsible]="false" [items]="servicesNavItems"
-        [drawerClassNames]="['drawer-static', 'drawer-left']" [hamburgerClassNames]="['size-md']">
-        <anu-aside-nav-header class="outside-non-collapsible"><h2>Services</h2></anu-aside-nav-header>
-      </anu-aside-nav>
+  <section class="app-content container">
+    <anu-hamburger class="lib-nav-hamburger" [opened]="libNavOpened" (changed)="libNavChanged($event)">Library
+      Documentation</anu-hamburger>
+    <div class="row-md row-lg nowrap relative app-content-sub-container">
+      <section class="leftSideMenu">
+        <!-- Visible in Mobile only -->
+        <div class="lib-nav-mobile">
+          <anu-drawer class="lib-nav-mobile-drawer drawer-static drawer-top-sm drawer-left-md drawer-left-lg primary-lightest-bg shadow spacing-vertical"
+            [opened]="libNavOpened">
+            <ng-container *ngTemplateOutlet="libNavTemplate; context:{docsNavs}"></ng-container>
+          </anu-drawer>
+        </div>
 
-      <!-- New Components -->
-      <anu-aside-nav [opened]="true" class="hidden-sm spacing" [isCollapsible]="false" [items]="componentsNavItemsNew"
-        [drawerClassNames]="['drawer-static', 'drawer-left']" [hamburgerClassNames]="['size-md']">
-        <anu-aside-nav-header class="outside-non-collapsible"><h2>Components</h2></anu-aside-nav-header>
-      </anu-aside-nav>
-
-    </section>
+        <!-- Visible in Desktop and Ipad only -->
+        <!-- <div class="hidden-sm">
+          <ng-container *ngTemplateOutlet="libNavTemplate; context:{docsNavs}"></ng-container>
+        </div> -->
+      </section>
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   </section>
   <footer class="appFooter row">
     <anu-footer-nav class="spacing-vertical" [copyrightText]="appConfig.copyrightText" [items]="mainMenuItems">
     </anu-footer-nav>
   </footer>
 </div>
+
+
+<!-- Navigation Items Template -->
+
+<ng-template #libNavTemplate>
+  <anu-collapsible *ngFor="let pNav of docsNavs" [collapsed]="true" [hamBurgerClassNames]="['size-sm']">
+    <anu-collapsible-header class=""><strong>{{pNav.title}}</strong></anu-collapsible-header>
+    <anu-collapsible-content class="spacing-horizontal">
+      <anu-collapsible *ngFor="let sNav of pNav.subNav" [collapsed]="false" [hamBurgerClassNames]="['size-sm']">
+        <anu-collapsible-header>{{sNav.title}}</anu-collapsible-header>
+        <anu-collapsible-content>
+          <ul>
+            <li class="nav-link" *ngFor="let navItem of sNav.subNav">
+              <a [routerLink]="navItem.href" [routerLinkActive]="'active'" (click)="libNavOpened = !libNavOpened">{{navItem.title}}</a>
+            </li>
+          </ul>
+        </anu-collapsible-content>
+      </anu-collapsible>
+    </anu-collapsible-content>
+  </anu-collapsible>
+</ng-template>

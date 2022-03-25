@@ -1,7 +1,42 @@
-main.content {
-    padding: 1rem;
+:host {
 
-    .page-outlet {
-        width: inherit;
+    .app-content {
+        &-sub-container {
+            max-width: 100%;
+        }
+    }
+
+    main.content {
+        padding: 1rem;
+        width: -webkit-fill-available;
+
+        .page-outlet {
+            width: inherit;
+        }
+    }
+
+    .nav-link {
+        padding: 0.3rem 0;
+
+        &.active {
+            font-weight: bold;
+        }
+    }
+
+    .lib-nav-mobile {
+        &-hamburger {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        &-drawer {
+            margin-top: 1rem;
+            width: 100%;
+        }
+    }
+
+    .lib-nav-hamburger {
+        font-size: 1.5rem;
+        font-weight: bold;
     }
 }

@@ -20,7 +20,7 @@
         <ng-container *ngFor="let fn of filteredMethods">
             <anu-card class="method-card shadow spacing">
                 <anu-card-body>
-                    <anu-collapsible [collapsed]="false">
+                    <anu-collapsible [collapsed]="false" [hamBurgerClassNames]="['size-sm']">
                         <anu-collapsible-header>
                             <a href="javascript:void(0)">
                                 {{fn.name}}(...)
@@ -34,7 +34,7 @@
                                         (changed)="methodParametersChanged($event, fn)"></anu-service-method>
                                     <anu-error *ngIf="methodErrors[fn.name]" [code]="methodErrors[fn.name].code"
                                         [message]="methodErrors[fn.name].message"></anu-error>
-                                    <anu-collapsible *ngIf="methodResponses[fn.name]">
+                                    <anu-collapsible *ngIf="methodResponses[fn.name]" [hamBurgerClassNames]="['size-sm']">
                                         <anu-collapsible-header>
                                             <a href="javascript:void(0)">Method response</a>
                                         </anu-collapsible-header>
@@ -59,4 +59,4 @@
     </section>
 </article>
 <anu-spinner [show]="loading"></anu-spinner>
-<anu-error *ngIf="!svcInfo" [code]="error?.code || 404" [message]="error?.message || 'Service name not found - ' + name"></anu-error>
+<anu-error *ngIf="error" [code]="error?.code || 404" [message]="error?.message || 'Service name nott found - ' + name"></anu-error>

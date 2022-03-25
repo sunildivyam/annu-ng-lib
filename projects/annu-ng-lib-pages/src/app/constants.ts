@@ -25,7 +25,7 @@ export const appConfig: AppConfig = {
     themeName: 'armyGreen',
     tNcUrl: '',
     privacyPolicyUrl: '',
-    loginUrl:'',
+    loginUrl: '',
     logoutUrl: '',
     profileUrl: '',
     metaInfo: {
@@ -50,4 +50,70 @@ export const appConfig: AppConfig = {
         "video": ""
     },
     mainMenuItems: [],
-  };
+};
+
+
+export const DOCS_NAVS = [
+    {
+        id: 'components',
+        title: 'Components',
+        subNav: [
+            {
+                id: 'lib/components/cms',
+                title: 'CMS',
+                subNav: []
+            },
+            {
+                id: 'lib/components/common-ui',
+                title: 'Common UI',
+                subNav: []
+            },
+            {
+                id: 'lib/components/docs',
+                title: 'Documentation',
+                subNav: []
+            },
+            {
+                id: 'lib/components/auth',
+                title: 'Authentication',
+                subNav: []
+            }
+        ]
+    },
+    {
+        id: 'services',
+        title: 'Services',
+        subNav: [
+            {
+                id: 'lib/services',
+                title: 'Library',
+                subNav: []
+            },
+            {
+                id: 'lib/components/cms',
+                title: 'CMS',
+                subNav: []
+            },
+            {
+                id: 'lib/components/common-ui',
+                title: 'Common UI',
+                subNav: []
+            },
+            {
+                id: 'lib/components/docs',
+                title: 'Documentation',
+                subNav: []
+            },
+            {
+                id: 'lib/components/auth',
+                title: 'Authentication',
+                subNav: []
+            },
+            {
+                id: 'lib/firebase',
+                title: 'Firebase',
+                subNav: []
+            }
+        ]
+    }
+]

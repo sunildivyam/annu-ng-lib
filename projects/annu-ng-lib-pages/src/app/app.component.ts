@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
-import { AppConfig, MenuItem, NavItem, ThemeService } from '@annu/ng-lib';
-import { ROUTE_TYPES, appConfig } from './constants';
+import { AppConfig, ComponentInfo, MenuItem, NavItem, ThemeService, ServiceInfo, DocsService } from '@annu/ng-lib';
+import { ROUTE_TYPES, appConfig, DOCS_NAVS } from './constants';
 import { commonUiRoutes, mainRoutes, cmsRoutes, docsRoutes, authRoutes } from './app.routes';
-import { DocsService } from '@annu/ng-lib/components/docs/docs.service';
 
 @Component({
   selector: 'anu-root',
@@ -19,7 +18,10 @@ export class AppComponent implements OnInit {
 
   componentsNavItemsNew: Array<NavItem>;
 
-  constructor(private router: Router, private themeService: ThemeService, private docsService: DocsService) {
+  docsNavs: Array<any> = [...DOCS_NAVS];
+  libNavOpened: boolean = true;
+
+  constructor(private themeService: ThemeService, private docsService: DocsService) {
     this.componentsNavItems = [].concat(
       this.mapRoutesToNavItems(commonUiRoutes, ROUTE_TYPES.components.commonUi),
       this.mapRoutesToNavItems(cmsRoutes, ROUTE_TYPES.components.cms),
@@ -30,20 +32,53 @@ export class AppComponent implements OnInit {
     this.mainMenuItems = mainRoutes.map(r => ({ title: r.data.title, href: [r.path] }));
   }
 
+  private getNavsByType(primaryType: string, docInfo: Array<ServiceInfo | ComponentInfo>): Array<NavItem> {
+    let pDocsNavs = [...this.docsNavs];
+
+    pDocsNavs = pDocsNavs.map(docNav => {
+      if (docNav.id === primaryType) {
+        docNav.subNav = docNav.subNav.map(secNav => {
+          const id = secNav.id;
+          const navItems: Array<NavItem> = [];
+
+          docInfo.forEach((docInfo: ServiceInfo) => {
+            if (docInfo.tsUrl.indexOf(id) >= 0) {
+              navItems.push({
+                title: docInfo.name,
+                href: `./${primaryType}/${docInfo.name}`
+              })
+            }
+          })
+
+          secNav.subNav = [...navItems];
+
+          return secNav;
+        })
+      }
+
+      return docNav;
+    })
+
+
+    return pDocsNavs;
+  }
+
   private async getAllLibServices() {
     try {
-    const svcs = await this.docsService.getAllServices();
-    this.servicesNavItems = svcs.map(svc => ({ title: svc.name, href: `./services/${svc.name}` }))
-    } catch(error: any) {
+      const svcs = await this.docsService.getAllServices();
+      this.docsNavs = this.getNavsByType('services', svcs);
+      // this.servicesNavItems = svcs.map(svc => ({ title: svc.name, href: `./services/${svc.name}` }))
+    } catch (error: any) {
       this.servicesNavItems = [];
     }
   }
 
   private async getAllLibComponents() {
     try {
-    const cmps = await this.docsService.getAllComponents();
-    this.componentsNavItemsNew = cmps.map(cmp => ({ title: cmp.name, href: `./components-doc/${cmp.name}` }))
-    } catch(error: any) {
+      const cmps = await this.docsService.getAllComponents();
+      this.docsNavs = this.getNavsByType('components', cmps);
+      // this.componentsNavItemsNew = cmps.map(cmp => ({ title: cmp.name, href: `./components-doc/${cmp.name}` }))
+    } catch (error: any) {
       this.componentsNavItemsNew = [];
     }
   }
@@ -85,5 +120,9 @@ export class AppComponent implements OnInit {
 
   public mainMenuOpenStatusChanged(opened: boolean): void {
     this.isMainNavOpen = opened;
+  }
+
+  public libNavChanged(opened: boolean) {
+    this.libNavOpened = opened;
   }
 }

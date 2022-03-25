@@ -1,6 +1,6 @@
 export * from './docs.module';
 export * from './docs.interface';
-
+export * from './docs.service';
 export * from './lib-resources';
 
 export * from './component-info';
