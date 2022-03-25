@@ -4,4 +4,13 @@
         flex-direction: column;
         min-height: 5rem;
     }
+
+    .input-prop {
+        border-top: 1px solid var(--anu-secondary-dark);
+    }
+
+    .output-section {
+        width: -webkit-fill-available;
+        min-width: 60%;
+    }
 }
