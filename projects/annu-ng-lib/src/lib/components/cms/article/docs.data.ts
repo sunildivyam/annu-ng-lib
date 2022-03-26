@@ -1,6 +1,6 @@
 import { UtilsService } from '../../../services/utils';
 import { DocsData } from '../../docs/docs.interface';
-import { ARTICLE_ELEMENT} from './article-element/_docs.data';
+import { ARTICLE_ELEMENT} from './article-element/docs.data';
 
 const utilsSvc = new UtilsService();
 

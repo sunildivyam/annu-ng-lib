@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 
 /**
@@ -23,7 +23,11 @@ export class CardComponent implements OnChanges {
 
   @HostBinding('class') rowLayout = '';
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.isRowLayout = this.injector.get('isRowLayout', this.isRowLayout);
+    this.imageCssClasses = this.injector.get('imageCssClasses', this.imageCssClasses);
+    this.contentCssClasses = this.injector.get('contentCssClasses', this.contentCssClasses);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
       this.rowLayout = this.isRowLayout ? 'nowrap': '';

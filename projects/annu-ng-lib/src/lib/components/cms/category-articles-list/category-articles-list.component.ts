@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Injector, Input } from '@angular/core';
 import { Category } from '../category/category.interface';
 import { Article } from '../article/article.interface';
 
@@ -16,5 +16,11 @@ export class CategoryArticlesListComponent {
 
   noDataMessage: string = 'No data Available';
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.category = this.injector.get('category', this.category);
+    this.articles = this.injector.get('articles', this.articles);
+    this.headerClassNames = this.injector.get('headerClassNames', this.headerClassNames);
+    this.listClassNames = this.injector.get('listClassNames', this.listClassNames);
+    this.href = this.injector.get('href', this.href);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Article } from '../article';
 
 @Component({
@@ -10,7 +10,10 @@ export class ArticleViewComponent implements OnInit {
   @Input() value: Article | null = null;
   @Input() showMetaInfo: boolean = false;
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.value = this.injector.get('value', this.value);
+    this.showMetaInfo = this.injector.get('showMetaInfo', this.showMetaInfo);
+  }
 
   ngOnInit(): void {
   }

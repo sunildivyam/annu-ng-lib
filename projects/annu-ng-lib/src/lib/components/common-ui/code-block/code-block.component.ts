@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { HighlightService } from './highlight.service';
 
 /**
@@ -13,12 +13,15 @@ import { HighlightService } from './highlight.service';
   styleUrls: ['./code-block.component.scss']
 })
 export class CodeBlockComponent implements OnInit, OnChanges {
-@Input() source: string;
-@Input() language = 'typescript';
+  @Input() source: string;
+  @Input() language = 'typescript';
 
-highlightedSource: string ='';
+  highlightedSource: string = '';
 
-  constructor(private hltService: HighlightService) { }
+  constructor(private hltService: HighlightService, private injector: Injector) {
+    this.source = this.injector.get('source', this.source);
+    this.language = this.injector.get('language', this.language);
+  }
 
   ngOnInit(): void {
     this.highlightedSource = this.hltService.highlight(this.source, this.language);

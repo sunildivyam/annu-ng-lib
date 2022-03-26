@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { EditorElement } from '../content-editor.interface';
 
 @Component({
@@ -14,7 +14,10 @@ export class ParagraphComponent implements OnInit {
   @Output() changed = new EventEmitter<EditorElement>();
   @Output() focusin = new EventEmitter<EditorElement>();
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.value = this.injector.get('value', this.value);
+    this.fullTree = this.injector.get('fullTree', this.fullTree);
+  }
 
   ngOnInit(): void {
   }
@@ -38,7 +41,7 @@ export class ParagraphComponent implements OnInit {
 
   public onFocus(event: any) {
     event.stopPropagation();
-    this.focusin.emit(this.value);    
+    this.focusin.emit(this.value);
   }
 
   public textSelected() {

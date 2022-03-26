@@ -1,16 +1,16 @@
 // Common UI
 import { AsideNavComponent } from '../../common-ui/aside-nav/docs.data';
-import { AsideNavHeaderComponent } from '../../common-ui/aside-nav-header/docs.data';
-import { AsideNavItemComponent } from '../../common-ui/aside-nav-item/docs.data';
-import { CardBodyComponent } from '../../common-ui/card-body/docs.data';
+import { AsideNavHeaderComponent } from '../../common-ui/aside-nav/aside-nav-header/docs.data';
+import { AsideNavItemComponent } from '../../common-ui/aside-nav/aside-nav-item/docs.data';
+import { CardBodyComponent } from '../../common-ui/card/card-body/docs.data';
 import { CardComponent } from '../../common-ui/card/docs.data';
-import { CardFooterComponent } from '../../common-ui/card-footer/docs.data';
-import { CardImageComponent } from '../../common-ui/card-image/docs.data';
-import { CardTitleComponent } from '../../common-ui/card-title/docs.data';
+import { CardFooterComponent } from '../../common-ui/card/card-footer/docs.data';
+import { CardImageComponent } from '../../common-ui/card/card-image/docs.data';
+import { CardTitleComponent } from '../../common-ui/card/card-title/docs.data';
 import { CodeBlockComponent } from '../../common-ui/code-block/docs.data';
-import { CollapsibleComponent } from '../../common-ui/collapsible/_docs.data';
-import { CollapsibleContentComponent } from '../../common-ui/collapsible-content/docs.data';
-import { CollapsibleHeaderComponent } from '../../common-ui/collapsible-header/docs.data';
+import { CollapsibleComponent } from '../../common-ui/collapsible/docs.data';
+import { CollapsibleContentComponent } from '../../common-ui/collapsible/collapsible-content/docs.data';
+import { CollapsibleHeaderComponent } from '../../common-ui/collapsible/collapsible-header/docs.data';
 import { ColorPaletteComponent } from '../../common-ui/color-palette/docs.data';
 import { DrawerComponent } from '../../common-ui/drawer/docs.data';
 import { ErrorComponent } from '../../common-ui/error/docs.data';
@@ -19,7 +19,7 @@ import { HamburgerComponent } from '../../common-ui/hamburger/docs.data';
 import { ImageFormComponent } from '../../common-ui/image-form/docs.data';
 import { LinkFormComponent } from '../../common-ui/link-form/docs.data';
 import { MenuComponent } from '../../common-ui/menu/docs.data';
-import { MetaFormComponent } from '../../common-ui/meta-form/docs.data';
+import { MetaFormComponent } from '../../common-ui/meta/meta-form/docs.data';
 import { ModalComponent } from '../../common-ui/modal/docs.data';
 import { MultiSelectBoxComponent } from '../../common-ui/multi-select-box/docs.data';
 import { PaginationComponent } from '../../common-ui/pagination/docs.data';
@@ -34,20 +34,20 @@ import { ToolbarComponent } from '../../common-ui/toolbar/docs.data';
 import { TypographyComponent } from '../../common-ui/typography/docs.data';
 
 // CMS
-import { ArticleComponent } from '../../cms/article/_docs.data';
+import { ArticleComponent } from '../../cms/article/docs.data';
 import { ArticleEditorComponent } from '../../cms/article-editor/docs.data';
-import { ArticleElementComponent } from '../../cms/article-element/docs.data';
+import { ArticleElementComponent } from '../../cms/article/article-element/docs.data';
 import { ArticleListComponent } from '../../cms/article-list/docs.data';
 import { ArticleViewComponent } from '../../cms/article-view/docs.data';
 import { CategoryArticlesListComponent } from '../../cms/category-articles-list/docs.data';
 import { CategoryComponent } from '../../cms/category/docs.data';
 import { CategoryEditorComponent } from '../../cms/category-editor/docs.data';
-import { ContentEditorComponent } from '../../cms/Content-editor/docs.data';
-import { ContentElementComponent } from '../../cms/content-element/docs.data';
-import { HeadingComponent } from '../../cms/heading/docs.data';
-import { ImageComponent } from '../../cms/image/docs.data';
-import { ListItemComponent } from '../../cms/list-item/docs.data';
-import { ParagraphComponent } from '../../cms/paragraph/docs.data';
+import { ContentEditorComponent } from '../../cms/content-editor/docs.data';
+import { ContentElementComponent } from '../../cms/content-editor/content-element/docs.data';
+import { HeadingComponent } from '../../cms/content-editor/heading/docs.data';
+import { ImageComponent } from '../../cms/content-editor/image/docs.data';
+import { ListItemComponent } from '../../cms/content-editor/list-item/docs.data';
+import { ParagraphComponent } from '../../cms/content-editor/paragraph/docs.data';
 
 // Auth
 import { LoginComponent } from '../../auth/login/docs.data';

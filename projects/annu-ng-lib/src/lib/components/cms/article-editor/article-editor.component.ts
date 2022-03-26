@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Article } from '../article/article.interface';
 import { EditorElement, EDITOR_ROOT_ELEMENT } from '../content-editor';
 import { ImageInfo } from '../../common-ui/image-form';
@@ -36,7 +36,10 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   selectedArticleCategories: Array<any> = [];
   categoriesMultiSelectItems: Array<any> = [];
 
-  constructor(private utils: UtilsService) {
+  constructor(private utils: UtilsService, private injector: Injector) {
+    this.value = this.injector.get('value', this.value);
+    this.categories = this.injector.get('categories', this.categories);
+
     this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.toDashedString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.article = { ...this.sampleArticle };
   }

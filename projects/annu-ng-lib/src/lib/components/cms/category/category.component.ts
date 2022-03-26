@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UtilsService } from '../../../services/utils';
 import { Category } from './category.interface';
 
@@ -36,7 +36,14 @@ export class CategoryComponent implements OnInit, OnChanges {
 
    trimmedDescription: string = '';
 
-   constructor(public utilsSvc: UtilsService) { }
+   constructor(public utilsSvc: UtilsService, private injector: Injector) {
+    this.value = this.injector.get('value', this.value);
+    this.updateHref = this.injector.get('updateHref', this.updateHref);
+    this.readMoreHref = this.injector.get('readMoreHref', this.readMoreHref);
+    this.titleHref = this.injector.get('titleHref', this.titleHref);
+    this.showMetaInfo = this.injector.get('showMetaInfo', this.showMetaInfo);
+    this.descriptionCharCount = this.injector.get('descriptionCharCount', this.descriptionCharCount);
+    }
 
    ngOnInit(): void {
      this.trimDescription();
