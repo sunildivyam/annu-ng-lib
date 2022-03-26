@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { Page } from './pagination.interface';
 
 
@@ -21,7 +21,7 @@ export class PaginationComponent implements OnInit {
   @Input() activePage: number = 0;
   @Input() totalCount: number = 0;
   @Input() pageSize: number = 0;
-  @Input() pageUrl: string;
+  @Input() pageUrl: string = '';
   @Input() showPageRange: boolean = true;
   @Output() changed = new EventEmitter<Page>();
 
@@ -30,14 +30,21 @@ export class PaginationComponent implements OnInit {
   rangePages: Array<number> = [];
   pageCount: number = 0;
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.activePage = this.injector.get('activePage', this.activePage);
+    this.totalCount = this.injector.get('totalCount', this.totalCount);
+    this.pageSize = this.injector.get('pageSize', this.pageSize);
+    this.pageUrl = this.injector.get('pageUrl', this.pageUrl);
+    this.showPageRange = this.injector.get('showPageRange', this.showPageRange);
+    this.changed = this.injector.get('changed', this.changed);
+  }
 
   private recalculatePagination(): void {
     // set pageCount
     this.pageCount = Math.ceil(this.totalCount / this.pageSize);
     // set rangePages
     this.rangePages = [];
-    for (let i = 1; i<= this.pageCount; i++) {
+    for (let i = 1; i <= this.pageCount; i++) {
       this.rangePages.push(i);
     }
     // set previous Page
@@ -69,7 +76,7 @@ export class PaginationComponent implements OnInit {
     this.recalculatePagination();
   }
 
-  public pageLink(pageNo: number) : string {
+  public pageLink(pageNo: number): string {
     if (!this.pageUrl) {
       return '#';
     }

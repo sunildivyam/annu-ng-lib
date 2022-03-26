@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'anu-multi-select-box',
@@ -13,7 +13,13 @@ export class MultiSelectBoxComponent implements OnInit {
 
   @Output() changed: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.items = this.injector.get('items', this.items);
+    this.selectedItems = this.injector.get('selectedItems', this.selectedItems);
+    this.keyField = this.injector.get('keyField', this.keyField);
+    this.labelField = this.injector.get('labelField', this.labelField);
+    this.changed = this.injector.get('changed', this.changed);
+  }
 
   ngOnInit(): void {
   }

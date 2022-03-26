@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, OnInit, SimpleChanges, Injector } from '@angular/core';
 import { ThemeService } from '../theme/theme.service';
 import { FormControl } from '@angular/forms';
 import { ColorPalette } from './color-palette.interface';
@@ -17,7 +17,12 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
   /**
    * A ColorPalette Objcet containg name, hue, saturation, and colors array
    */
-  @Input() colorPalette: ColorPalette;
+  @Input() colorPalette: ColorPalette = {
+    name: 'Default',
+    hue: 180,
+    saturation: 50,
+    colors: []
+  };
   /**
    * Emits ColorPalette objcet, as any of the ColorPalette value changes.
    */
@@ -36,13 +41,8 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
    */
   headerText: string;
 
-  constructor(private themeService: ThemeService) {
-    this.colorPalette = {
-      name: 'Default',
-      hue: 180,
-      saturation: 50,
-      colors: []
-    } as ColorPalette;
+  constructor(private themeService: ThemeService, private injector: Injector) {
+    this.colorPalette = this.injector.get('colorPalette', this.colorPalette);
 
     this.hueControl = new FormControl(this.colorPalette.hue);
     this.saturationControl = new FormControl(this.colorPalette.saturation);

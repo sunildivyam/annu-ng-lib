@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { Link } from './link-form.interface';
 
 @Component({
@@ -15,7 +15,14 @@ export class LinkFormComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<Link>();
 
-  constructor() { }
+  constructor(private injector: Injector) {
+    this.href = this.injector.get('href', this.href);
+    this.title = this.injector.get('title', this.title);
+    this.label = this.injector.get('label', this.label);
+    this.target = this.injector.get('target', this.target);
+    this.cancel = this.injector.get('cancel', this.cancel);
+    this.save = this.injector.get('save', this.save);
+  }
 
   ngOnInit(): void {
   }

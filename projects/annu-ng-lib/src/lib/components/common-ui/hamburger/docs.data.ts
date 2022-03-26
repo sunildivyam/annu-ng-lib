@@ -1,6 +1,8 @@
 import { DocsData } from '../../docs/docs.interface';
 
 export const HamburgerComponent: DocsData = {
-    projectionContent: '',
-    inputPropsValues: {}
+    projectionContent: 'Projected sample heading text',
+    inputPropsValues: {
+        opened: true
+    }
 }

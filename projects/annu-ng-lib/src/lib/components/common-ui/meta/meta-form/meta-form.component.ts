@@ -24,7 +24,9 @@ export class MetaFormComponent implements OnInit, OnChanges {
   public metaInfoJsonStr: string = '';
 
   constructor(private fb: FormBuilder, private metaService: MetaService, private injector: Injector) {
-    this.changed = this.injector.get('changed', new EventEmitter<MetaInfo>());
+    this.metaInfo = this.injector.get('metaInfo', this.metaInfo);
+    this.changed = this.injector.get('changed', this.changed);
+
     this.metaProps = META_PROPS.map(p => ({ ...p }));
 
     const formGroup = {};

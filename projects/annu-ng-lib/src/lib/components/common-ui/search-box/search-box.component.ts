@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 
@@ -29,8 +29,11 @@ export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   keywordsSubject: Subject<string> = new Subject<string>();
   keywordsSubscription: Subscription
 
-  constructor() {
-
+  constructor(private injector: Injector) {
+    this.items = this.injector.get('items', this.items);
+    this.keys = this.injector.get('keys', this.keys);
+    this.placeholder = this.injector.get('placeholder', this.placeholder);
+    this.changed = this.injector.get('changed', this.changed);
   }
 
   private filter(): Array<Object> {
