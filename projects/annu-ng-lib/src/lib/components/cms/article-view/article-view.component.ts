@@ -1,4 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
+import { UtilsService } from '../../../services/utils';
 import { Article } from '../article';
 
 @Component({
@@ -10,7 +11,7 @@ export class ArticleViewComponent implements OnInit {
   @Input() value: Article | null = null;
   @Input() showMetaInfo: boolean = false;
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector, public utilsSvc: UtilsService) {
     this.value = this.injector.get('value', this.value);
     this.showMetaInfo = this.injector.get('showMetaInfo', this.showMetaInfo);
   }

@@ -38,6 +38,7 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
     this.component = LibComponents[this.componentInfo.name];
     this.componentInfo.inputProps.forEach(prop => {
+      console.log('CMP - Val: ', LibComponentsContent[this.componentInfo.name])
       const propValue = LibComponentsContent[this.componentInfo.name]?.inputPropsValues?.[prop.name] || prop.defaultValue;
 
       this.inputPropsValues[prop.name] = this.docService.parsePropValueToStr(prop, propValue);
@@ -48,6 +49,7 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
   private projectContent() {
     const el = this.renderer.createElement('div');
+    console.log('CMP - Cont: ', LibComponentsContent[this.componentInfo.name])
     el.innerHTML = LibComponentsContent[this.componentInfo.name]?.projectionContent || '';
     this.componentContent = [];
     for (let chNode of el.childNodes) {

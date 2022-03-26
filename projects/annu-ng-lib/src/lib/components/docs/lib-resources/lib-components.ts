@@ -57,13 +57,13 @@ import {
 } from '../../auth';
 
 
-import {
-  ComponentInfoComponent,
-  ComponentPropsComponent,
-  ComponentUsageComponent,
-  ServiceInfoComponent,
-  ServiceMethodComponent,
-} from '../';
+
+  import { ComponentInfoComponent } from '../component-info/component-info.component';
+  import { ComponentPropsComponent } from '../component-props/component-props.component';
+  // import { ComponentUsageComponent } from '../component-usage/component-usage.component';
+  import { ServiceInfoComponent } from '../service-info/service-info.component';
+  import { ServiceMethodComponent } from '../service-method/service-method.component';
+
 
 export const LibComponents = {
   // Common UI
@@ -124,7 +124,7 @@ export const LibComponents = {
   // docs
   ComponentInfoComponent,
   ComponentPropsComponent,
-  ComponentUsageComponent,
+  // ComponentUsageComponent,
   ServiceInfoComponent,
   ServiceMethodComponent,
 };

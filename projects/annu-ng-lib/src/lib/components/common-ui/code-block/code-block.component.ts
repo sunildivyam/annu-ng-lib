@@ -19,7 +19,7 @@ export class CodeBlockComponent implements OnInit, OnChanges {
   highlightedSource: string = '';
 
   constructor(private hltService: HighlightService, private injector: Injector) {
-    this.source = this.injector.get('source', this.source);
+    this.source = this.injector.get('source', this.source || '');
     this.language = this.injector.get('language', this.language);
   }
 

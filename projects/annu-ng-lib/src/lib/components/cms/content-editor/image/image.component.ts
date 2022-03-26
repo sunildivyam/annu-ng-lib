@@ -15,7 +15,7 @@ export class ImageComponent implements OnInit {
   @Output() focusin = new EventEmitter<EditorElement>();
 
   constructor(private injector: Injector) {
-    this.value = this.injector.get('value', this.value);
+    this.value = this.injector.get('value', this.value || null);
     this.fullTree = this.injector.get('fullTree', this.fullTree);
   }
 

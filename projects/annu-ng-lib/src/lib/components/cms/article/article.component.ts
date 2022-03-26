@@ -15,15 +15,15 @@ export class ArticleComponent implements OnInit, OnChanges {
   /**
    * shows hyperlink to update page
    */
-  @Input() updateHref: Array<string>;
+  @Input() updateHref: Array<string> = [];
   /**
    * shows hyperlink to readmore page
    */
-  @Input() readMoreHref: Array<string>;
+  @Input() readMoreHref: Array<string> = [];
   /**
    * shows hyperlink to article full view page
    */
-  @Input() titleHref: Array<string>;
+  @Input() titleHref: Array<string> = [];
   /**
    * if false, info like updated, created, published etc. will be hidden.
    */
