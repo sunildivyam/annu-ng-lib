@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
     this.headingHref = this.injector.get('headingHref', this.headingHref);
     this.subHeading = this.injector.get('subHeading', this.subHeading);
     this.subHeadingHref = this.injector.get('subHeadingHref', this.subHeadingHref);
-    this.opened = this.injector.get('opened', this.opened);
+    setTimeout(() => this.opened = this.injector.get('opened', this.opened))
     this.selected = this.injector.get('selected', this.selected);
     this.openStatusChanged = this.injector.get('openStatusChanged', this.openStatusChanged);
   }

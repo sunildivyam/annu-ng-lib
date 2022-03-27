@@ -23,11 +23,15 @@ export class CodeBlockComponent implements OnInit, OnChanges {
     this.language = this.injector.get('language', this.language);
   }
 
+  private highlightSource() {
+    setTimeout(() => this.highlightedSource = this.hltService.highlight(this.source, this.language));
+  }
+
   ngOnInit(): void {
-    this.highlightedSource = this.hltService.highlight(this.source, this.language);
+    this.highlightSource();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.highlightedSource = this.hltService.highlight(this.source, this.language);
+    this.highlightSource();
   }
 }

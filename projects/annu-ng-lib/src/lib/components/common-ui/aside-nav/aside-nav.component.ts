@@ -59,7 +59,7 @@ export class AsideNavComponent implements OnInit {
   constructor(private injector: Injector) {
     this.items = this.injector.get('items', this.items);
     this.heading = this.injector.get('heading', this.heading);
-    this.opened = this.injector.get('opened', this.opened);
+    setTimeout(() => this.opened = this.injector.get('opened', this.opened))
     this.hamburgerClassNames = this.injector.get('hamburgerClassNames', this.hamburgerClassNames);
     this.drawerClassNames = this.injector.get('drawerClassNames', this.drawerClassNames);
     this.isHamburgerStyle = this.injector.get('isHamburgerStyle', this.isHamburgerStyle);

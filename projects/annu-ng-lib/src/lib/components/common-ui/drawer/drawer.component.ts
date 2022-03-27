@@ -33,27 +33,27 @@ export class DrawerComponent implements OnInit {
   @Input() opened: boolean = false;
 
   /**
-   * position shows the drawer top/right/bottom/left from the relative parent or from the screen based on DRAWER_POSITIONS values.
+   * position shows the drawer top/right/bottom/left from the relative parent or from the screen based on drawer overlay class names.
    */
-  // @Input() position: string = DRAWER_POSITIONS.LEFT;
+  @Input() positionClassNames: Array<string> = ['drawer-left'];
 
   /**
-   * Allowed values are from DRAWER_OVERLAYS, shows drawer relative to parent, window, push content.
+   * Shows drawer relative to parent, window, push content.
    */
-  // @Input() overlay: string = DRAWER_OVERLAYS.PUSH_CONTENT;
+  @Input() overlayClassNames: Array<string> = ['drawer-content-pushed'];
 
 
   @HostBinding('class.drawer-opened') get isOpenMethod() { return this.opened; }
-  // @HostBinding('class') get isPositionMethod() {
-  //   let classNames = '';
-  //   if (this.position) classNames += 'drawer-' + this.position + ' ';
-  //   if (this.overlay) classNames += 'drawer-' + this.overlay + ' ';
-  //   return classNames;
-  // }
+  @HostBinding('class') get isPositionMethod() {
+    return [...this.positionClassNames, ...this.overlayClassNames];
+  }
 
 
   constructor(private injector: Injector) {
-    this.opened = this.injector.get('opened', this.opened);
+    setTimeout(() => this.opened = this.injector.get('opened', this.opened))
+    // this.opened = this.injector.get('opened', this.opened);
+    this.positionClassNames = this.injector.get('positionClassNames', this.positionClassNames);
+    this.overlayClassNames = this.injector.get('overlayClassNames', this.overlayClassNames);
   }
 
   ngOnInit(): void {
