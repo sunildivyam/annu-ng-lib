@@ -1,8 +1,13 @@
-<h2>Usage</h2>
-<anu-code-block [source]="usageSource" language="markup"></anu-code-block>
+<anu-collapsible [collapsed]="true" [hamBurgerClassNames]="['size-md']">
+    <anu-collapsible-header>Usage</anu-collapsible-header>
+    <anu-collapsible-content>
+        <anu-code-block [source]="usageSource" language="markup"></anu-code-block>
+    </anu-collapsible-content>
+</anu-collapsible>
+
 <div class="row nowrap-lg nowrap-md">
     <div class="spacing col-sm-12 output-section">
-        <h2>Output</h2>
+        <h2>Rendered Component</h2>
         <section class="output-container relative">
             <ng-container *ngComponentOutlet="component; injector: componentInjector; content: componentContent">
             </ng-container>

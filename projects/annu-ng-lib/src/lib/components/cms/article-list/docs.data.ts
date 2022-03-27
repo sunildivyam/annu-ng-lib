@@ -1,4 +1,3 @@
-import { ARTICLE } from 'projects/annu-ng-lib-pages/src/app/page-components/article-page/config';
 import { DocsData } from '../../docs/docs.interface';
 import { ARTICLE_ELEMENT } from '../article/article-element/docs.data';
 import { Article } from '../article/article.interface';

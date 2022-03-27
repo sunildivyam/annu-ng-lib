@@ -54,7 +54,7 @@
         <anu-collapsible-content>
           <ul>
             <li class="nav-link" *ngFor="let navItem of sNav.subNav">
-              <a [routerLink]="navItem.href" [routerLinkActive]="'active'" (click)="libNavOpened = !libNavOpened">{{navItem.title}}</a>
+              <a [routerLink]="[pNav.href, sNav.href, navItem.href]" [routerLinkActive]="'active'" (click)="libNavOpened = !libNavOpened">{{navItem.title}}</a>
             </li>
           </ul>
         </anu-collapsible-content>

@@ -1,4 +1,9 @@
 :host {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
     .output-container {
         display: flex;
         flex-direction: column;

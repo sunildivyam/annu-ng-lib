@@ -4,6 +4,7 @@ import { ComponentUsageComponent } from './component-usage.component';
 import { CodeBlockModule } from '../../common-ui/code-block';
 import { FormsModule } from '@angular/forms';
 import { ToggleModule } from '../../common-ui/toggle';
+import { CollapsibleModule } from '../../common-ui/collapsible';
 
 
 
@@ -15,7 +16,8 @@ import { ToggleModule } from '../../common-ui/toggle';
     CommonModule,
     FormsModule,
     CodeBlockModule,
-    ToggleModule
+    ToggleModule,
+    CollapsibleModule
   ],
   exports: [
     ComponentUsageComponent

@@ -57,25 +57,30 @@ export const DOCS_NAVS = [
     {
         id: 'components',
         title: 'Components',
+        href: 'components',
         subNav: [
             {
                 id: 'lib/components/cms',
                 title: 'CMS',
+                href: 'cms',
                 subNav: []
             },
             {
                 id: 'lib/components/common-ui',
                 title: 'Common UI',
+                href: 'common-ui',
                 subNav: []
             },
             {
                 id: 'lib/components/docs',
                 title: 'Documentation',
+                href: 'docs',
                 subNav: []
             },
             {
                 id: 'lib/components/auth',
                 title: 'Authentication',
+                href: 'auth',
                 subNav: []
             }
         ]
@@ -83,35 +88,42 @@ export const DOCS_NAVS = [
     {
         id: 'services',
         title: 'Services',
+        href: 'services',
         subNav: [
             {
                 id: 'lib/services',
                 title: 'Library',
+                href: 'lib',
                 subNav: []
             },
             {
                 id: 'lib/components/cms',
                 title: 'CMS',
+                href: 'library',
                 subNav: []
             },
             {
                 id: 'lib/components/common-ui',
                 title: 'Common UI',
+                href: 'common-ui',
                 subNav: []
             },
             {
                 id: 'lib/components/docs',
                 title: 'Documentation',
+                href: 'docs',
                 subNav: []
             },
             {
                 id: 'lib/components/auth',
                 title: 'Authentication',
+                href: 'auth',
                 subNav: []
             },
             {
                 id: 'lib/firebase',
                 title: 'Firebase',
+                href: 'firebase',
                 subNav: []
             }
         ]
