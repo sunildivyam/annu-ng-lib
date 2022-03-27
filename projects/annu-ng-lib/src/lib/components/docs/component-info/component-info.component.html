@@ -21,17 +21,17 @@
     </section>
 
     <section *ngIf="activeTab.name === tabs[2].name">
-        <h2>{{cmpInfo.tsUrl}}</h2>
-        <anu-code-block [source]="cmpInfo.tsSource"></anu-code-block>
+        <h2>{{cmpInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="cmpInfo?.tsSource"></anu-code-block>
     </section>
 
     <section *ngIf="activeTab.name === tabs[3].name">
-        <h2>{{cmpInfo.templateUrl}}</h2>
-        <anu-code-block [source]="cmpInfo.templateSource"></anu-code-block>
+        <h2>{{cmpInfo?.templateUrl}}</h2>
+        <anu-code-block [source]="cmpInfo?.templateSource"></anu-code-block>
     </section>
 
     <section *ngIf="activeTab.name === tabs[4].name">
-        <h2>{{cmpInfo.styleUrl}}</h2>
-        <anu-code-block [source]="cmpInfo.styleSource"></anu-code-block>
+        <h2>{{cmpInfo?.styleUrl}}</h2>
+        <anu-code-block [source]="cmpInfo?.styleSource"></anu-code-block>
     </section>
 </article>

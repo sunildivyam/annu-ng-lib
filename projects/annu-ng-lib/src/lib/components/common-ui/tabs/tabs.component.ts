@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, Injector } from '@angular/core';
 import { Tab } from './tabs.interface';
 
 @Component({
@@ -6,9 +6,9 @@ import { Tab } from './tabs.interface';
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit {
-  @Input() tabs: Array<Tab>;
-  @Input() activeTab: Tab;
+export class TabsComponent implements OnInit, OnChanges {
+  @Input() tabs: Array<Tab> = [];
+  @Input() activeTab: Tab = null;
   @Input() rounded: boolean = false;
   @Input() spaced: boolean = false;
   @Input() vertical: boolean = false;
@@ -17,15 +17,20 @@ export class TabsComponent implements OnInit {
 
   @Output() changed = new EventEmitter<Tab>();
 
-  constructor() {
-    this.tabs = []
+  constructor(private injector: Injector) {
+    this.tabs = this.injector.get('tabs', this.tabs);
+    this.activeTab = this.injector.get('activeTab', this.activeTab);
+    this.rounded = this.injector.get('rounded', this.rounded);
+    this.spaced = this.injector.get('spaced', this.spaced);
+    this.vertical = this.injector.get('vertical', this.vertical);
+    this.secondary = this.injector.get('secondary', this.secondary);
+    this.fullWidth = this.injector.get('fullWidth', this.fullWidth);
+    this.changed = this.injector.get('changed', this.changed);
   }
 
   private setActiveTab(selectedTab: Tab) {
-    if (!selectedTab) return;
-
     this.tabs.forEach(tab => {
-      if (tab.name === selectedTab.name) {
+      if (selectedTab && tab.name === selectedTab.name) {
         tab.active = true;
         this.changed.emit(tab);
       } else {
@@ -35,6 +40,10 @@ export class TabsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setActiveTab(this.activeTab);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.setActiveTab(this.activeTab);
   }
 

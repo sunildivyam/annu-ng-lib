@@ -76,9 +76,16 @@ export class DocsService {
 
     if ((str.startsWith("'") && str.endsWith("'")) || (str.startsWith('\"') && str.endsWith('\"'))) {
       str = str.substring(1);
-      str = str.substring(0, str.length -1);
+      str = str.substring(0, str.length - 1);
     }
-    console.log(str);
+
+    return str;
+  }
+
+  private replaceSingleWithDoubleQuotes(str): string {
+    if (!str) return str;
+    str = str.replace(/'/g, '"');
+
     return str;
   }
 
@@ -99,7 +106,12 @@ export class DocsService {
           paramValue = value === 'null' ? null : JSON.parse(value);
       }
     } catch (error: any) {
-      paramValue = value;
+      paramValue = this.replaceSingleWithDoubleQuotes(value);
+      try {
+        paramValue = paramValue === 'null' ? null : JSON.parse(paramValue);
+      } catch (error: any) {
+        paramValue = value;
+      }
     }
 
     return paramValue;

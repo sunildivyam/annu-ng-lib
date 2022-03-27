@@ -9,7 +9,7 @@ import { LibComponents, LibComponentsContent } from '../lib-resources';
   styleUrls: ['./component-usage.component.scss']
 })
 export class ComponentUsageComponent implements OnInit, OnChanges {
-  @Input() componentInfo: ComponentInfo;
+  @Input() componentInfo: ComponentInfo = null;
 
   component: Component;
   componentInjector: Injector;
@@ -22,7 +22,7 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
   constructor(private injector: Injector,
     @Inject(Renderer2) private readonly renderer: Renderer2,
     private docService: DocsService) {
-    this.componentInfo = this.injector.get('componentInfo', null);
+    this.componentInfo = this.injector.get('componentInfo', this.componentInfo);
   }
 
   ngOnInit(): void {
@@ -36,9 +36,8 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
   private async renderComponent() {
     if (!this.componentInfo) return;
 
-    this.component = LibComponents[this.componentInfo.name];
+    this.component = this.componentInfo.name === 'ComponentUsageComponent' ? ComponentUsageComponent : LibComponents[this.componentInfo.name];
     this.componentInfo.inputProps.forEach(prop => {
-      console.log('CMP - Val: ', LibComponentsContent[this.componentInfo.name])
       const propValue = LibComponentsContent[this.componentInfo.name]?.inputPropsValues?.[prop.name] || prop.defaultValue;
 
       this.inputPropsValues[prop.name] = this.docService.parsePropValueToStr(prop, propValue);
@@ -49,7 +48,6 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
   private projectContent() {
     const el = this.renderer.createElement('div');
-    console.log('CMP - Cont: ', LibComponentsContent[this.componentInfo.name])
     el.innerHTML = LibComponentsContent[this.componentInfo.name]?.projectionContent || '';
     this.componentContent = [];
     for (let chNode of el.childNodes) {
@@ -71,14 +69,35 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
       providers: inputPropProviders,
       parent: this.injector
     })
+
+    this.usageSource = this.buildUsageSource(this.componentInfo);
   }
 
   public inputPropsChanged(event: any, prop: ComponentProp): void {
     if (prop.type === 'boolean') {
       this.inputPropsValues[prop.name] = event;
     }
-    console.log(this.inputPropsValues);
+
     this.createInjector();
   }
 
+  private buildUsageSource(componentInfo: ComponentInfo): string {
+    if (!componentInfo) return '';
+    // Open the tag
+    let usageSrc = `<${componentInfo.selector} `;
+
+    // Add Properties
+    componentInfo.inputProps.forEach(prop => {
+      const propVal = this.inputPropsValues[prop.name];
+      usageSrc += `\n\t[${prop.name}]='${propVal}'`
+    })
+
+    // add projectedContent source
+    const projectedContent = LibComponentsContent[this.componentInfo.name]?.projectionContent || '';
+    usageSrc += projectedContent? `>\n\t${projectedContent}` : '>';
+
+    // Close the tag
+    usageSrc += `\n</${componentInfo.selector}>`;
+    return usageSrc;
+  }
 }

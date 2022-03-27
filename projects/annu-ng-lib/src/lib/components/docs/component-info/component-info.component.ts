@@ -18,11 +18,12 @@ export class ComponentInfoComponent implements OnInit, OnChanges {
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
 
 
-  constructor(private docService: DocsService, public injector: Injector) {
+  constructor(private docService: DocsService, private injector: Injector) {
     this.name = this.injector.get('name', '');
   }
 
   ngOnInit(): void {
+    this.getComponentInfo();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

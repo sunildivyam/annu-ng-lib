@@ -8,7 +8,7 @@ import { MenuItem } from '../menu';
   styleUrls: ['./footer-nav.component.scss']
 })
 export class FooterNavComponent implements OnInit {
-  @Input() copyrightText: string;
+  @Input() copyrightText: string = '';
   @Input() items: Array<MenuItem> = [];
   @Output() selected = new EventEmitter<MenuItem>();
 
