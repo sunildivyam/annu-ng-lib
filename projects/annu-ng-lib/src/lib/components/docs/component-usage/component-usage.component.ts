@@ -1,4 +1,4 @@
-import { Component, Inject, Injector, Input, OnChanges, OnInit, Renderer2, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Injector, Input, OnChanges, OnInit, Renderer2, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { ComponentInfo, ComponentProp } from '../docs.interface';
 import { DocsService } from '../docs.service';
 import { LibComponents, LibComponentsContent } from '../lib-resources';
@@ -10,14 +10,16 @@ import { LibComponents, LibComponentsContent } from '../lib-resources';
 })
 export class ComponentUsageComponent implements OnInit, OnChanges {
   @Input() componentInfo: ComponentInfo = null;
+  @ViewChild('vc', {read: ViewContainerRef}) cmpContainer: ViewContainerRef;
 
-  component: Component;
+  component: Type<any>;
   componentInjector: Injector;
   componentContent: Array<Array<any>>;
   usageSource: string;
 
   // Properties Form Vars
   inputPropsValues: any = {};
+  outputPropsSubscriptions: any = {};
 
   constructor(private injector: Injector,
     @Inject(Renderer2) private readonly renderer: Renderer2,
@@ -26,7 +28,7 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.renderComponent();
+    // this.renderComponent();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,6 +44,7 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
       this.inputPropsValues[prop.name] = this.docService.parsePropValueToStr(prop, propValue);
     });
+    this.createOutputPropsSubscriptions();
     this.createInjector();
     this.projectContent();
   }
@@ -65,8 +68,15 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
       }
     });
 
+    const outputPropProviders = this.componentInfo.outputProps.map(prop => {
+      return {
+        provide: prop.name,
+        useValue: this.outputPropsSubscriptions[prop.name],
+      }
+    });
+
     this.componentInjector = Injector.create({
-      providers: inputPropProviders,
+      providers: [...outputPropProviders, ...inputPropProviders],
       parent: this.injector
     })
 
@@ -94,10 +104,25 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
     // add projectedContent source
     const projectedContent = LibComponentsContent[this.componentInfo.name]?.projectionContent || '';
-    usageSrc += projectedContent? `>\n\t${projectedContent}` : '>';
+    usageSrc += projectedContent ? `>\n\t${projectedContent}` : '>';
 
     // Close the tag
     usageSrc += `\n</${componentInfo.selector}>`;
     return usageSrc;
+  }
+
+  private createOutputPropsSubscriptions() {
+    if (!this.componentInfo) return;
+    const outputProps = this.componentInfo.outputProps || [];
+
+    for (let prop of outputProps) {
+      if (this.outputPropsSubscriptions[prop.name]) this.outputPropsSubscriptions[prop.name].unsubscribe();
+      this.outputPropsSubscriptions[prop.name] = null;
+      this.outputPropsSubscriptions[prop.name] = new EventEmitter<any>();
+      this.outputPropsSubscriptions[prop.name].subscribe(result => {
+        console.log('Output Prop Result: ', result);
+      })
+    }
+    console.log(this.outputPropsSubscriptions)
   }
 }
