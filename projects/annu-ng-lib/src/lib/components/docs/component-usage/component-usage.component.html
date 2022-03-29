@@ -9,15 +9,27 @@
     <div class="spacing col-sm-12 output-section">
         <h2>Rendered Component</h2>
         <section class="output-container relative">
-            <ng-container *ngComponentOutlet="component; injector: componentInjector; content: componentContent">
+            <ng-container #vc>
             </ng-container>
         </section>
     </div>
+
     <!-- Input Properties Form -->
     <div class="spacing col-sm-12 secondary-lightest-bg shadow input-properties-section">
+
+        <h2>Output Properties Subscriptions</h2>
+        <i>You can see results of Output property subscriptions</i>
+        <div *ngIf="outputPropResults?.length" class="spacing-around-vertical"><a href="#" (click)="clearOutputPropResults($event)">Clear Output Results</a></div>
+        <div class="spacing-around-vertical">
+            <div class="input-prop spacing-around-vertical" *ngFor="let propResult of outputPropResults">
+                <label>{{propResult.prop.name}}(...)</label>
+                <textarea readonly [value]="propResult.resultStr"></textarea>
+            </div>
+        </div>
+
         <h2>Input Properties</h2>
         <i>Try changing below properties, and see the resulting effect in the Output section of the component.</i>
-        <div class="">
+        <div class="spacing-around-vertical">
             <div class="input-prop spacing-around-vertical" *ngFor="let prop of componentInfo?.inputProps">
                 <label>{{prop.name}}</label>
                 <anu-toggle *ngIf="prop.type === 'boolean'" [checked]="inputPropsValues[prop.name]" [rounded]="true"

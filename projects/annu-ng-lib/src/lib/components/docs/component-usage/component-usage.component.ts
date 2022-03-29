@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Injector, Input, OnChanges, OnInit, Renderer2, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, EventEmitter, Inject, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { ComponentInfo, ComponentProp } from '../docs.interface';
 import { DocsService } from '../docs.service';
 import { LibComponents, LibComponentsContent } from '../lib-resources';
@@ -10,22 +10,17 @@ import { LibComponents, LibComponentsContent } from '../lib-resources';
 })
 export class ComponentUsageComponent implements OnInit, OnChanges {
   @Input() componentInfo: ComponentInfo = null;
-  @ViewChild('vc', {read: ViewContainerRef}) cmpContainer: ViewContainerRef;
+  @ViewChild('vc', {static: true, read: ViewContainerRef}) cmpContainer: ViewContainerRef;
 
-  component: Type<any>;
-  componentInjector: Injector;
-  componentContent: Array<Array<any>>;
+  cmpInstance:any;
+  cmpContent: Array<Array<any>>;
   usageSource: string;
+  outputPropResults: Array<any> = [];
 
   // Properties Form Vars
   inputPropsValues: any = {};
-  outputPropsSubscriptions: any = {};
 
-  constructor(private injector: Injector,
-    @Inject(Renderer2) private readonly renderer: Renderer2,
-    private docService: DocsService) {
-    this.componentInfo = this.injector.get('componentInfo', this.componentInfo);
-  }
+  constructor(@Inject(Renderer2) private readonly renderer: Renderer2, private docService: DocsService) {}
 
   ngOnInit(): void {
     // this.renderComponent();
@@ -36,62 +31,74 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
   }
 
   private async renderComponent() {
+    this.cmpContainer.clear();
+    this.cmpInstance = null;
+    this.inputPropsValues = {};
+    this.outputPropResults = [];
+
     if (!this.componentInfo) return;
 
-    this.component = this.componentInfo.name === 'ComponentUsageComponent' ? ComponentUsageComponent : LibComponents[this.componentInfo.name];
-    this.componentInfo.inputProps.forEach(prop => {
-      const propValue = LibComponentsContent[this.componentInfo.name]?.inputPropsValues?.[prop.name] || prop.defaultValue;
-
-      this.inputPropsValues[prop.name] = this.docService.parsePropValueToStr(prop, propValue);
-    });
-    this.createOutputPropsSubscriptions();
-    this.createInjector();
-    this.projectContent();
-  }
-
-  private projectContent() {
-    const el = this.renderer.createElement('div');
-    el.innerHTML = LibComponentsContent[this.componentInfo.name]?.projectionContent || '';
-    this.componentContent = [];
-    for (let chNode of el.childNodes) {
-      this.componentContent.push([chNode])
-    }
-  }
-
-  private createInjector() {
-    if (!this.componentInfo) return;
-
-    const inputPropProviders = this.componentInfo.inputProps.map(prop => {
-      return {
-        provide: prop.name,
-        useValue: this.docService.parsePropValue(prop, this.inputPropsValues[prop.name]),
-      }
-    });
-
-    const outputPropProviders = this.componentInfo.outputProps.map(prop => {
-      return {
-        provide: prop.name,
-        useValue: this.outputPropsSubscriptions[prop.name],
-      }
-    });
-
-    this.componentInjector = Injector.create({
-      providers: [...outputPropProviders, ...inputPropProviders],
-      parent: this.injector
+    const cmpRef: ComponentRef<any> = this.cmpContainer.createComponent(LibComponents[this.componentInfo.name], {
+      index: 0,
+      projectableNodes: this.getContentToProject()
     })
 
-    this.usageSource = this.buildUsageSource(this.componentInfo);
+    this.cmpInstance = cmpRef.instance;
+
+    // Init form InputProps
+    this.componentInfo.inputProps.forEach(prop => {
+      const propValue = LibComponentsContent[this.componentInfo.name]?.inputPropsValues?.[prop.name] || prop.defaultValue;
+      this.inputPropsValues[prop.name] = this.docService.parsePropValueToStr(prop, propValue);
+    });
+
+    // Set Input props
+    this.setInputProps();
+    this.setOutputProps();
+    this.buildUsageSource();
   }
 
-  public inputPropsChanged(event: any, prop: ComponentProp): void {
-    if (prop.type === 'boolean') {
-      this.inputPropsValues[prop.name] = event;
+  private getContentToProject(): any {
+    const el = this.renderer.createElement('div');
+    el.innerHTML = LibComponentsContent[this.componentInfo.name]?.projectionContent || '';
+    const componentContent = [];
+    for (let chNode of el.childNodes) {
+      componentContent.push([chNode])
     }
 
-    this.createInjector();
+    return componentContent;
   }
 
-  private buildUsageSource(componentInfo: ComponentInfo): string {
+  private setInputProps() {
+    if (!this.componentInfo) return;
+    this.componentInfo.inputProps.map(prop => {
+      this.cmpInstance[prop.name] = this.docService.parsePropValue(prop, this.inputPropsValues[prop.name]);
+    })
+  }
+
+  private setOutputProps() {
+    if (!this.componentInfo) return;
+    const outputProps = this.componentInfo.outputProps || [];
+
+    for (let prop of outputProps) {
+      this.cmpInstance[prop.name]
+      if (this.cmpInstance[prop.name]) this.cmpInstance[prop.name].unsubscribe();
+      this.cmpInstance[prop.name] = null;
+      this.cmpInstance[prop.name] = new EventEmitter<any>();
+      this.cmpInstance[prop.name].subscribe(result => {
+        let resultStr = '';
+        try {
+          resultStr = JSON.stringify(result, null, '\t');
+        } catch(error: any) {
+          resultStr = result;
+        }
+        this.outputPropResults.push({prop, resultStr});
+      })
+    }
+  }
+
+  private buildUsageSource(): string {
+    const componentInfo = this.componentInfo;
+
     if (!componentInfo) return '';
     // Open the tag
     let usageSrc = `<${componentInfo.selector} `;
@@ -111,18 +118,17 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
     return usageSrc;
   }
 
-  private createOutputPropsSubscriptions() {
-    if (!this.componentInfo) return;
-    const outputProps = this.componentInfo.outputProps || [];
-
-    for (let prop of outputProps) {
-      if (this.outputPropsSubscriptions[prop.name]) this.outputPropsSubscriptions[prop.name].unsubscribe();
-      this.outputPropsSubscriptions[prop.name] = null;
-      this.outputPropsSubscriptions[prop.name] = new EventEmitter<any>();
-      this.outputPropsSubscriptions[prop.name].subscribe(result => {
-        console.log('Output Prop Result: ', result);
-      })
+  public inputPropsChanged(event: any, prop: ComponentProp): void {
+    if (prop.type === 'boolean') {
+      this.inputPropsValues[prop.name] = event;
     }
-    console.log(this.outputPropsSubscriptions)
+
+    this.buildUsageSource();
+    this.setInputProps();
+  }
+
+  public clearOutputPropResults(event: any): void {
+    event.preventDefault();
+    this.outputPropResults = [];
   }
 }
