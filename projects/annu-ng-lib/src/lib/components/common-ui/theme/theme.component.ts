@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 import { ThemeService } from './theme.service';
 import { Theme } from './theme.interface';
 import { Typography } from '../typography';

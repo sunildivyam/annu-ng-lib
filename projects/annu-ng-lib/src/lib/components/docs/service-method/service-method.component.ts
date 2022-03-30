@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ComponentMethod } from '../docs.interface';
 
 @Component({
@@ -12,10 +12,7 @@ export class ServiceMethodComponent implements OnInit, OnChanges {
 
   parameters: Array<any> = []
 
-  constructor(private injector: Injector) {
-    this.method = this.injector.get('method', this.method);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.initValues();

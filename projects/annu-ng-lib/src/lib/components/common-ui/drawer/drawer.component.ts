@@ -1,4 +1,4 @@
-import { Component, HostBinding, Injector, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { DRAWER_OVERLAYS } from '.';
 import { DRAWER_POSITIONS } from './drawer.constants';
 
@@ -49,12 +49,7 @@ export class DrawerComponent implements OnInit {
   }
 
 
-  constructor(private injector: Injector) {
-    setTimeout(() => this.opened = this.injector.get('opened', this.opened))
-    // this.opened = this.injector.get('opened', this.opened);
-    this.positionClassNames = this.injector.get('positionClassNames', this.positionClassNames);
-    this.overlayClassNames = this.injector.get('overlayClassNames', this.overlayClassNames);
-  }
+  constructor() {}
 
   ngOnInit(): void {
 

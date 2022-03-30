@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { NavItem } from './aside-nav.interface';
 
 /**
@@ -56,15 +56,7 @@ export class AsideNavComponent implements OnInit {
   @HostBinding('class.aside-nav-collapsible') get isCollapsibleMethod() { return this.isCollapsible };
   @HostBinding('class.aside-nav-opened') get openedMethod() { return this.opened };
 
-  constructor(private injector: Injector) {
-    this.items = this.injector.get('items', this.items);
-    this.heading = this.injector.get('heading', this.heading);
-    setTimeout(() => this.opened = this.injector.get('opened', this.opened))
-    this.hamburgerClassNames = this.injector.get('hamburgerClassNames', this.hamburgerClassNames);
-    this.drawerClassNames = this.injector.get('drawerClassNames', this.drawerClassNames);
-    this.isHamburgerStyle = this.injector.get('isHamburgerStyle', this.isHamburgerStyle);
-    this.isCollapsible = this.injector.get('isCollapsible', this.isCollapsible);
-  }
+  constructor() {}
 
   ngOnInit(): void { }
 

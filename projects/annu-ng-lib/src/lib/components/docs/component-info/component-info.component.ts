@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Tab } from '../../common-ui/tabs';
 import { COMMPONENT_INFO_TABS, PROPERTY_TYPES } from '../constants';
 import { ComponentInfo } from '../docs.interface';
@@ -18,18 +18,14 @@ export class ComponentInfoComponent implements OnInit, OnChanges {
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
 
 
-  constructor(private docService: DocsService, private injector: Injector) {
-    this.name = this.injector.get('name', '');
-  }
+  constructor(private docService: DocsService) {}
 
   ngOnInit(): void {
     this.getComponentInfo();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['name']?.currentValue !== changes['name']?.previousValue) {
-      this.getComponentInfo();
-    }
+    this.getComponentInfo();
   }
 
   private async getComponentInfo() {

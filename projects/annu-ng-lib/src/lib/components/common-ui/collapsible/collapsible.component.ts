@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'anu-collapsible',
@@ -10,11 +10,7 @@ export class CollapsibleComponent implements OnInit {
   @Input() hamBurgerClassNames: Array<string> = ['size-md'];
   @Output() changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(public injector: Injector) {
-    this.collapsed = this.injector.get('collapsed', this.collapsed);
-    this.hamBurgerClassNames = this.injector.get('hamBurgerClassNames', this.hamBurgerClassNames);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }

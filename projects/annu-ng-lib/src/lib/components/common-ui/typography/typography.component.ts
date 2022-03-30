@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Typography } from './typography.interface';
 
 @Component({
@@ -10,10 +10,7 @@ export class TypographyComponent implements OnInit {
   @Input() typography: Array<Typography> = [];
   @Output() changed = new EventEmitter<Array<Typography>>();
 
-  constructor(private injector: Injector) {
-    this.typography = this.injector.get('typography', this.typography);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ImageInfo } from './image-form.interface';
 
 @Component({
@@ -12,12 +12,7 @@ export class ImageFormComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 
-  constructor(private injector: Injector) {
-    this.src = this.injector.get('src', this.src);
-    this.alt = this.injector.get('alt', this.alt);
-    this.cancel = this.injector.get('cancel', this.cancel);
-    this.save = this.injector.get('save', this.save);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }

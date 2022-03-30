@@ -1,4 +1,4 @@
-import { Component, HostBinding, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 
 /**
@@ -23,10 +23,6 @@ export class CardComponent {
 
   @HostBinding('class.nowrap') get isRowLayoutMethod() { return this.isRowLayout};
 
-  constructor(private injector: Injector) {
-    this.isRowLayout = this.injector.get('isRowLayout', this.isRowLayout);
-    this.imageCssClasses = this.injector.get('imageCssClasses', this.imageCssClasses);
-    this.contentCssClasses = this.injector.get('contentCssClasses', this.contentCssClasses);
-  }
+  constructor() {}
 
 }

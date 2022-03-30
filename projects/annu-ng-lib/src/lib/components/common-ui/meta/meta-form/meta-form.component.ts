@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MetaInfo, MetaProp } from '../meta.interface';
 import { META_PROPS } from '../constants';
@@ -15,7 +15,7 @@ import { MetaService } from '../meta.service';
 })
 export class MetaFormComponent implements OnInit, OnChanges {
   @Input() metaInfo: MetaInfo;
-  @Output() changed: EventEmitter<MetaInfo>;
+  @Output() changed: EventEmitter<MetaInfo> = new EventEmitter<MetaInfo>();
 
   public metaProps: Array<MetaProp>;
   public metaForm: FormGroup;
@@ -23,10 +23,7 @@ export class MetaFormComponent implements OnInit, OnChanges {
   public metaTags: Array<string> = [];
   public metaInfoJsonStr: string = '';
 
-  constructor(private fb: FormBuilder, private metaService: MetaService, private injector: Injector) {
-    this.metaInfo = this.injector.get('metaInfo', this.metaInfo);
-    this.changed = this.injector.get('changed', this.changed);
-
+  constructor(private fb: FormBuilder, private metaService: MetaService) {
     this.metaProps = META_PROPS.map(p => ({ ...p }));
 
     const formGroup = {};

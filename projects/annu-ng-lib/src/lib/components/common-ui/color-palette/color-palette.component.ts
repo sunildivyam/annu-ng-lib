@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, OnChanges, OnInit, SimpleChanges, Injector } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ThemeService } from '../theme/theme.service';
 import { FormControl } from '@angular/forms';
 import { ColorPalette } from './color-palette.interface';
@@ -41,9 +41,7 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
    */
   headerText: string;
 
-  constructor(private themeService: ThemeService, private injector: Injector) {
-    this.colorPalette = this.injector.get('colorPalette', this.colorPalette);
-
+  constructor(private themeService: ThemeService) {
     this.hueControl = new FormControl(this.colorPalette.hue);
     this.saturationControl = new FormControl(this.colorPalette.saturation);
     this.hueControl.valueChanges.subscribe(this.hueChanged);

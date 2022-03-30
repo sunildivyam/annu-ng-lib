@@ -6,12 +6,13 @@ import { LibComponents, LibComponentsContent } from '../lib-resources';
 @Component({
   selector: 'anu-component-usage',
   templateUrl: './component-usage.component.html',
-  styleUrls: ['./component-usage.component.scss']
+  styleUrls: ['./component-usage.component.scss'],
 })
 export class ComponentUsageComponent implements OnInit, OnChanges {
   @Input() componentInfo: ComponentInfo = null;
   @ViewChild('vc', {static: true, read: ViewContainerRef}) cmpContainer: ViewContainerRef;
 
+  cmpRef: ComponentRef<any>;
   cmpInstance:any;
   cmpContent: Array<Array<any>>;
   usageSource: string;
@@ -20,10 +21,12 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
   // Properties Form Vars
   inputPropsValues: any = {};
 
-  constructor(@Inject(Renderer2) private readonly renderer: Renderer2, private docService: DocsService) {}
+  constructor(
+    @Inject(Renderer2) private readonly renderer: Renderer2,
+    private docService: DocsService) {}
 
   ngOnInit(): void {
-    // this.renderComponent();
+    this.renderComponent();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -32,18 +35,19 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
   private async renderComponent() {
     this.cmpContainer.clear();
+    if (this.cmpRef) this.cmpRef.destroy();
     this.cmpInstance = null;
     this.inputPropsValues = {};
     this.outputPropResults = [];
 
     if (!this.componentInfo) return;
 
-    const cmpRef: ComponentRef<any> = this.cmpContainer.createComponent(LibComponents[this.componentInfo.name], {
+    this.cmpRef = this.cmpContainer.createComponent(LibComponents[this.componentInfo.name], {
       index: 0,
       projectableNodes: this.getContentToProject()
     })
 
-    this.cmpInstance = cmpRef.instance;
+    this.cmpInstance = this.cmpRef.instance;
 
     // Init form InputProps
     this.componentInfo.inputProps.forEach(prop => {
@@ -73,6 +77,10 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
     this.componentInfo.inputProps.map(prop => {
       this.cmpInstance[prop.name] = this.docService.parsePropValue(prop, this.inputPropsValues[prop.name]);
     })
+
+    // Due to a Bug in angular, ngOnChanges() does not gets triggered for dynamically generated components. So we need to call it explicitly.
+    // But we can not pass changes param to it, so DO NOT use changes in your dynamically generated components.
+    if (this.cmpInstance['ngOnChanges']) this.cmpInstance['ngOnChanges']();
   }
 
   private setOutputProps() {
@@ -115,6 +123,8 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
 
     // Close the tag
     usageSrc += `\n</${componentInfo.selector}>`;
+    this.usageSource = usageSrc;
+
     return usageSrc;
   }
 

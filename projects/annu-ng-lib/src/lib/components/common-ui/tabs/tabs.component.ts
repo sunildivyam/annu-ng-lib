@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, Injector } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Tab } from './tabs.interface';
 
 @Component({
@@ -17,16 +17,7 @@ export class TabsComponent implements OnInit, OnChanges {
 
   @Output() changed = new EventEmitter<Tab>();
 
-  constructor(private injector: Injector) {
-    this.tabs = this.injector.get('tabs', this.tabs);
-    this.activeTab = this.injector.get('activeTab', this.activeTab);
-    this.rounded = this.injector.get('rounded', this.rounded);
-    this.spaced = this.injector.get('spaced', this.spaced);
-    this.vertical = this.injector.get('vertical', this.vertical);
-    this.secondary = this.injector.get('secondary', this.secondary);
-    this.fullWidth = this.injector.get('fullWidth', this.fullWidth);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   private setActiveTab(selectedTab: Tab) {
     this.tabs.forEach(tab => {

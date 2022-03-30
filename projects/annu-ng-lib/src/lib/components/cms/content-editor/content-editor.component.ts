@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EditorElement } from './content-editor.interface';
 import { EDITOR_ROOT_ELEMENT, TOOLBAR_FORMATTING } from './constants';
 import { ToolbarItem } from '../../common-ui/toolbar';
@@ -36,9 +36,7 @@ export class ContentEditorComponent implements OnInit {
   toggleLinkForm: boolean = false;
   toggleImageForm: boolean = false;
 
-  constructor(private selService: SelectionService, private injector: Injector) {
-    this.value = this.injector.get('value', this.value);
-
+  constructor(private selService: SelectionService) {
     this.selectionRect = { top: 0, left: 0, bottom: 0, right: 0}
     this.selService.selection.subscribe(this.handleTextSelection);
   }

@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Article } from './article.interface';
 import { UtilsService } from '../../../services/utils';
 
@@ -36,14 +36,7 @@ export class ArticleComponent implements OnInit, OnChanges {
 
   trimmedDescription: string = '';
 
-  constructor(public utilsSvc: UtilsService, private injector: Injector) {
-    this.value = this.injector.get('value', this.value || null);
-    this.updateHref = this.injector.get('updateHref', this.updateHref);
-    this.readMoreHref = this.injector.get('readMoreHref', this.readMoreHref);
-    this.titleHref = this.injector.get('titleHref', this.titleHref);
-    this.showMetaInfo = this.injector.get('showMetaInfo', this.showMetaInfo);
-    this.descriptionCharCount = this.injector.get('descriptionCharCount', this.descriptionCharCount);
-  }
+  constructor(public utilsSvc: UtilsService) {}
 
   ngOnInit(): void {
     this.trimDescription();

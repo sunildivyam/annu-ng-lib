@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EditorElement } from '../../content-editor/content-editor.interface';
 
 @Component({
@@ -9,9 +9,7 @@ import { EditorElement } from '../../content-editor/content-editor.interface';
 export class ArticleElementComponent implements OnInit {
   @Input() value: EditorElement;
 
-  constructor(private injector: Injector) {
-    this.value = this.injector.get('value', this.value);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }

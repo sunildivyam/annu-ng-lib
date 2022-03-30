@@ -1,4 +1,4 @@
-import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ToolbarItem } from '../../../common-ui/toolbar';
 import { EditorElement } from '../content-editor.interface';
 import { ImageInfo } from '../../../common-ui/image-form';
@@ -23,10 +23,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     alt: ''
   };
 
-  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService, private injector: Injector) {
-    this.editorElement = this.injector.get('editorElement', this.editorElement);
-    this.fullTree = this.injector.get('fullTree', this.fullTree);
-  }
+  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) {}
 
   ngOnInit(): void {
     this.setStyleToolbarItems();

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UtilsService } from '../../../services/utils';
 import { Category } from '../category';
 import { CATEGORY_EDITOR_TABS } from './category-editor.constants';
@@ -34,9 +34,7 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   category: Category;
   sampleCategory: Category;
 
-  constructor(private utils: UtilsService, private injector: Injector) {
-    this.value = this.injector.get('value', this.value);
-
+  constructor(private utils: UtilsService) {
     this.sampleCategory = { ...SAMPLE_CATEGORY, created: utils.currentDate, updated: utils.currentDate };
     this.category = { ...this.sampleCategory };
   }

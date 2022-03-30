@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Page } from './pagination.interface';
 
 
@@ -30,14 +30,7 @@ export class PaginationComponent implements OnInit {
   rangePages: Array<number> = [];
   pageCount: number = 0;
 
-  constructor(private injector: Injector) {
-    this.activePage = this.injector.get('activePage', this.activePage);
-    this.totalCount = this.injector.get('totalCount', this.totalCount);
-    this.pageSize = this.injector.get('pageSize', this.pageSize);
-    this.pageUrl = this.injector.get('pageUrl', this.pageUrl);
-    this.showPageRange = this.injector.get('showPageRange', this.showPageRange);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   private recalculatePagination(): void {
     // set pageCount

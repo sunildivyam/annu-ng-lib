@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostBinding, HostListener, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 
 
 /**
@@ -45,12 +45,7 @@ export class HamburgerComponent implements OnInit {
    */
   @HostListener('click') toggleMethod() { this.toggle() }
 
-  constructor(private injector: Injector) {
-    this.opened = this.injector.get('opened', this.opened);
-    this.heading = this.injector.get('heading', this.heading);
-    this.isHamburgerStyle = this.injector.get('isHamburgerStyle', this.isHamburgerStyle);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }

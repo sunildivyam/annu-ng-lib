@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BASE64_AUTH } from '../../../images';
 import { AuthFirebaseService } from '../../../firebase/auth/auth-firebase.service';
@@ -22,12 +22,7 @@ export class LoginStatusComponent implements OnInit {
   loading: boolean = false;
   userIcon: string = BASE64_AUTH.user;
 
-  constructor(private authFireSvc: AuthFirebaseService, private router: Router, private injector: Injector) {
-    this.loginPageUrl = this.injector.get('loginPageUrl', this.loginPageUrl);
-    this.profilePageUrl = this.injector.get('profilePageUrl', this.profilePageUrl);
-    this.loggedOutPageUrl = this.injector.get('loggedOutPageUrl', this.loggedOutPageUrl);
-    this.theme = this.injector.get('theme', this.theme);
-
+  constructor(private authFireSvc: AuthFirebaseService, private router: Router) {
     this.authFireSvc.authStateChanged().subscribe(u => {
       this.user = u;
     });

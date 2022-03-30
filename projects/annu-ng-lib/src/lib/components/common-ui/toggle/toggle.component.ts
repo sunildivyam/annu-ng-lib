@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'anu-toggle',
@@ -11,11 +11,7 @@ export class ToggleComponent implements OnInit {
 
   @Output() changed = new EventEmitter<boolean>();
 
-  constructor(private injector: Injector) {
-    this.rounded = this.injector.get('rounded', this.rounded);
-    this.checked = this.injector.get('checked', this.checked);
-    this.changed = this.injector.get('changed', this.changed);
-   }
+  constructor() {}
 
   ngOnInit(): void {
   }

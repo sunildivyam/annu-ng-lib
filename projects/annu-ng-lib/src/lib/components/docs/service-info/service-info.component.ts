@@ -27,9 +27,7 @@ export class ServiceInfoComponent implements OnInit {
   loading: boolean = false;
   error: any;
 
-  constructor(private docService: DocsService, private injector: Injector) {
-    this.name = this.injector.get('name', this.name);
-  }
+  constructor(private docService: DocsService, private injector: Injector) {}
 
   ngOnInit(): void {
     this.getServiceInfo();

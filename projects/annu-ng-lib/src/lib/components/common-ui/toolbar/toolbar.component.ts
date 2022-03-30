@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToolbarItem } from '.';
 
 @Component({
@@ -12,11 +12,7 @@ export class ToolbarComponent implements OnInit {
 
   @Output() changed = new EventEmitter<ToolbarItem>();
 
-  constructor(private injector: Injector) {
-    this.items = this.injector.get('items', this.items);
-    this.isVertical = this.injector.get('isVertical', this.isVertical);
-    this.changed = this.injector.get('changed', this.changed);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }

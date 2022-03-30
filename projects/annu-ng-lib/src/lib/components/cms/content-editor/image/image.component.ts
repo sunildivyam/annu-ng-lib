@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EditorElement } from '../content-editor.interface';
 
 @Component({
@@ -14,10 +14,7 @@ export class ImageComponent implements OnInit {
   @Output() changed = new EventEmitter<EditorElement>();
   @Output() focusin = new EventEmitter<EditorElement>();
 
-  constructor(private injector: Injector) {
-    this.value = this.injector.get('value', this.value || null);
-    this.fullTree = this.injector.get('fullTree', this.fullTree);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem } from './menu.interface';
 
 @Component({
@@ -16,16 +16,7 @@ export class MenuComponent implements OnInit {
   @Output() selected = new EventEmitter<MenuItem>();
   @Output() openStatusChanged = new EventEmitter<boolean>();
 
-  constructor(private injector: Injector) {
-    this.items = this.injector.get('items', this.items);
-    this.heading = this.injector.get('heading', this.heading);
-    this.headingHref = this.injector.get('headingHref', this.headingHref);
-    this.subHeading = this.injector.get('subHeading', this.subHeading);
-    this.subHeadingHref = this.injector.get('subHeadingHref', this.subHeadingHref);
-    setTimeout(() => this.opened = this.injector.get('opened', this.opened))
-    this.selected = this.injector.get('selected', this.selected);
-    this.openStatusChanged = this.injector.get('openStatusChanged', this.openStatusChanged);
-  }
+  constructor() {}
 
   ngOnInit(): void {
   }
