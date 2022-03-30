@@ -19,7 +19,7 @@
 
         <h2>Output Properties Subscriptions</h2>
         <i>You can see results of Output property subscriptions</i>
-        <div *ngIf="outputPropResults?.length" class="spacing-around-vertical"><a href="#" (click)="clearOutputPropResults($event)">Clear Output Results</a></div>
+        <div *ngIf="outputPropResults && outputPropResults.length" class="spacing-around-vertical"><a href="#" (click)="clearOutputPropResults($event)">Clear Output Results</a></div>
         <div class="spacing-around-vertical">
             <div class="input-prop spacing-around-vertical" *ngFor="let propResult of outputPropResults">
                 <label>{{propResult.prop.name}}(...)</label>
