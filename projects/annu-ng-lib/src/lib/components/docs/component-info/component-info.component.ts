@@ -9,31 +9,18 @@ import { DocsService } from '../docs.service';
   templateUrl: './component-info.component.html',
   styleUrls: ['./component-info.component.scss']
 })
-export class ComponentInfoComponent implements OnInit, OnChanges {
-  @Input() name: string = '';
+export class ComponentInfoComponent implements OnInit {
+  @Input() componentInfo: ComponentInfo;
 
-  cmpInfo: ComponentInfo;
   tabs = COMMPONENT_INFO_TABS.map(t => ({ ...t }));
   activeTab = this.tabs[1];
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
 
 
-  constructor(private docService: DocsService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.getComponentInfo();
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getComponentInfo();
-  }
-
-  private async getComponentInfo() {
-    try {
-      this.cmpInfo = await this.docService.getComponentInfo(this.name);
-    } catch (error: any) {
-      this.cmpInfo = null;
-    }
   }
 
   public tabChanged(tab: Tab) {

@@ -1,22 +1,22 @@
 <article>
-    <h1>{{svcInfo?.name}}</h1>
-    <p [innerHtml]="svcInfo?.description"></p>
+    <h1>{{serviceInfo?.name}}</h1>
+    <p [innerHtml]="serviceInfo?.description"></p>
     <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 
     <section *ngIf="activeTab.name === tabs[0].name">
-        <h2 *ngIf="svcInfo?.props && svcInfo?.props.length">Properties</h2>
-        <anu-component-props [props]="svcInfo?.props"></anu-component-props>
-        <h2 *ngIf="svcInfo?.methods && svcInfo?.methods.length">Methods</h2>
-        <anu-component-props [props]="svcInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        <h2 *ngIf="serviceInfo?.props && serviceInfo?.props.length">Properties</h2>
+        <anu-component-props [props]="serviceInfo?.props"></anu-component-props>
+        <h2 *ngIf="serviceInfo?.methods && serviceInfo?.methods.length">Methods</h2>
+        <anu-component-props [props]="serviceInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
     </section>
 
     <section *ngIf="activeTab.name === tabs[1].name">
         <p>You can run your service methods and see their output.
             Below screen provides you the input boxes to enter your method argument values.</p>
-        <anu-search-box [items]="svcInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)"
+        <anu-search-box [items]="serviceInfo?.methods" [keys]="searchKeys" (changed)="onMethodSearch($event)"
             placeholder="service method name...">
         </anu-search-box>
-        <label>Results: {{filteredMethods?.length || 0}} of {{svcInfo?.methods?.length || 0}}</label>
+        <label>Results: {{filteredMethods?.length || 0}} of {{serviceInfo?.methods?.length || 0}}</label>
         <ng-container *ngFor="let fn of filteredMethods">
             <anu-card class="method-card shadow spacing">
                 <anu-card-body>
@@ -54,8 +54,8 @@
     </section>
 
     <section *ngIf="activeTab.name === tabs[2].name">
-        <h2>{{svcInfo?.tsUrl}}</h2>
-        <anu-code-block [source]="svcInfo?.tsSource"></anu-code-block>
+        <h2>{{serviceInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="serviceInfo?.tsSource"></anu-code-block>
     </section>
 </article>
 <anu-spinner [show]="loading"></anu-spinner>

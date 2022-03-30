@@ -12,9 +12,8 @@ import { LibServices } from '../lib-resources/lib-services';
   styleUrls: ['./service-info.component.scss']
 })
 export class ServiceInfoComponent implements OnInit {
-  @Input() name: string = '';
+  @Input() serviceInfo: ServiceInfo;
 
-  svcInfo: ServiceInfo;
   tabs = SERVICE_INFO_TABS.map(t => ({ ...t }));
   activeTab = this.tabs[1];
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
@@ -30,36 +29,23 @@ export class ServiceInfoComponent implements OnInit {
   constructor(private docService: DocsService, private injector: Injector) {}
 
   ngOnInit(): void {
-    this.getServiceInfo();
+    this.initServiceInstance();
   }
 
   ngOnChanges(): void {
-    this.getServiceInfo();
+    this.initServiceInstance();
   }
 
-  private async getServiceInfo() {
-    if (!this.name) return;
-    this.loading = true;
-    this.error = null;
-
-    try {
-      this.svcInfo = await this.docService.getServiceInfo(this.name)
-
-      this.filteredMethods = this.svcInfo?.methods || [];
+  private initServiceInstance() {
+    this.filteredMethods = this.serviceInfo?.methods || [];
       // Set Service Instance
-      if (this.svcInfo) {
-        this.serviceInstance = this.injector.get<any>(LibServices[this.svcInfo.name]);
+      if (this.serviceInfo) {
+        this.serviceInstance = this.injector.get<any>(LibServices[this.serviceInfo.name]);
       } else {
         this.serviceInstance = null;
       }
-
-      this.loading = false;
-    } catch (error: any) {
-      this.loading = false;
-      this.error = error;
-      this.serviceInstance = null;
-    }
   }
+
 
   public tabChanged(tab: Tab) {
     this.activeTab = tab;

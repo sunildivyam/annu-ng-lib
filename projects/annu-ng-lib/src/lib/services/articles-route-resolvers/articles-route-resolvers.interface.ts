@@ -1,6 +1,6 @@
-import { Category, Article, CategoryGroup } from "../../components/cms";
+import { Article, CategoryGroup } from "../../components/cms";
 
-export interface HomeViewRouteData {
+export interface ArticlesHomeViewRouteData {
     allCategoriesGroups?: Array<CategoryGroup>;
     errorAllCategoriesGroups?: any;
 }

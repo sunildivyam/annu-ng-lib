@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +12,7 @@ import {
   OverviewPageComponent,
   ServicePageComponent,
   ComponentPageComponent,
+  LibDocsHomePageComponent,
 } from './page-components';
 
 
@@ -23,9 +24,11 @@ import {
     OverviewPageComponent,
     ServicePageComponent,
     ComponentPageComponent,
+    LibDocsHomePageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,   // Needed to access transfered state on browser from SSR.
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LibConfig } from '../../app-config/app-config.interface';
 import { ACCESS_MODIFIERS } from './constants';
@@ -151,15 +151,24 @@ export class DocsService {
    */
   public async getLibDocsInfo(): Promise<LibDocsInfo> {
     return new Promise((resolve, reject) => {
+
       this.httpClient.get<any>(this.url)
         .pipe(catchError(
-          (errorResponse: HttpErrorResponse) => {
+          (errorResponse: any) => {
             this.libDocsCache.services = [];
             this.libDocsCache.components = [];
+            console.log('STATUS', errorResponse.status);
+            let errorMsg: string;
+            if (errorResponse.error instanceof HttpErrorResponse) {
+              errorMsg = errorResponse.error.message;
+            } else {
+              errorMsg = errorResponse.message
+            }
+            const error = { code: errorResponse.status || errorResponse?.error?.code || errorResponse?.code || 'UNKNOWN', message: errorMsg || 'Something went wrong' }
+            reject(error);
 
-            reject(errorResponse);
             return throwError(() => {
-              return errorResponse;
+              return error;
             });
           }
         ))

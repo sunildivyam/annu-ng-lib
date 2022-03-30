@@ -1,37 +1,37 @@
 <article>
-    <h1>{{cmpInfo?.name}}</h1>
-    <p [innerHtml]="cmpInfo?.description"></p>
+    <h1>{{componentInfo?.name}}</h1>
+    <p [innerHtml]="componentInfo?.description"></p>
     <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 
     <section *ngIf="activeTab.name === tabs[0].name">
-        <h2 *ngIf="cmpInfo?.inputProps && cmpInfo?.inputProps.length">Input Properties</h2>
-        <anu-component-props [props]="cmpInfo?.inputProps"></anu-component-props>
-        <h2 *ngIf="cmpInfo?.outputProps && cmpInfo?.outputProps.length">Output Properties / Events</h2>
-        <anu-component-props [props]="cmpInfo?.outputProps"></anu-component-props>
-        <h2 *ngIf="cmpInfo?.props && cmpInfo?.props.length">Properties</h2>
-        <anu-component-props [props]="cmpInfo?.props"></anu-component-props>
-        <h2 *ngIf="cmpInfo?.methods && cmpInfo?.methods.length">Methods</h2>
-        <anu-component-props [props]="cmpInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        <h2 *ngIf="componentInfo?.inputProps && componentInfo?.inputProps.length">Input Properties</h2>
+        <anu-component-props [props]="componentInfo?.inputProps"></anu-component-props>
+        <h2 *ngIf="componentInfo?.outputProps && componentInfo?.outputProps.length">Output Properties / Events</h2>
+        <anu-component-props [props]="componentInfo?.outputProps"></anu-component-props>
+        <h2 *ngIf="componentInfo?.props && componentInfo?.props.length">Properties</h2>
+        <anu-component-props [props]="componentInfo?.props"></anu-component-props>
+        <h2 *ngIf="componentInfo?.methods && componentInfo?.methods.length">Methods</h2>
+        <anu-component-props [props]="componentInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
     </section>
 
     <section class="usage" *ngIf="activeTab.name === tabs[1].name">
         <!-- TODO: Remove this ng-content once usage component is done. -->
-        <anu-component-usage [componentInfo]="cmpInfo"></anu-component-usage>
+        <anu-component-usage [componentInfo]="componentInfo"></anu-component-usage>
         <ng-content></ng-content>
     </section>
 
     <section *ngIf="activeTab.name === tabs[2].name">
-        <h2>{{cmpInfo?.tsUrl}}</h2>
-        <anu-code-block [source]="cmpInfo?.tsSource"></anu-code-block>
+        <h2>{{componentInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="componentInfo?.tsSource"></anu-code-block>
     </section>
 
     <section *ngIf="activeTab.name === tabs[3].name">
-        <h2>{{cmpInfo?.templateUrl}}</h2>
-        <anu-code-block [source]="cmpInfo?.templateSource"></anu-code-block>
+        <h2>{{componentInfo?.templateUrl}}</h2>
+        <anu-code-block [source]="componentInfo?.templateSource"></anu-code-block>
     </section>
 
     <section *ngIf="activeTab.name === tabs[4].name">
-        <h2>{{cmpInfo?.styleUrl}}</h2>
-        <anu-code-block [source]="cmpInfo?.styleSource"></anu-code-block>
+        <h2>{{componentInfo?.styleUrl}}</h2>
+        <anu-code-block [source]="componentInfo?.styleSource"></anu-code-block>
     </section>
 </article>
