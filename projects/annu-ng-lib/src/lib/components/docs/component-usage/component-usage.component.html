@@ -14,9 +14,9 @@
         </section>
     </div>
 
-    <!-- Input Properties Form -->
-    <div class="spacing col-sm-12 secondary-lightest-bg shadow input-properties-section">
 
+    <div class="spacing col-sm-12 secondary-lightest-bg shadow input-properties-section">
+         <!-- Output Properties Form -->
         <h2>Output Properties Subscriptions</h2>
         <i>You can see results of Output property subscriptions</i>
         <div *ngIf="outputPropResults && outputPropResults.length" class="spacing-around-vertical"><a href="#"
@@ -27,7 +27,7 @@
                 <textarea readonly [value]="propResult.resultStr"></textarea>
             </li>
         </ol>
-
+         <!-- Input Properties Form -->
         <h2>Input Properties</h2>
         <i>Try changing below properties, and see the resulting effect in the Output section of the component.</i>
         <div class="spacing-around-vertical">

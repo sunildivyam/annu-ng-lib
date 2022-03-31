@@ -7,6 +7,11 @@ import {
   OverviewPageComponent,
   ServicePageComponent,
   ComponentPageComponent,
+  ClassPageComponent,
+  DirectivePageComponent,
+  GuardPageComponent,
+  InterfacePageComponent,
+  InterceptorPageComponent,
   LibDocsHomePageComponent,
 } from './page-components';
 
@@ -23,6 +28,21 @@ export const libDocsRoutes = [
 
   // Components Routes
   { path: 'components/:docType/:componentName', component: ComponentPageComponent, data: { title: 'Components' } },
+
+  // Classs Routes
+  { path: 'classes/:docType/:className', component: ClassPageComponent, data: { title: 'Classes' } },
+
+  // Guards Routes
+  { path: 'guards/:docType/:guardName', component: GuardPageComponent, data: { title: 'Guards' } },
+
+  // Interfaces Routes
+  { path: 'interfaces/:docType/:interfaceName', component: InterfacePageComponent, data: { title: 'Interfaces' } },
+
+  // Interceptors Routes
+  { path: 'interceptors/:docType/:interceptorName', component: InterceptorPageComponent, data: { title: 'Interceptors' } },
+
+  // Directives Routes
+  { path: 'directives/:docType/:directiveName', component: DirectivePageComponent, data: { title: 'Directives' } },
 ];
 
 export const routes: Routes = [

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ComponentProp } from '../docs.interface';
-import { PROPERTY_TYPES } from '../constants';
+import { PROPERTY_TYPES } from '../docs.constants';
 
 @Component({
   selector: 'anu-component-props',

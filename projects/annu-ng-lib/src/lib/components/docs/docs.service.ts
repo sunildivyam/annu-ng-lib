@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LibConfig } from '../../app-config/app-config.interface';
-import { ACCESS_MODIFIERS } from './constants';
+import { ACCESS_MODIFIERS } from './docs.constants';
 import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo, LibDocsInfo } from './docs.interface';
 
 @Injectable()
@@ -173,8 +173,13 @@ export class DocsService {
           }
         ))
         .subscribe(docsResponse => {
-          this.libDocsCache.services = docsResponse.injectables.map(svc => this.parseServiceInfo(svc)) || [];
-          this.libDocsCache.components = docsResponse.components.map(cmp => this.parseComponentInfo(cmp)) || [];
+          this.libDocsCache.services = docsResponse.injectables.map(service => this.parseServiceInfo(service)) || [];
+          this.libDocsCache.components = docsResponse.components.map(component => this.parseComponentInfo(component)) || [];
+          this.libDocsCache.interfaces = docsResponse.interfaces.map(intf => this.parseServiceInfo(intf)) || [];
+          this.libDocsCache.classes = docsResponse.classes.map(cls => this.parseServiceInfo(cls)) || [];
+          this.libDocsCache.directives = docsResponse.injectables.map(dirtve => this.parseServiceInfo(dirtve)) || [];
+          this.libDocsCache.interceptors = docsResponse.injectables.map(interceptor => this.parseServiceInfo(interceptor)) || [];
+          this.libDocsCache.guards = docsResponse.injectables.map(guard => this.parseServiceInfo(guard)) || [];
 
           resolve({ ...this.libDocsCache });
         })

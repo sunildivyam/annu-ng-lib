@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Route, Router, Routes } from '@angular/router';
-import { AppConfig, ComponentInfo, MenuItem, NavItem, ThemeService, ServiceInfo, DocsService, MetaService, LIB_DOCS_ROUTE_RESOLVER_DATA_KEYS, LibDocsHomeViewRouteData } from '@annu/ng-lib';
+import { AppConfig, ComponentInfo, MenuItem, NavItem, ThemeService, ServiceInfo, DocsService, MetaService, LIB_DOCS_ROUTE_RESOLVER_DATA_KEYS, LibDocsHomeViewRouteData, GuardInfo, DirectiveInfo, InterfaceInfo, InterceptorInfo, ClassInfo } from '@annu/ng-lib';
 import { ROUTE_TYPES, appConfig, DOCS_NAVS } from '../../constants';
 import { filter, Subscription } from 'rxjs';
 
@@ -25,15 +25,18 @@ export class LibDocsHomePageComponent implements OnInit {
       if (!homeViewData.libDocsInfoError) {
       this.docsNavs = this.getNavsByType('components', homeViewData.libDocsInfo?.components || []);
       this.docsNavs = this.getNavsByType('services', homeViewData.libDocsInfo?.services || []);
-      // this.docsNavs = this.getNavsByType('interfaces', homeViewData.libDocsInfo.interfaces);
-      // this.docsNavs = this.getNavsByType('guards', homeViewData.libDocsInfo.guards);
+      this.docsNavs = this.getNavsByType('interfaces', homeViewData.libDocsInfo.interfaces);
+      this.docsNavs = this.getNavsByType('guards', homeViewData.libDocsInfo.guards);
+      this.docsNavs = this.getNavsByType('classes', homeViewData.libDocsInfo?.classes || []);
+      this.docsNavs = this.getNavsByType('interceptors', homeViewData.libDocsInfo?.interceptors || []);
+      this.docsNavs = this.getNavsByType('directives', homeViewData.libDocsInfo?.directives || []);
       }
       this.error = homeViewData?.libDocsInfoError;
       console.log('HOME VIEW - NAVIGATION-END: FILLING DATA TO VIEW - ENDED')
     })
   }
 
-  private getNavsByType(primaryType: string, docInfo: Array<ServiceInfo | ComponentInfo>): Array<NavItem> {
+  private getNavsByType(primaryType: string, docInfo: Array<ServiceInfo | ComponentInfo | GuardInfo | DirectiveInfo | InterfaceInfo | InterceptorInfo | ClassInfo>): Array<NavItem> {
     let pDocsNavs = [...this.docsNavs];
 
     pDocsNavs = pDocsNavs.map(docNav => {
@@ -42,7 +45,7 @@ export class LibDocsHomePageComponent implements OnInit {
           const id = secNav.id;
           const navItems: Array<NavItem> = [];
 
-          docInfo.forEach((docInfo: ServiceInfo) => {
+          docInfo.forEach((docInfo: any) => {
             if (docInfo.tsUrl.indexOf(id) >= 0) {
               navItems.push({
                 title: docInfo.name,

@@ -11,6 +11,11 @@ import { AppComponent } from './app.component';
 import {
   OverviewPageComponent,
   ServicePageComponent,
+  ClassPageComponent,
+  DirectivePageComponent,
+  GuardPageComponent,
+  InterfacePageComponent,
+  InterceptorPageComponent,
   ComponentPageComponent,
   LibDocsHomePageComponent,
 } from './page-components';
@@ -23,6 +28,11 @@ import {
     // Components Pages
     OverviewPageComponent,
     ServicePageComponent,
+    ClassPageComponent,
+    DirectivePageComponent,
+    GuardPageComponent,
+    InterfacePageComponent,
+    InterceptorPageComponent,
     ComponentPageComponent,
     LibDocsHomePageComponent,
   ],

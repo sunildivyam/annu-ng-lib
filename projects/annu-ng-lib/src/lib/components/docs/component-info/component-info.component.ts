@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Tab } from '../../common-ui/tabs';
-import { COMMPONENT_INFO_TABS, PROPERTY_TYPES } from '../constants';
+import { COMMPONENT_INFO_TABS, PROPERTY_TYPES } from '../docs.constants';
 import { ComponentInfo } from '../docs.interface';
-import { DocsService } from '../docs.service';
 
 @Component({
   selector: 'anu-component-info',

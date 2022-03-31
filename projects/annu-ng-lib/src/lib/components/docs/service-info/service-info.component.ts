@@ -1,6 +1,6 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ComponentMethod, ServiceInfo } from '../docs.interface';
-import { PROPERTY_TYPES, SERVICE_INFO_TABS } from '../constants';
+import { PROPERTY_TYPES, SERVICE_INFO_TABS } from '../docs.constants';
 import { DocsService } from '../docs.service';
 import { Tab } from '../../common-ui/tabs';
 import { LibServices } from '../lib-resources/lib-services';
