@@ -52,38 +52,39 @@ export const appConfig: AppConfig = {
     mainMenuItems: [],
 };
 
+const cmpSubNavs = [
+    {
+        id: 'lib/components/cms',
+        title: 'CMS',
+        href: 'cms',
+        subNav: []
+    },
+    {
+        id: 'lib/components/common-ui',
+        title: 'Common UI',
+        href: 'common-ui',
+        subNav: []
+    },
+    {
+        id: 'lib/components/docs',
+        title: 'Documentation',
+        href: 'docs',
+        subNav: []
+    },
+    {
+        id: 'lib/components/auth',
+        title: 'Authentication',
+        href: 'auth',
+        subNav: []
+    }
+];
 
 export const DOCS_NAVS = [
     {
         id: 'components',
         title: 'Components',
         href: 'components',
-        subNav: [
-            {
-                id: 'lib/components/cms',
-                title: 'CMS',
-                href: 'cms',
-                subNav: []
-            },
-            {
-                id: 'lib/components/common-ui',
-                title: 'Common UI',
-                href: 'common-ui',
-                subNav: []
-            },
-            {
-                id: 'lib/components/docs',
-                title: 'Documentation',
-                href: 'docs',
-                subNav: []
-            },
-            {
-                id: 'lib/components/auth',
-                title: 'Authentication',
-                href: 'auth',
-                subNav: []
-            }
-        ]
+        subNav: cmpSubNavs
     },
     {
         id: 'services',
@@ -96,30 +97,50 @@ export const DOCS_NAVS = [
                 href: 'lib',
                 subNav: []
             },
+            ...cmpSubNavs,
+
             {
-                id: 'lib/components/cms',
-                title: 'CMS',
-                href: 'library',
+                id: 'lib/firebase',
+                title: 'Firebase',
+                href: 'firebase',
+                subNav: []
+            }
+        ]
+    },
+    {
+        id: 'interfaces',
+        title: 'Interfaces',
+        href: 'interfaces',
+        subNav: [
+            {
+                id: 'lib/services',
+                title: 'Library',
+                href: 'lib',
                 subNav: []
             },
+            ...cmpSubNavs,
+
             {
-                id: 'lib/components/common-ui',
-                title: 'Common UI',
-                href: 'common-ui',
+                id: 'lib/firebase',
+                title: 'Firebase',
+                href: 'firebase',
+                subNav: []
+            }
+        ]
+    },
+    {
+        id: 'guards',
+        title: 'Guards',
+        href: 'guards',
+        subNav: [
+            {
+                id: 'lib/services',
+                title: 'Library',
+                href: 'lib',
                 subNav: []
             },
-            {
-                id: 'lib/components/docs',
-                title: 'Documentation',
-                href: 'docs',
-                subNav: []
-            },
-            {
-                id: 'lib/components/auth',
-                title: 'Authentication',
-                href: 'auth',
-                subNav: []
-            },
+            ...cmpSubNavs,
+
             {
                 id: 'lib/firebase',
                 title: 'Firebase',
