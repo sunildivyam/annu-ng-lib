@@ -1,5 +1,15 @@
 <form class="container disable-select">
     <h2>Add Image</h2>
+
+    <div class="form-group">
+        <label for="file">Choose a file to upload:</label>
+        <input
+            id="file"
+            type="file"
+            class=""
+            (change)="onFileChange($event)"/>
+    </div>
+
     <label>Image source</label>
     <input type="text" [(ngModel)]="src" name="image-src" />
     <label>Image alt text</label>

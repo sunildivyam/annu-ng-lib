@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword, UserCredential, getAuth, GoogleAuthProvider, signInWithPopup, User, Auth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, User, Auth, onAuthStateChanged } from 'firebase/auth';
 import { Observable, Subject } from 'rxjs';
 import { CommonFirebaseService } from '../common-firebase';
 
@@ -44,47 +44,6 @@ export class AuthFirebaseService {
     const auth = this.getFirebaseAuth();
     return auth.currentUser ? true : false;
   }
-
-  public async createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
-
-    const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-
-    return userCredential;
-  }
-
-  public async loginWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
-    const auth = this.getFirebaseAuth();
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-    return userCredential;
-  }
-
-  public async loginWithGoogle() {
-    const auth = this.getFirebaseAuth();
-    // await setPersistence(this.auth, browserLocalPersistence);
-    // Sign in using a redirect.
-    const provider = new GoogleAuthProvider();
-    // Start a sign in process for an unauthenticated user.
-    provider.addScope('profile');
-    provider.addScope('email');
-
-    // await signInWithRedirect(auth, provider);
-    const result = await signInWithPopup(auth, provider);
-
-    // This will trigger a full page redirect away from your app
-
-    // After returning from the redirect when your app initializes you can obtain the result
-    // let result = await getRedirectResult(auth);
-
-    if (result) {
-      // This is the signed-in user
-      const user = result.user;
-      // This gives you a Google Access Token.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-    }
-  }
-
 
   public authStateChanged(): Observable<User> {
     return this.authState.asObservable();

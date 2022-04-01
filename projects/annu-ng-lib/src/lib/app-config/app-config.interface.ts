@@ -1,5 +1,5 @@
 import { MetaInfo } from "../components/common-ui/meta";
-import { FirebaseConfig } from "../firebase/firebase.interface";
+import { FirebaseConfig, FirebaseStoreConfig } from "../firebase/firebase.interface";
 import { MenuItem } from "../components/common-ui/menu/menu.interface";
 
 export interface AppConfig {
@@ -20,4 +20,5 @@ export class LibConfig {
     docsJsonUrl?: string = '';
     firebaseui?: any;
     firebase?: FirebaseConfig;
+    firebaseStoreConfig: FirebaseStoreConfig;
 }

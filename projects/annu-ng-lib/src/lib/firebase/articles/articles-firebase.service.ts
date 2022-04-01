@@ -28,6 +28,7 @@ import { getSeedsCategories, getSeedsArticles } from './articles-firebase.seed';
 import { UtilsService } from '../../services/utils/utils.service';
 import { AuthFirebaseService } from '../auth';
 import { QueryConfig } from '../firebase.interface';
+import { ImageFireStoreService } from '../image-storage/image-fire-store.service';
 
 const FIREBASE_DOCS = {
   CATEGORIES: 'categories',
@@ -48,7 +49,7 @@ const FIREBASE_DOCS = {
 })
 export class ArticlesFirebaseService {
 
-  constructor(private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService) { }
+  constructor(private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService, private imageFireStoreService: ImageFireStoreService) { }
 
   /**
    * Adds a new category for the logged in user.
@@ -80,6 +81,13 @@ export class ArticlesFirebaseService {
     delete category.id;
 
     try {
+      if (category.image && category.image.imageData) {
+        const imgSrc = `${pCategory.id}/${pCategory}.jpeg`;
+        await this.imageFireStoreService.uploadImage(imgSrc, category.image.imageData);
+        category.image.src = imgSrc;
+        delete category.image.imageData;
+      }
+
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
       const categoryRef = doc(categoriesRef, pCategory.id);
