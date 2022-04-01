@@ -1,25 +1,25 @@
 <anu-hamburger class="lib-nav-hamburger" [opened]="libNavOpened" (changed)="libNavChanged($event)">Library
-    Documentation</anu-hamburger>
+  Documentation</anu-hamburger>
 <div class="row-md row-lg nowrap relative app-content-sub-container">
-    <section class="leftSideMenu">
-        <!-- Visible in Mobile only -->
-        <div class="lib-nav-mobile">
-            <anu-drawer
-                class="lib-nav-mobile-drawer drawer-static drawer-top-sm drawer-left-md drawer-left-lg primary-lightest-bg shadow spacing"
-                [opened]="libNavOpened">
-                <ng-container *ngTemplateOutlet="libNavTemplate; context:{docsNavs}"></ng-container>
-            </anu-drawer>
-        </div>
+  <section class="leftSideMenu">
+    <!-- Visible in Mobile only -->
+    <div class="lib-nav-mobile">
+      <anu-drawer
+        class="lib-nav-mobile-drawer drawer-static drawer-top-sm drawer-left-md drawer-left-lg primary-lightest-bg shadow spacing"
+        [opened]="libNavOpened">
+        <ng-container *ngTemplateOutlet="libNavTemplate; context:{docsNavs}"></ng-container>
+      </anu-drawer>
+    </div>
 
-        <!-- Visible in Desktop and Ipad only -->
-        <!-- <div class="hidden-sm">
+    <!-- Visible in Desktop and Ipad only -->
+    <!-- <div class="hidden-sm">
         <ng-container *ngTemplateOutlet="libNavTemplate; context:{docsNavs}"></ng-container>
       </div> -->
-    </section>
-    <main class="content">
-        <anu-error *ngIf="error" [code]="error?.code || error?.status" [message]="error?.message"></anu-error>
-        <router-outlet></router-outlet>
-    </main>
+  </section>
+  <main class="content">
+    <anu-error *ngIf="error" [code]="error?.code || error?.status" [message]="error?.message"></anu-error>
+    <router-outlet></router-outlet>
+  </main>
 </div>
 
 
@@ -27,19 +27,22 @@
 <!-- Navigation Items Template -->
 
 <ng-template #libNavTemplate>
-    <anu-collapsible *ngFor="let pNav of docsNavs" [collapsed]="true" [hamBurgerClassNames]="['size-sm']">
-      <anu-collapsible-header class=""><strong>{{pNav.title}}</strong></anu-collapsible-header>
-      <anu-collapsible-content class="spacing-horizontal">
-        <anu-collapsible *ngFor="let sNav of pNav.subNav" [collapsed]="false" [hamBurgerClassNames]="['size-sm']">
+  <anu-collapsible *ngFor="let pNav of docsNavs" [collapsed]="true" [hamBurgerClassNames]="['size-sm']">
+    <anu-collapsible-header class=""><strong>{{pNav.title}}</strong></anu-collapsible-header>
+    <anu-collapsible-content class="spacing-horizontal">
+      <ng-container *ngFor="let sNav of pNav.subNav">
+        <anu-collapsible *ngIf="sNav.subNav && sNav.subNav.length" [collapsed]="false" [hamBurgerClassNames]="['size-sm']">
           <anu-collapsible-header>{{sNav.title}}</anu-collapsible-header>
           <anu-collapsible-content>
             <ul>
               <li class="nav-link" *ngFor="let navItem of sNav.subNav">
-                <a [routerLink]="[pNav.href, sNav.href, navItem.href]" [routerLinkActive]="'active'" (click)="libNavOpened = !libNavOpened">{{navItem.title}}</a>
+                <a [routerLink]="[pNav.href, sNav.href, navItem.href]" [routerLinkActive]="'active'"
+                  (click)="libNavOpened = !libNavOpened">{{navItem.title}}</a>
               </li>
             </ul>
           </anu-collapsible-content>
         </anu-collapsible>
-      </anu-collapsible-content>
-    </anu-collapsible>
-  </ng-template>
+      </ng-container>
+    </anu-collapsible-content>
+  </anu-collapsible>
+</ng-template>

@@ -52,11 +52,31 @@ export const appConfig: AppConfig = {
     mainMenuItems: [],
 };
 
-const cmpSubNavs = [
+const copyArray = (arr: Array<any> = []): Array<any> => arr.map(obj => ({...obj}))
+
+const secSubNavs = [
+    {
+        id: 'lib/app-config',
+        title: 'App Config',
+        href: 'app-config',
+        subNav: []
+    },
+    {
+        id: 'lib/services',
+        title: 'Library',
+        href: 'lib',
+        subNav: []
+    },
     {
         id: 'lib/components/cms',
         title: 'CMS',
         href: 'cms',
+        subNav: []
+    },
+    {
+        id: 'lib/firebase',
+        title: 'Firebase',
+        href: 'firebase',
         subNav: []
     },
     {
@@ -84,49 +104,31 @@ export const DOCS_NAVS = [
         id: 'components',
         title: 'Components',
         href: 'components',
-        subNav: cmpSubNavs
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'directives',
+        title: 'Directives',
+        href: 'directives',
+        subNav: copyArray(secSubNavs)
     },
     {
         id: 'services',
         title: 'Services',
         href: 'services',
-        subNav: [
-            {
-                id: 'lib/services',
-                title: 'Library',
-                href: 'lib',
-                subNav: []
-            },
-            ...cmpSubNavs,
-
-            {
-                id: 'lib/firebase',
-                title: 'Firebase',
-                href: 'firebase',
-                subNav: []
-            }
-        ]
+        subNav: copyArray(secSubNavs)
     },
     {
         id: 'interfaces',
         title: 'Interfaces',
         href: 'interfaces',
-        subNav: [
-            {
-                id: 'lib/services',
-                title: 'Library',
-                href: 'lib',
-                subNav: []
-            },
-            ...cmpSubNavs,
-
-            {
-                id: 'lib/firebase',
-                title: 'Firebase',
-                href: 'firebase',
-                subNav: []
-            }
-        ]
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'classes',
+        title: 'Classes',
+        href: 'classes',
+        subNav: copyArray(secSubNavs)
     },
     {
         id: 'guards',
@@ -134,19 +136,36 @@ export const DOCS_NAVS = [
         href: 'guards',
         subNav: [
             {
-                id: 'lib/services',
-                title: 'Library',
-                href: 'lib',
+                id: 'lib/services/articles-route-resolvers',
+                title: 'Articles Route Resolvers',
+                href: 'articles-route-resolvers',
                 subNav: []
             },
-            ...cmpSubNavs,
-
             {
-                id: 'lib/firebase',
-                title: 'Firebase',
-                href: 'firebase',
+                id: 'lib/services/lib-docs-route-resolvers',
+                title: 'Library Docs Route Resolvers',
+                href: 'lib-docs-route-resolvers',
                 subNav: []
-            }
+            },
+            {
+                id: 'lib/services/route-guards',
+                title: 'Route Guards',
+                href: 'route-guards',
+                subNav: []
+            },
+        ]
+    },
+    {
+        id: 'interceptors',
+        title: 'Interceptors',
+        href: 'interceptors',
+        subNav: [
+            {
+                id: 'lib/services/interceptors',
+                title: 'Interceptors',
+                href: 'interceptors',
+                subNav: []
+            },
         ]
     }
 ]

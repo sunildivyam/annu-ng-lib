@@ -36,7 +36,7 @@ export class LibDocsHomePageComponent implements OnInit {
     })
   }
 
-  private getNavsByType(primaryType: string, docInfo: Array<ServiceInfo | ComponentInfo | GuardInfo | DirectiveInfo | InterfaceInfo | InterceptorInfo | ClassInfo>): Array<NavItem> {
+  private getNavsByType(primaryType: string, docsInfo: Array<ServiceInfo | ComponentInfo | GuardInfo | DirectiveInfo | InterfaceInfo | InterceptorInfo | ClassInfo>): Array<NavItem> {
     let pDocsNavs = [...this.docsNavs];
 
     pDocsNavs = pDocsNavs.map(docNav => {
@@ -45,7 +45,7 @@ export class LibDocsHomePageComponent implements OnInit {
           const id = secNav.id;
           const navItems: Array<NavItem> = [];
 
-          docInfo.forEach((docInfo: any) => {
+          docsInfo.forEach((docInfo: any) => {
             if (docInfo.tsUrl.indexOf(id) >= 0) {
               navItems.push({
                 title: docInfo.name,
@@ -64,7 +64,7 @@ export class LibDocsHomePageComponent implements OnInit {
     })
 
 
-    return pDocsNavs;
+    return [...pDocsNavs];
   }
 
 
