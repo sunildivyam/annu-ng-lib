@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UtilsService } from '../../../services/utils';
 import { Article } from '../article';
 
 @Component({
@@ -10,7 +11,7 @@ export class ArticleViewComponent implements OnInit {
   @Input() value: Article | null = null;
   @Input() showMetaInfo: boolean = false;
 
-  constructor() { }
+  constructor(public utilsSvc: UtilsService) {}
 
   ngOnInit(): void {
   }

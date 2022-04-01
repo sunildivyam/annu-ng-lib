@@ -1,7 +1,3 @@
-main.content {
-    padding: 1rem;
-
-    .page-outlet {
-        width: inherit;
-    }
+:host {
+    display: flex;
 }

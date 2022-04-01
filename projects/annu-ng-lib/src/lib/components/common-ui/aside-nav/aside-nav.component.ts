@@ -56,7 +56,7 @@ export class AsideNavComponent implements OnInit {
   @HostBinding('class.aside-nav-collapsible') get isCollapsibleMethod() { return this.isCollapsible };
   @HostBinding('class.aside-nav-opened') get openedMethod() { return this.opened };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void { }
 

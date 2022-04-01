@@ -29,9 +29,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   keywordsSubject: Subject<string> = new Subject<string>();
   keywordsSubscription: Subscription
 
-  constructor() {
-
-  }
+  constructor() {}
 
   private filter(): Array<Object> {
     if (!this.keywords) {

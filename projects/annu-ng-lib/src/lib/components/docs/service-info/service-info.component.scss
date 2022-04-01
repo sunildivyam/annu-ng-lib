@@ -1,4 +1,7 @@
 :host {
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
     h2 {
         margin-top: 1rem;

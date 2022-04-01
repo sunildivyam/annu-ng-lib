@@ -7,10 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class CollapsibleComponent implements OnInit {
   @Input() collapsed: boolean = true;
-  @Input() hamBurgerClassNames: Array<string> = [''];
+  @Input() hamBurgerClassNames: Array<string> = ['size-md'];
   @Output() changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

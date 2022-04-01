@@ -14,7 +14,7 @@ export class ParagraphComponent implements OnInit {
   @Output() changed = new EventEmitter<EditorElement>();
   @Output() focusin = new EventEmitter<EditorElement>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
@@ -38,7 +38,7 @@ export class ParagraphComponent implements OnInit {
 
   public onFocus(event: any) {
     event.stopPropagation();
-    this.focusin.emit(this.value);    
+    this.focusin.emit(this.value);
   }
 
   public textSelected() {

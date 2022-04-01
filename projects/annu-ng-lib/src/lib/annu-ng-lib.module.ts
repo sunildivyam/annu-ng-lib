@@ -12,6 +12,7 @@ import { AppConfigModule } from './app-config';
 import { RouteGuardsModule } from './services/route-guards/route-guards.module';
 import { ArticlesRouteResolversModule } from './services/articles-route-resolvers';
 import { UtilsModule } from './services/utils';
+import { LibDocsRouteResolversModule } from './services/lib-docs-route-resolvers';
 
 
 const libMoudlesToImportAndExport = [
@@ -19,6 +20,7 @@ const libMoudlesToImportAndExport = [
 
   RouteGuardsModule,
   ArticlesRouteResolversModule,
+  LibDocsRouteResolversModule,
   UtilsModule,
 
   DocsModule,

@@ -13,7 +13,7 @@ export class MultiSelectBoxComponent implements OnInit {
 
   @Output() changed: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

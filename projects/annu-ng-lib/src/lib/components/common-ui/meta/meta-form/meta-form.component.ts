@@ -15,7 +15,7 @@ import { MetaService } from '../meta.service';
 })
 export class MetaFormComponent implements OnInit, OnChanges {
   @Input() metaInfo: MetaInfo;
-  @Output() changed: EventEmitter<MetaInfo>;
+  @Output() changed: EventEmitter<MetaInfo> = new EventEmitter<MetaInfo>();
 
   public metaProps: Array<MetaProp>;
   public metaForm: FormGroup;
@@ -24,7 +24,6 @@ export class MetaFormComponent implements OnInit, OnChanges {
   public metaInfoJsonStr: string = '';
 
   constructor(private fb: FormBuilder, private metaService: MetaService) {
-    this.changed = new EventEmitter<MetaInfo>();
     this.metaProps = META_PROPS.map(p => ({ ...p }));
 
     const formGroup = {};

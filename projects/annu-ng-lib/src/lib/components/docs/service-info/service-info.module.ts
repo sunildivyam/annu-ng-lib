@@ -11,6 +11,7 @@ import { ServiceInfoComponent } from './service-info.component';
 
 import { ComponentPropsModule } from '../component-props';
 import { ServiceMethodModule } from '../service-method';
+import { SpinnerModule } from '../../common-ui/spinner';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ServiceMethodModule } from '../service-method';
     ComponentPropsModule,
     ErrorModule,
     CollapsibleModule,
+    SpinnerModule,
   ],
   exports: [ServiceInfoComponent],
 })

@@ -79,24 +79,23 @@ const TYPOGRAPHY: Array<Typography> = [
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent {
-  theme: Theme;
-  tabs: Array<Tab> = TABS;
-  selectedTab: Tab;
-  themeName: string;
-  themeFromJson: string;
+  theme: Theme = {
+    name: 'default',
+    title: 'Default Theme',
+    description: 'Default theme description',
+    colorPalettes: { ...COLOR_PALETTES },
+    typography: [...TYPOGRAPHY],
+  };
+  tabs: Array<Tab> = [...TABS];
+  selectedTab: Tab = null;
+  themeName: string = '';
+  themeFromJson: string = '';
   isThemeFromJson: boolean = false;
   isJsonError: boolean = false;
-  typography: Array<Typography> = TYPOGRAPHY;
+  typography: Array<Typography> = [...TYPOGRAPHY];
 
   constructor(private themeService: ThemeService) {
     this.selectedTab = this.tabs.find(tb => tb.active === true);
-    this.theme = {
-      name: 'default',
-      title: 'Default Theme',
-      description: 'Default theme description',
-      colorPalettes: COLOR_PALETTES,
-      typography: this.typography,
-    };
   }
 
   public tabChanged(tab: Tab): void {
@@ -117,9 +116,9 @@ export class ThemeComponent {
     this.isJsonError = false;
     try {
       this.theme = JSON.parse(this.themeFromJson);
-      this.typography = this.theme.typography.map(t => ({...t}));
+      this.typography = this.theme.typography.map(t => ({ ...t }));
       this.isThemeFromJson = false;
-    } catch(er) {
+    } catch (er) {
       this.isJsonError = true;
     }
   }

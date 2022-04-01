@@ -1,0 +1,31 @@
+<article>
+    <h1>{{classInfo?.name}}</h1>
+    <p [innerHtml]="classInfo?.description"></p>
+    <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+
+    <section *ngIf="activeTab.name === tabs[0].name">
+        <ng-container *ngIf="classInfo?.inputProps && classInfo?.inputProps.length">
+            <h2>Input Properties</h2>
+            <anu-component-props [props]="classInfo?.inputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="classInfo?.outputProps && classInfo?.outputProps.length">
+            <h2>Output Properties / Events</h2>
+            <anu-component-props [props]="classInfo?.outputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="classInfo?.props && classInfo?.props.length">
+            <h2>Properties</h2>
+            <anu-component-props [props]="classInfo?.props"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="classInfo?.methods && classInfo?.methods.length">
+            <h2>Methods</h2>
+            <anu-component-props [props]="classInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        </ng-container>
+    </section>
+    <section *ngIf="activeTab.name === tabs[1].name">
+        <h2>{{classInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="classInfo?.tsSource"></anu-code-block>
+    </section>
+</article>
+<anu-spinner [show]="loading"></anu-spinner>
+<anu-error *ngIf="error" [code]="error?.code || 404" [message]="error?.message || 'Class name not found - ' + name">
+</anu-error>

@@ -11,11 +11,11 @@ export class ToggleComponent implements OnInit {
 
   @Output() changed = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
-  
+
   public toggled(value:any) {
     this.changed.emit(value.currentTarget.checked);
   }

@@ -97,6 +97,7 @@ $max-transition-size: 5000px;
 
     &.drawer {
         &-opened {
+
             &.drawer-top {
                 max-height: #{$max-transition-size};
                 transform: scaleY(1);

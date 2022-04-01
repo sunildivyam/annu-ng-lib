@@ -9,7 +9,7 @@ export class ModalComponent implements OnInit, OnChanges {
   @Input() opened: boolean = false;
   @HostBinding('style.display') show = 'none';
 
-  constructor() { }
+  constructor() {}
 
   private showHide() {
     if (this.opened) {

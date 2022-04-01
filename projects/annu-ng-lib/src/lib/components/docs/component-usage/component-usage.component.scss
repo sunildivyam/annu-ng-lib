@@ -1,0 +1,21 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .output-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 5rem;
+    }
+
+    .input-prop {
+        border-top: 1px solid var(--anu-secondary-dark);
+    }
+
+    .output-section {
+        width: -webkit-fill-available;
+        min-width: 75%;
+    }
+}

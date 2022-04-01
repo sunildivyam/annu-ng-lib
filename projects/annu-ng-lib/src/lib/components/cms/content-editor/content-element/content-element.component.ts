@@ -23,7 +23,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     alt: ''
   };
 
-  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) { }
+  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) {}
 
   ngOnInit(): void {
     this.setStyleToolbarItems();
