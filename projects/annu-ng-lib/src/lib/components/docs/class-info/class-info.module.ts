@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClassInfoComponent } from './class-info.component';
+import { CodeBlockModule, ErrorModule, SpinnerModule, TabsModule } from '../../common-ui';
+import { ComponentPropsModule } from '../component-props/component-props.module';
 
 
 
@@ -9,7 +11,12 @@ import { ClassInfoComponent } from './class-info.component';
     ClassInfoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TabsModule,
+    SpinnerModule,
+    ErrorModule,
+    CodeBlockModule,
+    ComponentPropsModule,
   ],
   exports: [
     ClassInfoComponent

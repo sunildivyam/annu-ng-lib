@@ -46,13 +46,11 @@ export const libDocsRoutes = [
 ];
 
 export const routes: Routes = [
-  ...mainRoutes,
-
   {
     path: '', component: LibDocsHomePageComponent,
     resolve: { [LIB_DOCS_ROUTE_RESOLVER_DATA_KEYS.LIB_DOCS_HOME_VIEW]: LibDocsHomeViewRouteResolver},
     // Article Public Routes
-    children: [...libDocsRoutes],
+    children: [...mainRoutes, ...libDocsRoutes],
   },
 
   //Any Other route (non-existant routes)

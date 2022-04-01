@@ -177,7 +177,7 @@ export class DocsService {
           this.libDocsCache.components = docsResponse.components.map(component => this.parseComponentInfo(component)) || [];
           this.libDocsCache.interfaces = docsResponse.interfaces.map(intf => this.parseServiceInfo(intf)) || [];
           this.libDocsCache.classes = docsResponse.classes.map(cls => this.parseServiceInfo(cls)) || [];
-          this.libDocsCache.directives = docsResponse.directives.map(dirtve => this.parseServiceInfo(dirtve)) || [];
+          this.libDocsCache.directives = docsResponse.directives.map(dirtve => this.parseComponentInfo(dirtve)) || [];
           this.libDocsCache.interceptors = docsResponse.interceptors.map(interceptor => this.parseServiceInfo(interceptor)) || [];
           this.libDocsCache.guards = docsResponse.guards.map(guard => this.parseServiceInfo(guard)) || [];
 

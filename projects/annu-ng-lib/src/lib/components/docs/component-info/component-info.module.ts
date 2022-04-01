@@ -8,6 +8,7 @@ import { ComponentInfoComponent } from './component-info.component';
 import { ComponentPropsModule } from '../component-props';
 import { FormsModule } from '@angular/forms';
 import { ComponentUsageModule } from '../component-usage';
+import { ErrorModule } from '../../common-ui/error';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ComponentUsageModule } from '../component-usage';
     TabsModule,
     CardModule,
     CodeBlockModule,
+    ErrorModule,
     ComponentPropsModule,
     ComponentUsageModule,
   ],

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InterceptorInfoComponent } from './interceptor-info.component';
-
+import { CodeBlockModule, ErrorModule, SpinnerModule, TabsModule } from '../../common-ui';
+import { ComponentPropsModule } from '../component-props/component-props.module';
 
 
 @NgModule({
@@ -9,7 +10,12 @@ import { InterceptorInfoComponent } from './interceptor-info.component';
     InterceptorInfoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TabsModule,
+    SpinnerModule,
+    ErrorModule,
+    CodeBlockModule,
+    ComponentPropsModule,
   ],
   exports: [
     InterceptorInfoComponent

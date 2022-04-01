@@ -1,1 +1,30 @@
-<p>interceptor-info works!</p>
+<anu-error *ngIf="!interceptorInfo" [code]="error?.code || 404" [message]="error?.message || 'Interceptor not found'"></anu-error>
+<article>
+    <h1>{{interceptorInfo?.name}}</h1>
+    <p [innerHtml]="interceptorInfo?.description"></p>
+    <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+
+    <section *ngIf="activeTab.name === tabs[0].name">
+        <ng-container *ngIf="interceptorInfo?.inputProps && interceptorInfo?.inputProps.length">
+            <h2>Input Properties</h2>
+            <anu-component-props [props]="interceptorInfo?.inputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="interceptorInfo?.outputProps && interceptorInfo?.outputProps.length">
+            <h2>Output Properties / Events</h2>
+            <anu-component-props [props]="interceptorInfo?.outputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="interceptorInfo?.props && interceptorInfo?.props.length">
+            <h2>Properties</h2>
+            <anu-component-props [props]="interceptorInfo?.props"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="interceptorInfo?.methods && interceptorInfo?.methods.length">
+            <h2>Methods</h2>
+            <anu-component-props [props]="interceptorInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        </ng-container>
+    </section>
+    <section *ngIf="activeTab.name === tabs[1].name">
+        <h2>{{interceptorInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="interceptorInfo?.tsSource"></anu-code-block>
+    </section>
+</article>
+<anu-spinner [show]="loading"></anu-spinner>

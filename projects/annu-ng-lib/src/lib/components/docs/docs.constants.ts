@@ -61,10 +61,6 @@ export const DIRECTIVE_INFO_TABS: Array<Tab> = [
         active: true,
     },
     {
-        name: 'playground',
-        title: 'Playground',
-    },
-    {
         name: 'typescript',
         title: 'Ts',
     },
@@ -75,10 +71,6 @@ export const CLASS_INFO_TABS: Array<Tab> = [
         name: 'overview',
         title: 'Overview',
         active: true,
-    },
-    {
-        name: 'playground',
-        title: 'Playground',
     },
     {
         name: 'typescript',
@@ -93,10 +85,6 @@ export const GUARD_INFO_TABS: Array<Tab> = [
         active: true,
     },
     {
-        name: 'playground',
-        title: 'Playground',
-    },
-    {
         name: 'typescript',
         title: 'Ts',
     },
@@ -109,10 +97,6 @@ export const INTERCEPTOR_INFO_TABS: Array<Tab> = [
         active: true,
     },
     {
-        name: 'playground',
-        title: 'Playground',
-    },
-    {
         name: 'typescript',
         title: 'Ts',
     },
@@ -123,10 +107,6 @@ export const INTERFACE_INFO_TABS: Array<Tab> = [
         name: 'overview',
         title: 'Overview',
         active: true,
-    },
-    {
-        name: 'playground',
-        title: 'Playground',
     },
     {
         name: 'typescript',

@@ -1,1 +1,30 @@
-<p>guard-info works!</p>
+<anu-error *ngIf="!guardInfo" [code]="error?.code || 404" [message]="error?.message || 'Guard not found'"></anu-error>
+<article>
+    <h1>{{guardInfo?.name}}</h1>
+    <p [innerHtml]="guardInfo?.description"></p>
+    <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+
+    <section *ngIf="activeTab.name === tabs[0].name">
+        <ng-container *ngIf="guardInfo?.inputProps && guardInfo?.inputProps.length">
+            <h2>Input Properties</h2>
+            <anu-component-props [props]="guardInfo?.inputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="guardInfo?.outputProps && guardInfo?.outputProps.length">
+            <h2>Output Properties / Events</h2>
+            <anu-component-props [props]="guardInfo?.outputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="guardInfo?.props && guardInfo?.props.length">
+            <h2>Properties</h2>
+            <anu-component-props [props]="guardInfo?.props"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="guardInfo?.methods && guardInfo?.methods.length">
+            <h2>Methods</h2>
+            <anu-component-props [props]="guardInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        </ng-container>
+    </section>
+    <section *ngIf="activeTab.name === tabs[1].name">
+        <h2>{{guardInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="guardInfo?.tsSource"></anu-code-block>
+    </section>
+</article>
+<anu-spinner [show]="loading"></anu-spinner>

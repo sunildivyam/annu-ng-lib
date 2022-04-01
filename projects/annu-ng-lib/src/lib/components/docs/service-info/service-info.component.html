@@ -1,13 +1,26 @@
+<anu-error *ngIf="!serviceInfo" [code]="error?.code || 404" [message]="error?.message || 'Service not found'"></anu-error>
 <article>
     <h1>{{serviceInfo?.name}}</h1>
     <p [innerHtml]="serviceInfo?.description"></p>
     <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 
     <section *ngIf="activeTab.name === tabs[0].name">
-        <h2 *ngIf="serviceInfo?.props && serviceInfo?.props.length">Properties</h2>
-        <anu-component-props [props]="serviceInfo?.props"></anu-component-props>
-        <h2 *ngIf="serviceInfo?.methods && serviceInfo?.methods.length">Methods</h2>
-        <anu-component-props [props]="serviceInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        <ng-container *ngIf="serviceInfo?.inputProps && serviceInfo?.inputProps.length">
+            <h2>Input Properties</h2>
+            <anu-component-props [props]="serviceInfo?.inputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="serviceInfo?.outputProps && serviceInfo?.outputProps.length">
+            <h2>Output Properties / Events</h2>
+            <anu-component-props [props]="serviceInfo?.outputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="serviceInfo?.props && serviceInfo?.props.length">
+            <h2>Properties</h2>
+            <anu-component-props [props]="serviceInfo?.props"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="serviceInfo?.methods && serviceInfo?.methods.length">
+            <h2>Methods</h2>
+            <anu-component-props [props]="serviceInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        </ng-container>
     </section>
 
     <section *ngIf="activeTab.name === tabs[1].name">
@@ -59,4 +72,3 @@
     </section>
 </article>
 <anu-spinner [show]="loading"></anu-spinner>
-<anu-error *ngIf="error" [code]="error?.code || 404" [message]="error?.message || 'Service name nott found - ' + name"></anu-error>
