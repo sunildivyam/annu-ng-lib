@@ -7,12 +7,12 @@ import { ToolbarItem } from '.';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-@Input() items: Array<ToolbarItem> = [];
-@Input() isVertical: boolean = false;
+  @Input() items: Array<ToolbarItem> = [];
+  @Input() isVertical: boolean = false;
 
-@Output() changed = new EventEmitter<ToolbarItem>();
+  @Output() changed = new EventEmitter<ToolbarItem>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
@@ -21,7 +21,7 @@ export class ToolbarComponent implements OnInit {
     if (!item.href) {
       event.preventDefault();
     }
-    
+
     this.changed.emit(item);
   }
 }

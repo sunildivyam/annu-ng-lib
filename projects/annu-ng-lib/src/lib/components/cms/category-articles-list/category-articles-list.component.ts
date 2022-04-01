@@ -16,5 +16,5 @@ export class CategoryArticlesListComponent {
 
   noDataMessage: string = 'No data Available';
 
-  constructor() { }
+  constructor() {}
 }

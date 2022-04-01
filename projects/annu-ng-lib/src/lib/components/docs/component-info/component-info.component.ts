@@ -1,37 +1,29 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Tab } from '../../common-ui/tabs';
-import { COMMPONENT_INFO_TABS, PROPERTY_TYPES } from '../constants';
+import { COMMPONENT_INFO_TABS, PROPERTY_TYPES } from '../docs.constants';
 import { ComponentInfo } from '../docs.interface';
-import { DocsService } from '../docs.service';
 
 @Component({
   selector: 'anu-component-info',
   templateUrl: './component-info.component.html',
   styleUrls: ['./component-info.component.scss']
 })
-export class ComponentInfoComponent implements OnInit, OnChanges {
-  @Input() name: string = '';
+export class ComponentInfoComponent implements OnInit {
+  @Input() componentInfo: ComponentInfo;
 
-  cmpInfo: ComponentInfo;
-  tabs = COMMPONENT_INFO_TABS.map(t => ({...t}));
+  tabs = COMMPONENT_INFO_TABS.map(t => ({ ...t }));
   activeTab = this.tabs[1];
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
 
-  constructor(private docService: DocsService) { }
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.getComponentInfo();
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getComponentInfo();
-  }
-
-  private getComponentInfo() {
-    this.docService.getComponentInfo(this.name).subscribe((cmpInfo: ComponentInfo) => this.cmpInfo = cmpInfo);
   }
 
   public tabChanged(tab: Tab) {
     this.activeTab = tab;
   }
+
 }

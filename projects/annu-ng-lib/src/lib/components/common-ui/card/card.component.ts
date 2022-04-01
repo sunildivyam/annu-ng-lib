@@ -16,17 +16,13 @@ import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from 
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnChanges {
+export class CardComponent {
   @Input() isRowLayout: boolean = false;
   @Input() imageCssClasses: Array<string> = [];
   @Input() contentCssClasses: Array<string> = [];
 
-  @HostBinding('class') rowLayout = '';
+  @HostBinding('class.nowrap') get isRowLayoutMethod() { return this.isRowLayout};
 
-  constructor() { }
-
-  ngOnChanges(changes: SimpleChanges): void {
-      this.rowLayout = this.isRowLayout ? 'nowrap': '';
-  }
+  constructor() {}
 
 }

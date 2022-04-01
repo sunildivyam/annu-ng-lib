@@ -34,7 +34,12 @@ export class LoginStatusComponent implements OnInit {
 
   private async logout(): Promise<void> {
     this.loading = true;
+    try {
     await this.authFireSvc.logout();
+    } catch(error: any) {
+      console.log(error)
+      this.loading = false;
+    }
     this.loading = false;
     this.router.navigate([this.loggedOutPageUrl])
   }

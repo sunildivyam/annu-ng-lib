@@ -25,7 +25,7 @@ export const appConfig: AppConfig = {
     themeName: 'armyGreen',
     tNcUrl: '',
     privacyPolicyUrl: '',
-    loginUrl:'',
+    loginUrl: '',
     logoutUrl: '',
     profileUrl: '',
     metaInfo: {
@@ -50,4 +50,122 @@ export const appConfig: AppConfig = {
         "video": ""
     },
     mainMenuItems: [],
-  };
+};
+
+const copyArray = (arr: Array<any> = []): Array<any> => arr.map(obj => ({...obj}))
+
+const secSubNavs = [
+    {
+        id: 'lib/app-config',
+        title: 'App Config',
+        href: 'app-config',
+        subNav: []
+    },
+    {
+        id: 'lib/services',
+        title: 'Library',
+        href: 'lib',
+        subNav: []
+    },
+    {
+        id: 'lib/components/cms',
+        title: 'CMS',
+        href: 'cms',
+        subNav: []
+    },
+    {
+        id: 'lib/firebase',
+        title: 'Firebase',
+        href: 'firebase',
+        subNav: []
+    },
+    {
+        id: 'lib/components/common-ui',
+        title: 'Common UI',
+        href: 'common-ui',
+        subNav: []
+    },
+    {
+        id: 'lib/components/docs',
+        title: 'Documentation',
+        href: 'docs',
+        subNav: []
+    },
+    {
+        id: 'lib/components/auth',
+        title: 'Authentication',
+        href: 'auth',
+        subNav: []
+    }
+];
+
+export const DOCS_NAVS = [
+    {
+        id: 'components',
+        title: 'Components',
+        href: 'components',
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'directives',
+        title: 'Directives',
+        href: 'directives',
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'services',
+        title: 'Services',
+        href: 'services',
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'interfaces',
+        title: 'Interfaces',
+        href: 'interfaces',
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'classes',
+        title: 'Classes',
+        href: 'classes',
+        subNav: copyArray(secSubNavs)
+    },
+    {
+        id: 'guards',
+        title: 'Guards',
+        href: 'guards',
+        subNav: [
+            {
+                id: 'lib/services/articles-route-resolvers',
+                title: 'Articles Route Resolvers',
+                href: 'articles-route-resolvers',
+                subNav: []
+            },
+            {
+                id: 'lib/services/lib-docs-route-resolvers',
+                title: 'Library Docs Route Resolvers',
+                href: 'lib-docs-route-resolvers',
+                subNav: []
+            },
+            {
+                id: 'lib/services/route-guards',
+                title: 'Route Guards',
+                href: 'route-guards',
+                subNav: []
+            },
+        ]
+    },
+    {
+        id: 'interceptors',
+        title: 'Interceptors',
+        href: 'interceptors',
+        subNav: [
+            {
+                id: 'lib/services/interceptors',
+                title: 'Interceptors',
+                href: 'interceptors',
+                subNav: []
+            },
+        ]
+    }
+]

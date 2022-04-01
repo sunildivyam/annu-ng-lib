@@ -7,15 +7,15 @@ import { ComponentMethod } from '../docs.interface';
   styleUrls: ['./service-method.component.scss']
 })
 export class ServiceMethodComponent implements OnInit, OnChanges {
-  @Input() method: ComponentMethod;
+  @Input() method: ComponentMethod = null;
   @Output() changed: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   parameters: Array<any> = []
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    // this.initValues();
+    this.initValues();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

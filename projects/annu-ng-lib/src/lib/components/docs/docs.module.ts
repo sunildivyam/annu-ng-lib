@@ -6,6 +6,12 @@ import { ServiceMethodModule } from './service-method';
 import { ComponentInfoModule } from './component-info';
 import { ComponentPropsModule } from './component-props';
 import { ServiceInfoModule } from './service-info';
+import { ComponentUsageModule } from './component-usage/component-usage.module';
+import { InterfaceInfoModule } from './interface-info/interface-info.module';
+import { GuardInfoModule } from './guard-info/guard-info.module';
+import { InterceptorInfoModule } from './interceptor-info/interceptor-info.module';
+import { ClassInfoModule } from './class-info/class-info.module';
+import { DirectiveInfoModule } from './directive-info/directive-info.module';
 
 
 @NgModule({
@@ -20,6 +26,12 @@ import { ServiceInfoModule } from './service-info';
     ComponentInfoModule,
     ComponentPropsModule,
     ServiceInfoModule,
+    ComponentUsageModule,
+    InterfaceInfoModule,
+    GuardInfoModule,
+    InterceptorInfoModule,
+    ClassInfoModule,
+    DirectiveInfoModule,
   ],
 })
 export class DocsModule { }

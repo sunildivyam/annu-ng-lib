@@ -48,7 +48,7 @@ export class SpinnerComponent implements OnInit, OnChanges {
    */
    @HostBinding('style.position') position = 'absolute';
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Initializes the display and position bound style properties.

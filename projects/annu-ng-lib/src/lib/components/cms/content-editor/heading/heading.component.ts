@@ -14,7 +14,7 @@ export class HeadingComponent implements OnInit {
   @Output() changed = new EventEmitter<EditorElement>();
   @Output() focusin = new EventEmitter<EditorElement>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

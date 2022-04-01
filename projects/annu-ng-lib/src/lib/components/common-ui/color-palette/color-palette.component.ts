@@ -17,7 +17,12 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
   /**
    * A ColorPalette Objcet containg name, hue, saturation, and colors array
    */
-  @Input() colorPalette: ColorPalette;
+  @Input() colorPalette: ColorPalette = {
+    name: 'Default',
+    hue: 180,
+    saturation: 50,
+    colors: []
+  };
   /**
    * Emits ColorPalette objcet, as any of the ColorPalette value changes.
    */
@@ -37,13 +42,6 @@ export class ColorPaletteComponent implements OnInit, OnChanges {
   headerText: string;
 
   constructor(private themeService: ThemeService) {
-    this.colorPalette = {
-      name: 'Default',
-      hue: 180,
-      saturation: 50,
-      colors: []
-    } as ColorPalette;
-
     this.hueControl = new FormControl(this.colorPalette.hue);
     this.saturationControl = new FormControl(this.colorPalette.saturation);
     this.hueControl.valueChanges.subscribe(this.hueChanged);

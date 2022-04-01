@@ -1,0 +1,31 @@
+<anu-error *ngIf="!directiveInfo" [code]="error?.code || 404" [message]="error?.message || 'Directive not found'"></anu-error>
+<article>
+    <h1>{{directiveInfo?.name}}</h1>
+    <p [innerHtml]="directiveInfo?.description"></p>
+    <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
+
+    <section *ngIf="activeTab.name === tabs[0].name">
+        <ng-container *ngIf="directiveInfo?.inputProps && directiveInfo?.inputProps.length">
+            <h2>Input Properties</h2>
+            <anu-component-props [props]="directiveInfo?.inputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="directiveInfo?.outputProps && directiveInfo?.outputProps.length">
+            <h2>Output Properties / Events</h2>
+            <anu-component-props [props]="directiveInfo?.outputProps"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="directiveInfo?.props && directiveInfo?.props.length">
+            <h2>Properties</h2>
+            <anu-component-props [props]="directiveInfo?.props"></anu-component-props>
+        </ng-container>
+        <ng-container *ngIf="directiveInfo?.methods && directiveInfo?.methods.length">
+            <h2>Methods</h2>
+            <anu-component-props [props]="directiveInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
+        </ng-container>
+    </section>
+
+    <section *ngIf="activeTab.name === tabs[1].name">
+        <h2>{{directiveInfo?.tsUrl}}</h2>
+        <anu-code-block [source]="directiveInfo?.tsSource"></anu-code-block>
+    </section>
+
+</article>

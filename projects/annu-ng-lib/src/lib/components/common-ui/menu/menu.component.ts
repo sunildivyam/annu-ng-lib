@@ -7,17 +7,16 @@ import { MenuItem } from './menu.interface';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-@Input() items: Array<MenuItem> = [];
-@Input() heading: string;
-@Input() headingHref: Array<string> = [];
-@Input() subHeading: string;
-@Input() subHeadingHref: Array<string> = [];
+  @Input() items: Array<MenuItem> = [];
+  @Input() heading: string = '';
+  @Input() headingHref: Array<string> = [];
+  @Input() subHeading: string = '';
+  @Input() subHeadingHref: Array<string> = [];
+  @Input() opened: boolean = false;
+  @Output() selected = new EventEmitter<MenuItem>();
+  @Output() openStatusChanged = new EventEmitter<boolean>();
 
-@Input() opened: boolean;
-@Output() selected = new EventEmitter<MenuItem>();
-@Output() openStatusChanged = new EventEmitter<boolean>();
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

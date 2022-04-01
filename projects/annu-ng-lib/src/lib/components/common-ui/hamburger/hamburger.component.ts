@@ -45,7 +45,7 @@ export class HamburgerComponent implements OnInit {
    */
   @HostListener('click') toggleMethod() { this.toggle() }
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

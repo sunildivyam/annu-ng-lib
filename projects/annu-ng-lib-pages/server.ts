@@ -6,7 +6,7 @@ import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
-import { existsSync } from 'fs';
+import { existsSync, readFile } from 'fs';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -24,6 +24,19 @@ export function app(): express.Express {
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
+
+  // Serve JSON data
+  server.get('/data/*.json', (req, res) => {
+    readFile(join(distFolder, req.url), {encoding: 'utf8'}, (err, json) => {
+      if (err) {
+        res.status(404).send('Requested resource does not exist');
+      } else {
+        let obj = JSON.parse(json);
+        res.json(obj);
+      }
+    });
+  });
+
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'

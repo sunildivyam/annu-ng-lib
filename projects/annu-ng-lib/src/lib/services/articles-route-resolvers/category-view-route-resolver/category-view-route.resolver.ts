@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { CategoryViewRouteData, HomeViewRouteData } from '../articles-route-resolvers.interface';
+import { CategoryViewRouteData, ArticlesHomeViewRouteData } from '../articles-route-resolvers.interface';
 
 import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
 import { CategoryGroup } from '../../../components/cms';
@@ -47,7 +47,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       return this.routeData;
     } else {
       // populate some of the data that is already available on parent route.
-      const parentRouteData: HomeViewRouteData = route.parent.data[ARTICLES_ROUTE_RESOLVER_DATA_KEYS.HOME_VIEW];
+      const parentRouteData: ArticlesHomeViewRouteData = route.parent.data[ARTICLES_ROUTE_RESOLVER_DATA_KEYS.ARTICLES_HOME_VIEW];
       this.routeData = {
         allCategoriesGroups: parentRouteData.allCategoriesGroups,
         errorAllCategoriesGroups: parentRouteData.errorAllCategoriesGroups

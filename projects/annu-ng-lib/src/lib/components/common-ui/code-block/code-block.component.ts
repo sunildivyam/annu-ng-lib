@@ -13,18 +13,22 @@ import { HighlightService } from './highlight.service';
   styleUrls: ['./code-block.component.scss']
 })
 export class CodeBlockComponent implements OnInit, OnChanges {
-@Input() source: string;
-@Input() language = 'typescript';
+  @Input() source: string;
+  @Input() language = 'typescript';
 
-highlightedSource: string ='';
+  highlightedSource: string = '';
 
-  constructor(private hltService: HighlightService) { }
+  constructor(private hltService: HighlightService) {}
+
+  private highlightSource() {
+    setTimeout(() => this.highlightedSource = this.hltService.highlight(this.source, this.language));
+  }
 
   ngOnInit(): void {
-    this.highlightedSource = this.hltService.highlight(this.source, this.language);
+    this.highlightSource();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.highlightedSource = this.hltService.highlight(this.source, this.language);
+    this.highlightSource();
   }
 }

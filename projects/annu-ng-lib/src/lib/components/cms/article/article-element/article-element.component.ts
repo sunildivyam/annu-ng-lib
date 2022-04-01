@@ -9,7 +9,7 @@ import { EditorElement } from '../../content-editor/content-editor.interface';
 export class ArticleElementComponent implements OnInit {
   @Input() value: EditorElement;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

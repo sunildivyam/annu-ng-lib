@@ -1,15 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { LibConfig } from '../../app-config/app-config.interface';
-import { ACCESS_MODIFIERS } from './constants';
-import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo } from './docs.interface';
+import { ACCESS_MODIFIERS } from './docs.constants';
+import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo, LibDocsInfo } from './docs.interface';
 
 @Injectable()
 export class DocsService {
   url: string;
-  componentsCache: Object = {};
-  servicesCache: Object = {};
+  libDocsCache: LibDocsInfo = {};
 
   constructor(private httpClient: HttpClient, private libConfig: LibConfig) {
     this.url = this.libConfig?.docsJsonUrl || '';
@@ -70,50 +70,231 @@ export class DocsService {
     } as ServiceInfo;
   }
 
+
+  private stripSingleQuotedStr(str: string): string {
+    if (!str) return str;
+
+    if ((str.startsWith("'") && str.endsWith("'")) || (str.startsWith('\"') && str.endsWith('\"'))) {
+      str = str.substring(1);
+      str = str.substring(0, str.length - 1);
+    }
+
+    return str;
+  }
+
+  private replaceSingleWithDoubleQuotes(str): string {
+    if (!str) return str;
+    str = str.replace(/'/g, '"');
+
+    return str;
+  }
+
+  public parsePropValue(prop: ComponentProp, value: any): any {
+    let paramValue;
+    try {
+      switch (prop.type) {
+        case 'string':
+          paramValue = value === 'null' ? null : value;
+          break;
+        case 'number':
+          paramValue = parseInt(value);
+          break;
+        case 'boolean':
+          paramValue = value === 'null' ? null : value === 'false' ? false : Boolean(value);
+          break;
+        default:
+          paramValue = value === 'null' ? null : JSON.parse(value);
+      }
+    } catch (error: any) {
+      paramValue = this.replaceSingleWithDoubleQuotes(value);
+      try {
+        paramValue = paramValue === 'null' ? null : JSON.parse(paramValue);
+      } catch (error: any) {
+        paramValue = value;
+      }
+    }
+
+    return paramValue;
+  }
+
+  public parsePropValueToStr(prop: ComponentProp, value: any): any {
+    let paramValue;
+    try {
+      switch (prop.type) {
+        case 'string':
+          paramValue = value === null ? 'null' : this.stripSingleQuotedStr(value);
+          break;
+        case 'number':
+          paramValue = value;
+          break;
+        case 'boolean':
+          paramValue = value === 'null' ? null : value === 'false' ? false : value;
+          break;
+        default:
+          paramValue = value === null ? 'null' : JSON.stringify(value, null, '\t');
+          paramValue = this.stripSingleQuotedStr(paramValue);
+      }
+    } catch (error: any) {
+      paramValue = value;
+    }
+
+    return paramValue;
+  }
+
+  /**
+   * Gets docs info for all available resources in the library.
+   * @date 23/3/2022 - 1:25:35 pm
+   *
+   * @public
+   * @async
+   * @returns {Promise<LibDocsInfo>}
+   */
+  public async getLibDocsInfo(): Promise<LibDocsInfo> {
+    return new Promise((resolve, reject) => {
+
+      this.httpClient.get<any>(this.url)
+        .pipe(catchError(
+          (errorResponse: any) => {
+            this.libDocsCache.services = [];
+            this.libDocsCache.components = [];
+            console.log('STATUS', errorResponse.status);
+            let errorMsg: string;
+            if (errorResponse.error instanceof HttpErrorResponse) {
+              errorMsg = errorResponse.error.message;
+            } else {
+              errorMsg = errorResponse.message
+            }
+            const error = { code: errorResponse.status || errorResponse?.error?.code || errorResponse?.code || 'UNKNOWN', message: errorMsg || 'Something went wrong' }
+            reject(error);
+
+            return throwError(() => {
+              return error;
+            });
+          }
+        ))
+        .subscribe(docsResponse => {
+          this.libDocsCache.services = docsResponse.injectables.map(service => this.parseServiceInfo(service)) || [];
+          this.libDocsCache.components = docsResponse.components.map(component => this.parseComponentInfo(component)) || [];
+          this.libDocsCache.interfaces = docsResponse.interfaces.map(intf => this.parseServiceInfo(intf)) || [];
+          this.libDocsCache.classes = docsResponse.classes.map(cls => this.parseServiceInfo(cls)) || [];
+          this.libDocsCache.directives = docsResponse.directives.map(dirtve => this.parseComponentInfo(dirtve)) || [];
+          this.libDocsCache.interceptors = docsResponse.interceptors.map(interceptor => this.parseServiceInfo(interceptor)) || [];
+          this.libDocsCache.guards = docsResponse.guards.map(guard => this.parseServiceInfo(guard)) || [];
+
+          resolve({ ...this.libDocsCache });
+        })
+    })
+  }
+
+
   /**
   * getComponentInfo() method fetches all the Components from docs json,
   * parses and filters them and returns the Component Info for the specipfied component name.
   *
   * @public
   * @param {string} name Name of the service to retrive information
-  * @returns {Observable<ComponentInfo>}
+  * @returns {Promise<ComponentInfo>}
   */
-  public getComponentInfo(name: string): Observable<ComponentInfo> {
-    return new Observable(observer => {
-      const cmpInfo = this.componentsCache[name];
-      if (cmpInfo) {
-        observer.next(cmpInfo);
-      } else {
-        this.httpClient.get(this.url).subscribe((res: any) => {
-          const cmp = res.components.find(c => c.name === name);
-          this.componentsCache[name] = this.parseComponentInfo(cmp);
-          observer.next(this.componentsCache[name]);
-        })
-      }
-    })
-  }
+  public async getComponentInfo(name: string): Promise<ComponentInfo> {
+    let cmpInfo;
 
+    if (!name) {
+      throw new Error('Component Name is Empty or Invalid');
+    }
+
+    if (this.libDocsCache.components && this.libDocsCache.components.length) {
+      cmpInfo = this.libDocsCache.components.find(c => c.name === name);
+    }
+
+
+    if (cmpInfo) {
+      return { ...cmpInfo };
+    } else {
+      try {
+        await this.getLibDocsInfo();
+        if (this.libDocsCache.components && this.libDocsCache.components.length) {
+          cmpInfo = this.libDocsCache.components.find(c => c.name === name);
+        }
+
+        if (cmpInfo) {
+          return { ...cmpInfo };
+        } else {
+          throw new Error('Component not found - ' + name);
+        }
+      } catch (error: any) {
+        throw error;
+      }
+    }
+  }
 
   /**
-   * getServiceInfo() method fetches all the services from docs json,
-   * parses and filters them and returns the Service Info for the specipfied service name.
-   *
-   * @public
-   * @param {string} name Name of the service to retrive information
-   * @returns {Observable<Object>}
-   */
-  public getServiceInfo(name: string): Observable<Object> {
-    return new Observable(observer => {
-      const svcInfo = this.servicesCache[name];
-      if (svcInfo) {
-        observer.next(svcInfo);
-      } else {
-        this.httpClient.get(this.url).subscribe((res: any) => {
-          const svc = res.injectables.find(s => s.name === name);
-          this.servicesCache[name] = this.parseServiceInfo(svc);
-          observer.next(this.servicesCache[name]);
-        })
+    * getServiceInfo() method fetches all the Services from docs json,
+    * parses and filters them and returns the Service Info for the specipfied component name.
+    *
+    * @public
+    * @param {string} name Name of the service to retrive information
+    * @returns {Promise<ServiceInfo>}
+    */
+  public async getServiceInfo(name: string): Promise<ServiceInfo> {
+    if (!name) {
+      throw new Error('Service Name is Empty or Invalid');
+    }
+
+    const svcInfo = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
+
+    if (svcInfo) {
+      return { ...svcInfo };
+    } else {
+      try {
+        await this.getLibDocsInfo();
+        const svcInfoFound = this.libDocsCache.services && this.libDocsCache.services.length && this.libDocsCache.services.find(s => s.name === name);
+        if (svcInfoFound) {
+          return { ...svcInfoFound };
+        } else {
+          throw new Error('Service not found - ' + name);
+        }
+      } catch (error: any) {
+        throw error;
       }
-    })
+    }
   }
+
+  /**
+  * getAllComponents() method fetches all the Components from docs json.
+  *
+  * @public
+  * @returns {Promise<Array<ComponentInfo>>}
+  */
+  public async getAllComponents(): Promise<Array<ComponentInfo>> {
+    const allComponents = this.libDocsCache.components || [];
+
+    if (allComponents && allComponents.length) {
+      return [...allComponents];
+    } else {
+      await this.getLibDocsInfo();
+      const allComponentsFound = this.libDocsCache.components || [];
+
+      return [...allComponentsFound];
+    }
+  }
+
+  /**
+  * getAllServices() method fetches all the Services from docs json.
+  *
+  * @public
+  * @returns {Promise<Array<ServiceInfo>>}
+  */
+  public async getAllServices(): Promise<Array<ServiceInfo>> {
+    const allServices = this.libDocsCache.services || [];
+
+    if (allServices && allServices.length) {
+      return [...allServices];
+    } else {
+      await this.getLibDocsInfo();
+      const allServicesFound = this.libDocsCache.services || [];
+
+      return [...allServicesFound];
+    }
+  }
+
 }

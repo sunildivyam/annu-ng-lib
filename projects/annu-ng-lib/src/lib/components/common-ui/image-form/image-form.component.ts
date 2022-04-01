@@ -7,12 +7,12 @@ import { ImageInfo } from './image-form.interface';
   styleUrls: ['./image-form.component.scss']
 })
 export class ImageFormComponent implements OnInit {
-@Input() src: string = 'https://';
-@Input() alt: string = '';
-@Output() cancel = new EventEmitter();
-@Output() save = new EventEmitter<ImageInfo>();
+  @Input() src: string = 'https://';
+  @Input() alt: string = '';
+  @Output() cancel = new EventEmitter();
+  @Output() save = new EventEmitter<ImageInfo>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
@@ -24,7 +24,7 @@ export class ImageFormComponent implements OnInit {
 
   public saveClicked(event) {
     event.preventDefault();
-    this.save.emit({src: this.src, alt: this.alt} as ImageInfo);
+    this.save.emit({ src: this.src, alt: this.alt } as ImageInfo);
   }
 
 }

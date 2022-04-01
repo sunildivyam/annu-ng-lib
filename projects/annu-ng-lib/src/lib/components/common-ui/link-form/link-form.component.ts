@@ -15,7 +15,7 @@ export class LinkFormComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<Link>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

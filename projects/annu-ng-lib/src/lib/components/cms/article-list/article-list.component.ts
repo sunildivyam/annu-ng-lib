@@ -10,7 +10,7 @@ export class ArticleListComponent implements OnInit {
   @Input() items: Array<Article> = [];
   @Input() href: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
