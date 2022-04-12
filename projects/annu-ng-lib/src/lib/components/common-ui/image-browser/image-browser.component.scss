@@ -1,0 +1,21 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    position: relative;
+
+    .image-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--anu-primary-normal);
+        width: 100%;
+        height: 10rem;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+}

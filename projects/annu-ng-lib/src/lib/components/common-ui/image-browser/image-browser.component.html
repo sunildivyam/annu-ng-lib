@@ -1,0 +1,42 @@
+<anu-error class="col-12" *ngIf="error" [code]="error?.code" [message]="error?.message"></anu-error>
+<anu-card class="border-round"  [ngClass]="imageClassNames">
+    <anu-card-body>
+        <h2>Upload Image</h2>
+        <div class="form-group">
+            <input #fileInput id="file" type="file" class="" (change)="onFileChange($event)" />
+            <input type="button" class="btn" (click)="fileInput.click()" value="Choose file to upload...">
+            <label>{{choosenFileName || 'No file choosen'}}</label>
+        </div>
+    </anu-card-body>
+</anu-card>
+
+<ng-container *ngFor="let imgFile of imagesFiles">
+    <anu-card class="border-round" [ngClass]="imageClassNames" [class.primary-lightest-bg]="imgFile.downloadUrl === selectedImage.downloadUrl">
+        <anu-card-image>
+            <div *ngIf="!imgFile.downloadUrl" class="image-preview relative">
+                <a href="#" (click)="previewClick($event, imgFile)">Preview</a>
+                <anu-spinner class="col-12" [show]="loadingPreview"></anu-spinner>
+            </div>
+            <img *ngIf="imgFile.downloadUrl" [src]="imgFile.downloadUrl" [alt]="imgFile.name" />
+        </anu-card-image>
+        <anu-card-title class="spacing-around-vertical">
+            {{imgFile.name}}
+        </anu-card-title>
+        <anu-card-footer>
+            <div class="row stretch nowrap spacing-around-vertical">
+                <a href="#" (click)="deleteClick($event, imgFile)">delete</a>
+                <a href="#" (click)="selectClick($event, imgFile)">select</a>
+            </div>
+        </anu-card-footer>
+    </anu-card>
+</ng-container>
+
+<anu-card [ngClass]="imageClassNames" class="center middle border-round">
+    <anu-card-body>
+        <div class="col-12">
+            <a *ngIf="nextPageToken" href="#" (click)="loadMoreClick($event)">Load more...</a>
+            <a *ngIf="!nextPageToken" href="#" (click)="refreshClick($event)">Re-load List</a>
+        </div>
+    </anu-card-body>
+</anu-card>
+<anu-spinner class="col-12" [show]="loading"></anu-spinner>

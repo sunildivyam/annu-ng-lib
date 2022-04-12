@@ -26,6 +26,7 @@ import { ErrorModule } from './error/error.module';
 import { CollapsibleModule } from './collapsible/collapsible.module';
 import { MultiSelectBoxModule } from './multi-select-box/multi-select-box.module';
 import { DrawerModule } from './drawer/drawer.module';
+import { ImageBrowserModule } from './image-browser/image-browser.module';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { DrawerModule } from './drawer/drawer.module';
     CollapsibleModule,
     MultiSelectBoxModule,
     DrawerModule,
+    ImageBrowserModule,
   ],
 })
 export class CommonUiModule { }

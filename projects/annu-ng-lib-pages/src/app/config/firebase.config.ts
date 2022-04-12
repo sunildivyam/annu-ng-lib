@@ -63,8 +63,8 @@ export const firebaseAppConfig = {
 export const firebaseStoreConfig: FirebaseStoreConfig = {
   baseStoreUrl: 'annu-ng-lib/docs',
   maxKBs: 1024,
-  maxWidth: 400,
-  maxHeight: 300,
+  maxWidth: 900,
+  maxHeight: 600,
   minWidth: 100,
   minHeight: 100,
 }

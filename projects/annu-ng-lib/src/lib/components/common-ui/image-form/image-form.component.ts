@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ImageFireStoreService } from '../../../firebase/image-storage';
+import { ImageFileInfo } from '../image-browser/image-browser.interface';
 import { ImageInfo } from './image-form.interface';
 
 @Component({
@@ -12,8 +14,6 @@ export class ImageFormComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 
-  imageData: any;
-
   constructor() { }
 
   ngOnInit(): void {
@@ -26,13 +26,11 @@ export class ImageFormComponent implements OnInit {
 
   public saveClicked(event) {
     event.preventDefault();
-    this.save.emit({ src: this.src, alt: this.alt, imageData: this.imageData } as ImageInfo);
+    this.save.emit({ src: this.src, alt: this.alt } as ImageInfo);
   }
 
-  public onFileChange(event: any): void {
-    this.imageData = null;
-    if (event.target.files.length > 0) {
-      this.imageData = event.target.files[0];
-    }
+  public onFileBrowserSelect(imageFileInfo: ImageFileInfo): void {
+    this.src = imageFileInfo.downloadUrl;
   }
+
 }

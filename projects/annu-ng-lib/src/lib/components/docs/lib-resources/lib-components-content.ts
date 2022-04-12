@@ -32,6 +32,7 @@ import { ThemePreviewComponent } from '../../common-ui/theme-preview/docs.data';
 import { ToggleComponent } from '../../common-ui/toggle/docs.data';
 import { ToolbarComponent } from '../../common-ui/toolbar/docs.data';
 import { TypographyComponent } from '../../common-ui/typography/docs.data';
+import { ImageBrowserComponent } from '../../common-ui/image-browser/docs.data';
 
 // CMS
 import { ArticleComponent } from '../../cms/article/docs.data';
@@ -96,6 +97,7 @@ export const LibComponentsContent = {
   ToggleComponent,
   ToolbarComponent,
   TypographyComponent,
+  ImageBrowserComponent,
 
   // CMS
   ArticleComponent,
