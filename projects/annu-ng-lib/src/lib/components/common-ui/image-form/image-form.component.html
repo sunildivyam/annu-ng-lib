@@ -1,11 +1,18 @@
 <form class="container disable-select">
-    <anu-image-browser (selected)="onFileBrowserSelect($event)"
-        [selectedImage]="{downloadUrl: src}"></anu-image-browser>
-    <h2>Selected Image:</h2>
     <label>Image source</label>
     <input type="text" [(ngModel)]="src" name="image-src" />
     <label>Image alt text</label>
     <input type="text" [(ngModel)]="alt" name="image-alt" />
+
+    <anu-collapsible class="spacing-around-vertical" [hamBurgerClassNames]="['size-sm']">
+        <anu-collapsible-header>
+            Browse from Server
+        </anu-collapsible-header>
+        <anu-collapsible-content>
+            <anu-image-browser (selected)="onFileBrowserSelect($event)" [selectedImage]="{downloadUrl: src}">
+            </anu-image-browser>
+        </anu-collapsible-content>
+    </anu-collapsible>
 
     <div class="row spacing">
         <div class="col-6 center"><a href="#" (click)="cancelClicked($event)">Cancel</a></div>

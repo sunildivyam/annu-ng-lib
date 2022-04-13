@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ImageFireStoreService } from '../../../firebase/image-storage';
 import { ImageFileInfo } from '../image-browser/image-browser.interface';
 import { ImageInfo } from './image-form.interface';
 

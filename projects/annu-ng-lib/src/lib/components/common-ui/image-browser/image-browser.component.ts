@@ -89,14 +89,35 @@ export class ImageBrowserComponent implements OnInit {
     }
   }
 
+  private async previewImageFile(imageFile: ImageFileInfo) {
+    this.error = null;
+    this.loadingPreview = true;
+
+    try {
+      const downloadUrl = await this.imageFireSvc.getImageUrl(imageFile.name, this.authSvc.getCurrentUserId());
+      imageFile.downloadUrl = downloadUrl;
+      this.loadingPreview = false;
+    } catch (error: any) {
+      this.error = error;
+      this.loadingPreview = false;
+    }
+  }
+
   ngOnInit(): void {
     this.refreshFiles();
   }
 
-  public selectClick(event: any, imageFIle: ImageFileInfo): void {
+  public selectClick(event: any, imageFile: ImageFileInfo): void {
     event.preventDefault();
-    this.selectedImage = imageFIle;
-    this.selected.emit(imageFIle);
+    if (!imageFile.downloadUrl) {
+      this.previewImageFile(imageFile).then(() => {
+        this.selectedImage = imageFile;
+        this.selected.emit(imageFile);
+      })
+    } else {
+      this.selectedImage = imageFile;
+      this.selected.emit(imageFile);
+    }
   }
 
   public loadMoreClick(event: any) {
@@ -109,18 +130,14 @@ export class ImageBrowserComponent implements OnInit {
     this.refreshFiles();
   }
 
-  public deleteClick(event: any, imageFIle: ImageFileInfo): void {
+  public deleteClick(event: any, imageFile: ImageFileInfo): void {
     event.preventDefault();
-    this.deleteImageFile(imageFIle);
+    this.deleteImageFile(imageFile);
   }
 
-  public previewClick(event: any, imageFIle: ImageFileInfo): void {
+  public previewClick(event: any, imageFile: ImageFileInfo): void {
     event.preventDefault();
-    this.loadingPreview = true;
-    this.imageFireSvc.getImageUrl(imageFIle.name, this.authSvc.getCurrentUserId()).then(url => {
-      imageFIle.downloadUrl = url
-      this.loadingPreview = false;
-    });
+    this.previewImageFile(imageFile);
   }
 
   public onFileChange(event: any) {

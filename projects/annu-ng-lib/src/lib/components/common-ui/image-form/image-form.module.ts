@@ -4,6 +4,7 @@ import { ImageFormComponent } from './image-form.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorModule } from '../error';
 import { ImageBrowserModule } from '../image-browser';
+import { CollapsibleModule } from '../collapsible';
 
 
 
@@ -14,6 +15,7 @@ import { ImageBrowserModule } from '../image-browser';
     FormsModule,
     ErrorModule,
     ImageBrowserModule,
+    CollapsibleModule,
   ],
   exports: [ImageFormComponent],
 })

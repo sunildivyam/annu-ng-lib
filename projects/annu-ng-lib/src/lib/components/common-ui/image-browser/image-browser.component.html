@@ -1,7 +1,7 @@
 <anu-error class="col-12" *ngIf="error" [code]="error?.code" [message]="error?.message"></anu-error>
 <anu-card class="border-round"  [ngClass]="imageClassNames">
     <anu-card-body>
-        <h2>Upload Image</h2>
+        <h3>Upload Image</h3>
         <div class="form-group">
             <input #fileInput id="file" type="file" class="" (change)="onFileChange($event)" />
             <input type="button" class="btn" (click)="fileInput.click()" value="Choose file to upload...">
