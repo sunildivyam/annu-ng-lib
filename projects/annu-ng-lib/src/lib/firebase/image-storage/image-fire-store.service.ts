@@ -10,7 +10,6 @@ export class ImageFireStoreService {
 
   constructor(private commonFireSvc: CommonFirebaseService, private libConfig: LibConfig) {
     this.baseStoreUrl = this.libConfig.firebaseStoreConfig.baseStoreUrl;
-    console.log(this.baseStoreUrl)
   }
 
   private buildImageUrl(filePath: string, userId: string = ''): string {
@@ -140,7 +139,6 @@ export class ImageFireStoreService {
   public async getImagesList(filePath: string, pageSize: number = 10, nextPageToken: any = null, userId: string = ''): Promise<ImageFileInfoList> {
     const fireStorage = getStorage(this.commonFireSvc.initOrGetFirebaseApp(), this.libConfig.firebase.storageBucket);
     const lookinFolder = this.buildImageUrl(filePath, userId);
-    console.log(lookinFolder)
     const listRef = ref(fireStorage, lookinFolder);
 
     try {
