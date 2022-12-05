@@ -35,15 +35,19 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   sampleCategory: Category;
 
   constructor(private utils: UtilsService) {
-    this.sampleCategory = { ...SAMPLE_CATEGORY, created: utils.currentDate, updated: utils.currentDate };
+    this.sampleCategory = { ...SAMPLE_CATEGORY, id: this.utils.getUniqueFromString(SAMPLE_CATEGORY.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.category = { ...this.sampleCategory };
+
+    this.categoryMetaChanged = this.categoryMetaChanged.bind(this);
   }
 
   private initCategory() {
     if (this.value) {
-      this.category = { ...this.value };
+      this.category = { ...this.value, metaInfo: { ...this.value.metaInfo } };
+
     } else {
-      this.category = { ...this.sampleCategory };
+      this.value = { ...this.sampleCategory, metaInfo: { ...this.sampleCategory.metaInfo } };
+      this.category = { ...this.sampleCategory, metaInfo: { ...this.sampleCategory.metaInfo } };
     }
   }
 
@@ -60,7 +64,12 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   }
 
   public categoryMetaChanged(metaInfo: MetaInfo) {
-    this.category.id = this.utils.toDashedString(metaInfo.title);
+    if (metaInfo.title !== this.value?.metaInfo?.title) {
+      this.category.id = this.utils.getUniqueFromString(metaInfo.title);
+    } else {
+      this.category.id = this.value.id;
+    }
+
     this.category = { ...this.category, metaInfo: { ...metaInfo } };
     this.changed.emit({ ...this.category });
   }

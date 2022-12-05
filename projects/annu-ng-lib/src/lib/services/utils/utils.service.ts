@@ -72,4 +72,21 @@ export class UtilsService {
 
     return str.substring(0, count) + '...';
   }
+
+
+  /**
+   * Generates a unique ID from a string by adding dashes for spaces and adding a unique string.
+   * @date 14/4/2022 - 2:39:05 pm
+   *
+   * @public
+   * @param {string} [str='']
+   * @returns {string}
+   */
+  public getUniqueFromString(str: string = ''): string {
+    const dashed = this.toDashedString(str);
+    const rndStr = Math.random().toString(36).substring(2);
+    const uniqueId = Date.now().toString(36) + rndStr.substring(rndStr.length/3);
+
+    return `${dashed}-${uniqueId}`;
+  }
 }

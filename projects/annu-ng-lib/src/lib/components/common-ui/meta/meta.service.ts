@@ -46,7 +46,7 @@ export class MetaService {
     metaProps.forEach((p: MetaProp) => {
       p.types.forEach((t: MetaPropertyType) => {
         const attrValue = t.subType ? `${t.subType}:${p.name}` : p.name;
-        const attr = `${t.type}="${attrValue}"`;
+        const attr = `${t.type === 'httpEquiv' ? 'http-equiv' : t.type }="${attrValue}"`;
         this.meta.removeTag(attr);
       })
     });
