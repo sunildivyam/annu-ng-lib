@@ -3,6 +3,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 
 const DEBOUNCE_TIME = 800;
+const OBJECT_SEPARATOR = '.';
 
 /**
  * SearchBox component filters any objects from an array for the keywords and looks into passed keys of the objects.
@@ -21,6 +22,9 @@ const DEBOUNCE_TIME = 800;
 })
 export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   @Input() items: Array<Object> = [];
+  /**
+   * Keys can be direct or nested keys, for example: "title" or "title.primary".
+   */
   @Input() keys: Array<string> = [];
   @Input() placeholder: string = 'keywords...';
   @Output() changed = new EventEmitter<Array<Object>>();
@@ -29,7 +33,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   keywordsSubject: Subject<string> = new Subject<string>();
   keywordsSubscription: Subscription
 
-  constructor() {}
+  constructor() { }
 
   private filter(): Array<Object> {
     if (!this.keywords) {
@@ -38,11 +42,34 @@ export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
     const filteredItems = this.items.filter(it => {
       let found = false;
       this.keys.forEach(key => {
-        const value = it[key] || '';
-        if (value.toLowerCase().includes(this.keywords.toLocaleLowerCase())) {
+        let value = it[key] || '';
+
+        if (key && key.includes(OBJECT_SEPARATOR)) {
+          const valueAccessorArr = key.split(OBJECT_SEPARATOR);
+          value = it[valueAccessorArr[0]] || '';
+
+          valueAccessorArr.forEach((k, index) => {
+            if (index > 0) {
+              if (typeof value === 'object' && value !== null) {
+                value = value[k];
+              } else {
+                value = null;
+              }
+            } else {
+              if (typeof value !== 'object') {
+                value = null;
+              }
+            }
+          })
+        } else {
+          value = it[key];
+        }
+
+        if (typeof value === 'string' && value.toLowerCase().includes(this.keywords.toLocaleLowerCase())) {
           found = true;
         }
       })
+
       return found;
     });
 
@@ -65,10 +92,10 @@ export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-      this.keywordsSubscription.unsubscribe();
+    if (this.keywordsSubscription) this.keywordsSubscription.unsubscribe();
   }
 
-  public keywordsModelChanged(term: string):void {
+  public keywordsModelChanged(term: string): void {
     this.keywordsSubject.next(term);
   }
 
