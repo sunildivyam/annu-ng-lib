@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ImageFileInfo } from '../image-browser/image-browser.interface';
 import { ImageInfo } from './image-form.interface';
 
 @Component({
@@ -7,12 +8,12 @@ import { ImageInfo } from './image-form.interface';
   styleUrls: ['./image-form.component.scss']
 })
 export class ImageFormComponent implements OnInit {
-  @Input() src: string = 'https://';
+  @Input() src: string = '';
   @Input() alt: string = '';
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -25,6 +26,10 @@ export class ImageFormComponent implements OnInit {
   public saveClicked(event) {
     event.preventDefault();
     this.save.emit({ src: this.src, alt: this.alt } as ImageInfo);
+  }
+
+  public onFileBrowserSelect(imageFileInfo: ImageFileInfo): void {
+    this.src = imageFileInfo.downloadUrl;
   }
 
 }

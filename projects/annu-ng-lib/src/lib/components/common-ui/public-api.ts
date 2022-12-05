@@ -25,3 +25,4 @@ export * from './error';
 export * from './collapsible';
 export * from './multi-select-box';
 export * from './drawer';
+export * from './image-browser';

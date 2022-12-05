@@ -4,7 +4,8 @@ import { FirebaseConfig } from './firebase.interface';
 import { LibConfig } from '../app-config/app-config.interface';
 import { ArticlesFirebaseModule } from './articles';
 import { AuthFirebaseModule } from './auth/auth-firebase.module';
-import { initializeApp } from 'firebase/app';
+import { ImageStorageModule } from './image-storage/image-storage.module';
+import { CommonFirebaseModule, CommonFirebaseService } from './common-firebase';
 
 @NgModule({
   declarations: [],
@@ -12,19 +13,23 @@ import { initializeApp } from 'firebase/app';
     CommonModule,
     ArticlesFirebaseModule,
     AuthFirebaseModule,
+    ImageStorageModule,
+    CommonFirebaseModule,
   ],
   exports: [
     ArticlesFirebaseModule,
     AuthFirebaseModule,
+    ImageStorageModule,
+    CommonFirebaseModule,
   ]
 })
 export class FirebaseModule {
-  constructor(private libConfig: LibConfig, @Optional() @SkipSelf() parentModule?: FirebaseModule) {
+  constructor(private commonFireSvc: CommonFirebaseService, @Optional() @SkipSelf() parentModule?: FirebaseModule) {
     if (parentModule) {
       throw new Error('FirebaseModule is already loaded. Import it in the appModule only');
     } else {
       // initialize firebase
-      initializeApp(this.libConfig.firebase);
+      this.commonFireSvc.initOrGetFirebaseApp();
     }
   }
 

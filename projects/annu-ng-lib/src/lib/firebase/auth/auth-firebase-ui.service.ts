@@ -13,8 +13,13 @@ export class AuthFirebaseUiService {
 
   constructor(private libConfig: LibConfig, private authFireSvc: AuthFirebaseService) { }
 
+  private initOrGetFirebaseCompactApp() {
+    return firebase.apps.length ? firebase.apps[0] : firebase.initializeApp(this.libConfig.firebase);
+  }
+
   public async startAuthUI(elementId, successCb = null, errorCb = null, uiShownCb = null): Promise<void> {
-    const app = firebase.initializeApp(this.libConfig.firebase);
+
+    const app = this.initOrGetFirebaseCompactApp();
     const auth = firebase.app().auth();
 
     const firebaseui = await import('firebaseui');

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ImageFireStoreService } from './image-fire-store.service';
 import { CommonFirebaseModule } from '../common-firebase';
+import { AppConfigModule } from '../../app-config';
 
 
 
@@ -9,6 +11,8 @@ import { CommonFirebaseModule } from '../common-firebase';
   imports: [
     CommonModule,
     CommonFirebaseModule,
-  ]
+    AppConfigModule,
+  ],
+  providers: [ImageFireStoreService]
 })
-export class AuthFirebaseModule { }
+export class ImageStorageModule { }

@@ -49,6 +49,7 @@ import {
   ToggleComponent,
   ToolbarComponent,
   TypographyComponent,
+  ImageBrowserComponent,
 } from '../../common-ui';
 
 import {
@@ -100,6 +101,7 @@ export const LibComponents = {
   ToggleComponent,
   ToolbarComponent,
   TypographyComponent,
+  ImageBrowserComponent,
 
   // CMS
   ArticleComponent,
