@@ -31,10 +31,10 @@
             <div *ngIf="showMetaInfo && value?.isFeatured" class="spacing-around-horizontal">
                 <span class="success">Featured</span>
             </div>
-            <div class="spacing-around-horizontal" *ngIf="updateHref">
+            <div class="spacing-around-horizontal" *ngIf="updateHref && updateHref.length">
                 <a [routerLink]="updateHref">Update</a>
             </div>
-            <div class="spacing-around-horizontal" *ngIf="readMoreHref">
+            <div class="spacing-around-horizontal" *ngIf="readMoreHref && readMoreHref.length">
                 <a [routerLink]="readMoreHref">Read more...</a>
             </div>
         </div>

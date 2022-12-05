@@ -37,15 +37,16 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   categoriesMultiSelectItems: Array<any> = [];
 
   constructor(private utils: UtilsService) {
-    this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.toDashedString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
+    this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.getUniqueFromString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.article = { ...this.sampleArticle };
   }
 
   private initArticle() {
     if (this.value) {
-      this.article = { ...this.value };
+      this.article = { ...this.value, metaInfo: { ...this.value.metaInfo } };
     } else {
-      this.article = { ...this.sampleArticle };
+      this.article = { ...this.sampleArticle, metaInfo: { ...this.sampleArticle.metaInfo } };
+      this.value = { ...this.sampleArticle, metaInfo: { ...this.sampleArticle.metaInfo } };
     }
 
     this.selectedArticleCategories = this.article.categories?.map(cat => ({ id: cat }));
@@ -70,7 +71,12 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   }
 
   public articleMetaChanged(metaInfo: MetaInfo) {
-    this.article.id = this.utils.toDashedString(metaInfo.title);
+    if (metaInfo.title !== this.value.metaInfo.title) {
+      this.article.id = this.utils.getUniqueFromString(metaInfo.title);
+    } else {
+      this.article.id = this.value.id;
+    }
+
     this.article = { ...this.article, metaInfo: { ...metaInfo } };
     this.changed.emit({ ...this.article });
   }
