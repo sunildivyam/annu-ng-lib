@@ -31,14 +31,18 @@ export class IsLoggedInGuard implements CanActivate, CanActivateChild {
   public checkUserLoggedIn(urlTree: UrlTree): Promise<boolean | UrlTree> {
     return new Promise((resolve, reject) => {
       if (this.authFireSvc.isLoggedIn()) {
+        console.log('Already Logged In')
         resolve(true);
-      } else if(!this.authFireSvc.isLoggedInFromLocalStorage()) {
-        resolve(urlTree);
+      } else if(this.authFireSvc.isLoggedInFromLocalStorage()) {
+        console.log('Already Logged in from Local Storage - ');
+        resolve(true);
       } else {
         this.authFireSvc.authStateChanged().subscribe(user => {
           if (user) {
+            console.log('Success After Subscription');
             resolve(true);
           } else {
+            console.log('Success After Subscription, REDIRECT - to - ', urlTree);
             resolve(urlTree);
           }
         })
