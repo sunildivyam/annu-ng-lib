@@ -1,10 +1,10 @@
-import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { LibConfig } from '../../app-config/app-config.interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { getAuth, User, Auth, onAuthStateChanged } from 'firebase/auth';
 import { Observable, Subject } from 'rxjs';
 import { CommonFirebaseService } from '../common-firebase';
+import { FIREBASE_AUTH_ROLES } from './auth-firebase.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -55,10 +55,31 @@ export class AuthFirebaseService {
     return this.authState.asObservable();
   }
 
-  public async isUserAdmin(): Promise<boolean> {
+  public async getUserRoles(): Promise<Array<string>> {
     const auth = this.getFirebaseAuth();
     const idTokenResult = await auth.currentUser.getIdTokenResult();
-    return !!idTokenResult?.claims?.admin;
+    const claims = idTokenResult && idTokenResult.claims;
+    const claimsArray: Array<string> = [];
+    if (claims) {
+      Object.keys(FIREBASE_AUTH_ROLES).forEach(key => {
+        if (claims[FIREBASE_AUTH_ROLES[key]]) {
+          claimsArray.push(FIREBASE_AUTH_ROLES[key]);
+        }
+      })
+    }
+
+    return claimsArray;
+  }
+
+  public async isUserHasRole(role: string): Promise<boolean> {
+    const auth = this.getFirebaseAuth();
+    const idTokenResult = await auth.currentUser.getIdTokenResult();
+    const claims = idTokenResult && idTokenResult.claims;
+    if (typeof claims === 'object' && claims[role]) {
+      return true;
+    }
+
+    return false;
   }
 
   public async logout(): Promise<boolean> {

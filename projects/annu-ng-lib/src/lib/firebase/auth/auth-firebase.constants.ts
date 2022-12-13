@@ -16,3 +16,14 @@ export const FIREBASE_AUTH_SIGNIN_METHODS = {
     PHONE: "phone",
     TWITTER: "twitter.com",
 };
+
+export const FIREBASE_AUTH_ROLES = {
+    ADMIN: 'admin',
+    AUTHOR: 'author',
+    READER: 'reader',
+    STUDENT: 'student',
+    TEACHER: 'teacher',
+    EDITOR: 'editor',
+    MANAGER: 'manager',
+    PAID_MEMBER: 'paid-member',
+}
