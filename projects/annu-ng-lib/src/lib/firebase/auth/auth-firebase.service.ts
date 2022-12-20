@@ -35,57 +35,36 @@ export class AuthFirebaseService {
     return auth;
   }
 
-
   public getCurrentUser(): User {
-    const auth = this.getFirebaseAuth();
-    return auth.currentUser;
+    let currentUser = this.isLoggedInFromLocalStorage();
+
+    if (!currentUser) {
+      const auth = this.getFirebaseAuth();
+      currentUser = auth.currentUser;
+    }
+
+    return currentUser;
   }
 
   public getCurrentUserId(): string {
-    const auth = this.getFirebaseAuth();
-    return auth.currentUser && auth.currentUser.uid || '';
+    const currentUser = this.getCurrentUser();
+
+    return currentUser && currentUser.uid || '';
   }
 
   public isLoggedIn(): boolean {
-    const auth = this.getFirebaseAuth();
-    return auth.currentUser ? true : false;
+    return !!this.getCurrentUser();
   }
 
   public authStateChanged(): Observable<User> {
     return this.authState.asObservable();
   }
 
-  public async getUserRoles(): Promise<Array<string>> {
-    const auth = this.getFirebaseAuth();
-    const idTokenResult = await auth.currentUser.getIdTokenResult();
-    const claims = idTokenResult && idTokenResult.claims;
-    const claimsArray: Array<string> = [];
-    if (claims) {
-      Object.keys(FIREBASE_AUTH_ROLES).forEach(key => {
-        if (claims[FIREBASE_AUTH_ROLES[key]]) {
-          claimsArray.push(FIREBASE_AUTH_ROLES[key]);
-        }
-      })
-    }
-
-    return claimsArray;
-  }
-
-  public async isUserHasRole(role: string): Promise<boolean> {
-    const auth = this.getFirebaseAuth();
-    const idTokenResult = await auth.currentUser.getIdTokenResult();
-    const claims = idTokenResult && idTokenResult.claims;
-    if (typeof claims === 'object' && claims[role]) {
-      return true;
-    }
-
-    return false;
-  }
-
   public async logout(): Promise<boolean> {
     const auth = this.getFirebaseAuth();
     await auth.signOut();
     this.authState.next(null);
+
     return true;
   }
 
@@ -111,5 +90,41 @@ export class AuthFirebaseService {
         })
       }
     }
+  }
+
+  public async getCurrentUserRoles(): Promise<Array<string>> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('User is not logged in.');
+    }
+
+    const idTokenResult = await currentUser.getIdTokenResult();
+    const claims = idTokenResult && idTokenResult.claims;
+    const claimsArray: Array<string> = [];
+    if (claims) {
+      Object.keys(FIREBASE_AUTH_ROLES).forEach(key => {
+        if (claims[FIREBASE_AUTH_ROLES[key]]) {
+          claimsArray.push(FIREBASE_AUTH_ROLES[key]);
+        }
+      })
+    }
+
+    return claimsArray;
+  }
+
+  public async currentUserHasRole(role: string): Promise<boolean> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('User is not logged in.');
+    }
+
+    const idTokenResult = await currentUser.getIdTokenResult();
+    const claims = idTokenResult && idTokenResult.claims;
+
+    if (typeof claims === 'object' && claims[role]) {
+      return true;
+    }
+
+    return false;
   }
 }
