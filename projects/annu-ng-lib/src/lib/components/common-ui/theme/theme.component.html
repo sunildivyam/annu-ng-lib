@@ -5,13 +5,14 @@
   </section>
 
   <section class="annuTheme_overview" *ngIf="selectedTab.name === 'overview'">
-    <label>You can load theme from an existing JSON, and then you can edit it here. or can continue creating a new
-      theme.
+    <label>You can load theme from an existing JSON, and then you can edit it here or can continue creating a new
+      theme with default values.
+
       <a href="javascript:void(0)" (click)="isThemeFromJson = !isThemeFromJson">Load theme from Json</a>
     </label>
 
     <section class="annuTheme_overview_fromJson" *ngIf="isThemeFromJson">
-      <span class="error" *ngIf="isJsonError">This Json has errors, please correct and try again.</span>
+      <span class="error" *ngIf="isJsonError">This Json has syntax errors or may be theme name, title, colorPalettes or typography data is missing, please correct and try again.</span>
       <textarea [(ngModel)]="themeFromJson" placeholder="Copy JSON here from your theme json file..." ></textarea>
       <a href="javascript:void(0)" class="btn secondary" (click)="loadThemeFromJson($event)">Load</a>
     </section>
