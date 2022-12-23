@@ -71,6 +71,10 @@ const TYPOGRAPHY: Array<Typography> = [
     name: 'borderRadius',
     value: '0.5rem',
   } as Typography,
+  {
+    name: 'siteWidth',
+    value: '1080px',
+  } as Typography,
 ];
 
 const DEFAULT_THEME_JSON = {
