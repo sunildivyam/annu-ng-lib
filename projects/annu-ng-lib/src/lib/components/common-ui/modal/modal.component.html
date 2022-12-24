@@ -1,3 +1,15 @@
-<div class="annuModal col-lg-10 col-md-11 col-sm-11 shadow">    
+<div class="annuModal col-lg-10 col-md-11 col-sm-11 shadow">
+    <div *ngIf="title || enableClose" class="row stretch nowrap">
+        <div class="">
+            <h1 *ngIf="title">{{title}}</h1>
+        </div>
+        <div class="">
+            <a *ngIf="enableClose" href="javascript:void(0)" class="btn btn-primary" (click)="cancelClicked($event)">X</a>
+        </div>
+    </div>
     <ng-content></ng-content>
+    <div *ngIf="enableOk || enableCancel" class="row center">
+        <a *ngIf="enableOk" href="javascript:void(0)" class="btn btn-primary" (click)="okClicked($event)">{{okLabel || 'Ok'}}</a>
+        <a *ngIf="enableCancel" href="javascript:void(0)" class="btn btn-primary" (click)="cancelClicked($event)">{{cancelLabel || 'Cancel'}}</a>
+    </div>
 </div>
