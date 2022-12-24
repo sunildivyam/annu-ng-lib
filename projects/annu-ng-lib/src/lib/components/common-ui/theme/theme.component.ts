@@ -71,7 +71,19 @@ const TYPOGRAPHY: Array<Typography> = [
     name: 'borderRadius',
     value: '0.5rem',
   } as Typography,
+  {
+    name: 'siteWidth',
+    value: '1080px',
+  } as Typography,
 ];
+
+const DEFAULT_THEME_JSON = {
+  name: 'default',
+  title: 'Default Theme',
+  description: 'Default theme description',
+  colorPalettes: COLOR_PALETTES.map(cp => ({ ...cp })),
+  typography: TYPOGRAPHY.map(tp => ({ ...tp })),
+};
 
 @Component({
   selector: 'anu-theme',
@@ -79,13 +91,7 @@ const TYPOGRAPHY: Array<Typography> = [
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent {
-  theme: Theme = {
-    name: 'default',
-    title: 'Default Theme',
-    description: 'Default theme description',
-    colorPalettes: { ...COLOR_PALETTES },
-    typography: [...TYPOGRAPHY],
-  };
+  theme: Theme = { ...DEFAULT_THEME_JSON };
   tabs: Array<Tab> = [...TABS];
   selectedTab: Tab = null;
   themeName: string = '';
@@ -115,9 +121,15 @@ export class ThemeComponent {
   public loadThemeFromJson(): void {
     this.isJsonError = false;
     try {
-      this.theme = JSON.parse(this.themeFromJson);
-      this.typography = this.theme.typography.map(t => ({ ...t }));
-      this.isThemeFromJson = false;
+      const parsedTheme = JSON.parse(this.themeFromJson);
+      const { name, title, colorPalettes, typography } = parsedTheme;
+      if (!name || !title || !(colorPalettes instanceof Array) || !(typography instanceof Array)) {
+        this.isJsonError = true;
+      } else {
+        this.theme = parsedTheme;
+        this.typography = this.theme.typography.map(t => ({ ...t }));
+        this.isThemeFromJson = false;
+      }
     } catch (er) {
       this.isJsonError = true;
     }

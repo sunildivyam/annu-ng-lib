@@ -6,12 +6,16 @@
     <label>Saturation </label>
     <input type="range" min="0" max="100" [value]="colorPalette.saturation" class="anuColorPalette_slider" [formControl]="saturationControl">
   </div>
-  <div class="anuColorPalette_swatches">
+  <ng-container [formGroup]="lightsForm">
+  <div class="anuColorPalette_swatches" formArrayName="lightControls">
     <div class="anuColorPalette_swatches_color" *ngFor="let color of colorPalette.colors; let index = index"
     [style.background-color]="color.hsl"
     [style.color]="color.hsl">
       <small class="anuColorPalette_swatches_color_name">{{color.name}}</small>
       <small class="anuColorPalette_swatches_color_value">{{color.hsl}}</small>
+      <label>Light </label>
+      <input [formControlName]="index" type="range" min="0" max="100" [value]="color.l" class="anuColorPalette_slider">
     </div>
   </div>
+</ng-container>
 </div>

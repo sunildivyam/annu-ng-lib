@@ -33,7 +33,9 @@ export class IsLoggedInGuard implements CanActivate, CanActivateChild {
         resolve(true);
       } else {
         this.authFireSvc.authStateChanged().subscribe(user => {
-          if (user) {
+          if (typeof user === 'undefined') {
+            // Do nothing. As user is unknown (Firebase auth has not checked for the current user)
+          } else if (user) {
             resolve(true);
           } else {
             resolve(urlTree);

@@ -1,6 +1,9 @@
 export interface PaletteColor {
     name: string; // names eg. normal, dark, darker etc..
-    hsl: string
+    hsl: string;
+    h?: number;
+    s?: number;
+    l?: number;
   }
 
   export interface ColorPalette {

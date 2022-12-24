@@ -175,7 +175,10 @@ export class ThemeService {
       const l = PALETTE_LIGHTNESS_START + (i * factoringNumer);
       const paletteColor: PaletteColor = {
         name: PALETTE_SHADES[i],
-        hsl: `hsl(${hue}, ${saturation}%, ${l}%)`
+        hsl: `hsl(${hue}, ${saturation}%, ${l}%)`,
+        h: hue,
+        s: saturation,
+        l
       }
 
       colors.push(paletteColor);

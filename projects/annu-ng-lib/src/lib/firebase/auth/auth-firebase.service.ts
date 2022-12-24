@@ -1,8 +1,8 @@
 import { LibConfig } from '../../app-config/app-config.interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { getAuth, User, Auth, onAuthStateChanged } from 'firebase/auth';
-import { Observable, Subject } from 'rxjs';
+import { getAuth, User, Auth, onAuthStateChanged, getIdTokenResult } from 'firebase/auth';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { CommonFirebaseService } from '../common-firebase';
 import { FIREBASE_AUTH_ROLES } from './auth-firebase.constants';
 
@@ -11,7 +11,7 @@ import { FIREBASE_AUTH_ROLES } from './auth-firebase.constants';
 })
 export class AuthFirebaseService {
   auth: Auth;
-  authState: Subject<User> = new Subject<User>();
+  authState: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
 
   constructor(private commonFireSvc: CommonFirebaseService, @Inject(PLATFORM_ID) private platformId, private libConfig: LibConfig) {
     this.auth = this.getFirebaseAuth();
@@ -20,7 +20,9 @@ export class AuthFirebaseService {
     });
 
     this.authState.subscribe(user => {
-      this.setLoggedInToLocalStorage(user);
+      if (typeof user !== 'undefined') {
+        this.setLoggedInToLocalStorage(user);
+      }
     });
   }
 
@@ -36,13 +38,8 @@ export class AuthFirebaseService {
   }
 
   public getCurrentUser(): User {
-    let currentUser = this.isLoggedInFromLocalStorage();
-
-    if (!currentUser) {
-      const auth = this.getFirebaseAuth();
-      currentUser = auth.currentUser;
-    }
-
+    const auth = this.getFirebaseAuth();
+    const currentUser = auth.currentUser;
     return currentUser;
   }
 
@@ -70,9 +67,9 @@ export class AuthFirebaseService {
 
   public isLoggedInFromLocalStorage(): User {
     if (isPlatformBrowser(this.platformId)) {
-        const currentUser = window.localStorage.getItem('currentUser');
+      const currentUser = window.localStorage.getItem('currentUser');
 
-        return currentUser ? JSON.parse(currentUser) as User : null;
+      return currentUser ? JSON.parse(currentUser) as User : null;
     } else {
       return null;
     }
@@ -98,7 +95,7 @@ export class AuthFirebaseService {
       throw new Error('User is not logged in.');
     }
 
-    const idTokenResult = await currentUser.getIdTokenResult();
+    const idTokenResult = await getIdTokenResult(currentUser);
     const claims = idTokenResult && idTokenResult.claims;
     const claimsArray: Array<string> = [];
     if (claims) {
@@ -118,7 +115,7 @@ export class AuthFirebaseService {
       throw new Error('User is not logged in.');
     }
 
-    const idTokenResult = await currentUser.getIdTokenResult();
+    const idTokenResult = await getIdTokenResult(currentUser);
     const claims = idTokenResult && idTokenResult.claims;
 
     if (typeof claims === 'object' && claims[role]) {

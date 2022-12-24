@@ -1,5 +1,5 @@
 @import '../../../scss/mixins.scss';
-$max-transition-size: 5000px;
+$max-transition-size: none;
 
 @mixin mx-drawer-content-pushed {
     position: static;
@@ -47,7 +47,9 @@ $max-transition-size: 5000px;
     left: 0;
     transform-origin: center left;
     max-width: 0;
+    width: 0;
     transform: scaleX(0);
+    padding: 0;
 }
 
 @mixin mx-window-opened-max-size {
@@ -93,10 +95,12 @@ $max-transition-size: 5000px;
     flex-direction: column;
     position: static;
     transition: all 0.5s;
-    transition-property: max-height, max-width, transform;
+    transition-property: max-height, max-width, transform, opacity;
+    opacity: 0;
 
     &.drawer {
         &-opened {
+            opacity: 1;
 
             &.drawer-top {
                 max-height: #{$max-transition-size};
@@ -134,10 +138,12 @@ $max-transition-size: 5000px;
             &.drawer-left {
                 max-width: #{$max-transition-size};
                 transform: scaleX(1);
+                width: initial;
 
                 &-sm, &-md, &-lg {
                     max-width: #{$max-transition-size};
                     transform: scaleX(1);
+                    width: initial;
                 }
 
             }
