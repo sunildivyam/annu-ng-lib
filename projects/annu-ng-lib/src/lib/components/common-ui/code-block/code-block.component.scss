@@ -1,0 +1,15 @@
+:host {
+    .toolbar {
+        position: absolute;
+        right: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    >pre {
+        margin: 0;
+
+        &.readonly {
+            padding-top: 3rem;
+        }
+    }
+}
