@@ -1,7 +1,7 @@
 <anu-hamburger class="lib-nav-hamburger" [opened]="libNavOpened" (changed)="libNavChanged($event)">Library
   Documentation</anu-hamburger>
 <div class="row-md row-lg nowrap relative app-content-sub-container">
-  <section class="leftSideMenu">
+  <section class="leftSideMenu" [ngClass]="libNavOpened === true? 'leftSideMenu-width': ''">
     <!-- Visible in Mobile only -->
     <div class="lib-nav-mobile">
       <anu-drawer
@@ -16,7 +16,7 @@
         <ng-container *ngTemplateOutlet="libNavTemplate; context:{docsNavs}"></ng-container>
       </div> -->
   </section>
-  <main class="content">
+  <main class="content" [ngClass]="libNavOpened === true? 'content-width': ''">
     <anu-error *ngIf="error" [code]="error?.code || error?.status" [message]="error?.message"></anu-error>
     <router-outlet></router-outlet>
   </main>
