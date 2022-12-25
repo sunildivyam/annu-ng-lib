@@ -4,3 +4,8 @@ export interface Link {
     title?: string;
     target?: string;
 };
+
+export interface LinkTarget {
+    id: string;
+    title: string;
+};
