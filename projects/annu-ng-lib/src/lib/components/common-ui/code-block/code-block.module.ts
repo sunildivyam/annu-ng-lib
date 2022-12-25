@@ -4,6 +4,7 @@ import { CodeBlockComponent } from './code-block.component';
 import { HighlightService } from './highlight.service';
 import { ToolbarModule } from '../toolbar/toolbar.module';
 import { ModalModule } from '../modal/modal.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { ModalModule } from '../modal/modal.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ToolbarModule,
     ModalModule,
   ],

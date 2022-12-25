@@ -14,10 +14,10 @@
     (cancelClick)="modalCancelClicked($event)">
     <div class="col-12">
         <label for="source-language">Source Language</label>
-        <select formControlName="source-language">
-            <option [value]="lang.id" *ngFor="let lang of sourceLanguages">{{lang.title}}</option>
+        <select name="source-language" [(ngModel)]="newSourceLanguage">
+            <option [ngValue]="lang.id" *ngFor="let lang of sourceLanguages">{{lang.title}}</option>
         </select>
         <label for="source-code">Source Code</label>
-        <textarea [value]="source"></textarea>
+        <textarea name="source-code" class="source-code-textarea" [(ngModel)]="newSource"></textarea>
     </div>
 </anu-modal>

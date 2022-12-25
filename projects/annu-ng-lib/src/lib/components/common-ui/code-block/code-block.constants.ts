@@ -10,11 +10,13 @@ export const CODE_BLOCK_TOOLBAR_ITEMS = [
 export const SOURCE_LANGUAGES = [
 	{
 		title: 'Markup',
-		id: 'markup'
+		id: 'markup',
+		enabled: true
 	},
 	{
 		title: 'CSS',
-		id: 'css'
+		id: 'css',
+		enabled: true
 	},
 	{
 		title: 'C-like',
@@ -22,7 +24,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'JavaScript',
-		id: 'javascript'
+		id: 'javascript',
+		enabled: true
 	},
 	{
 		title: 'ABAP',
@@ -30,7 +33,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'ActionScript',
-		id: 'actionscript'
+		id: 'actionscript',
+		enabled: true
 	},
 	{
 		title: 'Ada',
@@ -46,7 +50,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'AppleScript',
-		id: 'applescript'
+		id: 'applescript',
+		enabled: true
 	},
 	{
 		title: 'Arduino',
@@ -66,7 +71,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'ASP.NET (C#)',
-		id: 'aspnet'
+		id: 'aspnet',
+		enabled: true
 	},
 	{
 		title: 'AutoHotkey',
@@ -78,11 +84,13 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Bash',
-		id: 'bash'
+		id: 'bash',
+		enabled: true
 	},
 	{
 		title: 'BASIC',
-		id: 'basic'
+		id: 'basic',
+		enabled: true
 	},
 	{
 		title: 'Batch',
@@ -102,23 +110,28 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'C',
-		id: 'c'
+		id: 'c',
+		enabled: true
 	},
 	{
 		title: 'C#',
-		id: 'csharp'
+		id: 'csharp',
+		enabled: true
 	},
 	{
 		title: 'C++',
-		id: 'cpp'
+		id: 'cpp',
+		enabled: true
 	},
 	{
 		title: 'CoffeeScript',
-		id: 'coffeescript'
+		id: 'coffeescript',
+		enabled: true
 	},
 	{
 		title: 'Clojure',
-		id: 'clojure'
+		id: 'clojure',
+		enabled: true
 	},
 	{
 		title: 'Crystal',
@@ -134,11 +147,13 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'D',
-		id: 'd'
+		id: 'd',
+		enabled: true
 	},
 	{
 		title: 'Dart',
-		id: 'dart'
+		id: 'dart',
+		enabled: true
 	},
 	{
 		title: 'Diff',
@@ -150,7 +165,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Docker',
-		id: 'docker'
+		id: 'docker',
+		enabled: true
 	},
 	{
 		title: 'Eiffel',
@@ -194,7 +210,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Git',
-		id: 'git'
+		id: 'git',
+		enabled: true
 	},
 	{
 		title: 'GLSL',
@@ -210,7 +227,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'GraphQL',
-		id: 'graphql'
+		id: 'graphql',
+		enabled: true
 	},
 	{
 		title: 'Groovy',
@@ -218,11 +236,13 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Haml',
-		id: 'haml'
+		id: 'haml',
+		enabled: true
 	},
 	{
 		title: 'Handlebars',
-		id: 'handlebars'
+		id: 'handlebars',
+		enabled: true
 	},
 	{
 		title: 'Haskell',
@@ -234,7 +254,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'HTTP',
-		id: 'http'
+		id: 'http',
+		enabled: true
 	},
 	{
 		title: 'HTTP Public-Key-Pins',
@@ -270,7 +291,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Java',
-		id: 'java'
+		id: 'java',
+		enabled: true
 	},
 	{
 		title: 'Jolie',
@@ -278,7 +300,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'JSON',
-		id: 'json'
+		id: 'json',
+		enabled: true
 	},
 	{
 		title: 'Julia',
@@ -290,7 +313,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Kotlin',
-		id: 'kotlin'
+		id: 'kotlin',
+		enabled: true
 	},
 	{
 		title: 'LaTeX',
@@ -298,7 +322,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Less',
-		id: 'less'
+		id: 'less',
+		enabled: true
 	},
 	{
 		title: 'Liquid',
@@ -326,11 +351,13 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Markdown',
-		id: 'markdown'
+		id: 'markdown',
+		enabled: true
 	},
 	{
 		title: 'Markup templating',
-		id: 'markup-templating'
+		id: 'markup-templating',
+		enabled: true
 	},
 	{
 		title: 'MATLAB',
@@ -338,7 +365,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'MEL',
-		id: 'mel'
+		id: 'mel',
+		enabled: true
 	},
 	{
 		title: 'Mizar',
@@ -374,7 +402,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Objective-C',
-		id: 'objectivec'
+		id: 'objectivec',
+		enabled: true
 	},
 	{
 		title: 'OCaml',
@@ -406,15 +435,18 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'PHP',
-		id: 'php'
+		id: 'php',
+		enabled: true
 	},
 	{
 		title: 'PHP Extras',
-		id: 'php-extras'
+		id: 'php-extras',
+		enabled: true
 	},
 	{
 		title: 'PL/SQL',
-		id: 'plsql'
+		id: 'plsql',
+		enabled: true
 	},
 	{
 		title: 'PowerShell',
@@ -450,7 +482,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Python',
-		id: 'python'
+		id: 'python',
+		enabled: true
 	},
 	{
 		title: 'Q (kdb+ database)',
@@ -466,11 +499,13 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'React JSX',
-		id: 'jsx'
+		id: 'jsx',
+		enabled: true
 	},
 	{
 		title: 'React TSX',
-		id: 'tsx'
+		id: 'tsx',
+		enabled: true
 	},
 	{
 		title: 'Ren\'py',
@@ -506,15 +541,18 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Sass (Sass)',
-		id: 'sass'
+		id: 'sass',
+		enabled: true
 	},
 	{
 		title: 'Sass (Scss)',
-		id: 'scss'
+		id: 'scss',
+		enabled: true
 	},
 	{
 		title: 'Scala',
-		id: 'scala'
+		id: 'scala',
+		enabled: true
 	},
 	{
 		title: 'Scheme',
@@ -530,7 +568,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'SQL',
-		id: 'sql'
+		id: 'sql',
+		enabled: true
 	},
 	{
 		title: 'Soy (Closure Template)',
@@ -566,11 +605,13 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'TypeScript',
-		id: 'typescript'
+		id: 'typescript',
+		enabled: true
 	},
 	{
 		title: 'VB.Net',
-		id: 'vbnet'
+		id: 'vbnet',
+		enabled: true
 	},
 	{
 		title: 'Velocity',
@@ -590,7 +631,8 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'Visual Basic',
-		id: 'visual-basic'
+		id: 'visual-basic',
+		enabled: true
 	},
 	{
 		title: 'WebAssembly',
@@ -614,6 +656,7 @@ export const SOURCE_LANGUAGES = [
 	},
 	{
 		title: 'YAML',
-		id: 'yaml'
+		id: 'yaml',
+		enabled: true
 	},
 ];
