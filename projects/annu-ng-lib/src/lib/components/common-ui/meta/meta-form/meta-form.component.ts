@@ -73,8 +73,7 @@ export class MetaFormComponent implements OnInit, OnChanges {
     this.metaInfoJsonStr = JSON.stringify(this.metaInfo, null, '\t');
   }
 
-  public closeMetaTags(event: any) {
-    event.preventDefault();
-    this.toggleModal = false;
+  public previewModalCloseClicked(opened: boolean) {
+    this.toggleModal = opened;
   }
 }

@@ -5,13 +5,13 @@
     [style.left.px]="selectionRect.left">
     <anu-toolbar [items]="formattingToolbar" (changed)="formattingToolbarSelected($event)"></anu-toolbar>
     <!-- Link Form Modal-->
-    <anu-modal [opened]="toggleLinkForm">
+    <anu-modal title="Update hyperlink information" [opened]="toggleLinkForm" (cancelClick)="cancelLinkModal()">
         <anu-link-form [href]="link.href" [label]="link.label" [title]="link.title" [target]="link.target"
             (cancel)="cancelLinkModal()" (save)="saveLink($event)">
         </anu-link-form>
     </anu-modal>
     <!-- Image Form Modal-->
-    <anu-modal [opened]="toggleImageForm">
+    <anu-modal title="Choose an image" [opened]="toggleImageForm"  (cancelClick)="cancelImageModal()">
         <anu-image-form [src]="imageInfo.src" [alt]="imageInfo.alt" (cancel)="cancelImageModal()"
             (save)="saveImage($event)">
         </anu-image-form>

@@ -64,22 +64,22 @@ export class ContentEditorComponent implements OnInit {
 
   public saveLink(link: Link): void {
     this.selService.addLink(link);
-    this.toggleLinkForm = !this.toggleLinkForm;
+    this.toggleLinkForm = false;
     this.isTextSelected = false;
   }
 
   public saveImage(image: ImageInfo): void {
     this.selService.addImage(image);
-    this.toggleImageForm = !this.toggleImageForm;
+    this.toggleImageForm = false;
     this.isTextSelected = false;
   }
 
   public cancelLinkModal(): void {
-    this.toggleLinkForm = !this.toggleLinkForm;
+    this.toggleLinkForm = false;
   }
 
   public cancelImageModal(): void {
-    this.toggleImageForm = !this.toggleImageForm;
+    this.toggleImageForm = false;
   }
 
   public formattingToolbarSelected(toolbarItem: ToolbarItem): void {

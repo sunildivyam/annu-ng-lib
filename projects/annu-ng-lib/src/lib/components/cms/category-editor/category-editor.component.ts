@@ -94,17 +94,17 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
       this.category.image = null;
       this.changed.emit({ ...this.category });
     } else {
-      this.toggleImageForm = !this.toggleImageForm;
+      this.toggleImageForm = true;
     }
   }
 
   public cancelImageChange() {
-    this.toggleImageForm = !this.toggleImageForm;
+    this.toggleImageForm = false;
   }
 
   public saveImageChange(image: ImageInfo) {
     this.category.image = image;
-    this.toggleImageForm = !this.toggleImageForm;
+    this.toggleImageForm = false;
     this.changed.emit({ ...this.category });
   }
 
