@@ -60,7 +60,7 @@
 
 <!-- Image Form Modal-->
 <ng-container *ngIf="toggleImageForm">
-    <anu-modal [opened]="toggleImageForm">
+    <anu-modal title="Choose an image" [opened]="toggleImageForm" (cancelClick)="cancelImageModal()">
         <anu-image-form [src]="imageInfo.src" [alt]="imageInfo.alt" (cancel)="cancelImageModal()"
             (save)="saveImage($event)">
         </anu-image-form>

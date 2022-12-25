@@ -98,17 +98,17 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
       this.article.image = null;
       this.changed.emit({ ...this.article });
     } else {
-      this.toggleImageForm = !this.toggleImageForm;
+      this.toggleImageForm = true;
     }
   }
 
   public cancelImageChange() {
-    this.toggleImageForm = !this.toggleImageForm;
+    this.toggleImageForm = false;
   }
 
   public saveImageChange(image: ImageInfo) {
     this.article.image = image;
-    this.toggleImageForm = !this.toggleImageForm;
+    this.toggleImageForm = false;
     this.changed.emit({ ...this.article });
   }
 
