@@ -1,3 +1,23 @@
-<pre [ngClass]="language ? 'language-' + language : 'language-'">
+<anu-toolbar class="toolbar" *ngIf="!readonly" [items]='toolbarItems' (changed)="toolbarChanged($event)"></anu-toolbar>
+
+<pre [ngClass]="[language ? 'language-' + language : 'language-', readonly ? '': 'readonly']">
 <code [innerHtml]="highlightedSource"></code>
 </pre>
+
+<anu-modal
+    [opened]="showSourceForm"
+    title="Update source code"
+    okLabel="Update Source"
+    enableOk="true"
+    enableCancel="true"
+    (okClick)="modalOkClicked($event)"
+    (cancelClick)="modalCancelClicked($event)">
+    <div class="col-12">
+        <label for="source-language">Source Language</label>
+        <select name="source-language" [(ngModel)]="newSourceLanguage">
+            <option [ngValue]="lang.id" *ngFor="let lang of sourceLanguages">{{lang.title}}</option>
+        </select>
+        <label for="source-code">Source Code</label>
+        <textarea name="source-code" class="source-code-textarea" [(ngModel)]="newSource"></textarea>
+    </div>
+</anu-modal>
