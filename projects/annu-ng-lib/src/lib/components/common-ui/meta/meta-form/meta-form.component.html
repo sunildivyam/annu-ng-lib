@@ -22,16 +22,18 @@
     </div>
 </form>
 
-<anu-modal [opened]="toggleModal">
+<anu-modal title="Meta information preview"
+    enableCancel="true"
+    cancelLabel="Close"
+    (cancelClick)="previewModalCloseClicked($event)"
+    [opened]="toggleModal">
     <h2>Meta tags</h2>
     <code><pre>
-<ng-container *ngFor="let tag of metaTags">
+    <ng-container *ngFor="let tag of metaTags">
 {{tag}}</ng-container>
-</pre></code>
+    </pre></code>
     <h2>metaInfo JSON</h2>
     <code><pre>
 {{metaInfoJsonStr}}
-</pre></code>
-    <hr />
-    <a class="center" href="#" (click)="closeMetaTags($event)">Close</a>
+    </pre></code>
 </anu-modal>
