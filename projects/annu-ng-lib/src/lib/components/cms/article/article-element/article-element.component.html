@@ -10,6 +10,10 @@
     <p [id]="value?.name" *ngIf="value?.tagName === 'p'" [innerHtml]="value?.data?.text"></p>
     <li [id]="value?.name" *ngIf="value?.tagName === 'li'" [innerHtml]="value?.data?.text"></li>
     <img [id]="value?.name" *ngIf="value?.tagName === 'img'" [src]="value?.data?.src" [alt]="value?.data?.alt"/>
+    <anu-code-block [id]="value?.name" *ngIf="value?.tagName === 'anu-code-block'"
+    [source]="value?.data?.source"
+    [language]="value?.data?.language"
+    enableEdit="false"></anu-code-block>
 
     <ng-container *ngIf="value?.isContainer && value?.children && value?.children.length">
         <div *ngIf="value?.tagName === 'div'">
