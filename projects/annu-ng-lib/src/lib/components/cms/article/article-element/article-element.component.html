@@ -13,7 +13,7 @@
     <anu-code-block [id]="value?.name" *ngIf="value?.tagName === 'anu-code-block'"
     [source]="value?.data?.source"
     [language]="value?.data?.language"
-    enableEdit="false"></anu-code-block>
+    [enableEdit]="false"></anu-code-block>
 
     <ng-container *ngIf="value?.isContainer && value?.children && value?.children.length">
         <div *ngIf="value?.tagName === 'div'">
