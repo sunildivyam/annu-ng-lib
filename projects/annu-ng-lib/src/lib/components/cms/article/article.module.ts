@@ -5,6 +5,7 @@ import { ArticleElementComponent } from './article-element/article-element.compo
 import { CardModule } from '../../common-ui/card';
 import { MetaModule } from '../../common-ui/meta';
 import { RouterModule } from '@angular/router';
+import { CodeBlockModule } from '../../common-ui/code-block';
 
 
 
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     MetaModule,
     CardModule,
     RouterModule,
+    CodeBlockModule,
   ],
   exports: [ArticleComponent, ArticleElementComponent],
 })
