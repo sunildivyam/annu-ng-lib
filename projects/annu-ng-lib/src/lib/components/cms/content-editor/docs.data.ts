@@ -100,6 +100,17 @@ export const EDITOR_ELEMENT: EditorElement =
             }
         },
         {
+            name: 'anu-code-block-1234',
+            tagName: 'anu-code-block',
+            data: {
+                source: `<li *ngIf="value.tagName === 'li'" contenteditable [(ngModel)]="value.data.text" (keydown.enter)="enterPressed($event, value)"
+                (anuFormatInline)="textSelected()" (keydown.backspace)="backspacePressed($event)" [name]="value.name"
+                [focus]="value?.focused" (blur)="onBlur($event)" (focusin)="onFocus($event)">
+            </li>`,
+                language: 'markup'
+            }
+        },
+        {
             name: 'ul-1234',
             tagName: 'ul',
             isContainer: true,

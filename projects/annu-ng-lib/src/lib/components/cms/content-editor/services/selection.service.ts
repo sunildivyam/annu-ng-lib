@@ -4,6 +4,7 @@ import { ImageInfo} from '../../../common-ui/image-form';
 import { Observable, Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { Rectangle } from '../content-editor.interface';
+import { SUPPORTED_TAGS } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ export class SelectionService {
 
     // check if selection contains an image, if yes then Image should also be the hyperlink.
     const fragment = range.cloneContents();
-    const imgs = fragment.querySelectorAll('img');
+    const imgs = fragment.querySelectorAll(SUPPORTED_TAGS.IMAGE);
 
     if (imgs && imgs.length) return true
 
@@ -123,7 +124,7 @@ export class SelectionService {
 
     // check if selection contains an image, if yes then Image should also be the hyperlink.
     const fragment = range.cloneContents();
-    const imgs = fragment.querySelectorAll('img');
+    const imgs = fragment.querySelectorAll(SUPPORTED_TAGS.IMAGE);
     let linkContentNode: any = this.document.createTextNode(link.label);
     if (imgs && imgs.length) {
       linkContentNode = fragment;
@@ -155,7 +156,7 @@ export class SelectionService {
     const range = selection.getRangeAt(0);
 
     // create a new Image
-    var newImage = this.document.createElement("img");
+    var newImage = this.document.createElement(SUPPORTED_TAGS.IMAGE);
     newImage.src = image.src;
     newImage.alt = image.alt;
     // newImage.appendChild(newImage);

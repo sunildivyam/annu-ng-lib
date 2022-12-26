@@ -3,3 +3,9 @@ export interface SourceLanguage {
     title: string;
     enabled?: boolean
 };
+
+export interface CodeBlockInfo {
+    source: string;
+    language: string;
+    enableEdit?: boolean;
+}

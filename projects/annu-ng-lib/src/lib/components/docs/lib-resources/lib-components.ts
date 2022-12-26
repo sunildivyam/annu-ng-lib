@@ -9,10 +9,7 @@ import {
   CategoryEditorComponent,
   ContentEditorComponent,
   ContentElementComponent,
-  HeadingComponent,
-  ImageComponent,
-  ListItemComponent,
-  ParagraphComponent,
+  LeafElementComponent,
 } from '../../cms';
 
 import {
@@ -114,10 +111,7 @@ export const LibComponents = {
   CategoryEditorComponent,
   ContentEditorComponent,
   ContentElementComponent,
-  HeadingComponent,
-  ImageComponent,
-  ListItemComponent,
-  ParagraphComponent,
+  LeafElementComponent,
 
   // Auth
   LoginComponent,

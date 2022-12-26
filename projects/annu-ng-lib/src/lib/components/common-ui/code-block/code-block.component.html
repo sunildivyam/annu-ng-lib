@@ -1,6 +1,6 @@
-<anu-toolbar class="toolbar" *ngIf="!readonly" [items]='toolbarItems' (changed)="toolbarChanged($event)"></anu-toolbar>
+<anu-toolbar class="toolbar" *ngIf="enableEdit" [items]='toolbarItems' (changed)="toolbarChanged($event)"></anu-toolbar>
 
-<pre [ngClass]="[language ? 'language-' + language : 'language-', readonly ? '': 'readonly']">
+<pre [ngClass]="[language ? 'language-' + language : 'language-', enableEdit ? 'enableEdit': '']">
 <code [innerHtml]="highlightedSource"></code>
 </pre>
 

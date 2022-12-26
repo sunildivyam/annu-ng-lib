@@ -3,6 +3,9 @@ export interface EditorElementData {
     src?: string;
     alt?: string;
     text?: string;
+    source?: string;
+    language?: string;
+    enableEdit?: string;
 };
 
 export interface EditorElement {

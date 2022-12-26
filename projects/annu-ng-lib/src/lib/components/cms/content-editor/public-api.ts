@@ -6,7 +6,4 @@ export * from './content-element/content-element.component';
 export * from './directives/contenteditable-value-accessor.directive';
 export * from './directives/focus.directive';
 export * from './directives/format-inline.directive';
-export * from './heading/heading.component';
-export * from './image/image.component';
-export * from './list-item/list-item.component';
-export * from './paragraph/paragraph.component';
+export * from './leaf-element/leaf-element.component';
