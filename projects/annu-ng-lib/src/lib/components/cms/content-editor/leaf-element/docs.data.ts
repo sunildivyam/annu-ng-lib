@@ -1,13 +1,13 @@
 import { DocsData } from '../../../docs/docs.interface';
 
-export const ListItemComponent: DocsData = {
+export const LeafElementComponent: DocsData = {
     projectionContent: '',
     inputPropsValues: {
         value: {
-            name: 'li-12365',
-            tagName: 'li',
+            name: 'h2-1234',
+            tagName: 'h2',
             data: {
-                text: 'Sample List Item 1',
+                text: 'Sample Heading 2',
             }
         }
     }

@@ -33,7 +33,7 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
     this.renderComponent();
   }
 
-  private async renderComponent() {
+  private renderComponent() {
     this.cmpContainer.clear();
     if (this.cmpRef) this.cmpRef.destroy();
     this.cmpInstance = null;
@@ -99,7 +99,9 @@ export class ComponentUsageComponent implements OnInit, OnChanges {
         } catch(error: any) {
           resultStr = result;
         }
-        this.outputPropResults.push({prop, resultStr});
+        setTimeout(() => {
+          this.outputPropResults.push({prop, resultStr});
+        });
       })
     }
   }

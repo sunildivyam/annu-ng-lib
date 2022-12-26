@@ -45,10 +45,7 @@ import { CategoryComponent } from '../../cms/category/docs.data';
 import { CategoryEditorComponent } from '../../cms/category-editor/docs.data';
 import { ContentEditorComponent } from '../../cms/content-editor/docs.data';
 import { ContentElementComponent } from '../../cms/content-editor/content-element/docs.data';
-import { HeadingComponent } from '../../cms/content-editor/heading/docs.data';
-import { ImageComponent } from '../../cms/content-editor/image/docs.data';
-import { ListItemComponent } from '../../cms/content-editor/list-item/docs.data';
-import { ParagraphComponent } from '../../cms/content-editor/paragraph/docs.data';
+import { LeafElementComponent } from '../../cms/content-editor/leaf-element/docs.data';
 
 // Auth
 import { LoginComponent } from '../../auth/login/docs.data';
@@ -110,10 +107,7 @@ export const LibComponentsContent = {
   CategoryEditorComponent,
   ContentEditorComponent,
   ContentElementComponent,
-  HeadingComponent,
-  ImageComponent,
-  ListItemComponent,
-  ParagraphComponent,
+  LeafElementComponent,
 
   // Auth
   LoginComponent,

@@ -23,7 +23,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     alt: ''
   };
 
-  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) {}
+  constructor(private cdr: ChangeDetectorRef, private ceService: ContentEditorService) { }
 
   ngOnInit(): void {
     this.setStyleToolbarItems();
@@ -70,12 +70,20 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
   }
 
   public styleToolbarSelected(item: ToolbarItem) {
-    if (item.name === 'img') {
-      this.toggleImageForm = true;
-      this.imageInfo.alt = this.editorElement?.data?.alt || this.editorElement?.data?.text;
-    } else {
-      this.ceService.replaceElement(this.editorElement, item.name, this.fullTree);
-      this.isToolbar = !this.isToolbar;
+    switch (item.name) {
+      case 'img':
+        this.toggleImageForm = true;
+        this.imageInfo.alt = this.editorElement?.data?.alt || this.editorElement?.data?.text;
+        break;
+
+      case 'anu-code-block':
+        this.ceService.replaceElement(this.editorElement, item.name, this.fullTree, {source: '<h1>Sample source code</h1>', language: 'markup'});
+        this.isToolbar = !this.isToolbar;
+        break;
+
+      default:
+        this.ceService.replaceElement(this.editorElement, item.name, this.fullTree);
+        this.isToolbar = !this.isToolbar;
     }
   }
 

@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ToolbarItem } from '../toolbar/toolbar.interface';
 import { HighlightService } from './highlight.service';
 import { CODE_BLOCK_TOOLBAR_ITEMS } from './code-block.constants';
-import { SourceLanguage } from './code-block.interface';
+import { CodeBlockInfo, SourceLanguage } from './code-block.interface';
 /**
  * CodeBlock Component applies the formatting and highlighting of the source code
  * and renders the source code in <code>\<pre\></code> and <code>\<code\></code> html tag.
@@ -26,14 +26,15 @@ export class CodeBlockComponent implements OnInit, OnChanges {
    */
   @Input() language = 'typescript';
 
-
   /**
-   * <code>readonly</code> property if true, shows the highlighted code block,
+   * <code>enableEdit</code> property if false, shows the highlighted code block,
    * and does not allow to edit the source code and its language.
-   * If false, edit toolbar becomes visible, and user can update source code and its language.
+   * If true, edit toolbar becomes visible, and user can update source code and its language.
    */
-  @Input() readonly: boolean = true;
+  @Input() enableEdit: boolean = false;
 
+  @Output() changed = new EventEmitter<CodeBlockInfo>();
+  @Output() sourceModalOpenStatusChanged = new EventEmitter<boolean>();
 
   highlightedSource: string = '';
   toolbarItems: Array<ToolbarItem> = [...CODE_BLOCK_TOOLBAR_ITEMS];
@@ -61,11 +62,10 @@ export class CodeBlockComponent implements OnInit, OnChanges {
   }
 
   public toolbarChanged(selectedItem: ToolbarItem): void {
-    this.showSourceForm = !this.showSourceForm;
-    if (this.showSourceForm === true) {
-      this.newSource = this.source;
-      this.newSourceLanguage = this.language;
-    }
+    this.showSourceForm = true;
+    this.newSource = this.source;
+    this.newSourceLanguage = this.language;
+    this.sourceModalOpenStatusChanged.emit(true);
   }
 
   public modalOkClicked(modalOpened: boolean): void {
@@ -73,9 +73,12 @@ export class CodeBlockComponent implements OnInit, OnChanges {
     this.source = this.newSource;
     this.language = this.newSourceLanguage;
     this.highlightSource();
+    this.changed.emit({source: this.source, language: this.language} as CodeBlockInfo);
+    this.sourceModalOpenStatusChanged.emit(modalOpened);
   }
 
   public modalCancelClicked(modalOpened: boolean): void {
     this.showSourceForm = modalOpened;
+    this.sourceModalOpenStatusChanged.emit(modalOpened);
   }
 }

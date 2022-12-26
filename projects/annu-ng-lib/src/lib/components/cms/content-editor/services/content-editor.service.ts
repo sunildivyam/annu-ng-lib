@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { EditorElement} from '../content-editor.interface';
+import { EditorElement, EditorElementData} from '../content-editor.interface';
 import { ImageInfo } from '../../../common-ui/image-form';
+import { SUPPORTED_TAGS } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,9 @@ export class ContentEditorService {
         url: '',
         text: '',
         alt: '',
-      }
+        source: SUPPORTED_TAGS.CODE_BLOCK === oldEl.tagName ? '<h1>Sample source code</h1>': '' ,
+        language: SUPPORTED_TAGS.CODE_BLOCK === oldEl.tagName ? 'markup': '' ,
+      } as EditorElementData
     } as EditorElement);
   }
 
@@ -96,9 +99,9 @@ export class ContentEditorService {
     }
   }
 
-  public replaceElement(el: EditorElement, tagName: string, fullTree: EditorElement, data: ImageInfo = null) {
+  public replaceElement(el: EditorElement, tagName: string, fullTree: EditorElement, data: ImageInfo | any = null) {
 
-    if (el.tagName === 'li') {
+    if (el.tagName === SUPPORTED_TAGS.LIST_ITEM) {
       const parent = this.findParent(el, fullTree);
       if (['ol', 'ul'].includes(tagName)) {
         if (parent.tagName !== tagName) {
@@ -110,7 +113,7 @@ export class ContentEditorService {
         const newItem = { ...el };
         newItem.tagName = tagName;
         newItem.name = this.getEditorElementName(tagName);
-        if (tagName === 'img' && data) {
+        if (tagName === SUPPORTED_TAGS.IMAGE && data) {
           newItem.data.src = data.src;
           newItem.data.alt = data.alt;
           delete newItem.data.text;
@@ -128,9 +131,9 @@ export class ContentEditorService {
     } else {
       if (['ol', 'ul'].includes(tagName)) {
         const newListItem = { ...el };
-        newListItem.tagName = 'li';
-        newListItem.name = this.getEditorElementName('li');
-        if (el.tagName === 'img') {
+        newListItem.tagName = SUPPORTED_TAGS.LIST_ITEM;
+        newListItem.name = this.getEditorElementName(SUPPORTED_TAGS.LIST_ITEM);
+        if (el.tagName === SUPPORTED_TAGS.IMAGE) {
           newListItem.data.text = newListItem.data.alt;
           delete newListItem.data.alt;
           delete newListItem.data.src;
@@ -143,11 +146,15 @@ export class ContentEditorService {
         delete el.data;
         delete el.focused;
       } else {
-        if (tagName === 'img' && data) {
+        if (tagName === SUPPORTED_TAGS.IMAGE && data) {
           el.data.src = data.src;
           el.data.alt = data.alt;
           delete el.data.text;
+        } else if (tagName === SUPPORTED_TAGS.CODE_BLOCK && data) {
+          el.data.source = data.source;
+          el.data.language = data.language;
         }
+
         el.tagName = tagName;
         el.name = this.getEditorElementName(tagName);
       }

@@ -1,6 +1,22 @@
 import { ToolbarItem } from "../../common-ui/toolbar";
 import { EditorElement } from "./content-editor.interface";
 
+export enum SUPPORTED_TAGS {
+  H1 = 'h1',
+  H2 = 'h2',
+  H3 = 'h3',
+  H4 = 'h4',
+  H5 = 'h5',
+  H6 = 'h6',
+  IMAGE = 'img',
+  PARAGRAPH = 'p',
+  CODE_BLOCK = 'anu-code-block',
+  LIST_ITEM = 'li',
+  ORDERED_LIST = 'ol',
+  UNORDERED_LIST = 'ul',
+  ARTICLE = 'article',
+  DIV = 'div',
+};
 
 export const EDITOR_ROOT_ELEMENT: EditorElement =
 {
@@ -85,46 +101,54 @@ export const TOOLBAR_STYLES: Array<ToolbarItem> = [
     icon: '',
     iconImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAArtJREFUaEPt2cnrVEcQwPHPz8QtehMU0RiI6FEQUdyJiRKEgKK4oBdv6l+gHlwPov4FLuQUFQSj6CVBcUFcQBH0IqIiuF28KbivFLyRx2NmfG9+b37zBqZhLtPV3fXtqq7q6teny1tfl+uvB9BpC/YsUDULjMEBLMJPnVYus/5rnMF6PK/1ZV3oJJZWTPGsOqHjskYAryq481mA0HFkI4AvKemVOI70f50wTnjJahxNLf7Nc7IulFa2ShFqGN50M8BQvK0iQES6zViDn/EER7Ans+OVBAjlz2FmnYN1DX+kIIbgXdUssAtbm0SFndiR9FcS4AEmNgGI/klVBgiXiJ1t1KI/ok+0rrTAfUxOAAbjfdXOQPj4tiYWCP8PmWgDAjAH8YsL160cKXt4EoVm1ZG9ioWpKPQjPrTTAuvwNwYlpl6B0zkhNmEtJuAxDmNfJg+0FWA2ziOSTa2Fv/6Fszkg8oi0DeAXXMfoOlq8xO+4mUfD78i0BSCutFcwpcniUXjMw70GMuFyn3MA/oCPZZ6BWPjfnMXPI8zF05QCcYCj8luFf5Iq61MTkNIBdmNLjp2ridzBgqQUHItTmJ4afyiBaFR7lAoQESN2rWi98AwXsBij6sBH5ImIVK+FxdMWarmgmYZLbSw742q9tw5BKQBh+hsYV8B1ioqGC23AwczAfgPEobuIGUU1akE+olIUOMdSY/sFEP4WBXUU1gPV4tqwBP8lC/YLIC5V2wdK89Q68ZD1Jy4nASOdL3If4nhAiqeVohGnLN4X+A23MwkvF8DUhH5EWdq0OE9k8/m4WzQTR+Yc3+KiZQ97iF+LApStRJnz5XKhMhcse64eQNk7WnS+hhbo+uf1bvjAcQLLaybLJqgoDfcnGbCKn5j+x8Zmn5iK+mLH5Tt1RSgNvAdQ2la2OFHPAi1uXGnDvgKePZUxa4GbwQAAAABJRU5ErkJggg=='
   } as ToolbarItem,
+
+  {
+    name: 'anu-code-block',
+    title: 'Code block',
+    label: '',
+    icon: '',
+    iconImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAYlJREFUaEPtmLEOwjAMRN2vhg3Y4KtBHiJZURL7Lm4qpERiQfH5np22bg/583X8uX/ZAFd3cHdgd2CyAvsITRZwOnymA08R0V/GeovInRFiAdT4QyTtOfIVkQ8DwQAU81owJr5VaAXQBUOgBqz5MwBgCASgNn8WAAQRBWiZPxMgDBEB6JnX/1/MnaMRcxMRvRPVy70mPIAV5otpCmIEsNI8DdEDOMN8VBPqRAsgmgg5/qhmGKIGQBNFIFjNEIQFYBONIGY1XYgCMJuoBZGlOYRQgKxEFiJbswuhAG6bIgfd7Mk2r9JdzXKEsiCWmtdJwF7EsxDLzbeGMRbiEvO9aRKFuMz8aByOQlxq3pvnoxDgTWq4HS6IN06vhIDNex2gR1yiJZT5KIDu63XC62CUpXyVqJ/m7hsfYqAFgcSPYGqA8OsqaqCGQON7EBYgbB45QjaxhcgGgMyzAPaayASAzc8AlAlRk2Ys1aG0siqYAUFpbACqbIlBuwOJxaSkdgeosiUG7Q4kFpOS+gHp9YE4BjsehgAAAABJRU5ErkJggg=='
+  } as ToolbarItem,
   {
     name: 'p',
     title: 'Paragraph',
-    label: 'Normal',
+    label: '',
     icon: '',
-    iconImage: ''
+    iconImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAARJJREFUaEPtmDEKAkEQBOsQTBQ/oQ8yFfyFZppqot8Q/2OqqS8wM1EOVLyVhYPeW++gN5+e6a5hgyno+Cs6Pj828G+CJmACYgJeITFAuTwksAUWQF9WbkbgDuyB1Vs+NHADhs30TqZazjiKGdgAy5YT2AHrmIFkMeUS8i+UK+lYHxMwATEBr5AYoFxuAnKEokBIYAJMgZ6o+11+BQ7AI6HmRyo0cAHGDTSav0wklw4NnIGSQuqXzUA5/AwYJHRwAo65Vijh3Hmk/I3myTnexQRMQEzAKyQGKJebgByhKNDW0+LPCbHuVaJNp8XKCbGugbacFksClRNiXQPiRuYv9y+UP/NqRxMwATEBr5AYoFzeeQJP65MaMdYfRFIAAAAASUVORK5CYII='
   } as ToolbarItem,
   {
     name: 'h1',
     title: 'Heading 1',
-    label: 'Heading 1',
+    label: 'H1',
     icon: '',
   } as ToolbarItem,
   {
     name: 'h2',
     title: 'Heading 2',
-    label: 'Heading 2',
+    label: 'H2',
     icon: '',
   } as ToolbarItem,
   {
     name: 'h3',
     title: 'Heading 3',
-    label: 'Heading 3',
+    label: 'H3',
     icon: '',
   } as ToolbarItem,
   {
     name: 'h4',
     title: 'Heading 4',
-    label: 'Heading 4',
+    label: 'H4',
     icon: '',
   } as ToolbarItem,{
     name: 'h5',
     title: 'Heading 5',
-    label: 'Heading 5',
+    label: 'H5',
     icon: '',
   } as ToolbarItem,
   {
     name: 'h6',
     title: 'Heading 6',
-    label: 'Heading 6',
+    label: 'H6',
     icon: '',
-  } as ToolbarItem
+  } as ToolbarItem,
 ];
