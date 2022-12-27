@@ -158,7 +158,7 @@ export class ArticlesFirebaseService {
    * <strong>id:</strong> filter by id or array of ids</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
-   * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>
+   * <strong>isForwardDir:</strong> if true, pagination will be forward else backward direction</br>
    * <strong>startPage:</strong> startPage should have the value of the orderBy field of the first or last record of previously fetched records.</br>
    * <strong>pageSize:</strong> if pageSize is les that equal to 0, then no pagination will be done</br>
    * <strong>isLive:</strong> if null, ignores filtering based on isLive. Otherwise filters documents that are published or unbulished based on true/false value.</br>
@@ -316,7 +316,7 @@ export class ArticlesFirebaseService {
    * <strong>articleCategoryId:</strong> filter by articleCategoryId or array of articleCategoryIds</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
-   * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>
+   * <strong>isForwardDir:</strong> if true, pagination will be forward else backward direction</br>
    * <strong>startPage:</strong> startPage should have the value of the orderBy field of the first or last record of previously fetched records.</br>
    * <strong>pageSize:</strong> if pageSize is les that equal to 0, then no pagination will be done</br>
    * <strong>isLive:</strong> if null, ignores filtering based on isLive. Otherwise filters documents that are published or unbulished based on true/false value.</br>
@@ -400,7 +400,7 @@ export class ArticlesFirebaseService {
   public buildQuery(documentsRef: CollectionReference<DocumentData>, queryConfig: QueryConfig): Array<any> {
     const queryArgs: Array<any> = [documentsRef];
 
-    const { userId, id, articleCategoryId, isLive, orderField, isDesc, isNextPages, startPage, pageSize } = queryConfig;
+    const { userId, id, articleCategoryId, isLive, orderField, isDesc, isForwardDir, startPage, pageSize } = queryConfig;
 
     // if userid is given, then fetches categories of that user only, else will fetch all categories
     if (userId) {
@@ -426,13 +426,12 @@ export class ArticlesFirebaseService {
     }
 
     if (orderField && pageSize >= 1) {
-      if (isNextPages) {
-        queryArgs.push(limit(pageSize));
+      queryArgs.push(limit(pageSize));
+      if (isForwardDir) {
         if (startPage) {
           queryArgs.push(startAfter(startPage));
         }
       } else {
-        queryArgs.push(limitToLast(pageSize));
         if (startPage) {
           queryArgs.push(endBefore(startPage));
         }

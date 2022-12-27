@@ -16,7 +16,7 @@ export interface QueryConfig {
     articleCategoryId?: string | Array<string>;
     orderField?: string;
     isDesc?: boolean;
-    isNextPages?: boolean;
+    isForwardDir?: boolean;
     startPage?: any;
     pageSize?: number;
     isLive?: boolean | null;

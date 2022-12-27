@@ -29,11 +29,14 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
 
   routeData: ArticlesHomeViewRouteData = {};
   LOGS_MODULE_NAME: string = ArticlesHomeViewRouteResolver.name;
+  pageSize: number = DEFAULT_PAGE_SIZE;
 
   constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ArticlesHomeViewRouteData> {
     this.routeData = {};
+    this.pageSize = route?.data?.pageSize || DEFAULT_PAGE_SIZE;
+
     // create a unique key that holds the route stata data.
     const HOME_VIEW_ROUTE_KEY = makeStateKey<ArticlesHomeViewRouteData>('articles-home-view-route');
 
@@ -60,8 +63,8 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
           isLive: true,
           articleCategoryId: cat.id,
           orderField: 'updated',
-          pageSize: DEFAULT_PAGE_SIZE,
-          isNextPages: true,
+          pageSize: this.pageSize,
+          isForwardDir: true,
           startPage: null
         };
         const articles = await this.articlesFireSvc.getArticles(queryConfig);
