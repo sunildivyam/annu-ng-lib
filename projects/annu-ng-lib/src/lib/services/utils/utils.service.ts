@@ -40,6 +40,48 @@ export class UtilsService {
     return dt.toLocaleDateString('en-US', options);
   }
 
+
+  /**
+   * Converts ISOString date string to its equivalent time in milliseconds since 1970, returns numeric value as a string.
+   * @date 12/28/2022 - 6:04:39 PM
+   *
+   * @public
+   * @param {string} dateStr
+   * @returns {string}
+   */
+  public dateStringToTotalTimeString(dateStr: string): string {
+    let timeStr = '';
+
+    try {
+      if (dateStr) {
+        const dt = new Date(dateStr);
+        timeStr = dt.getTime().toString();
+      }
+    } catch (err) {}
+
+    return timeStr;
+  }
+
+  /**
+   * Converts total time in milliseconds since 1970 (numbered string) to its equivalent ISOString date string.
+   * @date 12/28/2022 - 6:04:39 PM
+   *
+   * @public
+   * @param {string} timeStr
+   * @returns {string}
+   */
+  public totalTimeStringToUTCdateString(timeStr: string): string {
+    let dateStr = '';
+
+    try {
+      if (timeStr) {
+        dateStr = new Date(Number(timeStr)).toISOString();
+      }
+    } catch (err) {}
+
+    return dateStr;
+  }
+
   /**
    * Converts a string into dashed string. All spaces are replaced with dashes.
    * This converted string can be used for getting a unique name for a title of any content like, article etc.
@@ -85,7 +127,7 @@ export class UtilsService {
   public getUniqueFromString(str: string = ''): string {
     const dashed = this.toDashedString(str);
     const rndStr = Math.random().toString(36).substring(2);
-    const uniqueId = Date.now().toString(36) + rndStr.substring(rndStr.length/3);
+    const uniqueId = Date.now().toString(36) + rndStr.substring(rndStr.length / 3);
 
     return `${dashed}-${uniqueId}`;
   }

@@ -56,24 +56,28 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
 
   private async loadRouteData() {
     try {
-      const allCategories = await this.articlesFireSvc.getCategories({ isLive: true, orderField: 'updated' })
+      const allCategories = await this.articlesFireSvc.getCategories({ isLive: true, orderField: 'updated', isDesc: false })
       this.routeData.allCategoriesGroups = [];
-      await Promise.all(allCategories.map(async (cat: Category) => {
+      const catArticles = await Promise.all(allCategories.map(async (cat: Category) => {
         const queryConfig: QueryConfig = {
           isLive: true,
           articleCategoryId: cat.id,
           orderField: 'updated',
           pageSize: this.pageSize,
           isForwardDir: true,
-          startPage: null
+          startPage: null,
+          isDesc: true,
         };
-        const articles = await this.articlesFireSvc.getArticles(queryConfig);
+        return this.articlesFireSvc.getArticles(queryConfig);
+      }));
+
+      allCategories.forEach((cat, index) => {
         this.routeData.allCategoriesGroups.push(
           {
             category: cat,
-            articles: articles || []
+            articles: catArticles[index] || []
           });
-      }));
+      })
     } catch (error: any) {
       this.routeData.errorAllCategoriesGroups = error;
     }

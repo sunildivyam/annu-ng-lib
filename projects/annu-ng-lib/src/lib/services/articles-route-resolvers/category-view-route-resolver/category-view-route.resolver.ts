@@ -12,6 +12,7 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
 
 import { ARTICLES_ROUTE_RESOLVER_DATA_KEYS, ROUTE_PARAM_NAMES } from '../articles-route-resolvers.constants';
+import { UtilsService } from '../../utils';
 
 // Resolver should get pageSize from the route.data.pageSize, or ths page size will be set.
 const DEFAULT_PAGE_SIZE = 5;
@@ -32,7 +33,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
   orderByField: string = 'updated';
   routeData: CategoryViewRouteData = {};
 
-  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
+  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId, private utilsSvc: UtilsService) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<CategoryViewRouteData> {
     this.routeData = {};
@@ -65,11 +66,11 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
         this.routeData.categoryGroup = { category: foundCategoryGrp.category };
         this.routeData.errorCategoryGroup = parentRouteData.errorAllCategoriesGroups;
         // if this has child routes (article view route), then current category Articles are not needed, else we need to fetch from backend.
-        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE, currentStartPage, pageDir);
+        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE, this.utilsSvc.totalTimeStringToUTCdateString(currentStartPage), pageDir);
       } else {
         await this.getCategory(categoryId);
         // if this has child routes (article view route), then current category Articles are not needed, else we need to fetch from backend.
-        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE, currentStartPage, pageDir);
+        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE, this.utilsSvc.totalTimeStringToUTCdateString(currentStartPage), pageDir);
       }
 
       if (isPlatformServer(this.platformId)) {
@@ -111,6 +112,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       pageSize: pageSize,
       isForwardDir: pageDir === PageDirection.BACKWARD ? false : true,
       startPage: startPage || null,
+      isDesc: true
     };
 
     try {
@@ -125,6 +127,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
             this.routeData.startPage = null;
           }
         } catch (error: any) {
+          console.log('ERROR: ', error);
           this.routeData.startPage = null;
         }
       }
@@ -137,11 +140,13 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
             this.routeData.endPage = null;
           }
         } catch (error: any) {
+          console.log('ERROR: ', error);
           this.routeData.endPage = null;
         }
       }
 
     } catch (error: any) {
+      console.log('ERROR: ', error);
       this.routeData.errorCategoryGroup = error;
       this.routeData.categoryGroup.articles = [];
       this.setStartAndEndPageValues();
