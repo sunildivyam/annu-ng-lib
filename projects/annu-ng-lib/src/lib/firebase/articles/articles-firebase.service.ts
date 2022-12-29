@@ -5,7 +5,6 @@ import {
   collection,
   getDocs,
   getDoc,
-  addDoc,
   doc,
   setDoc,
   deleteDoc,
@@ -15,26 +14,19 @@ import {
   where,
   orderBy,
   startAfter,
-  startAt,
   limit,
-  CollectionReference,
-  DocumentData,
   endBefore,
   limitToLast,
+  QueryConstraint,
 } from 'firebase/firestore';
 
 import { Category, Article } from '../../components/cms';
-import { getSeedsCategories, getSeedsArticles } from './articles-firebase.seed';
+import { ArticlesFirebaseSeedService } from './articles-firebase-seed.service';
 import { UtilsService } from '../../services/utils/utils.service';
 import { AuthFirebaseService } from '../auth';
 import { QueryConfig } from '../firebase.interface';
 import { ImageFireStoreService } from '../image-storage/image-fire-store.service';
-
-const FIREBASE_DOCS = {
-  CATEGORIES: 'categories',
-  ARTICLES: 'articles'
-}
-
+import { FIREBASE_DOCS } from './articles-firebase.constants';
 
 /**
  * Description placeholder
@@ -49,7 +41,10 @@ const FIREBASE_DOCS = {
 })
 export class ArticlesFirebaseService {
 
-  constructor(private utilsSvc: UtilsService, private fireAuthSvc: AuthFirebaseService, private imageFireStoreService: ImageFireStoreService) { }
+  constructor(private utilsSvc: UtilsService,
+    private fireAuthSvc: AuthFirebaseService,
+    private imageFireStoreService: ImageFireStoreService,
+    private articlesFireSeedSvc: ArticlesFirebaseSeedService) { }
 
   /**
    * Adds a new category for the logged in user.
@@ -158,7 +153,7 @@ export class ArticlesFirebaseService {
    * <strong>id:</strong> filter by id or array of ids</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
-   * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>
+   * <strong>isForwardDir:</strong> if true, pagination will be forward else backward direction</br>
    * <strong>startPage:</strong> startPage should have the value of the orderBy field of the first or last record of previously fetched records.</br>
    * <strong>pageSize:</strong> if pageSize is les that equal to 0, then no pagination will be done</br>
    * <strong>isLive:</strong> if null, ignores filtering based on isLive. Otherwise filters documents that are published or unbulished based on true/false value.</br>
@@ -173,9 +168,9 @@ export class ArticlesFirebaseService {
     try {
       const db = getFirestore();
       const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
-      const queryArgs = this.buildQuery(categoriesRef, { ...queryConfig } as QueryConfig);
+      const queryArgs = this.buildQuery({ ...queryConfig } as QueryConfig);
 
-      const queryRef = query.apply(this, [...queryArgs]);
+      const queryRef = query(categoriesRef, ...queryArgs);
 
       const querySnapshot = await getDocs(queryRef);
       const categories: Array<Category> = [];
@@ -316,7 +311,7 @@ export class ArticlesFirebaseService {
    * <strong>articleCategoryId:</strong> filter by articleCategoryId or array of articleCategoryIds</br>
    * <strong>orderField:</strong> name of the orderBy field, this has to be same field that is used for startPage, if pagination is used.</br>
    * <strong>isDesc:</strong>  if true, orderBy field is sorted desc or asc order.</br>
-   * <strong>isNextPages:</strong> if true, pagination will be forward else backward direction</br>
+   * <strong>isForwardDir:</strong> if true, pagination will be forward else backward direction</br>
    * <strong>startPage:</strong> startPage should have the value of the orderBy field of the first or last record of previously fetched records.</br>
    * <strong>pageSize:</strong> if pageSize is les that equal to 0, then no pagination will be done</br>
    * <strong>isLive:</strong> if null, ignores filtering based on isLive. Otherwise filters documents that are published or unbulished based on true/false value.</br>
@@ -331,9 +326,9 @@ export class ArticlesFirebaseService {
     try {
       const db = getFirestore();
       const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
-      const queryArgs = this.buildQuery(articlesRef, { ...queryConfig } as QueryConfig);
+      const queryArgs: Array<QueryConstraint> = this.buildQuery({ ...queryConfig } as QueryConfig);
 
-      const queryRef = query.apply(this, [...queryArgs]);
+      const queryRef = query(articlesRef, ...queryArgs);
 
       const querySnapshot = await getDocs(queryRef);
       const articles: Array<Article> = [];
@@ -360,25 +355,28 @@ export class ArticlesFirebaseService {
    * @param {number} [seedRecordCount=6]
    * @returns {Promise<string>}
    */
-  public async seedDatabase(seedRecordCount: number = 6): Promise<string> {
+  public async seedDatabase(categoriesCount: number = 5,
+    featuredCatgoriesCount: number = 3,
+    categoryArticlesCount: number = 5): Promise<string> {
     const db = getFirestore();
     const writeBatchRef: WriteBatch = writeBatch(db);
     const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
     const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
 
-    getSeedsCategories(seedRecordCount).forEach(c => writeBatchRef.set(doc(categoriesRef), {
-      ...c,
-      created: this.utilsSvc.currentDate,
-      userId: this.fireAuthSvc.getCurrentUserId(),
-      updated: this.utilsSvc.currentDate
-    }));
-    getSeedsArticles(seedRecordCount).forEach(a => writeBatchRef.set(doc(articlesRef), {
-      ...a,
-      created: this.utilsSvc.currentDate,
-      updated: this.utilsSvc.currentDate,
-      userId: this.fireAuthSvc.getCurrentUserId(),
-      metaInfo: { ...a.metaInfo, 'article:published_time': this.utilsSvc.currentDate }
-    }));
+    const articlesDatabaseSeed = await this.articlesFireSeedSvc.generateArticlesDatabaseSeed(this.fireAuthSvc.getCurrentUserId(),
+    categoriesCount, featuredCatgoriesCount, categoryArticlesCount);
+
+    articlesDatabaseSeed.categories.forEach(c => {
+      const categoryId = c.id;
+      delete c.id;
+      writeBatchRef.set(doc(categoriesRef, categoryId), { ...c });
+    });
+
+    articlesDatabaseSeed.articles.forEach(a => {
+      const articleId = a.id;
+      delete a.id;
+      writeBatchRef.set(doc(articlesRef, articleId), { ...a });
+    });
 
     try {
       await writeBatchRef.commit();
@@ -393,14 +391,13 @@ export class ArticlesFirebaseService {
    * @date 19/2/2022 - 10:27:58 pm
    *
    * @public
-   * @param {CollectionReference<DocumentData>} documentsRef
    * @param {QueryConfig} queryConfig
-   * @returns {Array<any>}
+   * @returns {Array<QueryConstraint>}
    */
-  public buildQuery(documentsRef: CollectionReference<DocumentData>, queryConfig: QueryConfig): Array<any> {
-    const queryArgs: Array<any> = [documentsRef];
+  public buildQuery(queryConfig: QueryConfig): Array<QueryConstraint> {
+    const queryArgs: Array<QueryConstraint> = [];
 
-    const { userId, id, articleCategoryId, isLive, orderField, isDesc, isNextPages, startPage, pageSize } = queryConfig;
+    const { userId, id, articleCategoryId, isLive, orderField, isDesc, isForwardDir, startPage, pageSize } = queryConfig;
 
     // if userid is given, then fetches categories of that user only, else will fetch all categories
     if (userId) {
@@ -422,20 +419,22 @@ export class ArticlesFirebaseService {
     }
 
     if (orderField) {
-      queryArgs.push(orderBy(orderField, isDesc ? 'desc' : 'asc'));
+      queryArgs.push(orderBy(orderField, isDesc === true ? 'desc' : 'asc'));
     }
 
-    if (orderField && pageSize >= 1) {
-      if (isNextPages) {
+    if (startPage) {
+      if (isForwardDir !== false) {
+        queryArgs.push(startAfter(startPage));
+      } else {
+        queryArgs.push(endBefore(startPage));
+      }
+    }
+
+    if (pageSize > 0) {
+      if (isForwardDir !== false) {
         queryArgs.push(limit(pageSize));
-        if (startPage) {
-          queryArgs.push(startAfter(startPage));
-        }
       } else {
         queryArgs.push(limitToLast(pageSize));
-        if (startPage) {
-          queryArgs.push(endBefore(startPage));
-        }
       }
     }
 

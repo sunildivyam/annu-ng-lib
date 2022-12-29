@@ -4,15 +4,17 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { CategoryViewRouteData, ArticlesHomeViewRouteData } from '../articles-route-resolvers.interface';
+import { CategoryViewRouteData, ArticlesHomeViewRouteData, PageDirection } from '../articles-route-resolvers.interface';
 
 import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
 import { CategoryGroup } from '../../../components/cms';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
 
-import { ARTICLES_ROUTE_RESOLVER_DATA_KEYS } from '../articles-route-resolvers.constants';
+import { ARTICLES_ROUTE_RESOLVER_DATA_KEYS, ROUTE_PARAM_NAMES } from '../articles-route-resolvers.constants';
+import { UtilsService } from '../../utils';
 
+// Resolver should get pageSize from the route.data.pageSize, or ths page size will be set.
 const DEFAULT_PAGE_SIZE = 5;
 
 /**
@@ -28,16 +30,20 @@ const DEFAULT_PAGE_SIZE = 5;
  */
 @Injectable()
 export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData> {
-
+  orderByField: string = 'updated';
   routeData: CategoryViewRouteData = {};
 
-  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
+  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId, private utilsSvc: UtilsService) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<CategoryViewRouteData> {
     this.routeData = {};
-    const categoryId = route.params['categoryId'];
+    const categoryId = route.params[ROUTE_PARAM_NAMES.CATEGORY_ID];
+    const currentStartPage = route.queryParams[ROUTE_PARAM_NAMES.START_PAGE];
+    const pageDir: PageDirection = route.queryParams[ROUTE_PARAM_NAMES.PAGE_DIRECTION];
+
     // create a unique key that holds the route stata data.
-    const CATEGORY_VIEW_ROUTE_KEY = makeStateKey<CategoryViewRouteData>('category-view-route-' + categoryId);
+    const stateKeyName = 'category-view-route-' + categoryId + (currentStartPage || '') + (pageDir || '');
+    const CATEGORY_VIEW_ROUTE_KEY = makeStateKey<CategoryViewRouteData>(stateKeyName);
 
     //Check if state data already exists, if yes, serve it from state, and clear the state else, fetch the data and set it to state, that can be used at client side.
     if (this.transferState.hasKey(CATEGORY_VIEW_ROUTE_KEY)) {
@@ -56,12 +62,15 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       // check if route category already exist in parent data, else fetch it from backend
       const foundCategoryGrp = parentRouteData.allCategoriesGroups.find((catGroup: CategoryGroup) => catGroup.category.id === categoryId);
       if (foundCategoryGrp) {
-        this.routeData.categoryGroup = foundCategoryGrp;
+        // Fill category only from parent data. As articles may differ based on startPage and pageDirection. So Articles needs to be fetched fresh.
+        this.routeData.categoryGroup = { category: foundCategoryGrp.category };
         this.routeData.errorCategoryGroup = parentRouteData.errorAllCategoriesGroups;
+        // if this has child routes (article view route), then current category Articles are not needed, else we need to fetch from backend.
+        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE, this.utilsSvc.totalTimeStringToUTCdateString(currentStartPage), pageDir);
       } else {
         await this.getCategory(categoryId);
         // if this has child routes (article view route), then current category Articles are not needed, else we need to fetch from backend.
-        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE);
+        if (!route.firstChild) await this.getCategoryArticles(categoryId, route?.data?.pageSize || DEFAULT_PAGE_SIZE, this.utilsSvc.totalTimeStringToUTCdateString(currentStartPage), pageDir);
       }
 
       if (isPlatformServer(this.platformId)) {
@@ -94,22 +103,70 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
     }
   }
 
-  private async getCategoryArticles(categoryId: string, pageSize: number) {
+  private async getCategoryArticles(categoryId: string, pageSize: number, startPage: string, pageDir: PageDirection) {
     this.routeData.categoryGroup = this.routeData.categoryGroup || {};
+    const queryConfig: QueryConfig = {
+      isLive: true,
+      articleCategoryId: categoryId,
+      orderField: 'updated',
+      pageSize: pageSize,
+      isForwardDir: pageDir === PageDirection.BACKWARD ? false : true,
+      startPage: startPage || null,
+      isDesc: true
+    };
 
     try {
-      const queryConfig: QueryConfig = {
-        isLive: true,
-        articleCategoryId: categoryId,
-        orderField: 'updated',
-        pageSize: pageSize,
-        startPage: null,
-      };
-
       this.routeData.categoryGroup.articles = await this.articlesFireSvc.getArticles(queryConfig);
+      this.setStartAndEndPageValues();
+
+      if (this.routeData.startPage) {
+        // This can be extended to show partial infor of previous page articles later
+        try {
+          const previousPageArticles = await this.articlesFireSvc.getArticles({ ...queryConfig, isForwardDir: false, startPage: this.routeData.startPage });
+          if (!previousPageArticles || !previousPageArticles.length) {
+            this.routeData.startPage = null;
+          }
+        } catch (error: any) {
+          console.log('ERROR: ', error);
+          this.routeData.startPage = null;
+        }
+      }
+
+      if (this.routeData.endPage) {
+        // This can be extended to show partial infor of next page articles later
+        try {
+          const nextPageArticles = await this.articlesFireSvc.getArticles({ ...queryConfig, isForwardDir: true, startPage: this.routeData.endPage });
+          if (!nextPageArticles || !nextPageArticles.length) {
+            this.routeData.endPage = null;
+          }
+        } catch (error: any) {
+          console.log('ERROR: ', error);
+          this.routeData.endPage = null;
+        }
+      }
+
     } catch (error: any) {
+      console.log('ERROR: ', error);
       this.routeData.errorCategoryGroup = error;
       this.routeData.categoryGroup.articles = [];
+      this.setStartAndEndPageValues();
+    }
+  }
+
+  /**
+   * Sets startPage to first article's orderBy value and endPage to last recor'd orderBy value.
+   * Consumer can ask to fetch next page (backward/forward direction), based pagedir value.
+   */
+  private setStartAndEndPageValues() {
+    const articles = this.routeData?.categoryGroup?.articles;
+    const count = articles && articles.length || 0;
+
+    if (count) {
+      this.routeData.startPage = articles[0][this.orderByField];
+      this.routeData.endPage = articles[count - 1][this.orderByField];
+    } else {
+      this.routeData.startPage = null;
+      this.routeData.endPage = null;
     }
   }
 }

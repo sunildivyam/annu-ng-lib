@@ -10,9 +10,19 @@ export interface CategoryViewRouteData {
     errorCategoryGroup?: any;
     allCategoriesGroups?: Array<CategoryGroup>;
     errorAllCategoriesGroups?: any;
+
+    // startPage and end page should have orderBy values of the first and last record/article from the list.
+    startPage?: string;
+    endPage?: string;
 }
 
 export interface ArticleViewRouteData {
     article?: Article,
     errorArticle?: any;
 }
+
+
+export enum PageDirection {
+    FORWARD = 'f',
+    BACKWARD = 'b'
+};

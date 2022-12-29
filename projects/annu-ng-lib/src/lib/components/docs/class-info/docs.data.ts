@@ -3,7 +3,7 @@ const classInfo = {
     "name": "FirebaseConfig",
     "description": "",
     "tsUrl": "projects/annu-ng-lib/src/lib/firebase/firebase.interface.ts",
-    "tsSource": "export class FirebaseConfig {\r\n    public projectId? = '';\r\n    public appId? = '';\r\n    public storageBucket? = '';\r\n    public locationId? = '';\r\n    public apiKey? = '';\r\n    public authDomain? = '';\r\n    public messagingSenderId? = '';\r\n    public measurementId? = '';\r\n}\r\n\r\n\r\nexport interface QueryConfig {\r\n    userId?: string;\r\n    id?: string | Array<string>;\r\n    articleCategoryId?: string | Array<string>;\r\n    orderField?: string;\r\n    isDesc?: boolean;\r\n    isNextPages?: boolean;\r\n    startPage?: any;\r\n    pageSize?: number;\r\n    isLive?: boolean | null;\r\n  };\r\n",
+    "tsSource": "export class FirebaseConfig {\r\n    public projectId? = '';\r\n    public appId? = '';\r\n    public storageBucket? = '';\r\n    public locationId? = '';\r\n    public apiKey? = '';\r\n    public authDomain? = '';\r\n    public messagingSenderId? = '';\r\n    public measurementId? = '';\r\n}\r\n\r\n\r\nexport interface QueryConfig {\r\n    userId?: string;\r\n    id?: string | Array<string>;\r\n    articleCategoryId?: string | Array<string>;\r\n    orderField?: string;\r\n    isDesc?: boolean;\r\n    isForwardDir?: boolean;\r\n    startPage?: any;\r\n    pageSize?: number;\r\n    isLive?: boolean | null;\r\n  };\r\n",
     "inputProps": [],
     "outputProps": [],
     "props": [
