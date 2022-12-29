@@ -22,17 +22,19 @@ export class ArticlesFirebaseSeedService {
     private async generateCategories(userId: string,
         categoriesCount: number,
         featuredCatgoriesCount: number): Promise<Array<Category>> {
+        let updatedMilliseconds = Number(this.utilsSvc.dateStringToTotalTimeString(this.utilsSvc.currentDate));
         return new Promise((resolve, reject) => {
             const categories: Array<Category> = [];
             for (let catI = 1; catI <= categoriesCount; catI++) {
                 setTimeout(() => {
+                    updatedMilliseconds = ++updatedMilliseconds;
                     try {
                         categories.push({
                             ...SEED_CATEGORY,
                             id: `${SEED_CATEGORY.id}-${catI}`,
                             shortTitle: `${SEED_CATEGORY.shortTitle} ${catI}`,
-                            updated: this.utilsSvc.currentDate,
-                            created: this.utilsSvc.currentDate,
+                            updated: this.utilsSvc.totalTimeStringToUTCdateString(updatedMilliseconds.toString()),
+                            created: this.utilsSvc.totalTimeStringToUTCdateString(updatedMilliseconds.toString()),
                             userId: userId,
                             isFeatured: catI <= featuredCatgoriesCount,
                             metaInfo: {
@@ -51,15 +53,16 @@ export class ArticlesFirebaseSeedService {
                     if (catI === categoriesCount) {
                         resolve(categories);
                     }
-                }, 2);  // 2 milliseconds, just to add a gap of atleast 2 ms in the 'updated' or 'created' fields.
+                });
             }
         });
     }
 
     private async generateCategoryArticles(category: Category,
         categoryArticlesCount: number): Promise<Array<Article>> {
-            const catIdSplittedArray = category.id.split('-');
-            const categoryIndex = Number(catIdSplittedArray[catIdSplittedArray.length - 1]);
+        const catIdSplittedArray = category.id.split('-');
+        const categoryIndex = Number(catIdSplittedArray[catIdSplittedArray.length - 1]);
+        let updatedMilliseconds = Number(this.utilsSvc.dateStringToTotalTimeString(this.utilsSvc.currentDate));
         return new Promise((resolve, reject) => {
             if (!category) throw new Error('Category is required.');
 
@@ -69,11 +72,12 @@ export class ArticlesFirebaseSeedService {
                 setTimeout(() => {
                     try {
                         const articleIndex = (categoryIndex * categoryArticlesCount) - (categoryArticlesCount - articleI);
+                        updatedMilliseconds = updatedMilliseconds + articleIndex;
                         articles.push({
                             ...SEED_ARTICLE,
                             id: `${SEED_ARTICLE.id}-${articleIndex}`,
-                            updated: this.utilsSvc.currentDate,
-                            created: this.utilsSvc.currentDate,
+                            updated: this.utilsSvc.totalTimeStringToUTCdateString(updatedMilliseconds.toString()),
+                            created: this.utilsSvc.totalTimeStringToUTCdateString(updatedMilliseconds.toString()),
                             userId: category.userId,
                             metaInfo: {
                                 ...SEED_ARTICLE.metaInfo,
@@ -92,7 +96,7 @@ export class ArticlesFirebaseSeedService {
                     if (articleI === categoryArticlesCount) {
                         resolve(articles);
                     }
-                }, 2);  // 2 milliseconds, just to add a gap of atleast 2 ms in the 'updated' or 'created' fields.
+                });
             }
         });
     }
@@ -111,7 +115,7 @@ export class ArticlesFirebaseSeedService {
 
         // populate Categories
         const categories = await this.generateCategories(userId, categoriesCount, featuredCatgoriesCount);
-        const catArticles = await Promise.all(categories.map (cat => this.generateCategoryArticles(cat, categoryArticlesCount)));
+        const catArticles = await Promise.all(categories.map(cat => this.generateCategoryArticles(cat, categoryArticlesCount)));
         let articles: Array<Article> = [];
         catArticles.forEach(arts => {
             articles = articles.concat(arts);
