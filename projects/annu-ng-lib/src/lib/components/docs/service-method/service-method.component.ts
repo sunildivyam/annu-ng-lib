@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ComponentMethod } from '../docs.interface';
+import { ComponentProp } from '../docs.interface';
 
 @Component({
   selector: 'anu-service-method',
@@ -7,7 +7,7 @@ import { ComponentMethod } from '../docs.interface';
   styleUrls: ['./service-method.component.scss']
 })
 export class ServiceMethodComponent implements OnInit, OnChanges {
-  @Input() method: ComponentMethod = null;
+  @Input() method: ComponentProp = null;
   @Output() changed: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   parameters: Array<any> = []

@@ -8,6 +8,10 @@ import { firebaseAppConfig, firebaseui, firebaseStoreConfig } from "../app/confi
 export const environment = {
   production: false,
   libConfig: {
+    // dev:ssr local
+    apiBaseUrl: 'http://localhost:4200',
+    // firebase serve local
+    // apiBaseUrl: 'http://localhost:5000',
     docsJsonUrl: '/data/documentation.json',
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },

@@ -1,6 +1,6 @@
 import { Inject, NgModule } from '@angular/core';
-import { INITIAL_CONFIG, PlatformConfig, ServerModule, ServerTransferStateModule } from '@angular/platform-server';
-
+import { INITIAL_CONFIG, PlatformConfig, ServerModule } from '@angular/platform-server';
+import { environment } from '../environments/environment';
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 
@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
   imports: [
     AppModule,
     ServerModule,
-    ServerTransferStateModule,    // Needed to transfer state from SSR to client
   ],
   bootstrap: [AppComponent],
 })
@@ -22,6 +21,7 @@ export class AppServerModule {
    * @param {PlatformConfig} config
    */
   constructor(@Inject(INITIAL_CONFIG) private config: PlatformConfig) {
+    this.config.baseUrl = environment.libConfig.apiBaseUrl;
     this.config.useAbsoluteUrl = true;
   }
 }

@@ -37,5 +37,5 @@
     [focus]="value?.focused" (focusin)="onFocus($event)" (blur)="onBlur($event)"/>
 
 <anu-code-block *ngIf="value.tagName === 'anu-code-block'" [source]="value?.data?.source" [language]="value?.data?.language" [enableEdit]="true" tabindex="0"
-(keydown.enter)="enterPressed($event, value)" (keydown.backspace)="backspacePressed($event)" (changed)="codeBlockChanged($event)" [name]="value.name"
+(keydown.enter)="enterPressed($event, value)" (keydown.backspace)="backspacePressed($event)" (changed)="codeBlockChanged($event)" [id]="value.name"
 (sourceModalOpenStatusChanged)="sourceModalOpenStatusChanged($event)" [focus]="value?.focused" (focusin)="onFocus($event)" (blur)="onBlur($event)"></anu-code-block>

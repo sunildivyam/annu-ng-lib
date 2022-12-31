@@ -4,6 +4,7 @@ import { firebaseAppConfig, firebaseui, firebaseStoreConfig } from "../app/confi
 export const environment = {
   production: true,
   libConfig: {
+    apiBaseUrl: 'http://localhost:5000',  // This should be the hosted url
     docsJsonUrl: '/data/documentation.json',
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },

@@ -27,7 +27,7 @@
             </anu-card-body>
         </anu-card>
 
-        <anu-category class="spacing-around-horizontal-md spacing-around-horizontal-lg" [value]="category" showMetaInfo="true"></anu-category>
+        <anu-category class="spacing-around-horizontal-md spacing-around-horizontal-lg" [value]="category" [showMetaInfo]="true"></anu-category>
 
         <anu-modal [opened]="toggleImageForm" title="Choose an image" (cancelClick)="cancelImageChange()">
             <anu-image-form [src]="category?.image?.src" [alt]="category?.image?.alt" (cancel)="cancelImageChange()"

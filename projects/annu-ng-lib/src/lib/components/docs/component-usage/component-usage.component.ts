@@ -1,7 +1,8 @@
 import { Component, ComponentRef, EventEmitter, Inject, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { ComponentInfo, ComponentProp } from '../docs.interface';
 import { DocsService } from '../docs.service';
-import { LibComponents, LibComponentsContent } from '../lib-resources';
+import { LibComponents } from '../lib-resources/lib-components';
+import { LibComponentsContent } from '../lib-resources/lib-components-content';
 
 @Component({
   selector: 'anu-component-usage',

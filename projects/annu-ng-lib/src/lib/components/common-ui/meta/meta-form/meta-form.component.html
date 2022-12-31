@@ -23,7 +23,7 @@
 </form>
 
 <anu-modal title="Meta information preview"
-    enableCancel="true"
+    [enableCancel]="true"
     cancelLabel="Close"
     (cancelClick)="previewModalCloseClicked($event)"
     [opened]="toggleModal">

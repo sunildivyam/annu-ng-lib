@@ -4,7 +4,7 @@ import { appConfig } from './constants';
 import { mainRoutes } from './app.routes';
 
 @Component({
-  selector: 'anu-root',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

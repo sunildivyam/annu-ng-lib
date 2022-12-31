@@ -5,22 +5,7 @@
     <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 
     <section *ngIf="activeTab.name === tabs[0].name">
-        <ng-container *ngIf="interfaceInfo?.inputProps && interfaceInfo?.inputProps.length">
-            <h2>Input Properties</h2>
-            <anu-component-props [props]="interfaceInfo?.inputProps"></anu-component-props>
-        </ng-container>
-        <ng-container *ngIf="interfaceInfo?.outputProps && interfaceInfo?.outputProps.length">
-            <h2>Output Properties / Events</h2>
-            <anu-component-props [props]="interfaceInfo?.outputProps"></anu-component-props>
-        </ng-container>
-        <ng-container *ngIf="interfaceInfo?.props && interfaceInfo?.props.length">
-            <h2>Properties</h2>
-            <anu-component-props [props]="interfaceInfo?.props"></anu-component-props>
-        </ng-container>
-        <ng-container *ngIf="interfaceInfo?.methods && interfaceInfo?.methods.length">
-            <h2>Methods</h2>
-            <anu-component-props [props]="interfaceInfo?.methods" [type]="propertyTypes.METHOD"></anu-component-props>
-        </ng-container>
+
     </section>
     <section *ngIf="activeTab.name === tabs[1].name">
         <h2>{{interfaceInfo?.tsUrl}}</h2>

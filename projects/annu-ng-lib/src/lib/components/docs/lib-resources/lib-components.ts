@@ -56,7 +56,7 @@ import {
 
 
 
-  import { ComponentInfoComponent } from '../component-info/component-info.component';
+  // import { ComponentInfoComponent } from '../component-info/component-info.component';
   import { ComponentPropsComponent } from '../component-props/component-props.component';
   // import { ComponentUsageComponent } from '../component-usage/component-usage.component';
   import { ServiceInfoComponent } from '../service-info/service-info.component';
@@ -118,7 +118,7 @@ export const LibComponents = {
   LoginStatusComponent,
 
   // docs
-  ComponentInfoComponent,
+  // ComponentInfoComponent,
   ComponentPropsComponent,
   // ComponentUsageComponent,
   ServiceInfoComponent,

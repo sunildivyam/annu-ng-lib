@@ -1,12 +1,12 @@
 import 'zone.js/node';
 
+import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
+import { existsSync, readFile } from 'fs';
 import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
-import { existsSync, readFile } from 'fs';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -14,7 +14,7 @@ export function app(): express.Express {
   const distFolder = join(process.cwd(), 'dist/annu-ng-lib-pages/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
-  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
   }));
@@ -27,6 +27,7 @@ export function app(): express.Express {
 
   // Serve JSON data
   server.get('/data/*.json', (req, res) => {
+    console.log('JSON', req.url);
     readFile(join(distFolder, req.url), {encoding: 'utf8'}, (err, json) => {
       if (err) {
         res.status(404).send('Requested resource does not exist');
@@ -44,14 +45,15 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+    console.log('Render', req.url, 'baseUrl:', req.originalUrl);
+    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.originalUrl }] });
   });
 
   return server;
 }
 
 function run(): void {
-  const port = process.env.PORT || 4000;
+  const port = process.env['PORT'] || 4000;
 
   // Start up the Node server
   const server = app();

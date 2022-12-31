@@ -1,27 +1,44 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "annu-ng-lib": [
+        "dist/annu-ng-lib"
+      ],
+      "@annu/ng-lib": [
+        "projects/annu-ng-lib/src"
+      ],
+      "@annu/ng-lib/*": [
+        "projects/annu-ng-lib/src/*"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "module": "es2020",
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
     "lib": [
-      "es2018",
+      "ES2022",
       "dom"
-    ],
-    "paths": {
-      "@annu/ng-lib": [
-        "projects/annu-ng-lib/src/lib"
-      ],
-      "@annu/ng-lib/*": [
-        "projects/annu-ng-lib/src/lib/*"
-      ]
-    }
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }
