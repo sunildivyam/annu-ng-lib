@@ -54,17 +54,13 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
     } else {
       // populate some of the data that is already available on parent route.
       const parentRouteData: ArticlesHomeViewRouteData = route.parent.data[ARTICLES_ROUTE_RESOLVER_DATA_KEYS.ARTICLES_HOME_VIEW];
-      let foundCategoryGrp = null;
-      if (parentRouteData) {
-        this.routeData = {
-          allCategoriesGroups: parentRouteData.allCategoriesGroups,
-          errorAllCategoriesGroups: parentRouteData.errorAllCategoriesGroups
-        };
+      this.routeData = {
+        allCategoriesGroups: parentRouteData.allCategoriesGroups,
+        errorAllCategoriesGroups: parentRouteData.errorAllCategoriesGroups
+      };
 
-        // check if route category already exist in parent data, else fetch it from backend
-        foundCategoryGrp = parentRouteData.allCategoriesGroups.find((catGroup: CategoryGroup) => catGroup.category.id === categoryId);
-      }
-
+      // check if route category already exist in parent data, else fetch it from backend
+      const foundCategoryGrp = parentRouteData.allCategoriesGroups.find((catGroup: CategoryGroup) => catGroup.category.id === categoryId);
       if (foundCategoryGrp) {
         // Fill category only from parent data. As articles may differ based on startPage and pageDirection. So Articles needs to be fetched fresh.
         this.routeData.categoryGroup = { category: foundCategoryGrp.category };
