@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeService.setTheme(this.appConfig.themeName, false);
+    this.themeService.setTheme(this.appConfig.themeName, true);
   }
 
   public loginStatusClicked(): void {

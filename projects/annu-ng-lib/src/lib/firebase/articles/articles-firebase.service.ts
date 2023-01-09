@@ -27,6 +27,7 @@ import { AuthFirebaseService } from '../auth';
 import { QueryConfig } from '../firebase.interface';
 import { ImageFireStoreService } from '../image-storage/image-fire-store.service';
 import { FIREBASE_DOCS } from './articles-firebase.constants';
+import { CommonFirebaseService } from '../common-firebase';
 
 /**
  * Description placeholder
@@ -42,6 +43,7 @@ import { FIREBASE_DOCS } from './articles-firebase.constants';
 export class ArticlesFirebaseService {
 
   constructor(private utilsSvc: UtilsService,
+    private commonFirebaseSvc: CommonFirebaseService,
     private fireAuthSvc: AuthFirebaseService,
     private imageFireStoreService: ImageFireStoreService,
     private articlesFireSeedSvc: ArticlesFirebaseSeedService) { }
@@ -129,7 +131,7 @@ export class ArticlesFirebaseService {
    */
   public async getCategoryById(id: string): Promise<Category> {
     try {
-      const db = getFirestore();
+      const db = getFirestore(this.commonFirebaseSvc.initOrGetFirebaseApp());
       const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.CATEGORIES, id));
       if (!querySnapshot.exists()) {
         throw new Error(`Category with id- ${id} does not exist`);
@@ -145,7 +147,6 @@ export class ArticlesFirebaseService {
       throw error;
     }
   }
-
   /**
    * Reads Categories based on where conditions, orderby, and pagination.</br>
    * <strong>userId:</strong> filter by user id</br>
@@ -364,7 +365,7 @@ export class ArticlesFirebaseService {
     const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
 
     const articlesDatabaseSeed = await this.articlesFireSeedSvc.generateArticlesDatabaseSeed(this.fireAuthSvc.getCurrentUserId(),
-    categoriesCount, featuredCatgoriesCount, categoryArticlesCount);
+      categoriesCount, featuredCatgoriesCount, categoryArticlesCount);
 
     articlesDatabaseSeed.categories.forEach(c => {
       const categoryId = c.id;

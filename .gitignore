@@ -5,7 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
-
+/projects/annu-ng-lib-pages/src/assets/documentation.json
 # Node
 /node_modules
 npm-debug.log

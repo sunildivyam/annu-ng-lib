@@ -47,10 +47,18 @@ export const libDocsRoutes = [
 
 export const routes: Routes = [
   {
-    path: '', component: LibDocsHomePageComponent,
-    resolve: { [LIB_DOCS_ROUTE_RESOLVER_DATA_KEYS.LIB_DOCS_HOME_VIEW]: LibDocsHomeViewRouteResolver},
+    path: '',
+    component: LibDocsHomePageComponent,
+    resolve: { [LIB_DOCS_ROUTE_RESOLVER_DATA_KEYS.LIB_DOCS_HOME_VIEW]: LibDocsHomeViewRouteResolver },
     // Article Public Routes
-    children: [...mainRoutes, ...libDocsRoutes],
+    children: [
+      ...mainRoutes, ...libDocsRoutes,
+      {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
+      }
+    ],
   },
 
   //Any Other route (non-existant routes)

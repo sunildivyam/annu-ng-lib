@@ -4,15 +4,14 @@
 
 import { LibConfig } from "@annu/ng-lib";
 import { firebaseAppConfig, firebaseui, firebaseStoreConfig } from "../app/config/firebase.config";
+const baseUrl = 'http://localhost:4200';
 
 export const environment = {
   production: false,
   libConfig: {
     // dev:ssr local
-    apiBaseUrl: 'http://localhost:4200',
-    // firebase serve local
-    // apiBaseUrl: 'http://localhost:5000',
-    docsJsonUrl: '/data/documentation.json',
+    apiBaseUrl: baseUrl,
+    docsJsonUrl: `${baseUrl}/assets/documentation.json`, // absolute urls are required for SSR
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },
     firebaseStoreConfig,

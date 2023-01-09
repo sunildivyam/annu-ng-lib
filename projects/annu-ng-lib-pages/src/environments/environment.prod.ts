@@ -1,11 +1,12 @@
 import { LibConfig } from "@annu/ng-lib";
 import { firebaseAppConfig, firebaseui, firebaseStoreConfig } from "../app/config/firebase.config";
+const baseUrl = 'http://localhost:5000';
 
 export const environment = {
   production: true,
   libConfig: {
-    apiBaseUrl: 'http://localhost:5000',  // This should be the hosted url
-    docsJsonUrl: '/data/documentation.json',
+    apiBaseUrl: baseUrl,  // This should be the hosted url
+    docsJsonUrl: `${baseUrl}/assets/documentation.json`,
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },
     firebaseStoreConfig,

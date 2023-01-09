@@ -3,7 +3,7 @@ import 'zone.js/node';
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
-import { existsSync, readFile } from 'fs';
+import { existsSync } from 'fs';
 import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
@@ -25,19 +25,6 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
 
-  // Serve JSON data
-  server.get('/data/*.json', (req, res) => {
-    console.log('JSON', req.url);
-    readFile(join(distFolder, req.url), {encoding: 'utf8'}, (err, json) => {
-      if (err) {
-        res.status(404).send('Requested resource does not exist');
-      } else {
-        let obj = JSON.parse(json);
-        res.json(obj);
-      }
-    });
-  });
-
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
@@ -45,7 +32,6 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    console.log('Render', req.url, 'baseUrl:', req.originalUrl);
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.originalUrl }] });
   });
 

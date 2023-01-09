@@ -7,9 +7,10 @@ import {
 import { ArticlesHomeViewRouteData } from '../articles-route-resolvers.interface';
 
 import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { makeStateKey, StateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
-import { Category } from '../../../components/cms';
+import { Category, CategoryGroup } from '../../../components/cms';
+import { from, map, Observable, of, tap } from 'rxjs';
 
 const DEFAULT_PAGE_SIZE = 5;
 
@@ -26,15 +27,12 @@ const DEFAULT_PAGE_SIZE = 5;
  */
 @Injectable()
 export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRouteData> {
-
-  routeData: ArticlesHomeViewRouteData = {};
-  LOGS_MODULE_NAME: string = ArticlesHomeViewRouteResolver.name;
   pageSize: number = DEFAULT_PAGE_SIZE;
 
   constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ArticlesHomeViewRouteData> {
-    this.routeData = {};
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ArticlesHomeViewRouteData> {
+
     this.pageSize = route?.data?.pageSize || DEFAULT_PAGE_SIZE;
 
     // create a unique key that holds the route stata data.
@@ -42,44 +40,56 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
 
     //Check if state data already exists, if yes, serve it from state, and clear the state else, fetch the data and set it to state, that can be used at client side.
     if (this.transferState.hasKey(HOME_VIEW_ROUTE_KEY)) {
-      this.routeData = this.transferState.get<ArticlesHomeViewRouteData>(HOME_VIEW_ROUTE_KEY, {});
+      const routeData = this.transferState.get<ArticlesHomeViewRouteData>(HOME_VIEW_ROUTE_KEY, {});
       this.transferState.remove(HOME_VIEW_ROUTE_KEY);
-      return this.routeData;
+      return of(routeData);
+
     } else {
-      await this.loadRouteData();
-      if (isPlatformServer(this.platformId)) {
-        this.transferState.set(HOME_VIEW_ROUTE_KEY, this.routeData);
-      }
-      return this.routeData;
+      // Fetch the fresh data and set the new transferState for mext use.
+      return this.loadRouteData(HOME_VIEW_ROUTE_KEY);
     }
   }
 
-  private async loadRouteData() {
-    try {
-      const allCategories = await this.articlesFireSvc.getCategories({ isLive: true, orderField: 'updated', isDesc: false })
-      this.routeData.allCategoriesGroups = [];
-      const catArticles = await Promise.all(allCategories.map(async (cat: Category) => {
-        const queryConfig: QueryConfig = {
-          isLive: true,
-          articleCategoryId: cat.id,
-          orderField: 'updated',
-          pageSize: this.pageSize,
-          isForwardDir: true,
-          startPage: null,
-          isDesc: true,
-        };
-        return this.articlesFireSvc.getArticles(queryConfig);
-      }));
-
-      allCategories.forEach((cat, index) => {
-        this.routeData.allCategoriesGroups.push(
-          {
-            category: cat,
-            articles: catArticles[index] || []
-          });
-      })
-    } catch (error: any) {
-      this.routeData.errorAllCategoriesGroups = error;
+  private setTransferState(key: StateKey<ArticlesHomeViewRouteData>, routeData: ArticlesHomeViewRouteData): void {
+    if (isPlatformServer(this.platformId)) {
+      this.transferState.set(key, routeData);
     }
+  }
+
+  private loadRouteData(key: StateKey<ArticlesHomeViewRouteData>): Observable<ArticlesHomeViewRouteData> {
+    return new Observable<ArticlesHomeViewRouteData>(observer => {
+      let allCategories: Array<Category> = [];
+      this.articlesFireSvc.getCategories({ isLive: true, orderField: 'updated', isDesc: false })
+        .then(cats => {
+          allCategories = [...cats ?? []];
+          if (allCategories.length) {
+            Promise.all(allCategories
+              .map((cat: Category) => {
+                const queryConfig: QueryConfig = {
+                  isLive: true,
+                  articleCategoryId: cat.id,
+                  orderField: 'updated',
+                  pageSize: this.pageSize,
+                  isForwardDir: true,
+                  startPage: null,
+                  isDesc: true,
+                };
+                return this.articlesFireSvc.getArticles(queryConfig);
+              }))
+              .then(catsGroupArticles => {
+                const catGroups = allCategories.map((cat, index) => ({ category: { ...cat }, articles: [...catsGroupArticles[index]] } as CategoryGroup));
+                const routeData = { allCategoriesGroups: catGroups } as ArticlesHomeViewRouteData;
+                this.setTransferState(key, routeData);
+                observer.next(routeData);
+              })
+              .catch(error => observer.error(error))
+          } else {
+            const routeData = { allCategoriesGroups: [] } as ArticlesHomeViewRouteData;
+            this.setTransferState(key, routeData);
+            observer.next(routeData);
+          }
+        })
+        .catch(error => observer.error(error))
+    });
   }
 }

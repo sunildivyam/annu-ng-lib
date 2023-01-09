@@ -151,7 +151,6 @@ export class DocsService {
    */
   public async getLibDocsInfo(): Promise<LibDocsInfo> {
     return new Promise((resolve, reject) => {
-      console.log('Docs Url:', this.url);
       this.httpClient.get<any>(this.url, {responseType: 'json'})
         .pipe(catchError(
           (errorResponse: any) => {
