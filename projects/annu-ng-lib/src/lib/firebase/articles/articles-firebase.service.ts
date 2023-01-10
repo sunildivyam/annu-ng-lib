@@ -26,7 +26,7 @@ import { UtilsService } from '../../services/utils/utils.service';
 import { AuthFirebaseService } from '../auth';
 import { QueryConfig } from '../firebase.interface';
 import { ImageFireStoreService } from '../image-storage/image-fire-store.service';
-import { FIREBASE_DOCS } from './articles-firebase.constants';
+import { ARTICLES_COLLECTIONS } from './articles-firebase.constants';
 import { CommonFirebaseService } from '../common-firebase';
 
 /**
@@ -86,7 +86,7 @@ export class ArticlesFirebaseService {
       }
 
       const db = getFirestore();
-      const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
+      const categoriesRef = collection(db, ARTICLES_COLLECTIONS.CATEGORIES);
       const categoryRef = doc(categoriesRef, pCategory.id);
 
       await setDoc(categoryRef, category);
@@ -110,7 +110,7 @@ export class ArticlesFirebaseService {
   public async deleteCategory(category: Category): Promise<boolean> {
     try {
       const db = getFirestore();
-      const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
+      const categoriesRef = collection(db, ARTICLES_COLLECTIONS.CATEGORIES);
       const categoryRef = doc(categoriesRef, category.id);
 
       await deleteDoc(categoryRef);
@@ -132,7 +132,7 @@ export class ArticlesFirebaseService {
   public async getCategoryById(id: string): Promise<Category> {
     try {
       const db = getFirestore(this.commonFirebaseSvc.initOrGetFirebaseApp());
-      const querySnapshot = await getDoc(doc(db, FIREBASE_DOCS.CATEGORIES, id));
+      const querySnapshot = await getDoc(doc(db, ARTICLES_COLLECTIONS.CATEGORIES, id));
       if (!querySnapshot.exists()) {
         throw new Error(`Category with id- ${id} does not exist`);
       }
@@ -168,7 +168,7 @@ export class ArticlesFirebaseService {
   public async getCategories(queryConfig: QueryConfig): Promise<Array<Category>> {
     try {
       const db = getFirestore();
-      const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
+      const categoriesRef = collection(db, ARTICLES_COLLECTIONS.CATEGORIES);
       const queryArgs = this.buildQuery({ ...queryConfig } as QueryConfig);
 
       const queryRef = query(categoriesRef, ...queryArgs);
@@ -223,7 +223,7 @@ export class ArticlesFirebaseService {
 
     try {
       const db = getFirestore();
-      const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
+      const articlesRef = collection(db, ARTICLES_COLLECTIONS.ARTICLES);
       const articleRef = doc(articlesRef, pArticle.id);
 
       await setDoc(articleRef, article);
@@ -247,7 +247,7 @@ export class ArticlesFirebaseService {
   public async deleteArticle(article: Article): Promise<boolean> {
     try {
       const db = getFirestore();
-      const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
+      const articlesRef = collection(db, ARTICLES_COLLECTIONS.ARTICLES);
       const articleRef = doc(articlesRef, article.id);
 
       await deleteDoc(articleRef);
@@ -274,7 +274,7 @@ export class ArticlesFirebaseService {
 
     try {
       const db = getFirestore();
-      const articleRef = doc(db, FIREBASE_DOCS.ARTICLES, id);
+      const articleRef = doc(db, ARTICLES_COLLECTIONS.ARTICLES, id);
       const querySnapshot = await getDoc(articleRef);
       if (!querySnapshot.exists()) {
         throw new Error(`Article with id- ${id} does not exist`);
@@ -326,7 +326,7 @@ export class ArticlesFirebaseService {
   public async getArticles(queryConfig: QueryConfig): Promise<Array<Article>> {
     try {
       const db = getFirestore();
-      const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
+      const articlesRef = collection(db, ARTICLES_COLLECTIONS.ARTICLES);
       const queryArgs: Array<QueryConstraint> = this.buildQuery({ ...queryConfig } as QueryConfig);
 
       const queryRef = query(articlesRef, ...queryArgs);
@@ -361,8 +361,8 @@ export class ArticlesFirebaseService {
     categoryArticlesCount: number = 5): Promise<string> {
     const db = getFirestore();
     const writeBatchRef: WriteBatch = writeBatch(db);
-    const categoriesRef = collection(db, FIREBASE_DOCS.CATEGORIES);
-    const articlesRef = collection(db, FIREBASE_DOCS.ARTICLES);
+    const categoriesRef = collection(db, ARTICLES_COLLECTIONS.CATEGORIES);
+    const articlesRef = collection(db, ARTICLES_COLLECTIONS.ARTICLES);
 
     const articlesDatabaseSeed = await this.articlesFireSeedSvc.generateArticlesDatabaseSeed(this.fireAuthSvc.getCurrentUserId(),
       categoriesCount, featuredCatgoriesCount, categoryArticlesCount);

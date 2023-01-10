@@ -1,3 +1,5 @@
+import { StructuredQueryValueType } from "./common-firebase";
+
 export class FirebaseConfig {
     public projectId?= '';
     public appId?= '';
@@ -15,11 +17,13 @@ export interface QueryConfig {
     id?: string | Array<string>;
     articleCategoryId?: string | Array<string>;
     orderField?: string;
+    orderFieldType?: StructuredQueryValueType;
     isDesc?: boolean;
     isForwardDir?: boolean;
     startPage?: any;
     pageSize?: number;
     isLive?: boolean | null;
+    selectFields?: Array<string>;
 };
 
 export class FirebaseStoreConfig {

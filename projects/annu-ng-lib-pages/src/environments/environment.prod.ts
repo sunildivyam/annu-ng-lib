@@ -10,5 +10,6 @@ export const environment = {
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },
     firebaseStoreConfig,
+    firestoreBaseApiUrl: 'https://firestore.googleapis.com/v1/projects/annu-business/databases/(default)/documents',
   } as LibConfig
 };
