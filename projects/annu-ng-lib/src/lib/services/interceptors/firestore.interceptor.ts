@@ -8,7 +8,9 @@ import {
 import { Observable } from 'rxjs';
 import { LibConfig } from '../../app-config/app-config.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FirestoreInterceptor implements HttpInterceptor {
 
   constructor(private libConfig: LibConfig) {}

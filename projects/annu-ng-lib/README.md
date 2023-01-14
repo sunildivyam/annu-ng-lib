@@ -1,24 +1,18 @@
-# AnnuNgLib
+# @annubiz/ng-lib
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
+The objective of this project to develop a framework that can provide all required bolts and nuts to retail requirements, for example: Hiring and Jobs Retail Shopping and e-commerce Tour, Travel & hotels Web classifieds, etc.
 
-## Code scaffolding
+### How this is enabled:
+* One `index.ts` file is created in `projects/annu-ng-lib/src/lib` and exported all library angular items that need to be exposed publically.
+* `public-api.ts` needs to export all from this `index.ts`.
+* The last thing is to add `paths` to the root `tsconfig.base.json` to point to this `index.ts`.
+* This is all, now you just need to import library in your main app module.
 
-Run `ng generate component component-name --project annu-ng-lib` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project annu-ng-lib`.
-> Note: Don't forget to add `--project annu-ng-lib` or else it will be added to the default project in your `angular.json` file. 
+## Build Library
 
-## Build
+Run `ng build annu-ng-lib` to build the project. The build artifacts will be stored in the `dist/annu-ng-lib` directory. Use the `--prod` flag for a production build.
 
-Run `ng build annu-ng-lib` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build annu-ng-lib`, go to the dist folder `cd dist/annu-ng-lib` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test annu-ng-lib` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Generate alternate & optional Library documentation static site.
+* Run `npm run docs`, will create a `documentation` folder in root, that contains all static documentation code.
+* Run `npm run docs:serve`, will start a local static web server at http://localhost:8080 that will serve the static library documentation.
+* This documentation support can be removed later once pages app is completed.

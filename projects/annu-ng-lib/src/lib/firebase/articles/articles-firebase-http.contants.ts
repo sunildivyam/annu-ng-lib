@@ -1,9 +1,21 @@
+export const SHALLOW_CATEGORY_FIELDS = [
+    "shortTitle",
+    "isFeatured",
+    "metaInfo",
+    "image",
+    "created",
+    "updated",
+    "userId",
+    "isLive",
+];
 
-export const HTTP_QUERIES = {
-    CATEGORIES: {
-        ALL_LIVE: {
-
-        },
-
-    }
-}
+export const SHALLOW_ARTICLE_FIELDS = [
+    'metaInfo',
+    'image',
+    'categories',
+    'categoriesGroup',
+    'created',
+    'updated',
+    'userId',
+    'isLive',
+];

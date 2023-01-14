@@ -8,6 +8,7 @@ import { ThemeService } from '../../common-ui/theme';
 import {
   ArticlesFirebaseService,
   ArticlesFirebaseHttpService,
+  CategoriesFirebaseHttpService,
   ArticlesFirebaseSeedService,
   ArticlesFirebaseHttpQueryService,
 } from '../../../firebase/articles';
@@ -38,6 +39,7 @@ export const LibServices = {
 
   ArticlesFirebaseService,
   ArticlesFirebaseHttpService,
+  CategoriesFirebaseHttpService,
   ArticlesFirebaseSeedService,
   ArticlesFirebaseHttpQueryService,
 
