@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { ArticlesHomeViewRouteData } from '../articles-route-resolvers.interface';
 
-import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
+import { ArticlesFirebaseHttpService, QueryConfig, StructuredQueryValueType } from '../../../firebase';
 import { makeStateKey, StateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
 import { Category, CategoryGroup } from '../../../components/cms';
@@ -29,7 +29,7 @@ const DEFAULT_PAGE_SIZE = 5;
 export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRouteData> {
   pageSize: number = DEFAULT_PAGE_SIZE;
 
-  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
+  constructor(private articlesFireHttp: ArticlesFirebaseHttpService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ArticlesHomeViewRouteData> {
 
@@ -59,7 +59,7 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
   private loadRouteData(key: StateKey<ArticlesHomeViewRouteData>): Observable<ArticlesHomeViewRouteData> {
     return new Observable<ArticlesHomeViewRouteData>(observer => {
       let allCategories: Array<Category> = [];
-      this.articlesFireSvc.getCategories({ isLive: true, orderField: 'updated', isDesc: false })
+      this.articlesFireHttp.getCategories({ isLive: true, orderField: 'updated', isDesc: false })
         .then(cats => {
           allCategories = [...cats ?? []];
           if (allCategories.length) {
@@ -69,12 +69,13 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
                   isLive: true,
                   articleCategoryId: cat.id,
                   orderField: 'updated',
+                  orderFieldType: StructuredQueryValueType.stringValue,
                   pageSize: this.pageSize,
                   isForwardDir: true,
                   startPage: null,
                   isDesc: true,
                 };
-                return this.articlesFireSvc.getArticles(queryConfig);
+                return this.articlesFireHttp.getArticles(queryConfig);
               }))
               .then(catsGroupArticles => {
                 const catGroups = allCategories.map((cat, index) => ({ category: { ...cat }, articles: [...catsGroupArticles[index]] } as CategoryGroup));

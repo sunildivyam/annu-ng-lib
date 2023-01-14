@@ -22,6 +22,7 @@ export class FirestoreParserService {
       'timestampValue',
       'fields',
       'document',
+      'readTime'
     ];
     return Object.keys(value).find(k => props.includes(k));
   }
@@ -41,6 +42,7 @@ export class FirestoreParserService {
     else if (prop === 'geoPointValue') {
       value = { latitude: 0, longitude: 0, ...value[prop] }
     }
+    // extract and add id to the document.
     else if (prop === 'fields') {
       const nextValue = value[prop];
       const docName: string = value.name;

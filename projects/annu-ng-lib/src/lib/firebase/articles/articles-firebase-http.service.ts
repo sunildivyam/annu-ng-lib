@@ -32,7 +32,7 @@ export class ArticlesFirebaseHttpService {
       if (!id) {
         reject('Please add a valid category Id');
       } else {
-        const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.CATEGORIES}/${id}`;
+        const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.CATEGORIES}/${id}?key=${this.libConfig?.firebase?.apiKey || ''}`;
         const httpSubscription = this.http.get(url).subscribe({
           next: (c: any) => {
             const category: Category = this.firestoreParser.parse(c) as Category;
@@ -61,9 +61,12 @@ export class ArticlesFirebaseHttpService {
 
       const httpSubscription = this.http.post(url, this.queryService.buildStructuredQuery(ARTICLES_COLLECTIONS.CATEGORIES, queryConfig),
         {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          // headers: {
+          //   Authorization: `Bearer ${token}`
+          // },
+          // params: {
+          //   key: this.libConfig?.firebase?.apiKey || ''
+          // }
         })
         .subscribe({
           next: (cats: any) => {
@@ -90,7 +93,7 @@ public async getArticleById(id: string): Promise<Article> {
     if (!id) {
       reject('Please add a valid article Id');
     } else {
-      const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.ARTICLES}/${id}`;
+      const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.ARTICLES}/${id}?key=${this.libConfig?.firebase?.apiKey || ''}`;
       const httpSubscription = this.http.get(url).subscribe({
         next: (c: any) => {
           const article: Article = this.firestoreParser.parse(c) as Article;
@@ -119,9 +122,12 @@ public async getArticleById(id: string): Promise<Article> {
 
       const httpSubscription = this.http.post(url, this.queryService.buildStructuredQuery(ARTICLES_COLLECTIONS.ARTICLES, queryConfig),
         {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          // headers: {
+          //   Authorization: `Bearer ${token}`
+          // },
+          // params: {
+          //   key: this.libConfig?.firebase?.apiKey || ''
+          // }
         })
         .subscribe({
           next: (cats: any) => {

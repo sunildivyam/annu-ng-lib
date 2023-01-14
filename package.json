@@ -21,7 +21,7 @@
     "build:analyze": "ng build --configuration production --stats-json && webpack-bundle-analyzer ./dist/annu-ng-lib-pages/browser/stats.json",
     "lint": "ng lint"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^15.0.0",
     "@angular/common": "^15.0.0",

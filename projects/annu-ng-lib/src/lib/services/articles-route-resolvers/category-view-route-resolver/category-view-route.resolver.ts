@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { CategoryViewRouteData, ArticlesHomeViewRouteData, PageDirection } from '../articles-route-resolvers.interface';
 
-import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
+import { ArticlesFirebaseHttpService, QueryConfig, StructuredQueryValueType } from '../../../firebase';
 import { CategoryGroup } from '../../../components/cms';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
@@ -33,7 +33,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
   orderByField: string = 'updated';
   routeData: CategoryViewRouteData = {};
 
-  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId, private utilsSvc: UtilsService) { }
+  constructor(private articlesFireHttp: ArticlesFirebaseHttpService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId, private utilsSvc: UtilsService) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<CategoryViewRouteData> {
     this.routeData = {};
@@ -90,7 +90,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
         id: categoryId,
         isLive: true,
       };
-      const cats = await this.articlesFireSvc.getCategories(queryConfig);
+      const cats = await this.articlesFireHttp.getCategories(queryConfig);
       if (cats && cats.length) {
         this.routeData.categoryGroup.category = cats[0];
       } else {
@@ -109,6 +109,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       isLive: true,
       articleCategoryId: categoryId,
       orderField: 'updated',
+      orderFieldType: StructuredQueryValueType.stringValue,
       pageSize: pageSize,
       isForwardDir: pageDir === PageDirection.BACKWARD ? false : true,
       startPage: startPage || null,
@@ -116,13 +117,13 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
     };
 
     try {
-      this.routeData.categoryGroup.articles = await this.articlesFireSvc.getArticles(queryConfig);
+      this.routeData.categoryGroup.articles = await this.articlesFireHttp.getArticles(queryConfig);
       this.setStartAndEndPageValues();
 
       if (this.routeData.startPage) {
         // This can be extended to show partial infor of previous page articles later
         try {
-          const previousPageArticles = await this.articlesFireSvc.getArticles({ ...queryConfig, isForwardDir: false, startPage: this.routeData.startPage });
+          const previousPageArticles = await this.articlesFireHttp.getArticles({ ...queryConfig, isForwardDir: false, startPage: this.routeData.startPage });
           if (!previousPageArticles || !previousPageArticles.length) {
             this.routeData.startPage = null;
           }
@@ -135,7 +136,7 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       if (this.routeData.endPage) {
         // This can be extended to show partial infor of next page articles later
         try {
-          const nextPageArticles = await this.articlesFireSvc.getArticles({ ...queryConfig, isForwardDir: true, startPage: this.routeData.endPage });
+          const nextPageArticles = await this.articlesFireHttp.getArticles({ ...queryConfig, isForwardDir: true, startPage: this.routeData.endPage });
           if (!nextPageArticles || !nextPageArticles.length) {
             this.routeData.endPage = null;
           }

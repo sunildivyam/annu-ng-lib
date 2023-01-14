@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DocsService } from './docs.service';
 import { ServiceMethodModule } from './service-method';
 import { ComponentInfoModule } from './component-info';
@@ -12,6 +12,7 @@ import { GuardInfoModule } from './guard-info/guard-info.module';
 import { InterceptorInfoModule } from './interceptor-info/interceptor-info.module';
 import { ClassInfoModule } from './class-info/class-info.module';
 import { DirectiveInfoModule } from './directive-info/directive-info.module';
+import { FirestoreInterceptor } from '../../services/interceptors/firestore.interceptor';
 
 
 @NgModule({
@@ -20,7 +21,13 @@ import { DirectiveInfoModule } from './directive-info/directive-info.module';
     CommonModule,
     HttpClientModule,
   ],
-  providers: [DocsService],
+  providers: [
+    DocsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FirestoreInterceptor,
+    }
+  ],
   exports: [
     ServiceMethodModule,
     ComponentInfoModule,

@@ -11,7 +11,7 @@
 </anu-card>
 
 <ng-container *ngFor="let imgFile of imagesFiles">
-    <anu-card class="border-round" [ngClass]="imageClassNames" [class.primary-lightest-bg]="imgFile.downloadUrl === selectedImage.downloadUrl">
+    <anu-card class="border-round" [ngClass]="imageClassNames" [class.primary-lightest-bg]="imgFile.downloadUrl === selectedImage?.downloadUrl">
         <anu-card-image>
             <div *ngIf="!imgFile.downloadUrl" class="image-preview relative">
                 <a href="#" (click)="previewClick($event, imgFile)">Preview</a>
