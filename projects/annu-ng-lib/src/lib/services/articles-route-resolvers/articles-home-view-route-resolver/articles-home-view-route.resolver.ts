@@ -1,16 +1,14 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { ArticlesHomeViewRouteData } from '../articles-route-resolvers.interface';
 
-import { ArticlesFirebaseHttpService, QueryConfig, StructuredQueryValueType } from '../../../firebase';
+import { CategoriesFirebaseHttpService } from '../../../firebase';
 import { makeStateKey, StateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
-import { Category, CategoryGroup } from '../../../components/cms';
-import { from, map, Observable, of, tap } from 'rxjs';
 
 const DEFAULT_PAGE_SIZE = 5;
 
@@ -29,10 +27,14 @@ const DEFAULT_PAGE_SIZE = 5;
 export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRouteData> {
   pageSize: number = DEFAULT_PAGE_SIZE;
 
-  constructor(private articlesFireHttp: ArticlesFirebaseHttpService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
+  constructor(
+    private categoryFireHttp: CategoriesFirebaseHttpService,
+    private transferState: TransferState,
+    @Inject(PLATFORM_ID) private platformId
+    ) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ArticlesHomeViewRouteData> {
-
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ArticlesHomeViewRouteData> {
+    let routeData: ArticlesHomeViewRouteData = {};
     this.pageSize = route?.data?.pageSize || DEFAULT_PAGE_SIZE;
 
     // create a unique key that holds the route stata data.
@@ -40,57 +42,20 @@ export class ArticlesHomeViewRouteResolver implements Resolve<ArticlesHomeViewRo
 
     //Check if state data already exists, if yes, serve it from state, and clear the state else, fetch the data and set it to state, that can be used at client side.
     if (this.transferState.hasKey(HOME_VIEW_ROUTE_KEY)) {
-      const routeData = this.transferState.get<ArticlesHomeViewRouteData>(HOME_VIEW_ROUTE_KEY, {});
+      routeData = this.transferState.get<ArticlesHomeViewRouteData>(HOME_VIEW_ROUTE_KEY, {});
       this.transferState.remove(HOME_VIEW_ROUTE_KEY);
-      return of(routeData);
-
     } else {
       // Fetch the fresh data and set the new transferState for mext use.
-      return this.loadRouteData(HOME_VIEW_ROUTE_KEY);
+      routeData.pageCategoryGroups = await this.categoryFireHttp.getAllLiveCategoriesWithOnePageShallowArticles(this.pageSize);
+      this.setTransferState(HOME_VIEW_ROUTE_KEY, routeData);
     }
+
+    return routeData;
   }
 
   private setTransferState(key: StateKey<ArticlesHomeViewRouteData>, routeData: ArticlesHomeViewRouteData): void {
     if (isPlatformServer(this.platformId)) {
       this.transferState.set(key, routeData);
     }
-  }
-
-  private loadRouteData(key: StateKey<ArticlesHomeViewRouteData>): Observable<ArticlesHomeViewRouteData> {
-    return new Observable<ArticlesHomeViewRouteData>(observer => {
-      let allCategories: Array<Category> = [];
-      this.articlesFireHttp.getCategories({ isLive: true, orderField: 'updated', isDesc: false })
-        .then(cats => {
-          allCategories = [...cats ?? []];
-          if (allCategories.length) {
-            Promise.all(allCategories
-              .map((cat: Category) => {
-                const queryConfig: QueryConfig = {
-                  isLive: true,
-                  articleCategoryId: cat.id,
-                  orderField: 'updated',
-                  orderFieldType: StructuredQueryValueType.stringValue,
-                  pageSize: this.pageSize,
-                  isForwardDir: true,
-                  startPage: null,
-                  isDesc: true,
-                };
-                return this.articlesFireHttp.getArticles(queryConfig);
-              }))
-              .then(catsGroupArticles => {
-                const catGroups = allCategories.map((cat, index) => ({ category: { ...cat }, articles: [...catsGroupArticles[index]] } as CategoryGroup));
-                const routeData = { allCategoriesGroups: catGroups } as ArticlesHomeViewRouteData;
-                this.setTransferState(key, routeData);
-                observer.next(routeData);
-              })
-              .catch(error => observer.error(error))
-          } else {
-            const routeData = { allCategoriesGroups: [] } as ArticlesHomeViewRouteData;
-            this.setTransferState(key, routeData);
-            observer.next(routeData);
-          }
-        })
-        .catch(error => observer.error(error))
-    });
   }
 }

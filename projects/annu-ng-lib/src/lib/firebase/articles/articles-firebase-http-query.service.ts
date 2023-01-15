@@ -49,7 +49,7 @@ export class ArticlesFirebaseHttpQueryService {
       squery.orderBy = [
         {
           field: { fieldPath: orderField } as StructuredQueryFieldReference,
-          direction: isDesc === false ? StructuredQueryDirectionEnum.DESCENDING : StructuredQueryDirectionEnum.ASCENDING
+          direction: isDesc === true ? StructuredQueryDirectionEnum.DESCENDING : StructuredQueryDirectionEnum.ASCENDING
         } as StructuredQueryOrder
       ];
     }

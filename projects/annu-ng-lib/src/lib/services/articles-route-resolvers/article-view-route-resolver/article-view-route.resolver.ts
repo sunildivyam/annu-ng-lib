@@ -42,31 +42,13 @@ export class ArticleViewRouteResolver implements Resolve<ArticleViewRouteData> {
 
       return this.routeData;
     } else {
-      await this.getArticle(articleId);
+      this.routeData.article = await this.articlesFireHttp.getLiveArticle(articleId);
 
       if (isPlatformServer(this.platformId)) {
         this.transferState.set(ARTICLE_VIEW_ROUTE_KEY, this.routeData);
       }
+
       return this.routeData;
-    }
-  }
-
-  private async getArticle(articleId: string) {
-    const queryConfig: QueryConfig = {
-      id: articleId,
-      isLive: true,
-    }
-
-    try {
-      const foundArticles = await this.articlesFireHttp.getArticles(queryConfig);
-      if (foundArticles && foundArticles.length) {
-        this.routeData.article = foundArticles[0];
-      } else {
-        this.routeData.errorArticle = { code: '404', message: `Page does not exist - ${articleId}` }
-      }
-    } catch (error) {
-      this.routeData.errorArticle = error;
-      this.routeData.article = null;
     }
   }
 }

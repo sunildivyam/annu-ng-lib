@@ -121,6 +121,7 @@ export interface StructuredQueryType {
     endAt?: StructuredQueryCursor,
     offset?: number,
     limit?: number,
+    limitToLast?: number
 }
 
 export interface StructuredQuery {

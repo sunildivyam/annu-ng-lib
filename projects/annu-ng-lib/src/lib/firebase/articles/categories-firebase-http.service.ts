@@ -9,7 +9,7 @@ import { ArticlesFirebaseHttpQueryService } from './articles-firebase-http-query
 import { SHALLOW_CATEGORY_FIELDS } from './articles-firebase-http.contants';
 import { ArticlesFirebaseHttpService } from './articles-firebase-http.service';
 import { ARTICLES_COLLECTIONS, RUN_QUERY_KEYWORD } from './articles-firebase.constants';
-import { CategoryGroup_Temp } from './articles-firebase.interface';
+import { PageCategories, PageCategoryGroup } from './articles-firebase.interface';
 
 
 @Injectable({
@@ -27,6 +27,34 @@ export class CategoriesFirebaseHttpService {
     private articlesHttp: ArticlesFirebaseHttpService
   ) {
     this.firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
+  }
+
+  private async buildPageOfCategories(categories: Array<Category>, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true, queryConfig: QueryConfig | null = null): Promise<PageCategories> {
+    // if queryConfig is given, that means, previous and next page info will be fetched using this queryConfig.
+    const categoriesCount = categories?.length || 0;
+    const pageCategories: PageCategories = {
+      categories: categories || [],
+      startPage: categoriesCount ? categories[0]?.updated : null,
+      endPage: categoriesCount ? categories[categoriesCount - 1]?.updated : null
+    };
+
+    if (categoriesCount > 0 && pageSize > 0 && queryConfig) {
+      //set previousPage
+      if ((categoriesCount === pageSize && startPage) || (categoriesCount < pageSize && isForwardDir !== false && startPage)) {
+        const query = { ...queryConfig, pageSize: 1, startPage: pageCategories.startPage, isForwardDir: false };
+        const prevCategories = await this.runQueryByConfig(query);
+        pageCategories.previousPage = prevCategories?.length > 0 ? prevCategories[0] : null;
+      }
+
+      //set nextPage
+      if ((categoriesCount === pageSize) || (categoriesCount < pageSize && isForwardDir === false && startPage)) {
+        const query = { ...queryConfig, pageSize: 1, startPage: pageCategories.endPage, isForwardDir: true };
+        const nextCategories = await this.runQueryByConfig(query);
+        pageCategories.nextPage = nextCategories?.length > 0 ? nextCategories[0] : null;
+      }
+    }
+
+    return pageCategories;
   }
 
   public async runQueryById(id: string): Promise<Category> {
@@ -48,8 +76,6 @@ export class CategoriesFirebaseHttpService {
   }
 
   public async runQueryByConfig(queryConfig: QueryConfig): Promise<Array<Category>> {
-    const token = await this.authService.getAccessToken();
-
     return new Promise((resolve, reject) => {
       const url = `${this.firestoreApiUrl}${RUN_QUERY_KEYWORD}`;
 
@@ -66,14 +92,13 @@ export class CategoriesFirebaseHttpService {
     });
   }
 
-
   public async getCategory(categoryId: string): Promise<Category> {
     return this.runQueryById(categoryId);
   }
 
   public async getUsersCategory(userId: string, categoryId: string): Promise<Category> {
     const category = await this.runQueryById(categoryId);
-    if (category &&  category.userId === userId) {
+    if (category && category.userId === userId) {
       return category;
     } else if (!category) {
       throw new Error('The Category does not exist.');
@@ -82,7 +107,7 @@ export class CategoriesFirebaseHttpService {
     }
   }
 
-  public async getAllLiveCategoriesWithOnePageShallowArticles(pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<Array<CategoryGroup_Temp>> {
+  public async getAllLiveCategoriesWithOnePageShallowArticles(pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<Array<PageCategoryGroup>> {
     const categoriesQueryConfig: QueryConfig = {
       isLive: true,
       orderField: 'updated',
@@ -94,7 +119,7 @@ export class CategoriesFirebaseHttpService {
     return this.articlesHttp.getLiveShallowArticlesOfCategories(categories, pageSize, startPage, isForwardDir);
   }
 
-  public async getLiveCategoryWithOnePageShallowArticles(categoryId: string, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<CategoryGroup_Temp> {
+  public async getLiveCategoryWithOnePageShallowArticles(categoryId: string, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategoryGroup> {
     if (!categoryId) throw new Error('Please provide a valid category id.');
 
     const categoryQueryConfig: QueryConfig = {
@@ -106,15 +131,15 @@ export class CategoriesFirebaseHttpService {
     const categories = await this.runQueryByConfig(categoryQueryConfig);
     const category = categories?.length ? categories[0] : null;
     if (!category) throw new Error('Category does not exist.');
-    const categoryGroups = await this.articlesHttp.getLiveShallowArticlesOfCategories([category], pageSize, startPage, isForwardDir);
-    if (categoryGroups && categoryGroups.length) {
-      return categoryGroups[0];
+    const pageCategoryGroups: Array<PageCategoryGroup> = await this.articlesHttp.getLiveShallowArticlesOfCategories([category], pageSize, startPage, isForwardDir);
+    if (pageCategoryGroups && pageCategoryGroups.length) {
+      return pageCategoryGroups[0];
     } else {
       return null;
     }
   }
 
-  public async getUsersShallowCategories(userId: string, isLive: boolean | null): Promise<Array<Category>> {
+  public async getUsersOnePageShallowCategories(userId: string, isLive: boolean | null, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategories> {
     const categoriesQueryConfig: QueryConfig = {
       isLive,
       userId,
@@ -123,10 +148,11 @@ export class CategoriesFirebaseHttpService {
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
 
-    return this.runQueryByConfig(categoriesQueryConfig);
+    const categories = await this.runQueryByConfig(categoriesQueryConfig);
+    return this.buildPageOfCategories(categories, pageSize, startPage, isForwardDir, categoriesQueryConfig);
   }
 
-  public async getAllUsersShallowCategories(isLive: boolean | null): Promise<Array<Category>> {
+  public async getAllUsersOnePageShallowCategories(isLive: boolean | null, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategories> {
     const categoriesQueryConfig: QueryConfig = {
       isLive,
       orderField: 'updated',
@@ -134,7 +160,8 @@ export class CategoriesFirebaseHttpService {
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
 
-    return this.runQueryByConfig(categoriesQueryConfig);
+    const categories = await this.runQueryByConfig(categoriesQueryConfig);
+    return this.buildPageOfCategories(categories, pageSize, startPage, isForwardDir, categoriesQueryConfig);
   }
 
   public async getShallowCategoriesByIds(categoryIds: Array<string>): Promise<Array<Category>> {
