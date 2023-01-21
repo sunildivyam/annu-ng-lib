@@ -1,26 +1,18 @@
-import { Article, CategoryGroup } from "../../components/cms";
+import { Article } from "../../components/cms";
+import { PageCategoryGroup } from "../../firebase";
 
 export interface ArticlesHomeViewRouteData {
-    allCategoriesGroups?: Array<CategoryGroup>;
-    errorAllCategoriesGroups?: any;
+    pageCategoryGroups?: Array<PageCategoryGroup>;
 }
 
 export interface CategoryViewRouteData {
-    categoryGroup?: CategoryGroup;
-    errorCategoryGroup?: any;
-    allCategoriesGroups?: Array<CategoryGroup>;
-    errorAllCategoriesGroups?: any;
-
-    // startPage and end page should have orderBy values of the first and last record/article from the list.
-    startPage?: string;
-    endPage?: string;
+    pageCategoryGroup?: PageCategoryGroup;
+    pageCategoryGroups?: Array<PageCategoryGroup>;
 }
 
 export interface ArticleViewRouteData {
-    article?: Article,
-    errorArticle?: any;
+    article?: Article
 }
-
 
 export enum PageDirection {
     FORWARD = 'f',

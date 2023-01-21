@@ -27,5 +27,5 @@
     </section>
 </article>
 <anu-spinner [show]="loading"></anu-spinner>
-<anu-error *ngIf="error" [code]="error?.code || 404" [message]="error?.message || 'Class name not found - ' + name">
+<anu-error *ngIf="error" [code]="error?.code || 404" [message]="error?.message || 'Class name not found - ' + classInfo?.name">
 </anu-error>

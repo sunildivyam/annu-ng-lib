@@ -1,8 +1,8 @@
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
 
 import { AnnuNgLibModule } from '@annu/ng-lib';
 import { environment } from '../environments/environment';
@@ -38,7 +38,6 @@ import {
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserTransferStateModule,   // Needed to access transfered state on browser from SSR.
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

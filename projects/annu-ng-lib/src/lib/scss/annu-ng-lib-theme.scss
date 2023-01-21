@@ -2,9 +2,9 @@
 @import "mixins";
 // Import all fonts here, that has been refered from theme files.
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
-@import "~prismjs/themes/prism-okaidia";
+@import "node_modules/prismjs/themes/prism-okaidia";
 
-@import 'firebaseui/dist/firebaseui.css';
+@import 'node_modules/firebaseui/dist/firebaseui.css';
 @import 'color-classes';
 
 // Use any of the Prismjs themes for code highlighting:

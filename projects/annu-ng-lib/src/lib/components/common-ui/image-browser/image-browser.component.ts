@@ -11,7 +11,7 @@ const PAGE_SIZE = 10;
   styleUrls: ['./image-browser.component.scss']
 })
 export class ImageBrowserComponent implements OnInit {
-  @Input() selectedImage: ImageFileInfo;
+  @Input() selectedImage: ImageFileInfo = null;
   @Input() imageClassNames: Array<string> = ['col-sm-12', 'col-md-4', 'col-lg-4', 'shadow', 'spacing'];
   @Output() selected: EventEmitter<ImageFileInfo> = new EventEmitter<ImageFileInfo>();
 

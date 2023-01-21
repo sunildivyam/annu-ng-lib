@@ -13,6 +13,8 @@ export class ImageFormComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 
+  selectedImage: ImageFileInfo;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -30,6 +32,7 @@ export class ImageFormComponent implements OnInit {
 
   public onFileBrowserSelect(imageFileInfo: ImageFileInfo): void {
     this.src = imageFileInfo.downloadUrl;
+    this.selectedImage = imageFileInfo;
   }
 
 }

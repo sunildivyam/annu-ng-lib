@@ -52,7 +52,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     this.cdr.detectChanges();
   }
 
-  public focusin(editorElement: EditorElement) {
+  public focusin() {
     if (!this.editorElement?.isContainer) {
       this.ceService.setFocusOffAll(this.fullTree);
       this.editorElement.focused = true;
@@ -60,7 +60,7 @@ export class ContentElementComponent implements OnInit, AfterContentChecked, OnC
     }
   }
 
-  public onBlur(el: EditorElement) {
+  public onBlur() {
     this.changed.emit(this.editorElement);
   }
 

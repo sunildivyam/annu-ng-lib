@@ -7,11 +7,26 @@ import { MetaService } from '../../common-ui/meta';
 import { ThemeService } from '../../common-ui/theme';
 import {
   ArticlesFirebaseService,
+  ArticlesFirebaseHttpService,
+  CategoriesFirebaseHttpService,
+  ArticlesFirebaseSeedService,
+  ArticlesFirebaseHttpQueryService,
+} from '../../../firebase/articles';
+
+import {
   AuthFirebaseService,
   AuthFirebaseUiService,
+} from '../../../firebase/auth';
+
+import {
   ImageFireStoreService,
-  ArticlesFirebaseSeedService
-} from '../../../firebase';
+} from '../../../firebase/image-storage';
+
+import {
+  CommonFirebaseService,
+  FirestoreParserService,
+  FirestoreQueryService,
+} from '../../../firebase/common-firebase';
 
 export const LibServices = {
   UtilsService,
@@ -21,9 +36,19 @@ export const LibServices = {
   MetaService,
   SelectionService,
   ThemeService,
+
   ArticlesFirebaseService,
+  ArticlesFirebaseHttpService,
+  CategoriesFirebaseHttpService,
   ArticlesFirebaseSeedService,
+  ArticlesFirebaseHttpQueryService,
+
   AuthFirebaseService,
   AuthFirebaseUiService,
+
   ImageFireStoreService,
+
+  CommonFirebaseService,
+  FirestoreParserService,
+  FirestoreQueryService,
 };

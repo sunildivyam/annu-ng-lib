@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { IsLoggedInGuard } from '@annu/ng-lib';
+import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
+import { IsLoggedInGuard } from '@annu/ng-lib';
+
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabled'
-  })],
+    initialNavigation: 'enabledBlocking'
+})],
   exports: [RouterModule],
   providers: [IsLoggedInGuard]
 })

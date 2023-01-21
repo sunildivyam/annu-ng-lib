@@ -7,7 +7,7 @@ import {
 
 import { ArticleViewRouteData } from '../articles-route-resolvers.interface';
 
-import { ArticlesFirebaseService, QueryConfig } from '../../../firebase';
+import { ArticlesFirebaseHttpService, QueryConfig } from '../../../firebase';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
 
@@ -27,7 +27,7 @@ export class ArticleViewRouteResolver implements Resolve<ArticleViewRouteData> {
 
   routeData: ArticleViewRouteData = {};
 
-  constructor(private articlesFireSvc: ArticlesFirebaseService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
+  constructor(private articlesFireHttp: ArticlesFirebaseHttpService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ArticleViewRouteData> {
     this.routeData = {};
@@ -39,34 +39,14 @@ export class ArticleViewRouteResolver implements Resolve<ArticleViewRouteData> {
     if (this.transferState.hasKey(ARTICLE_VIEW_ROUTE_KEY)) {
       this.routeData = this.transferState.get<ArticleViewRouteData>(ARTICLE_VIEW_ROUTE_KEY, {});
       this.transferState.remove(ARTICLE_VIEW_ROUTE_KEY);
-
-      return this.routeData;
     } else {
-      await this.getArticle(articleId);
+      this.routeData.article = await this.articlesFireHttp.getLiveArticle(articleId);
 
       if (isPlatformServer(this.platformId)) {
         this.transferState.set(ARTICLE_VIEW_ROUTE_KEY, this.routeData);
       }
-      return this.routeData;
-    }
-  }
-
-  private async getArticle(articleId: string) {
-    const queryConfig: QueryConfig = {
-      id: articleId,
-      isLive: true,
     }
 
-    try {
-      const foundArticles = await this.articlesFireSvc.getArticles(queryConfig);
-      if (foundArticles && foundArticles.length) {
-        this.routeData.article = foundArticles[0];
-      } else {
-        this.routeData.errorArticle = { code: '404', message: `Page does not exist - ${articleId}` }
-      }
-    } catch (error) {
-      this.routeData.errorArticle = error;
-      this.routeData.article = null;
-    }
+    return this.routeData;
   }
 }

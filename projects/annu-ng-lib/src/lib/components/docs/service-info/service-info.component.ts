@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { ComponentMethod, ServiceInfo } from '../docs.interface';
+import { ComponentProp, ServiceInfo } from '../docs.interface';
 import { PROPERTY_TYPES, SERVICE_INFO_TABS } from '../docs.constants';
 import { DocsService } from '../docs.service';
 import { Tab } from '../../common-ui/tabs';
@@ -17,7 +17,7 @@ export class ServiceInfoComponent implements OnInit {
   tabs = SERVICE_INFO_TABS.map(t => ({ ...t }));
   activeTab = this.tabs[1];
   propertyTypes: typeof PROPERTY_TYPES = PROPERTY_TYPES;
-  filteredMethods: Array<ComponentMethod> = [];
+  filteredMethods: Array<ComponentProp> = [];
   searchKeys = ['name', 'description'];
   serviceInstance: any;
   methodParameters: Array<any> = [];
@@ -51,11 +51,11 @@ export class ServiceInfoComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  public onMethodSearch(filteredMethods: Array<ComponentMethod>): void {
-    this.filteredMethods = filteredMethods;
+  public onMethodSearch(filteredMethods: Array<ComponentProp | Object>): void {
+    this.filteredMethods = filteredMethods as Array<ComponentProp>;
   }
 
-  public methodParametersChanged(params: Array<any>, method: ComponentMethod): void {
+  public methodParametersChanged(params: Array<any>, method: ComponentProp): void {
     this.methodParameters = params;
 
     const argValues = params.map(p => this.docService.parsePropValue(p, p.value));

@@ -85,6 +85,8 @@ export class AuthFirebaseService {
             window.document.cookie = 'Authorization=Bearer ' + token;
           }
         })
+      } else {
+        window.document.cookie = '';
       }
     }
   }
@@ -123,5 +125,14 @@ export class AuthFirebaseService {
     }
 
     return false;
+  }
+
+  public async getAccessToken(): Promise<string> {
+    const currentUser = this.getCurrentUser();
+    if (currentUser) {
+      return await currentUser.getIdToken();
+    } else {
+      return '';
+    }
   }
 }

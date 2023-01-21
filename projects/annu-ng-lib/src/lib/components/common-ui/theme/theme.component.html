@@ -14,7 +14,7 @@
     <section class="annuTheme_overview_fromJson" *ngIf="isThemeFromJson">
       <span class="error" *ngIf="isJsonError">This Json has syntax errors or may be theme name, title, colorPalettes or typography data is missing, please correct and try again.</span>
       <textarea [(ngModel)]="themeFromJson" placeholder="Copy JSON here from your theme json file..." ></textarea>
-      <a href="javascript:void(0)" class="btn secondary" (click)="loadThemeFromJson($event)">Load</a>
+      <a href="javascript:void(0)" class="btn secondary" (click)="loadThemeFromJson()">Load</a>
     </section>
 
     <label>Name</label>

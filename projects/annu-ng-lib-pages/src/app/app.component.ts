@@ -4,7 +4,7 @@ import { appConfig } from './constants';
 import { mainRoutes } from './app.routes';
 
 @Component({
-  selector: 'anu-root',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.themeService.setTheme(this.appConfig.themeName, false);
+    this.themeService.setTheme(this.appConfig.themeName, true);
   }
 
   public loginStatusClicked(): void {
