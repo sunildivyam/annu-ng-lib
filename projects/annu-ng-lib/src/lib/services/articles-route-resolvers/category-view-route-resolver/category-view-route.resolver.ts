@@ -71,9 +71,9 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       if (isPlatformServer(this.platformId)) {
         this.transferState.set(CATEGORY_VIEW_ROUTE_KEY, routeData);
       }
-
-      return routeData;
     }
+
+    return routeData;
   }
 
 }

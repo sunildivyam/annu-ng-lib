@@ -29,30 +29,32 @@ export class CategoriesFirebaseHttpService {
     this.firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
   }
 
-  private async buildPageOfCategories(categories: Array<Category>, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true, queryConfig: QueryConfig | null = null): Promise<PageCategories> {
-    // if queryConfig is given, that means, previous and next page info will be fetched using this queryConfig.
+  private async buildPageOfCategories(categories: Array<Category>, pageSize: number = 0): Promise<PageCategories> {
+
     const categoriesCount = categories?.length || 0;
     const pageCategories: PageCategories = {
       categories: categories || [],
       startPage: categoriesCount ? categories[0]?.updated : null,
-      endPage: categoriesCount ? categories[categoriesCount - 1]?.updated : null
+      endPage: categoriesCount && pageSize && categoriesCount === pageSize ? categories[categoriesCount - 1]?.updated : null
     };
 
-    if (categoriesCount > 0 && pageSize > 0 && queryConfig) {
-      //set previousPage
-      if ((categoriesCount === pageSize && startPage) || (categoriesCount < pageSize && isForwardDir !== false && startPage)) {
-        const query = { ...queryConfig, pageSize: 1, startPage: pageCategories.startPage, isForwardDir: false };
-        const prevCategories = await this.runQueryByConfig(query);
-        pageCategories.previousPage = prevCategories?.length > 0 ? prevCategories[0] : null;
-      }
+    // NOTE: Commenting this out as firebase does not have a good support for backward pagination. So will implement infinite cyclic pagination
+    // if queryConfig is given, that means, previous and next page info will be fetched using this queryConfig.
+    // if (categoriesCount > 0 && pageSize > 0 && queryConfig) {
+    //   //set previousPage
+    //   if ((categoriesCount === pageSize && startPage) || (categoriesCount < pageSize && isForwardDir !== false && startPage)) {
+    //     const query = { ...queryConfig, pageSize: 1, startPage: pageCategories.startPage, isForwardDir: false };
+    //     const prevCategories = await this.runQueryByConfig(query);
+    //     pageCategories.previousPage = prevCategories?.length > 0 ? prevCategories[0] : null;
+    //   }
 
-      //set nextPage
-      if ((categoriesCount === pageSize) || (categoriesCount < pageSize && isForwardDir === false && startPage)) {
-        const query = { ...queryConfig, pageSize: 1, startPage: pageCategories.endPage, isForwardDir: true };
-        const nextCategories = await this.runQueryByConfig(query);
-        pageCategories.nextPage = nextCategories?.length > 0 ? nextCategories[0] : null;
-      }
-    }
+    //   //set nextPage
+    //   if ((categoriesCount === pageSize) || (categoriesCount < pageSize && isForwardDir === false && startPage)) {
+    //     const query = { ...queryConfig, pageSize: 1, startPage: pageCategories.endPage, isForwardDir: true };
+    //     const nextCategories = await this.runQueryByConfig(query);
+    //     pageCategories.nextPage = nextCategories?.length > 0 ? nextCategories[0] : null;
+    //   }
+    // }
 
     return pageCategories;
   }
@@ -149,7 +151,7 @@ export class CategoriesFirebaseHttpService {
     };
 
     const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.buildPageOfCategories(categories, pageSize, startPage, isForwardDir, categoriesQueryConfig);
+    return this.buildPageOfCategories(categories, pageSize);
   }
 
   public async getAllUsersOnePageShallowCategories(isLive: boolean | null, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategories> {
@@ -161,7 +163,7 @@ export class CategoriesFirebaseHttpService {
     };
 
     const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.buildPageOfCategories(categories, pageSize, startPage, isForwardDir, categoriesQueryConfig);
+    return this.buildPageOfCategories(categories, pageSize);
   }
 
   public async getShallowCategoriesByIds(categoryIds: Array<string>): Promise<Array<Category>> {

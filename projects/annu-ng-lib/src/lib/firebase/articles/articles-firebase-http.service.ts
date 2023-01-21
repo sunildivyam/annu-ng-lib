@@ -26,30 +26,32 @@ export class ArticlesFirebaseHttpService {
     this.firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
   }
 
-  private async buildPageOfArticles(articles: Array<Article>, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true, queryConfig: QueryConfig | null = null): Promise<PageArticles> {
-    // if queryConfig is given, that means, previous and next page info will be fetched using this queryConfig.
+  private async buildPageOfArticles(articles: Array<Article>, pageSize: number = 0): Promise<PageArticles> {
+
     const articlesCount = articles?.length || 0;
     const pageArticles: PageArticles = {
       articles: articles || [],
       startPage: articlesCount ? articles[0]?.updated : null,
-      endPage: articlesCount ? articles[articlesCount - 1]?.updated : null
+      endPage: articlesCount && pageSize && articlesCount === pageSize ? articles[articlesCount - 1]?.updated : null
     };
 
-    if (articlesCount > 0 && pageSize > 0 && queryConfig) {
-      //set previousPage
-      if ((articlesCount === pageSize && startPage) || (articlesCount < pageSize && isForwardDir !== false && startPage)) {
-        const query = { ...queryConfig, pageSize: 1, startPage: pageArticles.startPage, isForwardDir: false };
-        const prevArticles = await this.runQueryByConfig(query);
-        pageArticles.previousPage = prevArticles?.length > 0 ? prevArticles[0] : null;
-      }
+    // NOTE: Commenting this out as firebase does not have a good support for backward pagination. So will implement infinite cyclic pagination
+    // if queryConfig is given, that means, previous and next page info will be fetched using this queryConfig.
+    // if (articlesCount > 0 && pageSize > 0 && queryConfig) {
+    //   //set previousPage
+    //   if ((articlesCount === pageSize && startPage) || (articlesCount < pageSize && isForwardDir !== false && startPage)) {
+    //     const query = { ...queryConfig, pageSize: 1, startPage: pageArticles.startPage, isForwardDir: false };
+    //     const prevArticles = await this.runQueryByConfig(query);
+    //     pageArticles.previousPage = prevArticles?.length > 0 ? prevArticles[0] : null;
+    //   }
 
-      //set nextPage
-      if ((articlesCount === pageSize) || (articlesCount < pageSize && isForwardDir === false && startPage)) {
-        const query = { ...queryConfig, pageSize: 1, startPage: pageArticles.endPage, isForwardDir: true };
-        const nextArticles = await this.runQueryByConfig(query);
-        pageArticles.nextPage = nextArticles?.length > 0 ? nextArticles[0] : null;
-      }
-    }
+    //   //set nextPage
+    //   if ((articlesCount === pageSize) || (articlesCount < pageSize && isForwardDir === false && startPage)) {
+    //     const query = { ...queryConfig, pageSize: 1, startPage: pageArticles.endPage, isForwardDir: true };
+    //     const nextArticles = await this.runQueryByConfig(query);
+    //     pageArticles.nextPage = nextArticles?.length > 0 ? nextArticles[0] : null;
+    //   }
+    // }
 
     return pageArticles;
   }
@@ -139,7 +141,7 @@ export class ArticlesFirebaseHttpService {
     };
     const articles = await this.runQueryByConfig(articlesQueryConfig);
 
-    return this.buildPageOfArticles(articles, pageSize, startPage, isForwardDir, articlesQueryConfig);
+    return this.buildPageOfArticles(articles, pageSize);
   }
 
   public async getAllUsersOnePageShallowArticles(isLive: boolean | null, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageArticles> {
@@ -156,7 +158,7 @@ export class ArticlesFirebaseHttpService {
 
     const articles = await this.runQueryByConfig(articlesQueryConfig);
 
-    return this.buildPageOfArticles(articles, pageSize, startPage, isForwardDir, articlesQueryConfig);
+    return this.buildPageOfArticles(articles, pageSize);
   }
 
   public async getUsersOnePageInReviewShallowArticles(userId: string, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageArticles> {
@@ -174,7 +176,7 @@ export class ArticlesFirebaseHttpService {
 
     const articles = await this.runQueryByConfig(articlesQueryConfig);
 
-    return this.buildPageOfArticles(articles, pageSize, startPage, isForwardDir, articlesQueryConfig);
+    return this.buildPageOfArticles(articles, pageSize);
   }
 
   public async getAllUsersOnePageInReviewShallowArticles(pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageArticles> {
@@ -191,51 +193,37 @@ export class ArticlesFirebaseHttpService {
 
     const articles = await this.runQueryByConfig(articlesQueryConfig);
 
-    return this.buildPageOfArticles(articles, pageSize, startPage, isForwardDir, articlesQueryConfig);
+    return this.buildPageOfArticles(articles, pageSize);
   }
 
   public async getLiveShallowArticlesOfCategories(categories: Array<string> | Array<Category>, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<Array<PageCategoryGroup>> {
     let pageCategoryGroups: Array<PageCategoryGroup> = [];
 
     if (categories && categories.length) {
-      const categoryIds = categories.map(cat => typeof cat === 'string' ? cat : cat.id)
-      const totalPageSize = pageSize > 0 ? (pageSize + 2) * categoryIds.length : pageSize;
-
       const catArticlesQueryConfig: QueryConfig = {
         isLive: true,
         orderField: 'updated',
         orderFieldType: StructuredQueryValueType.stringValue,
-        articleCategoryId: categoryIds,
+        articleCategoryId: '',
         startPage,
-        pageSize: totalPageSize,
+        pageSize,
         isForwardDir,
         isDesc: true,
         selectFields: SHALLOW_ARTICLE_FIELDS
       };
 
-      const articles = await this.runQueryByConfig(catArticlesQueryConfig);
+      pageCategoryGroups = await Promise.all(categories.map(async cat => {
+        const catArticles = await this.runQueryByConfig({ ...catArticlesQueryConfig, articleCategoryId: cat.id });
+        // if a single category, then add pagearticles with previous and next page info else leave that info empty., so that pagination can be enebled for Category articles.
+        let pageArticles= await this.buildPageOfArticles(catArticles, pageSize);
 
-      if (articles?.length) {
-        pageCategoryGroups = await Promise.all(categories.map(async cat => {
-          const catArticles = articles.filter(art => art.categories?.includes(typeof cat === 'string' ? cat : cat.id)) || [];
-          // if a single category, then add pagearticles with previous and next page info else leave that info empty., so that pagination can be enebled for Category articles.
-          let pageArticles;
-          if(categories.length === 1) {
-            pageArticles = await this.buildPageOfArticles(catArticles, pageSize, startPage, isForwardDir, catArticlesQueryConfig);
-          } else {
-            pageArticles = await this.buildPageOfArticles(catArticles);
-          }
+        const pageCategoryGroup: PageCategoryGroup = {
+          category: typeof cat === 'string' ? { id: cat } as Category : cat,
+          pageArticles
+        }
 
-          const pageCategoryGroup: PageCategoryGroup = {
-            category: typeof cat === 'string' ? { id: cat } as Category : cat,
-            pageArticles
-          }
-
-          return pageCategoryGroup;
-        }));
-
-        return pageCategoryGroups;
-      }
+        return pageCategoryGroup;
+      }));
     }
 
     return pageCategoryGroups;
