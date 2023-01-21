@@ -21,13 +21,25 @@ export class FirestoreParserService {
       'stringValue',
       'timestampValue',
       'fields',
-      'document',
-      'readTime'
+      'document'
     ];
     return Object.keys(value).find(k => props.includes(k));
   }
 
   public parse(value: any) {
+    // Remove readTime
+    if (value instanceof Array) {
+      if (value.length === 1 && typeof value[0] === 'object' && Object.keys(value[0]).includes('readTime') && Object.keys(value[0]).length === 1) {
+        value.splice(0, 1);
+      }
+    }
+
+    if (typeof value === 'object') {
+      const objKeys = Object.keys(value);
+      if (objKeys.includes('readTime')) delete value.readTime;
+    }
+
+
     const prop = this.getFireStoreProp(value);
 
     if (prop === 'doubleValue' || prop === 'integerValue') {
