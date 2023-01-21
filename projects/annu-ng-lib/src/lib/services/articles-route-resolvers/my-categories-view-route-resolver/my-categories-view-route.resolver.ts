@@ -4,7 +4,6 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { of } from 'rxjs';
 import { CategoriesFirebaseHttpService, PageCategories, AuthFirebaseService } from '../../../firebase';
 
 
