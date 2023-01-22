@@ -95,17 +95,29 @@ export class CategoriesFirebaseHttpService {
   }
 
   public async getCategory(categoryId: string): Promise<Category> {
-    return this.runQueryById(categoryId);
+    try {
+      const category = await this.runQueryById(categoryId);
+      return category;
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getUsersCategory(userId: string, categoryId: string): Promise<Category> {
-    const category = await this.runQueryById(categoryId);
-    if (category && category.userId === userId) {
+    if (!userId) throw new Error('Please provide a valid user id.');
+    if (!categoryId) throw new Error('Please Provide a valid category id.');
+
+    const categoryQueryConfig: QueryConfig = {
+      id: categoryId,
+      userId
+    };
+    try {
+      const categories = await this.runQueryByConfig(categoryQueryConfig);
+      const category = categories?.length && categories[0] || null;
+
       return category;
-    } else if (!category) {
-      throw new Error('The Category does not exist.');
-    } else {
-      throw new Error('The Category does not belong to the given user id.');
+    } catch (error: any) {
+      throw error;
     }
   }
 
@@ -116,9 +128,12 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.articlesHttp.getLiveShallowArticlesOfCategories(categories, pageSize, startPage, isForwardDir);
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return await this.articlesHttp.getLiveShallowArticlesOfCategories(categories, pageSize, startPage, isForwardDir);
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getLiveCategoryWithOnePageShallowArticles(categoryId: string, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategoryGroup> {
@@ -130,14 +145,17 @@ export class CategoriesFirebaseHttpService {
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
 
-    const categories = await this.runQueryByConfig(categoryQueryConfig);
-    const category = categories?.length ? categories[0] : null;
-    if (!category) throw new Error('Category does not exist.');
-    const pageCategoryGroups: Array<PageCategoryGroup> = await this.articlesHttp.getLiveShallowArticlesOfCategories([category], pageSize, startPage, isForwardDir);
-    if (pageCategoryGroups && pageCategoryGroups.length) {
-      return pageCategoryGroups[0];
-    } else {
+    try {
+      const categories = await this.runQueryByConfig(categoryQueryConfig);
+      const category = categories?.length && categories[0] || null;
+      if (category) {
+        const pageCategoryGroups: Array<PageCategoryGroup> = await this.articlesHttp.getLiveShallowArticlesOfCategories([category], pageSize, startPage, isForwardDir);
+        return pageCategoryGroups?.length && pageCategoryGroups[0] || null;
+      }
+
       return null;
+    } catch (error: any) {
+      throw error;
     }
   }
 
@@ -149,9 +167,12 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.buildPageOfCategories(categories, pageSize);
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return await this.buildPageOfCategories(categories, pageSize);
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getAllUsersOnePageShallowCategories(isLive: boolean | null, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategories> {
@@ -161,9 +182,12 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.buildPageOfCategories(categories, pageSize);
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return await this.buildPageOfCategories(categories, pageSize);
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getShallowCategoriesByIds(categoryIds: Array<string>): Promise<Array<Category>> {
@@ -173,7 +197,10 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    return this.runQueryByConfig(categoriesQueryConfig);
+    try {
+      return await this.runQueryByConfig(categoriesQueryConfig);
+    } catch (error: any) {
+      throw error;
+    }
   }
 }

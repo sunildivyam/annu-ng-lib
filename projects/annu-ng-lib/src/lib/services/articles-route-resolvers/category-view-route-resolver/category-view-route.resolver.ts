@@ -56,16 +56,18 @@ export class CategoryViewRouteResolver implements Resolve<CategoryViewRouteData>
       // populate some of the data that is already available on parent route.
       const parentRouteData: ArticlesHomeViewRouteData = route.parent.data[ARTICLES_ROUTE_RESOLVER_DATA_KEYS.ARTICLES_HOME_VIEW];
       if (parentRouteData) {
-        routeData.pageCategoryGroups = parentRouteData?.pageCategoryGroups || [];
+        routeData.pageCategoryGroups = parentRouteData?.pageCategoryGroups || null;
       } else {
-        routeData.pageCategoryGroups = await this.categoriesFireHttp.getAllLiveCategoriesWithOnePageShallowArticles();
+        routeData.pageCategoryGroups = await this.categoriesFireHttp.getAllLiveCategoriesWithOnePageShallowArticles()
+        .catch(()=> null);
       }
 
       routeData.pageCategoryGroup = await this.categoriesFireHttp.getLiveCategoryWithOnePageShallowArticles(
         categoryId,
         pageSize,
         this.utilsSvc.totalTimeStringToUTCdateString(currentStartPage),
-        pageDir === PageDirection.BACKWARD ? false : true);
+        pageDir === PageDirection.BACKWARD ? false : true)
+        .catch(()=> null);
 
 
       if (isPlatformServer(this.platformId)) {

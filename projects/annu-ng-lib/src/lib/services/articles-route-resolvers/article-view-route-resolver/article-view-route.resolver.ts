@@ -40,7 +40,7 @@ export class ArticleViewRouteResolver implements Resolve<ArticleViewRouteData> {
       this.routeData = this.transferState.get<ArticleViewRouteData>(ARTICLE_VIEW_ROUTE_KEY, {});
       this.transferState.remove(ARTICLE_VIEW_ROUTE_KEY);
     } else {
-      this.routeData.article = await this.articlesFireHttp.getLiveArticle(articleId);
+      this.routeData.article = await this.articlesFireHttp.getLiveArticle(articleId).catch(() => null);
 
       if (isPlatformServer(this.platformId)) {
         this.transferState.set(ARTICLE_VIEW_ROUTE_KEY, this.routeData);
