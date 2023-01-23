@@ -1,5 +1,9 @@
 <h2>Article Editor</h2>
-<p>/{{article?.id}}</p>
+<div class="row spacing-around-vertical" *ngIf="!readonlyId">
+    <label>Article Id</label>
+    <input type="text" name="article-id" [(ngModel)]="article.id" />
+</div>
+<p *ngIf="readonlyId">/{{article?.id}}</p>
 <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 <section class="container tab-body">
 
@@ -22,9 +26,16 @@
                         <a class="spacing-around" href="#" (click)="changeImage($event)">Change image</a>
                         <a class="spacing-around" href="#" (click)="changeImage($event, true)">Remove image</a>
                     </div>
+                    <!-- inReview  -->
                     <div class="col-sm-12">
-                        <label>published? <anu-toggle [rounded]="true" [checked]="article?.isLive"
-                                (changed)="isLiveChanged($event)"></anu-toggle></label>
+                        <label class="spacing-horizontal">In Review? <anu-toggle [rounded]="true"
+                                [checked]="article?.inReview" (changed)="inReviewChanged($event)"></anu-toggle></label>
+                    </div>
+                    <div class="col-sm-12">
+                        <span *ngIf="!enablePublish" [ngClass]="article?.isLive ? 'success' : 'warning'">{{article?.isLive ? 'Published' :
+                            'Unpublished'}}</span>
+                        <label *ngIf="enablePublish" class="spacing-horizontal">Published? <anu-toggle [rounded]="true"
+                                [checked]="article?.isLive" (changed)="isLiveChanged($event)"></anu-toggle></label>
                     </div>
                 </div>
             </anu-card-body>
@@ -44,7 +55,18 @@
                 </div>
             </anu-card-body>
         </anu-card>
-
+        <anu-card class="shadow spacing spacing-around-vertical moreinfo-card spacing-around-horizontal-md spacing-around-horizontal-lg">
+            <anu-card-title>
+                <h2>Link Features to your Article</h2>
+            </anu-card-title>
+            <anu-card-body>
+                <div class="row">
+                    <anu-multi-select-box keyField="id" labelField="title" [items]="articleFeatures"
+                        [selectedItems]="selectedArticleFeatures" (changed)="onArticleFeaturesChanged($event)">
+                    </anu-multi-select-box>
+                </div>
+            </anu-card-body>
+        </anu-card>
         <anu-modal [opened]="toggleImageForm" title="Choose an image" (cancelClick)="cancelImageChange()">
             <anu-image-form [src]="article?.image?.src" [alt]="article?.image?.alt" (cancel)="cancelImageChange()"
                 (save)="saveImageChange($event)"></anu-image-form>

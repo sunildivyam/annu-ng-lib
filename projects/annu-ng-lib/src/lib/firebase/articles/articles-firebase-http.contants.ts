@@ -7,6 +7,8 @@ export const SHALLOW_CATEGORY_FIELDS = [
     "updated",
     "userId",
     "isLive",
+    "inReview",
+    "features",
 ];
 
 export const SHALLOW_ARTICLE_FIELDS = [
@@ -18,4 +20,6 @@ export const SHALLOW_ARTICLE_FIELDS = [
     'updated',
     'userId',
     'isLive',
+    "inReview",
+    "features",
 ];

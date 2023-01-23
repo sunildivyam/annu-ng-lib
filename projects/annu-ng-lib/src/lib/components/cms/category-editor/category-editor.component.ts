@@ -1,21 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UtilsService } from '../../../services/utils';
-import { Category } from '../category';
+import { Category, SAMPLE_CATEGORY, CategoryFeatures } from '../category';
 import { CATEGORY_EDITOR_TABS } from './category-editor.constants';
 import { ImageInfo } from '../../common-ui/image-form';
 import { MetaInfo } from '../../common-ui/meta';
 import { Tab } from '../../common-ui/tabs';
-
-const SAMPLE_CATEGORY = {
-  id: 'sample-category-title',
-  isLive: false,
-  isFeatured: false,
-  shortTitle: 'Sample Category Short Title',
-  metaInfo: {
-    title: 'Sample Category Title',
-    description: 'Sample category description text'
-  }
-};
 
 @Component({
   selector: 'anu-category-editor',
@@ -24,6 +13,9 @@ const SAMPLE_CATEGORY = {
 })
 export class CategoryEditorComponent implements OnInit, OnChanges {
   @Input() value: Category | null;
+  @Input() readonlyId: boolean = true;
+  @Input() enableUniqueId: boolean = true;
+  @Input() enablePublish: boolean = true;
   @Output() changed = new EventEmitter<Category>();
   @Output() saveClicked = new EventEmitter<Category>();
 
@@ -33,11 +25,13 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   activeTab = this.tabs[0];
   category: Category;
   sampleCategory: Category;
+  selectedCategoryFeatures: Array<any> = [];
+  categoryFeatures: Array<any> = [];
 
   constructor(private utils: UtilsService) {
     this.sampleCategory = { ...SAMPLE_CATEGORY, id: this.utils.getUniqueFromString(SAMPLE_CATEGORY.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.category = { ...this.sampleCategory };
-
+    this.categoryFeatures = Object.keys(CategoryFeatures).map(key => ({ id: key, title: key }));
     this.categoryMetaChanged = this.categoryMetaChanged.bind(this);
   }
 
@@ -49,6 +43,8 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
       this.value = { ...this.sampleCategory, metaInfo: { ...this.sampleCategory.metaInfo } };
       this.category = { ...this.sampleCategory, metaInfo: { ...this.sampleCategory.metaInfo } };
     }
+
+    this.selectedCategoryFeatures = this.category.features.map(f => ({ id: f }));
   }
 
   ngOnInit(): void {
@@ -65,7 +61,7 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
 
   public categoryMetaChanged(metaInfo: MetaInfo) {
     if (metaInfo.title !== this.value?.metaInfo?.title) {
-      this.category.id = this.utils.getUniqueFromString(metaInfo.title);
+      this.category.id = this.enableUniqueId ? this.utils.getUniqueFromString(metaInfo.title) : this.utils.toDashedString(metaInfo.title);
     } else {
       this.category.id = this.value.id;
     }
@@ -75,7 +71,14 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   }
 
   public isLiveChanged(isLive: boolean): void {
-    this.category = { ...this.category, isLive };
+    const inReview = isLive === true ? false : this.value.inReview;
+    this.category = { ...this.category, isLive, inReview };
+    this.changed.emit({ ...this.category });
+  }
+
+  public inReviewChanged(inReview: boolean): void {
+    const isLive = inReview === true ? false : this.value.isLive;
+    this.category = { ...this.category, inReview, isLive };
     this.changed.emit({ ...this.category });
   }
 
@@ -112,4 +115,12 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.saveClicked.emit({ ...this.category });
   }
+
+
+  public onCategoryFeaturesChanged(selectedCategoryFeatures: Array<any> = []): void {
+    this.category = { ...this.category, features: selectedCategoryFeatures?.map(catFeature => catFeature?.id) };
+    this.selectedCategoryFeatures = [...selectedCategoryFeatures];
+    this.changed.emit({ ...this.category });
+  }
+
 }

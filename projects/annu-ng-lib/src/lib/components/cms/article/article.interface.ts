@@ -14,9 +14,17 @@ export interface Article {
     updated?: string;
     userId?: string;    // User Id from Users
     isLive?: boolean;   // true if published and live to web.
+    inReview?: boolean; // true if the article is up for review, if true, then isLive must be false
+    features?: Array<string | ArticleFeatures>;
 }
 
-export interface CategoryGroup {
-    category?: Category;
-    articles?: Array<Article>;
+export enum ArticleFeatures {
+    featured = 'featured',
+    footerNavigation = 'footerNavigation',
+    primeShow = 'primeShow',
+    primeShowAside = 'primeShowAside',
+    inReview = 'inReview',
+    tnc = 'tnc',
+    privacy = 'privacy',
+    helpDocs = 'helpDocs',
 }
