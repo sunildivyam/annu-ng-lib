@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LibConfig } from '../../app-config';
-import { Category } from '../../components/cms/category';
+import { Category, CategoryFeatures } from '../../components/cms/category';
 import { UtilsService } from '../../services/utils/utils.service';
 import { AuthFirebaseService } from '../auth/auth-firebase.service';
 import { FirestoreParserService } from '../common-firebase/firestore-parser.service';
@@ -244,6 +244,21 @@ export class CategoriesFirebaseHttpService {
   public async getShallowCategoriesByIds(categoryIds: Array<string>): Promise<Array<Category>> {
     const categoriesQueryConfig: QueryConfig = {
       id: categoryIds,
+      orderField: 'updated',
+      orderFieldType: StructuredQueryValueType.stringValue,
+      selectFields: SHALLOW_CATEGORY_FIELDS
+    };
+    try {
+      return await this.runQueryByConfig(categoriesQueryConfig);
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  public async getShallowLiveCategoriesByFeatures(features: CategoryFeatures | Array<CategoryFeatures>, isLive: boolean = true): Promise<Array<Category>> {
+    const categoriesQueryConfig: QueryConfig = {
+      isLive,
+      features,
       orderField: 'updated',
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS

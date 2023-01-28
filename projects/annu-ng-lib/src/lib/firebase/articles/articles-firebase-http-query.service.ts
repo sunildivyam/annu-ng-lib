@@ -40,7 +40,7 @@ export class ArticlesFirebaseHttpQueryService {
     if (!collectionId || !queryConfig) throw new Error('Pleae provide a valid collectionId and queryConfig');
     const firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
     const collectionUrl = firestoreApiUrl.substring(firestoreApiUrl.indexOf('/projects/') + 1);
-    const { userId, id, articleCategoryId, isLive, orderField, orderFieldType, isDesc, isForwardDir, startPage, pageSize, selectFields } = queryConfig || null;
+    const { userId, id, articleCategoryId, isLive, orderField, orderFieldType, isDesc, isForwardDir, startPage, pageSize, selectFields, features } = queryConfig || null;
 
     let squery: StructuredQueryType = {
       from: [{ collectionId, allDescendants: false } as StructuredQueryCollectionSelector]
@@ -61,7 +61,7 @@ export class ArticlesFirebaseHttpQueryService {
       } as StructuredQuerySelectProjection;
     }
 
-    if (userId || id || articleCategoryId || isLive) {
+    if (userId || id || articleCategoryId || isLive || features) {
       squery.where = {
         compositeFilter: {
           filters: [],
@@ -128,6 +128,19 @@ export class ArticlesFirebaseHttpQueryService {
       squery.where.compositeFilter.filters.push({
         fieldFilter: {
           field: { fieldPath: 'categories' },
+          op,
+          value,
+        } as StructuredQueryFieldFilter
+      } as StructuredQueryFilter);
+    }
+
+    if (features) {
+      const op = features instanceof Array ? StructuredQueryOperatorEnum.ARRAY_CONTAINS_ANY : StructuredQueryOperatorEnum.ARRAY_CONTAINS;
+      const value: StructuredQueryValue = features instanceof Array ? { arrayValue: { values: features.map(v => ({ stringValue: v })) } } : { stringValue: features };
+
+      squery.where.compositeFilter.filters.push({
+        fieldFilter: {
+          field: { fieldPath: 'features' },
           op,
           value,
         } as StructuredQueryFieldFilter

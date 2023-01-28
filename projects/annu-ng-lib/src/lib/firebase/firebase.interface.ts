@@ -24,6 +24,7 @@ export interface QueryConfig {
     pageSize?: number;
     isLive?: boolean | null;
     selectFields?: Array<string>;
+    features?: string | Array<string>;
 };
 
 export class FirebaseStoreConfig {
