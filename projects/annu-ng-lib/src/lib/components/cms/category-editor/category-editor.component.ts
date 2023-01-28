@@ -14,10 +14,17 @@ import { Tab } from '../../common-ui/tabs';
 export class CategoryEditorComponent implements OnInit, OnChanges {
   @Input() value: Category | null;
   @Input() readonlyId: boolean = true;
+  @Input() readonlyTitle: boolean = false;
   @Input() enableUniqueId: boolean = true;
   @Input() enablePublish: boolean = true;
+  @Input() enableDelete: boolean = true;
+  @Input() enableReadonlyIdToggle: boolean = true;
+
   @Output() changed = new EventEmitter<Category>();
   @Output() saveClicked = new EventEmitter<Category>();
+  @Output() deleteClicked = new EventEmitter<Category>();
+  @Output() inReviewClicked = new EventEmitter<Category>();
+  @Output() isLiveClicked = new EventEmitter<Category>();
 
   toggleImageForm: boolean = false;
   tabs: Array<Tab> = CATEGORY_EDITOR_TABS.map(t => ({ ...t }));
@@ -27,6 +34,7 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   sampleCategory: Category;
   selectedCategoryFeatures: Array<any> = [];
   categoryFeatures: Array<any> = [];
+  readonlyMetaProps: Array<string> = [];
 
   constructor(private utils: UtilsService) {
     this.sampleCategory = { ...SAMPLE_CATEGORY, id: this.utils.getUniqueFromString(SAMPLE_CATEGORY.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
@@ -44,7 +52,11 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
       this.category = { ...this.sampleCategory, metaInfo: { ...this.sampleCategory.metaInfo } };
     }
 
-    this.selectedCategoryFeatures = this.category.features.map(f => ({ id: f }));
+    // Init selected categories.
+    this.selectedCategoryFeatures = this.category?.features?.map(f => ({ id: f })) || [];
+
+    //Init meta form with readonly props
+    this.readonlyMetaProps = this.readonlyTitle === true ? ['title'] : [];
   }
 
   ngOnInit(): void {
@@ -73,13 +85,13 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   public isLiveChanged(isLive: boolean): void {
     const inReview = isLive === true ? false : this.value.inReview;
     this.category = { ...this.category, isLive, inReview };
-    this.changed.emit({ ...this.category });
+    this.isLiveClicked.emit({ ...this.category });
   }
 
   public inReviewChanged(inReview: boolean): void {
     const isLive = inReview === true ? false : this.value.isLive;
     this.category = { ...this.category, inReview, isLive };
-    this.changed.emit({ ...this.category });
+    this.inReviewClicked.emit({ ...this.category });
   }
 
   public isFeaturedChanged(isFeatured: boolean): void {
@@ -116,6 +128,10 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
     this.saveClicked.emit({ ...this.category });
   }
 
+  public deleteCategory(event: any): void {
+    event.preventDefault();
+    this.deleteClicked.emit({ ...this.category });
+  }
 
   public onCategoryFeaturesChanged(selectedCategoryFeatures: Array<any> = []): void {
     this.category = { ...this.category, features: selectedCategoryFeatures?.map(catFeature => catFeature?.id) };
@@ -123,4 +139,10 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
     this.changed.emit({ ...this.category });
   }
 
+  public categoryIdDblClick(event: any): void {
+    event.preventDefault();
+    if (this.enableReadonlyIdToggle) {
+      this.readonlyId = !this.readonlyId;
+    }
+  }
 }

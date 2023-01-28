@@ -1,4 +1,4 @@
-import { StructuredQueryValueType } from "./common-firebase";
+import { StructuredQueryValue, StructuredQueryValueType } from "./common-firebase";
 
 export class FirebaseConfig {
     public projectId?= '';
@@ -33,4 +33,13 @@ export class FirebaseStoreConfig {
     public maxHeight: number;
     public minWidth: number;
     public minHeight: number;
+}
+
+export interface FirebaseDocument {
+    name?: string;
+    fields?: {
+        [key: string]: StructuredQueryValue
+    },
+    createTime?: string;
+    updateTime?: string;
 }

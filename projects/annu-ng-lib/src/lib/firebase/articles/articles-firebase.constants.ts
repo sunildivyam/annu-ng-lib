@@ -3,7 +3,9 @@ export const FEATURED_CATEGORIES_COUNT = 4;
 export const CATEGORY_ARTICLES_COUNT = 15;
 export const ARTICLES_COLLECTIONS = {
   CATEGORIES: 'categories',
-  ARTICLES: 'articles'
+  CATEGORIES_BIN: 'categories-bin',
+  ARTICLES: 'articles',
+  ARTICLES_BIN: 'articles-bin'
 };
 
 export const RUN_QUERY_KEYWORD: string = ':runQuery';

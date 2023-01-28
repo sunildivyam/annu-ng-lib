@@ -8,7 +8,9 @@ import { QueryConfig } from '../firebase.interface';
 import { ARTICLES_COLLECTIONS, RUN_QUERY_KEYWORD } from './articles-firebase.constants';
 import { ArticlesFirebaseHttpQueryService } from './articles-firebase-http-query.service';
 import { PageArticles, PageCategoryGroup } from './articles-firebase.interface';
-import { SHALLOW_ARTICLE_FIELDS } from './articles-firebase-http.contants';
+import { SHALLOW_ARTICLE_FIELDS, UPDATE_ARTICLE_FIELDS } from './articles-firebase-http.contants';
+import { UtilsService } from '../../services/utils/utils.service';
+import { AuthFirebaseService } from '../auth/auth-firebase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,9 @@ export class ArticlesFirebaseHttpService {
     private libConfig: LibConfig,
     private http: HttpClient,
     private firestoreParser: FirestoreParserService,
-    private queryService: ArticlesFirebaseHttpQueryService
+    private queryService: ArticlesFirebaseHttpQueryService,
+    private utilsSvc: UtilsService,
+    private fireAuthSvc: AuthFirebaseService,
   ) {
     this.firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
   }
@@ -91,11 +95,58 @@ export class ArticlesFirebaseHttpService {
     });
   }
 
+  public async runQueryToUpdate(article: Article, fieldsToUpdate: Array<string>, isBin: boolean = false): Promise<Article> {
+    if (!article || !article.id) throw new Error('Please provide a valid article.');
+    const currentDate = this.utilsSvc.currentDate;
+    const pArticle = { ...article, updated: currentDate };
+    if (!pArticle.created) pArticle.created = currentDate;
+    if (!pArticle.userId) pArticle.userId = this.fireAuthSvc.getCurrentUserId();
+    delete pArticle.id;
+
+    return new Promise((resolve, reject) => {
+      const url = `${this.firestoreApiUrl}/${isBin === true ? ARTICLES_COLLECTIONS.ARTICLES_BIN : ARTICLES_COLLECTIONS.ARTICLES}/${article.id}`;
+      const body = this.firestoreParser.buildFirebaseFields(pArticle, fieldsToUpdate);
+      const params = this.firestoreParser.buildQueryParamsToUpdate(fieldsToUpdate);
+
+      const httpSubscription = this.http.patch(url, body, { params })
+        .subscribe({
+          next: (art: any) => {
+            const updatedArticle: Article = this.firestoreParser.parse(art) as Article;
+            httpSubscription.unsubscribe();
+            resolve(updatedArticle);
+          },
+          error: reject
+        });
+    });
+  }
+
+  public async runQueryToDelete(article: Article): Promise<boolean> {
+    if (!article || !article.id) throw new Error('Please provide a valid article.');
+
+    return new Promise((resolve, reject) => {
+      // Copy to articles bin, then delete from articles db.
+      this.runQueryToUpdate(article, null, true)
+        .then(() => {
+          const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.ARTICLES}/${article.id}`;
+          // delete from articles db.
+          const httpSubscription = this.http.delete(url)
+            .subscribe({
+              next: (res: any) => {
+                httpSubscription.unsubscribe();
+                resolve(true);
+              },
+              error: reject
+            });
+        })
+        .catch(reject);
+    });
+  }
+
   public async getArticle(articleId: string): Promise<Article> {
     try {
       const article = await this.runQueryById(articleId);
       return article;
-    } catch(error: any) {
+    } catch (error: any) {
       throw error;
     }
   }
@@ -263,28 +314,66 @@ export class ArticlesFirebaseHttpService {
     return pageCategoryGroups;
   }
 
-  /*
-  Shallow Category = without description
-  Shallow Article = without body
 
-  DONE - getLiveShallowArticlesOfCategories([catId] | [cats]) returns [catGroups]
-  Done - getLiveArticle(id)
-  DONE - getUsersArticle(userId, id)
-  Done - getUsersOnePageShallowArticles(userId, isLive=null | false | true (all, offline, live), pageSize=0 (All articles) , startPage=null, isForwardDir = true)
-  Done - getAllUsersOnePageShallowArticles(isLive=null | false | true (all, offline, live))
-  Done - getUsersOnePageInReviewShallowArticles(userId, pageSize=0 (All articles) , startPage=null, isForwardDir = true)
-  Done - getAllUsersOnePageInReviewShallowArticles(pageSize=0 (All articles) , startPage=null, isForwardDir = true)
+  public async addArticle(article: Article): Promise<Article> {
+    const fieldsToUpdate = [...UPDATE_ARTICLE_FIELDS, 'isLive'];
+    // Any modification to a article, will bring it to unpublished, and not up for review.
+    article.isLive = false;
+    article.inReview = false;
+    const existedArticle = await this.getArticle(article.id).catch((error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        return null;
+      } else {
+        throw error;
+      }
+    });
+    if (existedArticle) throw new Error("Article already Exist.");
+    return this.runQueryToUpdate(article, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async updateArticle(article: Article): Promise<Article> {
+
+    const fieldsToUpdate = [...UPDATE_ARTICLE_FIELDS, 'isLive'];
+
+    // Any modification to a article, will bring it to unpublished, and not up for review.
+    article.isLive = false;
+    article.inReview = false;
+
+    return this.runQueryToUpdate(article, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async setArticleUpForReview(article: Article): Promise<Article> {
+
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+
+    // Any modification to a article, will bring it to unpublished, and not up for review.
+    article.isLive = false;
+    article.inReview = true;
+
+    return this.runQueryToUpdate(article, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async setArticleLive(article: Article): Promise<Article> {
+
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+
+    // Any modification to a article, will bring it to unpublished, and not up for review.
+    article.isLive = true;
+    article.inReview = false;
+
+    return this.runQueryToUpdate(article, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
 
 
-  Add new user category
-  Update Category
-  publish category
-
-  Add new user Article
-  Update Article
-
-  publish Article
-  Bring Article offline
-  make inReview
-  */
+  public async deleteArticle(article: Article): Promise<boolean> {
+    return this.runQueryToDelete(article);
+  }
 }

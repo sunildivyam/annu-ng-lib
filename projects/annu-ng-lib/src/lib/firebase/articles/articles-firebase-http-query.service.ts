@@ -13,7 +13,8 @@ import {
   StructuredQueryOrder,
   StructuredQuerySelectProjection,
   StructuredQueryType,
-  StructuredQueryValue
+  StructuredQueryValue,
+  StructuredQueryValueType
 } from '../common-firebase/common-firebase.interface';
 import { LibConfig } from '../../app-config';
 
@@ -153,4 +154,5 @@ export class ArticlesFirebaseHttpQueryService {
 
     return { structuredQuery: squery } as StructuredQuery;
   }
+
 }

@@ -1,12 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LibConfig } from '../../app-config';
 import { Category } from '../../components/cms/category';
-import { AuthFirebaseService } from '../auth';
-import { FirestoreParserService, StructuredQueryValueType } from '../common-firebase';
+import { UtilsService } from '../../services/utils/utils.service';
+import { AuthFirebaseService } from '../auth/auth-firebase.service';
+import { FirestoreParserService } from '../common-firebase/firestore-parser.service';
+import { StructuredQueryValueType } from '../common-firebase/common-firebase.interface';
 import { QueryConfig } from '../firebase.interface';
 import { ArticlesFirebaseHttpQueryService } from './articles-firebase-http-query.service';
-import { SHALLOW_CATEGORY_FIELDS } from './articles-firebase-http.contants';
+import { SHALLOW_CATEGORY_FIELDS, UPDATE_CATEGORY_FIELDS } from './articles-firebase-http.contants';
 import { ArticlesFirebaseHttpService } from './articles-firebase-http.service';
 import { ARTICLES_COLLECTIONS, RUN_QUERY_KEYWORD } from './articles-firebase.constants';
 import { PageCategories, PageCategoryGroup } from './articles-firebase.interface';
@@ -22,9 +24,10 @@ export class CategoriesFirebaseHttpService {
     private libConfig: LibConfig,
     private http: HttpClient,
     private firestoreParser: FirestoreParserService,
-    private authService: AuthFirebaseService,
     private queryService: ArticlesFirebaseHttpQueryService,
-    private articlesHttp: ArticlesFirebaseHttpService
+    private articlesHttp: ArticlesFirebaseHttpService,
+    private utilsSvc: UtilsService,
+    private fireAuthSvc: AuthFirebaseService,
   ) {
     this.firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
   }
@@ -91,6 +94,54 @@ export class CategoriesFirebaseHttpService {
           error: reject
         });
 
+    });
+  }
+
+  public async runQueryToUpdate(category: Category, fieldsToUpdate: Array<string>, isBin: boolean = false): Promise<Category> {
+    if (!category || !category.id) throw new Error('Please provide a valid category.');
+    const currentDate = this.utilsSvc.currentDate;
+    const pCategory = { ...category, updated: currentDate };
+    if (!pCategory.created) pCategory.created = currentDate;
+    if (!pCategory.userId) pCategory.userId = this.fireAuthSvc.getCurrentUserId();
+    delete pCategory.id;
+
+    return new Promise((resolve, reject) => {
+      const url = `${this.firestoreApiUrl}/${isBin === true ? ARTICLES_COLLECTIONS.CATEGORIES_BIN : ARTICLES_COLLECTIONS.CATEGORIES}/${category.id}`;
+      const body = this.firestoreParser.buildFirebaseFields(pCategory, fieldsToUpdate);
+      const params = this.firestoreParser.buildQueryParamsToUpdate(fieldsToUpdate);
+
+      const httpSubscription = this.http.patch(url, body, { params })
+        .subscribe({
+          next: (cat: any) => {
+            const updatedCategory: Category = this.firestoreParser.parse(cat) as Category;
+            httpSubscription.unsubscribe();
+            resolve(updatedCategory);
+          },
+          error: reject
+        });
+
+    });
+  }
+
+  public async runQueryToDelete(category: Category): Promise<boolean> {
+    if (!category || !category.id) throw new Error('Please provide a valid category.');
+
+    return new Promise((resolve, reject) => {
+      // Move category to categories-bin first then delete it from categories db.
+      this.runQueryToUpdate(category, null, true)
+        .then(() => {
+          const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.CATEGORIES}/${category.id}`;
+          // Deletes from categories db.
+          const httpSubscription = this.http.delete(url)
+            .subscribe({
+              next: (res: any) => {
+                httpSubscription.unsubscribe();
+                resolve(true);
+              },
+              error: reject
+            });
+        })
+        .catch(reject);
     });
   }
 
@@ -202,5 +253,66 @@ export class CategoriesFirebaseHttpService {
     } catch (error: any) {
       throw error;
     }
+  }
+
+  public async addCategory(category: Category): Promise<Category> {
+    const fieldsToUpdate = [...UPDATE_CATEGORY_FIELDS, 'isLive'];
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = false;
+    category.inReview = false;
+    const existedCategory = await this.getCategory(category.id).catch((error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        return null;
+      } else {
+        throw error;
+      }
+    });
+    if (existedCategory) throw new Error("Category already Exist.");
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async updateCategory(category: Category): Promise<Category> {
+
+    const fieldsToUpdate = [...UPDATE_CATEGORY_FIELDS, 'isLive'];
+
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = false;
+    category.inReview = false;
+
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async setCategoryUpForReview(category: Category): Promise<Category> {
+
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = false;
+    category.inReview = true;
+
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async setCategoryLive(category: Category): Promise<Category> {
+
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = true;
+    category.inReview = false;
+
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async deleteCategory(category: Category): Promise<boolean> {
+    return this.runQueryToDelete(category);
   }
 }

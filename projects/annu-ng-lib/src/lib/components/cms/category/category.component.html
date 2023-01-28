@@ -23,6 +23,9 @@
         <p [innerHtml]="trimmedDescription"></p>
     </anu-card-body>
     <anu-card-footer *ngIf="showMetaInfo || updateHref || readMoreHref">
+        <small *ngIf="showMetaInfo && value?.features" class="row">
+            <span class="spacing-around-half spacing-half border border-round" *ngFor="let feature of value.features"><small>{{feature}}</small></span>
+        </small>
         <div class="row right">
             <div *ngIf="showMetaInfo" class="spacing-around-horizontal">
                 <span [ngClass]="value?.isLive ? 'success' : 'warning'">{{value?.isLive ? 'Published' :

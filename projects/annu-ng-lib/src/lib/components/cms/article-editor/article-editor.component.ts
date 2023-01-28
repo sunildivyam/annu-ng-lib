@@ -24,11 +24,18 @@ const SAMPLE_ARTICLE = {
 export class ArticleEditorComponent implements OnInit, OnChanges {
   @Input() value: Article | null;
   @Input() readonlyId: boolean = true;
+  @Input() readonlyTitle: boolean = false;
   @Input() enableUniqueId: boolean = true;
   @Input() enablePublish: boolean = true;
+  @Input() enableDelete: boolean = true;
+  @Input() enableReadonlyIdToggle: boolean = true;
+
   @Input() categories: Array<Category> = [];
   @Output() changed = new EventEmitter<Article>();
   @Output() saveClicked = new EventEmitter<Article>();
+  @Output() isLiveClicked = new EventEmitter<Article>();
+  @Output() inReviewClicked = new EventEmitter<Article>();
+  @Output() deleteClicked = new EventEmitter<Article>();
 
   toggleImageForm: boolean = false;
   tabs: Array<Tab> = ARTICLE_EDITOR_TABS.map(t => ({ ...t }));
@@ -40,6 +47,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   categoriesMultiSelectItems: Array<any> = [];
   selectedArticleFeatures: Array<any> = [];
   articleFeatures: Array<any> = [];
+  readonlyMetaProps: Array<string> = [];
 
   constructor(private utils: UtilsService) {
     this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.getUniqueFromString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
@@ -60,7 +68,10 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     this.categoriesMultiSelectItems = this.categories?.map(cat => ({ id: cat?.id, title: cat?.metaInfo?.title }));
 
     // Init ArticleFeatures
-    this.selectedArticleFeatures = this.article.features?.map(f => ({ id: f }));
+    this.selectedArticleFeatures = this.article?.features?.map(f => ({ id: f })) || [];
+
+    // Init Meta form with readonly props
+    this.readonlyMetaProps = this.readonlyTitle === true ? ['title'] : [];
   }
 
   ngOnInit(): void {
@@ -106,13 +117,13 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   public isLiveChanged(isLive: boolean): void {
     const inReview = isLive === true ? false : this.value.inReview;
     this.article = { ...this.article, isLive, inReview };
-    this.changed.emit({ ...this.article });
+    this.isLiveClicked.emit({ ...this.article });
   }
 
   public inReviewChanged(inReview: boolean): void {
     const isLive = inReview === true ? false : this.value.isLive;
     this.article = { ...this.article, isLive, inReview };
-    this.changed.emit({ ...this.article });
+    this.inReviewClicked.emit({ ...this.article });
   }
 
   public changeImage(event: any, clear: boolean = false) {
@@ -138,5 +149,18 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   public saveArticle(event: any): void {
     event.preventDefault();
     this.saveClicked.emit({ ...this.article });
+  }
+
+
+  public deleteArticle(event: any): void {
+    event.preventDefault();
+    this.deleteClicked.emit({ ...this.article });
+  }
+
+  public articledDblClick(event: any): void {
+    event.preventDefault();
+    if (this.enableReadonlyIdToggle) {
+      this.readonlyId = !this.readonlyId;
+    }
   }
 }

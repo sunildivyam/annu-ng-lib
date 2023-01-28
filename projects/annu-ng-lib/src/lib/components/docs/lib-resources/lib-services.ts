@@ -5,13 +5,12 @@ import { HighlightService } from '../../common-ui/code-block/highlight.service';
 import { SelectionService } from '../../cms/content-editor/services/selection.service';
 import { MetaService } from '../../common-ui/meta';
 import { ThemeService } from '../../common-ui/theme';
-import {
-  ArticlesFirebaseService,
-  ArticlesFirebaseHttpService,
-  CategoriesFirebaseHttpService,
-  ArticlesFirebaseSeedService,
-  ArticlesFirebaseHttpQueryService,
-} from '../../../firebase/articles';
+
+import { ArticlesFirebaseService } from '../../../firebase/articles/articles-firebase.service';
+import { ArticlesFirebaseHttpService } from '../../../firebase/articles/articles-firebase-http.service';
+import { CategoriesFirebaseHttpService } from '../../../firebase/articles/categories-firebase-http.service';
+import { ArticlesFirebaseSeedService } from '../../../firebase/articles/articles-firebase-seed.service';
+import { ArticlesFirebaseHttpQueryService } from '../../../firebase/articles/articles-firebase-http-query.service';
 
 import {
   AuthFirebaseService,
@@ -37,10 +36,12 @@ export const LibServices = {
   SelectionService,
   ThemeService,
 
-  ArticlesFirebaseService,
+  CommonFirebaseService,
+  FirestoreParserService,
+  FirestoreQueryService,
+
   ArticlesFirebaseHttpService,
   CategoriesFirebaseHttpService,
-  ArticlesFirebaseSeedService,
   ArticlesFirebaseHttpQueryService,
 
   AuthFirebaseService,
@@ -48,7 +49,7 @@ export const LibServices = {
 
   ImageFireStoreService,
 
-  CommonFirebaseService,
-  FirestoreParserService,
-  FirestoreQueryService,
+  ArticlesFirebaseService,
+  ArticlesFirebaseSeedService,
+
 };

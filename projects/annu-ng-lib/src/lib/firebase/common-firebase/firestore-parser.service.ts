@@ -1,4 +1,7 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FirebaseDocument } from '../firebase.interface';
+import { StructuredQueryArrayValue, StructuredQueryMapValue, StructuredQueryValue, StructuredQueryValueType } from './common-firebase.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +84,69 @@ export class FirestoreParserService {
     }
 
     return value;
+  }
+
+  public buildFirebaseFields(doc: Object, fieldsToUpdate: Array<string>): FirebaseDocument {
+    if (!doc) throw new Error('Please provide a valid document object containing one or more fields.');
+
+    const firebaseDoc: FirebaseDocument = {
+      fields: {}
+    };
+
+    if (fieldsToUpdate && fieldsToUpdate.length) {
+      const missingPropsOnDoc = [];
+      fieldsToUpdate.forEach(fieldName => {
+        const fieldValue = doc[fieldName];
+        // ensures fieldsToUpdate field has its property on doc, else remove it from fields to update.
+        if (typeof fieldValue !== 'undefined') {
+          firebaseDoc.fields[fieldName] = this.getFieldStructuredValue(fieldValue);
+        } else {
+          missingPropsOnDoc.push(fieldName);
+        }
+      });
+
+      // remove missing props (undefined) from the fieldsToUpdate. As firestore does not update missing properties.
+      fieldsToUpdate = fieldsToUpdate.filter(fieldName => !missingPropsOnDoc.includes(fieldName));
+    } else {
+      firebaseDoc.fields = this.getFieldStructuredValue(doc).mapValue.fields;
+    }
+
+    return firebaseDoc;
+  }
+
+  public getFieldStructuredValue(value: any): StructuredQueryValue {
+    let valueType: StructuredQueryValueType;
+    if (typeof value === 'number') {
+      valueType = StructuredQueryValueType.doubleValue;
+    } else if (typeof value === 'string') {
+      valueType = StructuredQueryValueType.stringValue;
+    } else if (typeof value === 'boolean') {
+      valueType = StructuredQueryValueType.booleanValue;
+    } else if (value instanceof Array) {
+      valueType = StructuredQueryValueType.arrayValue;
+      const arrayValue: StructuredQueryArrayValue = { values: [] };
+      value.forEach(itemValue => {
+        arrayValue.values.push(this.getFieldStructuredValue(itemValue));
+      });
+      value = arrayValue;
+    } else if (typeof value === 'object') {
+      valueType = StructuredQueryValueType.mapValue;
+      const mapValue: StructuredQueryMapValue = { fields: {} };
+      Object.keys(value).forEach(key => mapValue.fields[key] = this.getFieldStructuredValue(value[key]));
+      value = mapValue;
+    }
+    const structuredQueryValue: StructuredQueryValue = { [valueType]: value };
+
+    return structuredQueryValue;
+  }
+
+  public buildQueryParamsToUpdate(fieldsToUpdate: Array<string>): HttpParams {
+    let params: HttpParams = new HttpParams();
+
+    fieldsToUpdate?.forEach(fieldName => {
+      params = params.append('updateMask.fieldPaths', fieldName);
+    });
+
+    return params;
   }
 }
