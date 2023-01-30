@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { CategoriesFirebaseHttpService, PageCategories, AuthFirebaseService } from '../../../firebase';
+import { CategoriesFirebaseHttpService, PageCategories, AuthFirebaseService, FIREBASE_AUTH_ROLES } from '../../../firebase';
 
 
 
@@ -14,7 +14,12 @@ export class MyCategoriesViewRouteResolver implements Resolve<PageCategories> {
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<PageCategories> {
     if (!route.firstChild) {
-      return await this.categoriesFireHttp.getUsersOnePageShallowCategories(this.authFireService.getCurrentUserId(), null);
+      const isAdmin = await this.authFireService.currentUserHasRole(FIREBASE_AUTH_ROLES.ADMIN);
+      if (isAdmin) {
+        return await this.categoriesFireHttp.getAllUsersOnePageShallowCategories(null);
+      } else {
+        return await this.categoriesFireHttp.getUsersOnePageShallowCategories(this.authFireService.getCurrentUserId(), null);
+      }
     }
 
     return null;

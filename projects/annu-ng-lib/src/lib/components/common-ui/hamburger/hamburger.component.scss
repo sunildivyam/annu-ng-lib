@@ -8,11 +8,16 @@ $size-lg: 3rem;
     flex-flow: nowrap;
     cursor: pointer;
     align-items: center;
+    justify-content: flex-start;
     width: max-content;
     font-size: #{$size-sm};
 
     &>div {
         display: flex;
+    }
+
+    &.hamburger-dropdown {
+        justify-content: space-between;
     }
 
     .hamburger-icon {

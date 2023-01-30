@@ -47,6 +47,7 @@ import {
   ToolbarComponent,
   TypographyComponent,
   ImageBrowserComponent,
+  FiltersComponent,
 } from '../../common-ui';
 
 import {
@@ -99,6 +100,7 @@ export const LibComponents = {
   ToolbarComponent,
   TypographyComponent,
   ImageBrowserComponent,
+  FiltersComponent,
 
   // CMS
   ArticleComponent,

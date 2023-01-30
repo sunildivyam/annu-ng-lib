@@ -33,6 +33,10 @@ export class ArticleComponent implements OnInit, OnChanges {
    */
   @Input() descriptionCharCount: number = 0;
 
+  /**
+   * Shows/hides description from the card.
+   */
+  @Input() showDescription: boolean = true;
 
   trimmedDescription: string = '';
 

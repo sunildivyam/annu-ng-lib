@@ -306,8 +306,7 @@ export class CategoriesFirebaseHttpService {
     const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
 
     // Any modification to a category, will bring it to unpublished, and not up for review.
-    category.isLive = false;
-    category.inReview = true;
+    category.isLive = category.inReview === true ? false : category.isLive;
 
     return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
       throw error;
@@ -319,8 +318,8 @@ export class CategoriesFirebaseHttpService {
     const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
 
     // Any modification to a category, will bring it to unpublished, and not up for review.
-    category.isLive = true;
-    category.inReview = false;
+
+    category.inReview = category.isLive === true ? false : category.inReview;
 
     return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
       throw error;

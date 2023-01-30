@@ -11,6 +11,7 @@ export interface AppConfig {
     profileUrl?: string;
     tNcUrl: string;
     privacyPolicyUrl: string;
+    adminEmail?: string;
     metaInfo: MetaInfo;
     mainMenuItems: Array<MenuItem>;
 }

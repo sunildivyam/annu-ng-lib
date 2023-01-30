@@ -1,8 +1,8 @@
 <div class="row nowrap">
-    <anu-hamburger [opened]="collapsed" [isHamburgerStyle]="false" (changed)="toggle($event)" [ngClass]="hamBurgerClassNames">
+    <anu-hamburger class="collapsible-hamburger" [opened]="collapsed" [isDropdownStyle]="isDropdownStyle" [isHamburgerStyle]="false" (changed)="toggle($event)" [ngClass]="hamBurgerClassNames">
         <ng-content select="anu-collapsible-header"></ng-content>
     </anu-hamburger>
 </div>
-<anu-drawer [opened]="collapsed" class="drawer-content-pushed drawer-top">
+<anu-drawer [opened]="collapsed" [positionClassNames]="['drawer-top']" [overlayClassNames]="['drawer-content-pushed']">
     <ng-content select="anu-collapsible-content"></ng-content>
 </anu-drawer>

@@ -1,0 +1,28 @@
+<!-- Filters -->
+<div class="flex-container">
+    <div class="row">
+        <ng-container *ngFor="let filter of filters">
+            <!-- single-select -->
+            <div *ngIf="filter.type === 'single-select'" class="col-sm-12 col-md-6 col-lg-4 spacing-around-vertical">
+                <div class="row nowrap shadow spacing-horizontal center">
+                    <label><input type="checkbox" [(ngModel)]="filter.enabled" (ngModelChange)="filterEnabled(filter.id, $event)" /> <span
+                            class="spacing-horizontal">{{filter.title}}</span></label>
+                    <div *ngIf="filter.enabled" class="row nowrap right">
+                        <small>{{filter.filter.noLabel}}</small><anu-toggle [checked]='filter.filter.value'
+                            [rounded]='true' (changed)="singleSelectChanged(filter.id, $event)"></anu-toggle><small>{{filter.filter.yesLabel}}</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- multi-select -->
+            <div *ngIf="filter.type === 'multi-select'"
+                class="col-12 shadow spacing-horizontal spacing-around-vertical">
+                <label>{{filter.title}}</label>
+                <anu-multi-select-box (changed)="multiSelectChanged(filter.id, $event)" [items]="filter.filter.values"
+                    [keyField]="filter.filter.keyName" [labelField]="filter.filter.valueName"
+                    [selectedItems]="filter.filter.selectedValues">
+                </anu-multi-select-box>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -351,8 +351,7 @@ export class ArticlesFirebaseHttpService {
     const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
 
     // Any modification to a article, will bring it to unpublished, and not up for review.
-    article.isLive = false;
-    article.inReview = true;
+    article.isLive = article.inReview === true ? false : article.isLive;
 
     return this.runQueryToUpdate(article, fieldsToUpdate).catch(error => {
       throw error;
@@ -364,8 +363,7 @@ export class ArticlesFirebaseHttpService {
     const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
 
     // Any modification to a article, will bring it to unpublished, and not up for review.
-    article.isLive = true;
-    article.inReview = false;
+    article.inReview = article.isLive === true ? false : article.inReview;
 
     return this.runQueryToUpdate(article, fieldsToUpdate).catch(error => {
       throw error;

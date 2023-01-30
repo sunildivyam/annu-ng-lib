@@ -19,7 +19,7 @@
         </small>
     </anu-card-title>
     <anu-card-body>
-        <p [innerHtml]="trimmedDescription"></p>
+        <p *ngIf="showDescription" [innerHtml]="trimmedDescription"></p>
     </anu-card-body>
     <anu-card-footer *ngIf="showMetaInfo || updateHref || readMoreHref">
         <small *ngIf="showMetaInfo && value?.features" class="row">
