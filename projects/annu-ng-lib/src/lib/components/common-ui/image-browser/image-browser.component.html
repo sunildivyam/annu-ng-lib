@@ -15,7 +15,7 @@
         <anu-card-image>
             <div *ngIf="!imgFile.downloadUrl" class="image-preview relative">
                 <a href="#" (click)="previewClick($event, imgFile)">Preview</a>
-                <anu-spinner class="col-12" [show]="loadingPreview"></anu-spinner>
+                <anu-spinner class="col-12" [show]="loadingPreview[imgFile.fullPath + imgFile.name]"></anu-spinner>
             </div>
             <img *ngIf="imgFile.downloadUrl" [src]="imgFile.downloadUrl" [alt]="imgFile.name" />
         </anu-card-image>
