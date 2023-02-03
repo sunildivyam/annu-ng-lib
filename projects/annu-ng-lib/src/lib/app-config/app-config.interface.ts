@@ -12,6 +12,7 @@ export interface AppConfig {
     tNcUrl: string;
     privacyPolicyUrl: string;
     adminEmail?: string;
+    defaultPageSize: number;
     metaInfo: MetaInfo;
     mainMenuItems: Array<MenuItem>;
 }
