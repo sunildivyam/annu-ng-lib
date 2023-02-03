@@ -2,7 +2,7 @@
     <img class="article-view-image" *ngIf="value?.image?.src" [src]="value.image.src" [alt]="value.image.alt" />
 </div>
 <!-- Article heading -->
-<h1 class="article-view-heaading spacing" [innerHtml]="value?.metaInfo?.title"></h1>
+<h1 class="article-view-heading shadow spacing" [innerHtml]="value?.metaInfo?.title"></h1>
 <!-- Article Meta info -->
 <small *ngIf="showMetaInfo" class="row nowrap stretch">
     <!-- Implement userInfo Service first then uncomment this code
