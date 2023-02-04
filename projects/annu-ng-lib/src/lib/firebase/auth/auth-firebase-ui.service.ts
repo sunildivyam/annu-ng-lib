@@ -24,14 +24,37 @@ export class AuthFirebaseUiService {
 
     const firebaseui = await import('firebaseui');
     const ui = firebaseui.auth && (firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth));
+    let callback = null;
+    let metadataRef = null;
 
     const uiConfig = {...this.libConfig.firebaseui, callbacks: {
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-        this.authFireSvc.authState.next(authResult.user);
         // User successfully signed in.
         // Return type determines whether we continue the redirect automatically
         // or whether we leave that to developer to handle.
+        // Remove previous listener.
 
+        if (callback) {
+          metadataRef.off('value', callback);
+        }
+        // On user login add new listener.
+        const user = authResult.user;
+        if (user) {
+          // Check if refresh is required.
+          metadataRef = firebase.database().ref('metadata/' + user.uid + '/refreshTime');
+          callback = (snapshot) => {
+            // Force refresh to pick up the latest custom claims changes.
+            // Note this is always triggered on first call. Further optimization could be
+            // added to avoid the initial trigger when the token is issued and already contains
+            // the latest claims.
+            user.getIdToken(true);
+            this.authFireSvc.authState.next(authResult.user);
+          };
+          // Subscribe new listener to changes on that node.
+          metadataRef.on('value', callback);
+        }
+
+        this.authFireSvc.authState.next(authResult.user);
         if (successCb) {
           successCb(authResult.user, redirectUrl);
         }
