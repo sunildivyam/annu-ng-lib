@@ -13,6 +13,7 @@ import { Tab } from '../../common-ui/tabs';
 })
 export class CategoryEditorComponent implements OnInit, OnChanges {
   @Input() value: Category | null;
+  @Input() imageHelpText: string = '';
   @Input() readonlyId: boolean = true;
   @Input() readonlyTitle: boolean = false;
   @Input() enableUniqueId: boolean = true;
@@ -39,7 +40,7 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   constructor(private utils: UtilsService) {
     this.sampleCategory = { ...SAMPLE_CATEGORY, id: this.utils.getUniqueFromString(SAMPLE_CATEGORY.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.category = { ...this.sampleCategory };
-    this.categoryFeatures = Object.keys(CategoryFeatures).map(key => ({ id: key, title: key }));
+    this.categoryFeatures = Object.keys(CategoryFeatures).map(key => ({ id: CategoryFeatures[key], title: CategoryFeatures[key] }));
     this.categoryMetaChanged = this.categoryMetaChanged.bind(this);
   }
 

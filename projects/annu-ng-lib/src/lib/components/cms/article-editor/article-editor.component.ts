@@ -23,12 +23,14 @@ const SAMPLE_ARTICLE = {
 })
 export class ArticleEditorComponent implements OnInit, OnChanges {
   @Input() value: Article | null;
+  @Input() imageHelpText: string = '';
   @Input() readonlyId: boolean = true;
   @Input() readonlyTitle: boolean = false;
   @Input() enableUniqueId: boolean = true;
   @Input() enablePublish: boolean = true;
   @Input() enableDelete: boolean = true;
   @Input() enableReadonlyIdToggle: boolean = true;
+  @Input() enableFeatures: boolean = true;
 
   @Input() categories: Array<Category> = [];
   @Output() changed = new EventEmitter<Article>();
@@ -52,7 +54,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   constructor(private utils: UtilsService) {
     this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.getUniqueFromString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
     this.article = { ...this.sampleArticle };
-    this.articleFeatures = Object.keys(ArticleFeatures).map(key => ({ id: key, title: key }));
+    this.articleFeatures = Object.keys(ArticleFeatures).map(key => ({ id: ArticleFeatures[key], title: ArticleFeatures[key] }));
   }
 
   private initArticle() {
@@ -68,7 +70,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     this.categoriesMultiSelectItems = this.categories?.map(cat => ({ id: cat?.id, title: cat?.metaInfo?.title }));
 
     // Init ArticleFeatures
-    this.selectedArticleFeatures = this.article?.features?.map(f => ({ id: f })) || [];
+    this.selectedArticleFeatures = this.article?.features?.map(f => ({ id: f, title: f })) || [];
 
     // Init Meta form with readonly props
     this.readonlyMetaProps = this.readonlyTitle === true ? ['title'] : [];

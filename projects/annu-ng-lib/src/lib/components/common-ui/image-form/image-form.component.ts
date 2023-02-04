@@ -10,6 +10,7 @@ import { ImageInfo } from './image-form.interface';
 export class ImageFormComponent implements OnInit {
   @Input() src: string = '';
   @Input() alt: string = '';
+  @Input() helpText: string = '';
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 

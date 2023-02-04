@@ -292,7 +292,7 @@ export class ArticlesFirebaseHttpService {
       try {
         pageCategoryGroups = await Promise.all(categories.map(async cat => {
           try {
-            const catArticles = await this.runQueryByConfig({ ...catArticlesQueryConfig, articleCategoryId: cat.id });
+            const catArticles = await this.runQueryByConfig({ ...catArticlesQueryConfig, articleCategoryId: typeof cat === 'string' ? cat : cat.id });
             // if a single category, then add pagearticles with previous and next page info else leave that info empty., so that pagination can be enebled for Category articles.
             let pageArticles = await this.buildPageOfArticles(catArticles, pageSize);
 

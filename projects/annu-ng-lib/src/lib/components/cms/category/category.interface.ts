@@ -16,12 +16,14 @@ export interface Category {
 };
 
 export enum CategoryFeatures {
-    primaryNavigation = 'primaryNavigation',
-    footerNavigation = 'footerNavigation',
-    primeShow = 'primeShow',
-    primeShowAside = 'primeShowAside',
-    inReview = 'inReview',
+    primaryNavigation = 'primary-navigation',
+    footerNavigation = 'footer-navigation',
+    primeShow = 'prime-show',
+    primeShowAside = 'prime-show-aside',
+    inReview = 'in-review',
     tnc = 'tnc',
     privacy = 'privacy',
-    helpDocs = 'helpDocs',
+    helpDocs = 'help-docs',
+    helpDocsAuthor = 'help-docs-author',
+    helpDocsAdmin = 'help-docs-admin',
 }

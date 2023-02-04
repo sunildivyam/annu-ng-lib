@@ -20,6 +20,12 @@ export class ArticleComponent implements OnInit, OnChanges {
    * shows hyperlink to readmore page
    */
   @Input() readMoreHref: Array<string> = [];
+
+  /**
+   * readmore label
+   */
+  @Input() readMoreLabel: string = '';
+
   /**
    * shows hyperlink to article full view page
    */
