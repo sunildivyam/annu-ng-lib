@@ -1,6 +1,8 @@
+<div class="container article-view-image-container">
+    <img class="article-view-image" *ngIf="value?.image?.src" [src]="value.image.src" [alt]="value.image.alt" />
+</div>
 <!-- Article heading -->
-<h1 [innerHtml]="value?.metaInfo?.title"></h1>
-
+<h1 class="article-view-heading shadow spacing" [innerHtml]="value?.metaInfo?.title"></h1>
 <!-- Article Meta info -->
 <small *ngIf="showMetaInfo" class="row nowrap stretch">
     <!-- Implement userInfo Service first then uncomment this code
@@ -11,14 +13,11 @@
     <div>
         <strong>Updated: </strong><span><small>{{utilsSvc.dateToLocalString(value?.updated)}}</small></span>
     </div>
-    <div>
+    <!-- <div>
         <strong>Created: </strong><span><small>{{utilsSvc.dateToLocalString(value?.created)}}</small></span>
-    </div>
+    </div> -->
 </small>
-
 <!-- Article Description -->
-
-<p [innerHtml]="value?.metaInfo?.description"></p>
-
+<p class="article-view-description" [innerHtml]="value?.metaInfo?.description"></p>
 <!-- Article body -->
 <anu-article-element [value]="value?.body"></anu-article-element>

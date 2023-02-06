@@ -1,12 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LibConfig } from '../../app-config';
-import { Category } from '../../components/cms/category';
-import { AuthFirebaseService } from '../auth';
-import { FirestoreParserService, StructuredQueryValueType } from '../common-firebase';
+import { Category, CategoryFeatures } from '../../components/cms/category';
+import { UtilsService } from '../../services/utils/utils.service';
+import { AuthFirebaseService } from '../auth/auth-firebase.service';
+import { FirestoreParserService } from '../common-firebase/firestore-parser.service';
+import { StructuredQueryValueType } from '../common-firebase/common-firebase.interface';
 import { QueryConfig } from '../firebase.interface';
 import { ArticlesFirebaseHttpQueryService } from './articles-firebase-http-query.service';
-import { SHALLOW_CATEGORY_FIELDS } from './articles-firebase-http.contants';
+import { SHALLOW_CATEGORY_FIELDS, UPDATE_CATEGORY_FIELDS } from './articles-firebase-http.contants';
 import { ArticlesFirebaseHttpService } from './articles-firebase-http.service';
 import { ARTICLES_COLLECTIONS, RUN_QUERY_KEYWORD } from './articles-firebase.constants';
 import { PageCategories, PageCategoryGroup } from './articles-firebase.interface';
@@ -22,9 +24,10 @@ export class CategoriesFirebaseHttpService {
     private libConfig: LibConfig,
     private http: HttpClient,
     private firestoreParser: FirestoreParserService,
-    private authService: AuthFirebaseService,
     private queryService: ArticlesFirebaseHttpQueryService,
-    private articlesHttp: ArticlesFirebaseHttpService
+    private articlesHttp: ArticlesFirebaseHttpService,
+    private utilsSvc: UtilsService,
+    private fireAuthSvc: AuthFirebaseService,
   ) {
     this.firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
   }
@@ -94,18 +97,78 @@ export class CategoriesFirebaseHttpService {
     });
   }
 
+  public async runQueryToUpdate(category: Category, fieldsToUpdate: Array<string>, isBin: boolean = false): Promise<Category> {
+    if (!category || !category.id) throw new Error('Please provide a valid category.');
+    const currentDate = this.utilsSvc.currentDate;
+    const pCategory = { ...category, updated: currentDate };
+    if (!pCategory.created) pCategory.created = currentDate;
+    if (!pCategory.userId) pCategory.userId = this.fireAuthSvc.getCurrentUserId();
+    delete pCategory.id;
+
+    return new Promise((resolve, reject) => {
+      const url = `${this.firestoreApiUrl}/${isBin === true ? ARTICLES_COLLECTIONS.CATEGORIES_BIN : ARTICLES_COLLECTIONS.CATEGORIES}/${category.id}`;
+      const body = this.firestoreParser.buildFirebaseFields(pCategory, fieldsToUpdate);
+      const params = this.firestoreParser.buildQueryParamsToUpdate(fieldsToUpdate);
+
+      const httpSubscription = this.http.patch(url, body, { params })
+        .subscribe({
+          next: (cat: any) => {
+            const updatedCategory: Category = this.firestoreParser.parse(cat) as Category;
+            httpSubscription.unsubscribe();
+            resolve(updatedCategory);
+          },
+          error: reject
+        });
+
+    });
+  }
+
+  public async runQueryToDelete(category: Category): Promise<boolean> {
+    if (!category || !category.id) throw new Error('Please provide a valid category.');
+
+    return new Promise((resolve, reject) => {
+      // Move category to categories-bin first then delete it from categories db.
+      this.runQueryToUpdate(category, null, true)
+        .then(() => {
+          const url = `${this.firestoreApiUrl}/${ARTICLES_COLLECTIONS.CATEGORIES}/${category.id}`;
+          // Deletes from categories db.
+          const httpSubscription = this.http.delete(url)
+            .subscribe({
+              next: (res: any) => {
+                httpSubscription.unsubscribe();
+                resolve(true);
+              },
+              error: reject
+            });
+        })
+        .catch(reject);
+    });
+  }
+
   public async getCategory(categoryId: string): Promise<Category> {
-    return this.runQueryById(categoryId);
+    try {
+      const category = await this.runQueryById(categoryId);
+      return category;
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getUsersCategory(userId: string, categoryId: string): Promise<Category> {
-    const category = await this.runQueryById(categoryId);
-    if (category && category.userId === userId) {
+    if (!userId) throw new Error('Please provide a valid user id.');
+    if (!categoryId) throw new Error('Please Provide a valid category id.');
+
+    const categoryQueryConfig: QueryConfig = {
+      id: categoryId,
+      userId
+    };
+    try {
+      const categories = await this.runQueryByConfig(categoryQueryConfig);
+      const category = categories?.length && categories[0] || null;
+
       return category;
-    } else if (!category) {
-      throw new Error('The Category does not exist.');
-    } else {
-      throw new Error('The Category does not belong to the given user id.');
+    } catch (error: any) {
+      throw error;
     }
   }
 
@@ -116,9 +179,12 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.articlesHttp.getLiveShallowArticlesOfCategories(categories, pageSize, startPage, isForwardDir);
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return await this.articlesHttp.getLiveShallowArticlesOfCategories(categories, pageSize, startPage, isForwardDir);
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getLiveCategoryWithOnePageShallowArticles(categoryId: string, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategoryGroup> {
@@ -130,14 +196,17 @@ export class CategoriesFirebaseHttpService {
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
 
-    const categories = await this.runQueryByConfig(categoryQueryConfig);
-    const category = categories?.length ? categories[0] : null;
-    if (!category) throw new Error('Category does not exist.');
-    const pageCategoryGroups: Array<PageCategoryGroup> = await this.articlesHttp.getLiveShallowArticlesOfCategories([category], pageSize, startPage, isForwardDir);
-    if (pageCategoryGroups && pageCategoryGroups.length) {
-      return pageCategoryGroups[0];
-    } else {
+    try {
+      const categories = await this.runQueryByConfig(categoryQueryConfig);
+      const category = categories?.length && categories[0] || null;
+      if (category) {
+        const pageCategoryGroups: Array<PageCategoryGroup> = await this.articlesHttp.getLiveShallowArticlesOfCategories([category], pageSize, startPage, isForwardDir);
+        return pageCategoryGroups?.length && pageCategoryGroups[0] || null;
+      }
+
       return null;
+    } catch (error: any) {
+      throw error;
     }
   }
 
@@ -149,9 +218,12 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.buildPageOfCategories(categories, pageSize);
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return await this.buildPageOfCategories(categories, pageSize);
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getAllUsersOnePageShallowCategories(isLive: boolean | null, pageSize: number = 0, startPage: string | null = null, isForwardDir: boolean = true): Promise<PageCategories> {
@@ -161,9 +233,12 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
-
-    const categories = await this.runQueryByConfig(categoriesQueryConfig);
-    return this.buildPageOfCategories(categories, pageSize);
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return await this.buildPageOfCategories(categories, pageSize);
+    } catch (error: any) {
+      throw error;
+    }
   }
 
   public async getShallowCategoriesByIds(categoryIds: Array<string>): Promise<Array<Category>> {
@@ -173,7 +248,85 @@ export class CategoriesFirebaseHttpService {
       orderFieldType: StructuredQueryValueType.stringValue,
       selectFields: SHALLOW_CATEGORY_FIELDS
     };
+    try {
+      return await this.runQueryByConfig(categoriesQueryConfig);
+    } catch (error: any) {
+      throw error;
+    }
+  }
 
-    return this.runQueryByConfig(categoriesQueryConfig);
+  public async getShallowLiveCategoriesByFeatures(features: CategoryFeatures | Array<CategoryFeatures>, isLive: boolean = true): Promise<Array<Category>> {
+    const categoriesQueryConfig: QueryConfig = {
+      isLive,
+      features,
+      orderField: 'updated',
+      orderFieldType: StructuredQueryValueType.stringValue,
+      selectFields: SHALLOW_CATEGORY_FIELDS
+    };
+    try {
+      return await this.runQueryByConfig(categoriesQueryConfig);
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  public async addCategory(category: Category): Promise<Category> {
+    const fieldsToUpdate = [...UPDATE_CATEGORY_FIELDS, 'isLive'];
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = false;
+    category.inReview = false;
+    const existedCategory = await this.getCategory(category.id).catch((error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        return null;
+      } else {
+        throw error;
+      }
+    });
+    if (existedCategory) throw new Error("Category already Exist.");
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async updateCategory(category: Category): Promise<Category> {
+
+    const fieldsToUpdate = [...UPDATE_CATEGORY_FIELDS, 'isLive'];
+
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = false;
+    category.inReview = false;
+
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async setCategoryUpForReview(category: Category): Promise<Category> {
+
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+    category.isLive = category.inReview === true ? false : category.isLive;
+
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async setCategoryLive(category: Category): Promise<Category> {
+
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+
+    // Any modification to a category, will bring it to unpublished, and not up for review.
+
+    category.inReview = category.isLive === true ? false : category.inReview;
+
+    return this.runQueryToUpdate(category, fieldsToUpdate).catch(error => {
+      throw error;
+    });
+  }
+
+  public async deleteCategory(category: Category): Promise<boolean> {
+    return this.runQueryToDelete(category);
   }
 }

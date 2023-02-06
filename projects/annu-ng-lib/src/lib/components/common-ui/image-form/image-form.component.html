@@ -9,7 +9,7 @@
             Browse from Server
         </anu-collapsible-header>
         <anu-collapsible-content>
-            <anu-image-browser (selected)="onFileBrowserSelect($event)" [selectedImage]="selectedImage">
+            <anu-image-browser [helpText]="helpText" (selected)="onFileBrowserSelect($event)" [selectedImage]="selectedImage">
             </anu-image-browser>
         </anu-collapsible-content>
     </anu-collapsible>

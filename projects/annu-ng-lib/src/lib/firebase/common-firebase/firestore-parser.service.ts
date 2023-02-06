@@ -1,4 +1,7 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FirebaseDocument } from '../firebase.interface';
+import { StructuredQueryArrayValue, StructuredQueryMapValue, StructuredQueryValue, StructuredQueryValueType } from './common-firebase.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +24,25 @@ export class FirestoreParserService {
       'stringValue',
       'timestampValue',
       'fields',
-      'document',
-      'readTime'
+      'document'
     ];
     return Object.keys(value).find(k => props.includes(k));
   }
 
   public parse(value: any) {
+    // Remove readTime
+    if (value instanceof Array) {
+      if (value.length === 1 && typeof value[0] === 'object' && Object.keys(value[0]).includes('readTime') && Object.keys(value[0]).length === 1) {
+        value.splice(0, 1);
+      }
+    }
+
+    if (typeof value === 'object') {
+      const objKeys = Object.keys(value);
+      if (objKeys.includes('readTime')) delete value.readTime;
+    }
+
+
     const prop = this.getFireStoreProp(value);
 
     if (prop === 'doubleValue' || prop === 'integerValue') {
@@ -69,5 +84,69 @@ export class FirestoreParserService {
     }
 
     return value;
+  }
+
+  public buildFirebaseFields(doc: Object, fieldsToUpdate: Array<string>): FirebaseDocument {
+    if (!doc) throw new Error('Please provide a valid document object containing one or more fields.');
+
+    const firebaseDoc: FirebaseDocument = {
+      fields: {}
+    };
+
+    if (fieldsToUpdate && fieldsToUpdate.length) {
+      const missingPropsOnDoc = [];
+      fieldsToUpdate.forEach(fieldName => {
+        const fieldValue = doc[fieldName];
+        // ensures fieldsToUpdate field has its property on doc, else remove it from fields to update.
+        if (typeof fieldValue !== 'undefined') {
+          firebaseDoc.fields[fieldName] = this.getFieldStructuredValue(fieldValue);
+        } else {
+          missingPropsOnDoc.push(fieldName);
+        }
+      });
+
+      // remove missing props (undefined) from the fieldsToUpdate. As firestore does not update missing properties.
+      fieldsToUpdate = fieldsToUpdate.filter(fieldName => !missingPropsOnDoc.includes(fieldName));
+    } else {
+      firebaseDoc.fields = this.getFieldStructuredValue(doc).mapValue.fields;
+    }
+
+    return firebaseDoc;
+  }
+
+  public getFieldStructuredValue(value: any): StructuredQueryValue {
+    let valueType: StructuredQueryValueType;
+    if (typeof value === 'number') {
+      valueType = StructuredQueryValueType.doubleValue;
+    } else if (typeof value === 'string') {
+      valueType = StructuredQueryValueType.stringValue;
+    } else if (typeof value === 'boolean') {
+      valueType = StructuredQueryValueType.booleanValue;
+    } else if (value instanceof Array) {
+      valueType = StructuredQueryValueType.arrayValue;
+      const arrayValue: StructuredQueryArrayValue = { values: [] };
+      value.forEach(itemValue => {
+        arrayValue.values.push(this.getFieldStructuredValue(itemValue));
+      });
+      value = arrayValue;
+    } else if (typeof value === 'object') {
+      valueType = StructuredQueryValueType.mapValue;
+      const mapValue: StructuredQueryMapValue = { fields: {} };
+      Object.keys(value).forEach(key => mapValue.fields[key] = this.getFieldStructuredValue(value[key]));
+      value = mapValue;
+    }
+    const structuredQueryValue: StructuredQueryValue = { [valueType]: value };
+
+    return structuredQueryValue;
+  }
+
+  public buildQueryParamsToUpdate(fieldsToUpdate: Array<string>): HttpParams {
+    let params: HttpParams = new HttpParams();
+
+    fieldsToUpdate?.forEach(fieldName => {
+      params = params.append('updateMask.fieldPaths', fieldName);
+    });
+
+    return params;
   }
 }

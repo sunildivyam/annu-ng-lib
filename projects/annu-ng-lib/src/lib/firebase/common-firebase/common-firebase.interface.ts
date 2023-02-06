@@ -49,7 +49,9 @@ export interface StructuredQueryArrayValue {
 }
 
 export interface StructuredQueryMapValue {
-    fields: object;
+    fields: {
+        [key: string]: StructuredQueryValue
+    };
 }
 
 export interface StructuredQueryValue {

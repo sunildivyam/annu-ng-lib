@@ -1,4 +1,4 @@
-<div class="hamburger-icon">
+<div *ngIf="!isDropdownStyle" class="hamburger-icon">
         <div *ngIf="!opened" class="hamburger-icon-normal">
            {{isHamburgerStyle ? '&#9776;' : '&#10010;'}}
         </div>
@@ -10,4 +10,13 @@
 <div class="hamburger-header">
     {{heading}}
     <ng-content></ng-content>
+</div>
+
+<div *ngIf="isDropdownStyle" class="hamburger-icon">
+    <div *ngIf="!opened" class="hamburger-icon-normal">
+        &#9660;
+    </div>
+    <div *ngIf="opened" class="hamburger-icon-opened">
+        &#9650;
+    </div>
 </div>

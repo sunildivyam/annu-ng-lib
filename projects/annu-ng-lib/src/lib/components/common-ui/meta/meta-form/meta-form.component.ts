@@ -15,6 +15,7 @@ import { MetaService } from '../meta.service';
 })
 export class MetaFormComponent implements OnInit, OnChanges {
   @Input() metaInfo: MetaInfo;
+  @Input() readonlyMetaProps: Array<string> = [];
   @Output() changed: EventEmitter<MetaInfo> = new EventEmitter<MetaInfo>();
 
   public metaProps: Array<MetaProp>;
@@ -44,11 +45,19 @@ export class MetaFormComponent implements OnInit, OnChanges {
 
   private setValues(metaInfo: MetaInfo) {
     const formValues = {};
+    const controlsToDisable = [];
     this.metaProps.forEach((p: MetaProp) => {
       formValues[p.name] = metaInfo?.[p.name] || p.defaultValue || '';
+      if (this.readonlyMetaProps?.includes(p.name)) {
+        controlsToDisable.push(this.metaForm.get(p.name));
+      } else {
+        this.metaForm.get(p.name)?.enable();
+      }
     });
 
     this.metaForm.patchValue(formValues);
+    // Disable only after patching values else values will not be patched for disabled controls.
+    controlsToDisable.forEach((ctrl) => ctrl?.disable());
   }
 
   ngOnInit(): void {

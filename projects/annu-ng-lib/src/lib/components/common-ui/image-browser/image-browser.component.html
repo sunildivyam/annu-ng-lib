@@ -2,6 +2,7 @@
 <anu-card class="border-round"  [ngClass]="imageClassNames">
     <anu-card-body>
         <h3>Upload Image</h3>
+        <span *ngIf="helpText"><small>{{helpText}}</small></span>
         <div class="form-group">
             <input #fileInput id="file" type="file" class="" (change)="onFileChange($event)" />
             <input type="button" class="btn" (click)="fileInput.click()" value="Choose file to upload...">
@@ -15,7 +16,7 @@
         <anu-card-image>
             <div *ngIf="!imgFile.downloadUrl" class="image-preview relative">
                 <a href="#" (click)="previewClick($event, imgFile)">Preview</a>
-                <anu-spinner class="col-12" [show]="loadingPreview"></anu-spinner>
+                <anu-spinner class="col-12" [show]="loadingPreview[imgFile.fullPath + imgFile.name]"></anu-spinner>
             </div>
             <img *ngIf="imgFile.downloadUrl" [src]="imgFile.downloadUrl" [alt]="imgFile.name" />
         </anu-card-image>

@@ -80,8 +80,12 @@ export class ArticlesFirebaseService {
     try {
       if (category.image && category.image.imageData) {
         const imgSrc = `${pCategory.id}/${pCategory.id}.jpeg`;
-        await this.imageFireStoreService.uploadImage(imgSrc, category.image.imageData);
-        category.image.src = await this.imageFireStoreService.getImageUrl(imgSrc);
+        const imageFileInfo = await this.imageFireStoreService.uploadImage(imgSrc, category.image.imageData);
+        if (imageFileInfo.downloadUrl) {
+          category.image.src = imageFileInfo.downloadUrl;
+        } else {
+          category.image.src = await this.imageFireStoreService.getImageUrl(imgSrc);
+        }
         delete category.image.imageData;
       }
 

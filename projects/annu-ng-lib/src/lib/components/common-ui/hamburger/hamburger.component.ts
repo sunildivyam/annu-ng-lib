@@ -33,19 +33,30 @@ export class HamburgerComponent implements OnInit {
   @Input() isHamburgerStyle: boolean = true;
 
   /**
+   * Enables dropdown like icon and behavior.
+   */
+  @Input() isDropdownStyle: boolean = false;
+
+  /**
    * <code>changed</code> event is emitted, when opened state changes/toggles.
    */
   @Output() changed = new EventEmitter<boolean>();
   /**
    * toggles hamburger-opened css class, when opened state changes/toggles.
    */
-  @HostBinding('class.hamburger-opened') openedMethod() { return this.opened; }
+  @HostBinding('class.hamburger-opened') get openedMethod() { return this.opened; }
+
+  /**
+     * toggles hamburger-dropdown css class, when isDropdownStyle state changes/toggles.
+     */
+  @HostBinding('class.hamburger-dropdown') get dropdownStyleMethod() { return this.isDropdownStyle; }
+
   /**
    * Click host event listener when host is clicked.
    */
   @HostListener('click') toggleMethod() { this.toggle() }
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
   }

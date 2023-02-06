@@ -9,4 +9,8 @@ export const CATEGORY_EDITOR_TABS: Array<Tab> = [
         name: 'moreinfo',
         title: 'More Info',
     } as Tab,
+    {
+        name: 'publish',
+        title: 'Publish',
+    } as Tab,
 ];
