@@ -28,6 +28,7 @@ export const UPDATE_CATEGORY_FIELDS = [
     "isFeatured",
     "metaInfo",
     "image",
+    'created',
     "updated",
     "userId",
     "inReview",
