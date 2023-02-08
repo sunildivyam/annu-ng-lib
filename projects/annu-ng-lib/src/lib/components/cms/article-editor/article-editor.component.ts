@@ -9,7 +9,7 @@ import { UtilsService } from '../../../services/utils';
 import { Category } from '../category/category.interface';
 
 const SAMPLE_ARTICLE = {
-  body: EDITOR_ROOT_ELEMENT,
+  body: { ...EDITOR_ROOT_ELEMENT },
   metaInfo: {
     title: EDITOR_ROOT_ELEMENT.children[0]?.data?.text,
     description: EDITOR_ROOT_ELEMENT.children[1]?.data?.text,
@@ -59,10 +59,10 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
 
   private initArticle() {
     if (this.value) {
-      this.article = { ...this.value, metaInfo: { ...this.value.metaInfo } };
+      this.article = JSON.parse(JSON.stringify(this.value));
     } else {
-      this.article = { ...this.sampleArticle, metaInfo: { ...this.sampleArticle.metaInfo } };
-      this.value = { ...this.sampleArticle, metaInfo: { ...this.sampleArticle.metaInfo } };
+      this.article = JSON.parse(JSON.stringify(this.sampleArticle));
+      this.value = JSON.parse(JSON.stringify(this.sampleArticle));
     }
 
     // Init Article Categories

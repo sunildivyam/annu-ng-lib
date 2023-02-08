@@ -5,7 +5,7 @@
         <span *ngIf="helpText"><small>{{helpText}}</small></span>
         <div class="form-group">
             <input #fileInput id="file" type="file" class="" (change)="onFileChange($event)" />
-            <input type="button" class="btn" (click)="fileInput.click()" value="Choose file to upload...">
+            <input type="button" class="btn" (click)="uploadClick()" value="Choose file to upload...">
             <label>{{choosenFileName || 'No file choosen'}}</label>
         </div>
     </anu-card-body>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthFirebaseService } from '../../../firebase/auth';
 import { ImageFireStoreService } from '../../../firebase/image-storage';
 import { ImageFileInfo } from './image-browser.interface';
@@ -16,6 +16,7 @@ export class ImageBrowserComponent implements OnInit {
   @Input() pageSize: number = PAGE_SIZE;
   @Input() helpText: string = '';
   @Output() selected: EventEmitter<ImageFileInfo> = new EventEmitter<ImageFileInfo>();
+  @ViewChild('fileInput') fileEl: ElementRef;
 
   imagesFiles: Array<ImageFileInfo> = [];
   nextPageToken: any;
@@ -108,10 +109,10 @@ export class ImageBrowserComponent implements OnInit {
     try {
       const downloadUrl = await this.imageFireSvc.getImageUrl(imageFile.name, this.authSvc.getCurrentUserId());
       imageFile.downloadUrl = downloadUrl;
-      this.loadingPreview[imageLoaderKey]= false;
+      this.loadingPreview[imageLoaderKey] = false;
     } catch (error: any) {
       this.error = error;
-      this.loadingPreview[imageLoaderKey]= false;
+      this.loadingPreview[imageLoaderKey] = false;
     }
   }
 
@@ -159,5 +160,12 @@ export class ImageBrowserComponent implements OnInit {
       this.choosenFileName = file.name;
       this.uploadImageFile(file);
     }
+  }
+
+  public uploadClick(): void {
+    const fileInputEl = this.fileEl.nativeElement;
+    fileInputEl.value = '';
+    this.choosenFileName = '';
+    fileInputEl.click();
   }
 }
