@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
-import  'firebase/compat/auth';
+import 'firebase/compat/auth';
 import { AuthFirebaseService } from './auth-firebase.service';
 
 import { LibConfig } from '../../app-config/app-config.interface';
+import { AdditionalUserInfo, User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -24,58 +25,48 @@ export class AuthFirebaseUiService {
 
     const firebaseui = await import('firebaseui');
     const ui = firebaseui.auth && (firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth));
-    let callback = null;
-    let metadataRef = null;
 
-    const uiConfig = {...this.libConfig.firebaseui, callbacks: {
-      signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-        // User successfully signed in.
-        // Return type determines whether we continue the redirect automatically
-        // or whether we leave that to developer to handle.
-        // Remove previous listener.
+    const uiConfig = {
+      ...this.libConfig.firebaseui, callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+          const user: User = authResult?.user;
+          const additionalUserInfo: AdditionalUserInfo = authResult?.additionalUserInfo;
 
-        if (callback) {
-          metadataRef.off('value', callback);
-        }
-        // On user login add new listener.
-        const user = authResult.user;
-        if (user) {
-          // Check if refresh is required.
-          metadataRef = firebase.database().ref('metadata/' + user.uid + '/refreshTime');
-          callback = (snapshot) => {
-            // Force refresh to pick up the latest custom claims changes.
-            // Note this is always triggered on first call. Further optimization could be
-            // added to avoid the initial trigger when the token is issued and already contains
-            // the latest claims.
-            user.getIdToken(true);
-            this.authFireSvc.authState.next(authResult.user);
-          };
-          // Subscribe new listener to changes on that node.
-          metadataRef.on('value', callback);
-        }
-
-        this.authFireSvc.authState.next(authResult.user);
-        if (successCb) {
-          successCb(authResult.user, redirectUrl);
-        }
-
-        return true;
-      },
-      signInFailure: (error) => {
-        // User sign in failure;
-        if (errorCb) {
-          errorCb(error);
-        }
-      },
-      uiShown: () => {
-        // The widget is rendered.
-        // Hide the loader.
-        if (uiShownCb) {
-          uiShownCb();
+          if (user && additionalUserInfo?.isNewUser) {
+            // Check if refresh is required.
+            // if the user is new, signed in first time, refresh the token
+            user.getIdToken(true)
+              .then(() => {
+                this.authFireSvc.authState.next(user);
+                if (successCb) {
+                  successCb(user, redirectUrl);
+                }
+              });
+          } else {
+            this.authFireSvc.authState.next(user);
+            if (successCb) {
+              successCb(user, redirectUrl);
+            }
+          }
+        },
+        signInFailure: (error) => {
+          // User sign in failure;
+          if (errorCb) {
+            errorCb(error);
+          }
+        },
+        uiShown: () => {
+          // The widget is rendered.
+          // Hide the loader.
+          if (uiShownCb) {
+            uiShownCb();
+          }
         }
       }
-    }};
+    };
 
-    ui && ui.start(elementId, uiConfig);
+    setTimeout(() => {
+      ui && ui.start(elementId, uiConfig);
+    });
   }
 }

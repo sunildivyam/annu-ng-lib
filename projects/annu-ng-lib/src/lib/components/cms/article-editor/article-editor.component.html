@@ -19,6 +19,10 @@
                 <anu-content-editor [value]="article?.body" (changed)="articleBodyChanged($event)"></anu-content-editor>
             </anu-card-body>
         </anu-card>
+
+        <section class="row spacing-vertical right">
+            <a class="btn" href="#" (click)="saveArticle($event)">Save Article</a>
+        </section>
     </section>
 
     <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'moreinfo'}">

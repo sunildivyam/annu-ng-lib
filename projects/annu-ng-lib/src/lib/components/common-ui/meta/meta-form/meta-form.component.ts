@@ -48,11 +48,6 @@ export class MetaFormComponent implements OnInit, OnChanges {
     const controlsToDisable = [];
     this.metaProps.forEach((p: MetaProp) => {
       formValues[p.name] = metaInfo?.[p.name] || p.defaultValue || '';
-      if (this.readonlyMetaProps?.includes(p.name)) {
-        controlsToDisable.push(this.metaForm.get(p.name));
-      } else {
-        this.metaForm.get(p.name)?.enable();
-      }
     });
 
     this.metaForm.patchValue(formValues);
@@ -84,5 +79,9 @@ export class MetaFormComponent implements OnInit, OnChanges {
 
   public previewModalCloseClicked(opened: boolean) {
     this.toggleModal = opened;
+  }
+
+  public isPropReadOnly(propName: string): boolean {
+    return !!this.readonlyMetaProps?.includes(propName);
   }
 }
