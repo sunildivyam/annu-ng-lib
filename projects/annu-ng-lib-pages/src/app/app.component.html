@@ -1,6 +1,6 @@
 <div class="appContainer container" role="main">
   <header class="appHeader row">
-    <anu-menu (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainMenuItems"
+    <anu-menu [logoUrl]="'/favicon.ico'" (openStatusChanged)="mainMenuOpenStatusChanged($event)" [opened]="isMainNavOpen" [items]="mainMenuItems"
       [heading]="appConfig.name" [subHeading]="appConfig.metaInfo.title" [headingHref]="['./']"
       [subHeadingHref]="['./']">
       <anu-login-status (profileClicked)="loginStatusClicked()" (signOutClicked)="loginStatusClicked()"

@@ -306,6 +306,14 @@ const jsonTheme = `{
     {
       "name": "siteWidth",
       "value": "1080px"
+    },
+    {
+      "name": "lineHeight",
+      "value": "2"
+    },
+    {
+      "name": "letterSpacing",
+      "value": "0.05rem"
     }
   ]
 }`;

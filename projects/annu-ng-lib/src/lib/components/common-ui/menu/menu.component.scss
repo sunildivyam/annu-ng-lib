@@ -6,6 +6,13 @@
     width: 100%;
     background-color: var(--anu-primary-normal);
     color: var(--anu-accent-deep-light);
+
+    line-height: calc(var(--anu-line-height)/1.7);
+}
+
+.logo {
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .app-name {
