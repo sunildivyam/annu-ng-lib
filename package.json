@@ -1,6 +1,6 @@
 {
   "name": "annu-ng-lib",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,7 +20,7 @@
     "build:cordova:ssr": "ng build --configuration production --output-path=./cordova/www/ && ng run annu-ng-lib-pages:server:production --output-path=./cordova/www/ && npx compodoc -p projects/annu-ng-lib/tsconfig.lib.json -e json -d ./cordova/www/data",
     "build:analyze": "ng build --configuration production --stats-json && webpack-bundle-analyzer ./dist/annu-ng-lib-pages/browser/stats.json",
     "lint": "ng lint",
-    "publish:lib": "cd dist/annu-ng-lib/ && npm version 1.0.1 && npm publish --access public"
+    "publish:lib": "cd dist/annu-ng-lib/ && npm version 1.0.2 && npm publish --access public"
   },
   "private": false,
   "dependencies": {
