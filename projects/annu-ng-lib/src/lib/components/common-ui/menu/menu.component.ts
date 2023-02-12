@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit {
   @Input() subHeading: string = '';
   @Input() subHeadingHref: Array<string> = [];
   @Input() opened: boolean = false;
+  @Input() logoUrl: string = '';
   @Output() selected = new EventEmitter<MenuItem>();
   @Output() openStatusChanged = new EventEmitter<boolean>();
 

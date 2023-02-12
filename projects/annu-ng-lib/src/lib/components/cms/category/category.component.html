@@ -2,7 +2,7 @@
     [contentCssClasses]="['col-sm-12', 'col-md-8', 'col-lg-8']"
     class="nowrap-md nowrap-lg">
     <anu-card-image *ngIf="value?.image?.src">
-        <a *ngIf="titleHref" [routerLink]="titleHref"><img [src]="value?.image?.src" [alt]="value?.image?.alt" /></a>
+        <a *ngIf="titleHref" [routerLink]="titleHref" class="shadow"><img [src]="value?.image?.src" [alt]="value?.image?.alt" /></a>
         <img *ngIf="!titleHref" [src]="value?.image?.src" [alt]="value?.image?.alt" />
     </anu-card-image>
     <anu-card-image *ngIf="!value?.image?.src">
@@ -11,7 +11,7 @@
     <anu-card-title>
         <h2><a *ngIf="titleHref" [routerLink]="titleHref">{{value?.metaInfo?.title}}</a></h2>
         <h2 *ngIf="!titleHref" [innerHtml]="value?.metaInfo?.title"></h2>
-        <h3 *ngIf="value?.shortTitle" [innerHtml]="value?.shortTitle"></h3>
+        <h3 *ngIf="showShortTitle && value?.shortTitle" [innerHtml]="value?.shortTitle"></h3>
         <small *ngIf="showMetaInfo" class="row nowrap stretch">
             <div><strong>Updated:
                 </strong><span><small>{{utilsSvc.dateToLocalString(value?.updated)}}</small></span></div>

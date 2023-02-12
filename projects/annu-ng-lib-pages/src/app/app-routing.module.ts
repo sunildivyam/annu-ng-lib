@@ -5,7 +5,8 @@ import { IsLoggedInGuard } from '@annu/ng-lib';
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
+    initialNavigation: 'enabledBlocking',
+    scrollPositionRestoration: 'top',
 })],
   exports: [RouterModule],
   providers: [IsLoggedInGuard]
