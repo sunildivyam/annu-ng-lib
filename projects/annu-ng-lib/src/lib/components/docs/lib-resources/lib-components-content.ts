@@ -34,6 +34,7 @@ import { ToolbarComponent } from '../../common-ui/toolbar/docs.data';
 import { TypographyComponent } from '../../common-ui/typography/docs.data';
 import { ImageBrowserComponent } from '../../common-ui/image-browser/docs.data';
 import { FiltersComponent } from '../../common-ui/filters/docs.data';
+import { ThemeFontResizerComponent } from '../../common-ui/theme-font-resizer/docs.data';
 
 // CMS
 import { ArticleComponent } from '../../cms/article/docs.data';
@@ -97,6 +98,7 @@ export const LibComponentsContent = {
   TypographyComponent,
   ImageBrowserComponent,
   FiltersComponent,
+  ThemeFontResizerComponent,
 
   // CMS
   ArticleComponent,
