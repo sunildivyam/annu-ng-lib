@@ -23,8 +23,8 @@
 html {
   font-family: var(--anu-font-family);
   font-size: var(--anu-font-size);
-  line-height: 1.5;
-  letter-spacing: 0.05rem;
+  line-height: var(--anu-line-height);
+  letter-spacing: var(--anu-letter-spacing);
   scroll-behavior: smooth;
 }
 
