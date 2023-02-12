@@ -29,6 +29,9 @@ import { MenuItem } from './menu.interface';
 export const MenuComponent: DocsData = {
     projectionContent: 'Projeccted Item',
     inputPropsValues: {
-        items: [...MENU_ITEMS]
+        items: [...MENU_ITEMS],
+        heading: 'Annu Library',
+        subHeading: 'UI components',
+        logoUrl: '/favicon.ico'
     }
 }

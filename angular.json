@@ -8,6 +8,11 @@
       "root": "projects/annu-ng-lib",
       "sourceRoot": "projects/annu-ng-lib/src",
       "prefix": "anu",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

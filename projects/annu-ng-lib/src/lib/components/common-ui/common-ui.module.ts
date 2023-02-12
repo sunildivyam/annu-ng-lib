@@ -28,6 +28,7 @@ import { MultiSelectBoxModule } from './multi-select-box/multi-select-box.module
 import { DrawerModule } from './drawer/drawer.module';
 import { ImageBrowserModule } from './image-browser/image-browser.module';
 import { FiltersModule } from './filters/filters.module';
+import { ThemeFontResizerModule } from './theme-font-resizer/theme-font-resizer.module';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { FiltersModule } from './filters/filters.module';
     DrawerModule,
     ImageBrowserModule,
     FiltersModule,
+    ThemeFontResizerModule,
   ],
 })
 export class CommonUiModule { }
