@@ -58,7 +58,7 @@ export class UtilsService {
         const dt = new Date(dateStr);
         timeStr = dt.getTime().toString();
       }
-    } catch (err) {}
+    } catch (err) { }
 
     return timeStr;
   }
@@ -78,7 +78,7 @@ export class UtilsService {
       if (timeStr) {
         dateStr = new Date(Number(timeStr)).toISOString();
       }
-    } catch (err) {}
+    } catch (err) { }
 
     return dateStr;
   }
@@ -119,10 +119,10 @@ export class UtilsService {
     if (!str) return '';
 
     return str.split('').filter((char, index) => {
-      if(char === ' ') {
-        if(index === (str.length - 1)) {
+      if (char === ' ') {
+        if (index === (str.length - 1)) {
           return false;
-        } else if(str[index + 1] === ' ') {
+        } else if (str[index + 1] === ' ') {
           return false;
         } else {
           return true;
@@ -197,8 +197,25 @@ export class UtilsService {
    * @returns {string}
    */
   public getImageSpecsString(imageSpecs: FirebaseStoreConfig): string {
-    const { minWidth, minHeight, maxWidth, maxHeight, maxKBs} = imageSpecs;
+    const { minWidth, minHeight, maxWidth, maxHeight, maxKBs } = imageSpecs;
 
     return `Allowed Image specification: 1Kb <= size <= ${maxKBs}Kbs | ${minWidth}px <= width <= ${maxWidth}px | ${minHeight}px <= height <= ${maxHeight}px`;
+  }
+
+
+  /**
+   * Deep copy an object or an array
+   * @date 2/28/2023 - 3:22:38 AM
+   *
+   * @public
+   * @param {(any)} value
+   * @returns {(any)}
+   */
+  public deepCopy(value: any): any {
+    try {
+      return JSON.parse(JSON.stringify(value));
+    } catch (err) {
+      return null;
+    }
   }
 }

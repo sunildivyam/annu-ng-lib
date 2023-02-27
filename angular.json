@@ -35,8 +35,7 @@
             "tsConfig": "projects/annu-ng-lib/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "xml-js"
+              "zone.js/testing"
             ]
           }
         }
@@ -61,10 +60,9 @@
             "main": "projects/annu-ng-lib-pages/src/main.ts",
             "polyfills": [
               "zone.js",
-              "xml-js",
               "dialog-polyfill"
             ],
-            "allowedCommonJsDependencies": ["prismjs", "xml-js"],
+            "allowedCommonJsDependencies": ["prismjs","buffer", "stream", "xml-js"],
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -135,8 +133,7 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "xml-js"
+              "zone.js/testing"
             ],
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",

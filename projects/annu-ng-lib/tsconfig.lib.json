@@ -6,12 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": [],
-    "paths": {
-      "stream": [
-        "node_modules/stream-browserify"
-      ],
-    }
+    "types": []
   },
   "exclude": [
     "**/*.spec.ts"

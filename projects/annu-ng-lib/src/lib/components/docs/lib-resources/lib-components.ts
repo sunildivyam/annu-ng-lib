@@ -49,6 +49,7 @@ import {
   ImageBrowserComponent,
   FiltersComponent,
   ThemeFontResizerComponent,
+  SitemapComponent,
 } from '../../common-ui';
 
 import {
@@ -103,6 +104,7 @@ export const LibComponents = {
   ImageBrowserComponent,
   FiltersComponent,
   ThemeFontResizerComponent,
+  SitemapComponent,
 
   // CMS
   ArticleComponent,
