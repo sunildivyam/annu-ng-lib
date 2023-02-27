@@ -35,7 +35,8 @@
             "tsConfig": "projects/annu-ng-lib/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "xml-js"
             ]
           }
         }
@@ -59,14 +60,18 @@
             "index": "projects/annu-ng-lib-pages/src/index.html",
             "main": "projects/annu-ng-lib-pages/src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "xml-js",
+              "dialog-polyfill"
             ],
-            "allowedCommonJsDependencies": ["prismjs"],
+            "allowedCommonJsDependencies": ["prismjs", "xml-js"],
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/annu-ng-lib-pages/src/favicon.ico",
-              "projects/annu-ng-lib-pages/src/assets"
+              "projects/annu-ng-lib-pages/src/assets",
+              "projects/annu-ng-lib-pages/src/sitemap.xml",
+              "projects/annu-ng-lib-pages/src/robots.txt"
             ],
             "styles": [
               "projects/annu-ng-lib/src/lib/scss/annu-ng-lib-theme.scss",
@@ -130,13 +135,16 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "xml-js"
             ],
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/annu-ng-lib-pages/src/favicon.ico",
-              "projects/annu-ng-lib-pages/src/assets"
+              "projects/annu-ng-lib-pages/src/assets",
+              "projects/annu-ng-lib-pages/src/sitemap.xml",
+              "projects/annu-ng-lib-pages/src/robots.txt"
             ],
             "styles": [
               "projects/annu-ng-lib/src/lib/scss/annu-ng-lib-theme.scss",
