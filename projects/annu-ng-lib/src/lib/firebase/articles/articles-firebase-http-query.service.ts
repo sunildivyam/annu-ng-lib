@@ -40,7 +40,7 @@ export class ArticlesFirebaseHttpQueryService {
     if (!collectionId || !queryConfig) throw new Error('Pleae provide a valid collectionId and queryConfig');
     const firestoreApiUrl = this.libConfig.firestoreBaseApiUrl;
     const collectionUrl = firestoreApiUrl.substring(firestoreApiUrl.indexOf('/projects/') + 1);
-    const { userId, id, articleCategoryId, isLive, orderField, orderFieldType, isDesc, isForwardDir, startPage, pageSize, selectFields, features } = queryConfig || null;
+    const { userId, id, articleCategoryId, isLive, updated, orderField, orderFieldType, isDesc, isForwardDir, startPage, pageSize, selectFields, features } = queryConfig || null;
 
     let squery: StructuredQueryType = {
       from: [{ collectionId, allDescendants: false } as StructuredQueryCollectionSelector]
@@ -61,7 +61,7 @@ export class ArticlesFirebaseHttpQueryService {
       } as StructuredQuerySelectProjection;
     }
 
-    if (userId || id || articleCategoryId || isLive || features) {
+    if (userId || id || articleCategoryId || isLive || features || updated) {
       squery.where = {
         compositeFilter: {
           filters: [],
@@ -119,6 +119,16 @@ export class ArticlesFirebaseHttpQueryService {
           value: { booleanValue: isLive } as StructuredQueryValue,
         } as StructuredQueryFieldFilter
       } as StructuredQueryFilter);
+    }
+
+    if (updated) {
+      squery.where.compositeFilter.filters.push({
+        fieldFilter: {
+          field: { fieldPath: 'updated' },
+          op: StructuredQueryOperatorEnum.GREATER_THAN_OR_EQUAL,
+          value: { stringValue: updated } as StructuredQueryValue,
+        } as StructuredQueryFieldFilter
+      });
     }
 
     if (articleCategoryId) {

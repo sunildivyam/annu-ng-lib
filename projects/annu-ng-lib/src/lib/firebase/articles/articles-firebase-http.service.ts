@@ -314,6 +314,21 @@ export class ArticlesFirebaseHttpService {
     return pageCategoryGroups;
   }
 
+  public async getAllLiveArticlesFromDate(fromDateTime: string): Promise<Array<Article>> {
+    const articlesQueryConfig: QueryConfig = {
+      isLive: true,
+      orderField: 'updated',
+      updated: fromDateTime,
+      orderFieldType: StructuredQueryValueType.stringValue,
+      selectFields: ['categories', 'updated']
+    };
+    try {
+      const articles = await this.runQueryByConfig(articlesQueryConfig);
+      return articles;
+    } catch (error: any) {
+      throw error;
+    }
+  }
 
   public async addArticle(article: Article): Promise<Article> {
     const fieldsToUpdate = [...UPDATE_ARTICLE_FIELDS, 'isLive'];

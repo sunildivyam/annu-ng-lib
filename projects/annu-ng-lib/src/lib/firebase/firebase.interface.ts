@@ -23,6 +23,7 @@ export interface QueryConfig {
     startPage?: any;
     pageSize?: number;
     isLive?: boolean | null;
+    updated?: string;
     selectFields?: Array<string>;
     features?: string | Array<string>;
 };

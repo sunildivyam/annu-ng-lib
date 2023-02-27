@@ -270,6 +270,32 @@ export class CategoriesFirebaseHttpService {
     }
   }
 
+
+  /**
+   * Get all Live categories since the given last updated, by date.
+   * @date 2/27/2023 - 6:40:21 PM
+   *
+   * @public
+   * @async
+   * @param {string} fromDateTime
+   * @returns {Promise<Array<Category>>}
+   */
+  public async getAllLiveCategoriesFromDate(fromDateTime: string): Promise<Array<Category>> {
+    const categoriesQueryConfig: QueryConfig = {
+      isLive: true,
+      orderField: 'updated',
+      updated: fromDateTime,
+      orderFieldType: StructuredQueryValueType.stringValue,
+      selectFields: ['updated']
+    };
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return categories;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
   public async addCategory(category: Category): Promise<Category> {
     const fieldsToUpdate = [...UPDATE_CATEGORY_FIELDS, 'isLive'];
     // Any modification to a category, will bring it to unpublished, and not up for review.
