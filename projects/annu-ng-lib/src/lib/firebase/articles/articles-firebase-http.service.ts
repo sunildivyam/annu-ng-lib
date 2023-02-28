@@ -98,7 +98,8 @@ export class ArticlesFirebaseHttpService {
   public async runQueryToUpdate(article: Article, fieldsToUpdate: Array<string>, isBin: boolean = false): Promise<Article> {
     if (!article || !article.id) throw new Error('Please provide a valid article.');
     const currentDate = this.utilsSvc.currentDate;
-    const pArticle = { ...article, updated: currentDate };
+    const pArticle = { ...article, updated: currentDate } as Article;
+    pArticle.metaInfo['article:published_time'] = currentDate;
     if (!pArticle.created) pArticle.created = currentDate;
     if (!pArticle.userId) pArticle.userId = this.fireAuthSvc.getCurrentUserId();
     delete pArticle.id;

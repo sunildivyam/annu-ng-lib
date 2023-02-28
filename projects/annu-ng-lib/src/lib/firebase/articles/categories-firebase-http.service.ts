@@ -101,6 +101,7 @@ export class CategoriesFirebaseHttpService {
     if (!category || !category.id) throw new Error('Please provide a valid category.');
     const currentDate = this.utilsSvc.currentDate;
     const pCategory = { ...category, updated: currentDate };
+    pCategory.metaInfo['article:published_time'] = currentDate;
     if (!pCategory.created) pCategory.created = currentDate;
     if (!pCategory.userId) pCategory.userId = this.fireAuthSvc.getCurrentUserId();
     delete pCategory.id;
