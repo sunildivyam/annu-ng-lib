@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UtilsService } from '../../../../services/utils/utils.service';
 import { Sitemap, SitemapInfo, SitemapItem } from '../sitemap.interface';
+import { SitemapService } from '../sitemap.service';
 
 @Component({
   selector: 'anu-sitemap',
@@ -22,8 +23,10 @@ export class SitemapComponent {
   checkNewUrlsCollapsed: boolean = false;
   previewCollapsed: boolean = false;
   newUrlsStatus: object = {};
+  sitemapXmlStr: string = '';
+  showXmlModal: boolean = false;
 
-  constructor(private utilsSvc: UtilsService) { }
+  constructor(private utilsSvc: UtilsService, private sitemapService: SitemapService) { }
 
   public loadSitemap(event: any): void {
     event.preventDefault();
@@ -53,4 +56,13 @@ export class SitemapComponent {
     this.saveClicked.emit(clonedNewSitemap);
   }
 
+  public showXmlString(event: any, sitemapJson: Sitemap): void {
+    event.preventDefault();
+    this.sitemapXmlStr = this.sitemapService.jsonToXmlSitemap(sitemapJson);
+    this.showXmlModal = true;
+  }
+
+  public xmlModalClosed(): void {
+    this.showXmlModal = false;
+  }
 }

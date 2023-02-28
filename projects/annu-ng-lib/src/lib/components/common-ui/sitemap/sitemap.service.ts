@@ -12,6 +12,7 @@ import { UtilsService } from '../../../services/utils/utils.service';
 export class SitemapService {
   private xmlUrl: string = '';
   private xmlJsonUrl: string = '';
+  private postXmlApiUrl: string = '';
 
   constructor(private libConfig: LibConfig,
     private utilsSvc: UtilsService,
@@ -21,6 +22,7 @@ export class SitemapService {
     }
     this.xmlUrl = `${this.libConfig.apiBaseUrl}/${SITEMAP_XML_FILE}`;
     this.xmlJsonUrl = `${this.libConfig.apiBaseUrl}/${SITEMAP_JSON_FILE}`;
+    this.postXmlApiUrl = `${this.libConfig.apiBaseUrl}/api/sitemap`;
   }
 
 
@@ -56,6 +58,43 @@ export class SitemapService {
     });
   }
 
+
+  /**
+   * Saves both sitemap.xml and assets/sitemap-info.json
+   * @date 2/28/2023 - 11:13:44 PM
+   *
+   * @public
+   * @async
+   * @param {Sitemap} sitemapJson
+   * @returns {Promise<any>}
+   */
+  public async saveSitemap(sitemapJson: Sitemap): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const xmlStr = this.jsonToXmlSitemap(sitemapJson);
+      const jsonStr = JSON.stringify({ updated: this.utilsSvc.currentDate }, null, '\t');
+
+      const xmlObserver$ = this.httpClient.post(this.postXmlApiUrl,
+        {
+          xmlStr: xmlStr,
+          jsonStr: jsonStr
+        },
+        {
+          observe: 'body',
+          responseType: 'json'
+        });
+
+      xmlObserver$.pipe(catchError((error: any) => {
+        reject(error);
+
+        return throwError(() => {
+          return error;
+        });
+      }))
+        .subscribe((res) => {
+          resolve(res);
+        });
+    });
+  }
 
   /**
    * Appends Urls to existing sitemap json.
@@ -102,7 +141,7 @@ export class SitemapService {
    */
   public jsonToXmlSitemap(sitemap: Sitemap): string {
     const sitemapStr = JSON.stringify(sitemap);
-    const sitemapXmlStr = json2xml(sitemapStr, { compact: true });
+    const sitemapXmlStr = json2xml(sitemapStr, { compact: true, spaces: 4 });
 
     return sitemapXmlStr;
   }
