@@ -11,6 +11,9 @@
       ],
       "@annu/ng-lib/*": [
         "projects/annu-ng-lib/src/*"
+      ],
+      "stream": [
+        "node_modules/stream-browserify"
       ]
     },
     "baseUrl": "./",

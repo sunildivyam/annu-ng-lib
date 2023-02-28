@@ -101,6 +101,7 @@ export class CategoriesFirebaseHttpService {
     if (!category || !category.id) throw new Error('Please provide a valid category.');
     const currentDate = this.utilsSvc.currentDate;
     const pCategory = { ...category, updated: currentDate };
+    pCategory.metaInfo['article:published_time'] = currentDate;
     if (!pCategory.created) pCategory.created = currentDate;
     if (!pCategory.userId) pCategory.userId = this.fireAuthSvc.getCurrentUserId();
     delete pCategory.id;
@@ -265,6 +266,32 @@ export class CategoriesFirebaseHttpService {
     };
     try {
       return await this.runQueryByConfig(categoriesQueryConfig);
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+
+  /**
+   * Get all Live categories since the given last updated, by date.
+   * @date 2/27/2023 - 6:40:21 PM
+   *
+   * @public
+   * @async
+   * @param {string} fromDateTime
+   * @returns {Promise<Array<Category>>}
+   */
+  public async getAllLiveCategoriesFromDate(fromDateTime: string): Promise<Array<Category>> {
+    const categoriesQueryConfig: QueryConfig = {
+      isLive: true,
+      orderField: 'updated',
+      updated: fromDateTime,
+      orderFieldType: StructuredQueryValueType.stringValue,
+      selectFields: ['updated']
+    };
+    try {
+      const categories = await this.runQueryByConfig(categoriesQueryConfig);
+      return categories;
     } catch (error: any) {
       throw error;
     }

@@ -29,6 +29,7 @@ import { DrawerModule } from './drawer/drawer.module';
 import { ImageBrowserModule } from './image-browser/image-browser.module';
 import { FiltersModule } from './filters/filters.module';
 import { ThemeFontResizerModule } from './theme-font-resizer/theme-font-resizer.module';
+import { SitemapModule } from './sitemap';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { ThemeFontResizerModule } from './theme-font-resizer/theme-font-resizer.
     ImageBrowserModule,
     FiltersModule,
     ThemeFontResizerModule,
+    SitemapModule,
   ],
 })
 export class CommonUiModule { }

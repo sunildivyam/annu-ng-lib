@@ -98,7 +98,8 @@ export class ArticlesFirebaseHttpService {
   public async runQueryToUpdate(article: Article, fieldsToUpdate: Array<string>, isBin: boolean = false): Promise<Article> {
     if (!article || !article.id) throw new Error('Please provide a valid article.');
     const currentDate = this.utilsSvc.currentDate;
-    const pArticle = { ...article, updated: currentDate };
+    const pArticle = { ...article, updated: currentDate } as Article;
+    pArticle.metaInfo['article:published_time'] = currentDate;
     if (!pArticle.created) pArticle.created = currentDate;
     if (!pArticle.userId) pArticle.userId = this.fireAuthSvc.getCurrentUserId();
     delete pArticle.id;
@@ -314,6 +315,21 @@ export class ArticlesFirebaseHttpService {
     return pageCategoryGroups;
   }
 
+  public async getAllLiveArticlesFromDate(fromDateTime: string): Promise<Array<Article>> {
+    const articlesQueryConfig: QueryConfig = {
+      isLive: true,
+      orderField: 'updated',
+      updated: fromDateTime,
+      orderFieldType: StructuredQueryValueType.stringValue,
+      selectFields: ['categories', 'updated']
+    };
+    try {
+      const articles = await this.runQueryByConfig(articlesQueryConfig);
+      return articles;
+    } catch (error: any) {
+      throw error;
+    }
+  }
 
   public async addArticle(article: Article): Promise<Article> {
     const fieldsToUpdate = [...UPDATE_ARTICLE_FIELDS, 'isLive'];
