@@ -11,6 +11,8 @@ export interface AppConfig {
     profileUrl?: string;
     tNcUrl: string;
     privacyPolicyUrl: string;
+    contactUsUrl?: string;
+    aboutUsUrl?: string;
     adminEmail?: string;
     defaultPageSize: number;
     metaInfo: MetaInfo;
