@@ -107,7 +107,7 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   public changeImage(event: any, clear: boolean = false) {
     event.preventDefault();
     if (clear === true) {
-      this.category.image = null;
+      this.category.image = { src: '', alt: '' } as ImageInfo;
       this.changed.emit({ ...this.category });
     } else {
       this.toggleImageForm = true;
