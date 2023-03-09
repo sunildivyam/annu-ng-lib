@@ -330,7 +330,7 @@ export class CategoriesFirebaseHttpService {
 
   public async setCategoryUpForReview(category: Category): Promise<Category> {
 
-    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated', 'metaInfo'];
 
     // Any modification to a category, will bring it to unpublished, and not up for review.
     category.isLive = category.inReview === true ? false : category.isLive;
@@ -342,7 +342,7 @@ export class CategoriesFirebaseHttpService {
 
   public async setCategoryLive(category: Category): Promise<Category> {
 
-    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated', 'metaInfo'];
 
     // Any modification to a category, will bring it to unpublished, and not up for review.
 

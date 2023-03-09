@@ -107,7 +107,8 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
   public changeImage(event: any, clear: boolean = false) {
     event.preventDefault();
     if (clear === true) {
-      this.category.image = null;
+      this.category.image = { src: '', alt: '' } as ImageInfo;
+      this.category.metaInfo.image = '';
       this.changed.emit({ ...this.category });
     } else {
       this.toggleImageForm = true;
@@ -120,6 +121,7 @@ export class CategoryEditorComponent implements OnInit, OnChanges {
 
   public saveImageChange(image: ImageInfo) {
     this.category.image = image;
+    this.category.metaInfo.image = image.src;
     this.toggleImageForm = false;
     this.changed.emit({ ...this.category });
   }

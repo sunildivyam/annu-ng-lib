@@ -364,7 +364,7 @@ export class ArticlesFirebaseHttpService {
 
   public async setArticleUpForReview(article: Article): Promise<Article> {
 
-    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated', 'metaInfo'];
 
     // Any modification to a article, will bring it to unpublished, and not up for review.
     article.isLive = article.inReview === true ? false : article.isLive;
@@ -376,7 +376,7 @@ export class ArticlesFirebaseHttpService {
 
   public async setArticleLive(article: Article): Promise<Article> {
 
-    const fieldsToUpdate = ['inReview', 'isLive', 'updated'];
+    const fieldsToUpdate = ['inReview', 'isLive', 'updated', 'metaInfo'];
 
     // Any modification to a article, will bring it to unpublished, and not up for review.
     article.inReview = article.isLive === true ? false : article.inReview;
