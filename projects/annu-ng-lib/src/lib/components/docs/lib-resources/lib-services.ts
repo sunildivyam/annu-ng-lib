@@ -23,6 +23,10 @@ import {
 } from '../../../firebase/image-storage';
 
 import {
+  SitemapFireStoreService,
+} from '../../../firebase/sitemap-storage';
+
+import {
   CommonFirebaseService,
   FirestoreParserService,
   FirestoreQueryService,
@@ -50,6 +54,8 @@ export const LibServices = {
   AuthFirebaseUiService,
 
   ImageFireStoreService,
+
+  SitemapFireStoreService,
 
   ArticlesFirebaseService,
   ArticlesFirebaseSeedService,

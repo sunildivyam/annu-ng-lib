@@ -1,33 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, combineLatestWith, throwError } from 'rxjs';
-import { LibConfig } from '../../../app-config/app-config.interface';
-import { SITEMAP_JSON_FILE, SITEMAP_XML_FILE } from './sitemap.constants';
-import { Sitemap, SitemapItem, SitemapResponse } from './sitemap.interface';
-import { xml2json, json2xml } from 'xml-js';
+import { catchError, throwError } from 'rxjs';
+import { Sitemap, SitemapInfo, SitemapItem, SitemapResponse } from './sitemap.interface';
 import { Buffer } from 'buffer';
+import { xml2json, json2xml } from 'xml-js';
 import { UtilsService } from '../../../services/utils/utils.service';
+import { SitemapFireStoreService } from '../../../firebase/sitemap-storage/sitemap-fire-store.service';
+import { defaultSitemapXmlStr } from '../../../firebase/sitemap-storage/sitemap-storage.constants';
+import { LibConfig } from '../../../app-config/app-config.interface';
 
 @Injectable()
 export class SitemapService {
-  private xmlUrl: string = '';
-  private xmlJsonUrl: string = '';
-  private postXmlApiUrl: string = '';
 
-  constructor(private libConfig: LibConfig,
+  constructor(
+    private libConfig: LibConfig,
     private utilsSvc: UtilsService,
-    private httpClient: HttpClient) {
+    private httpClient: HttpClient,
+    private sitemapFireSvc: SitemapFireStoreService) {
     if (typeof window !== undefined) {
       (window as any).Buffer = (window as any).Buffer || Buffer;
     }
-    this.xmlUrl = `${this.libConfig.apiBaseUrl}/${SITEMAP_XML_FILE}`;
-    this.xmlJsonUrl = `${this.libConfig.apiBaseUrl}/${SITEMAP_JSON_FILE}`;
-    this.postXmlApiUrl = `${this.libConfig.apiBaseUrl}/api/sitemap`;
   }
 
-
   /**
-   * Reads the sitemap xml and sitemap info json.
+   * Reads the sitemap.xml
    * @date 2/21/2023 - 11:35:49 PM
    *
    * @public
@@ -35,65 +31,44 @@ export class SitemapService {
    * @returns {Promise<SitemapResponse>}
    */
   public async getSitemapResponse(): Promise<SitemapResponse> {
-    return new Promise((resolve, reject) => {
-      const xmlObserver$ = this.httpClient.get(this.xmlUrl, { observe: 'body', responseType: 'text' });
-      const xmlJsonObserver$ = this.httpClient.get<any>(this.xmlJsonUrl, { responseType: 'json' });
+    const sitemapDownloadUrl = await this.sitemapFireSvc.sitemapExists();
+    let sitemapStr: string = '';
+    if (sitemapDownloadUrl) {
+      const xmlResponseObserver$ = this.httpClient.get<string>(sitemapDownloadUrl, {
+        observe: 'body',
+        responseType: 'text' as 'json'  // hack to avoid type error
+      });
+      return new Promise((resolve, reject) => {
+        xmlResponseObserver$.pipe(catchError((error: any) => {
+          reject(error);
 
-      xmlObserver$.pipe(combineLatestWith(xmlJsonObserver$), catchError((error: any) => {
-        reject(error);
-
-        return throwError(() => {
-          return error;
-        });
-      }))
-        .subscribe(([sitemapStr, sitemapInfo]) => {
-          const sitemap = this.xmlToJsonSitemap(sitemapStr);
-
-          const sitemapResponse: SitemapResponse = {
-            sitemapInfo,
-            sitemap
-          };
-          resolve(sitemapResponse);
-        });
-    });
+          return throwError(() => {
+            return error;
+          });
+        }))
+          .subscribe((sitemapStr: string) => {
+            resolve(this.prepareSitemapResponse(sitemapStr));
+          });
+      });
+    } else {
+      sitemapStr = defaultSitemapXmlStr;
+      return this.prepareSitemapResponse(sitemapStr);
+    }
   }
 
-
   /**
-   * Saves both sitemap.xml and assets/sitemap-info.json
+   * Saves both sitemap.xml to firebase storage
    * @date 2/28/2023 - 11:13:44 PM
    *
    * @public
    * @async
    * @param {Sitemap} sitemapJson
-   * @returns {Promise<any>}
+   * @returns {Promise<boolean>}
    */
-  public async saveSitemap(sitemapJson: Sitemap): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const xmlStr = this.jsonToXmlSitemap(sitemapJson);
-      const jsonStr = JSON.stringify({ updated: this.utilsSvc.currentDate }, null, '\t');
-
-      const xmlObserver$ = this.httpClient.post(this.postXmlApiUrl,
-        {
-          xmlStr: xmlStr,
-          jsonStr: jsonStr
-        },
-        {
-          observe: 'body',
-          responseType: 'json'
-        });
-
-      xmlObserver$.pipe(catchError((error: any) => {
-        reject(error);
-
-        return throwError(() => {
-          return error;
-        });
-      }))
-        .subscribe((res) => {
-          resolve(res);
-        });
-    });
+  public async saveSitemap(sitemapJson: Sitemap): Promise<boolean> {
+    const xmlStr = this.jsonToXmlSitemap(sitemapJson);
+    const result = await this.sitemapFireSvc.uploadSitemap(xmlStr);
+    return result;
   }
 
   /**
@@ -163,4 +138,62 @@ export class SitemapService {
     return sitemap;
   }
 
+  public getLastUpdatedFromSitemap(sitemap: Sitemap): string {
+    const urls = sitemap?.urlset?.url || [];
+    let lastUpdated: string = '';
+    if (!urls.length) {
+      return (new Date('1979-01-01')).toISOString();
+    }
+
+    lastUpdated = urls[0].lastmod._text;
+    urls.forEach(url => {
+      if ((new Date(url.lastmod._text)) > (new Date(lastUpdated))) {
+        lastUpdated = url.lastmod._text;
+      }
+    });
+    return lastUpdated;
+  }
+
+  private prepareSitemapResponse(sitemapStr: string): SitemapResponse {
+    const sitemap = this.xmlToJsonSitemap(sitemapStr);
+
+    const sitemapInfo: SitemapInfo = {
+      updated: this.getLastUpdatedFromSitemap(sitemap)
+    };
+
+    // check if no urls in xml then add root and login urls.
+    if (!sitemap.urlset?.url?.length) {
+      sitemap.urlset.url = [
+        {
+          loc: {
+            _text: `${this.libConfig.apiBaseUrl}`
+          },
+          lastmod: {
+            _text: this.utilsSvc.currentDate
+          },
+          priority: {
+            _text: '1.00'
+          }
+        } as SitemapItem,
+        {
+          loc: {
+            _text: `${this.libConfig.apiBaseUrl}/login`
+          },
+          lastmod: {
+            _text: this.utilsSvc.currentDate
+          },
+          priority: {
+            _text: '1.00'
+          }
+        } as SitemapItem
+      ];
+    }
+
+    const sitemapResponse: SitemapResponse = {
+      sitemapInfo,
+      sitemap
+    };
+
+    return sitemapResponse;
+  }
 }
