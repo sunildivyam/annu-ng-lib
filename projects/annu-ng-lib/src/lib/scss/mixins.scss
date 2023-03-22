@@ -4,11 +4,16 @@ $medium-breakpoint: 768px !default;         // 42em !default;
 $error: red;
 $warning: orange;
 $success: green;
+$error-hover: rgb(196, 9, 9);
+$warning-hover: rgb(243, 170, 34);
+$success-hover: rgb(18, 156, 18);
 $menu-z-index: 1000;
 $aside-nav-z-index: 900;
 $menu-modal: 9000;
 $opacity: 0.92;
 $checkbox_size: 1.5rem;
+$md-spacing: calc(var(--anu-spacing)/3);
+$sm-sapcing: calc(var(--anu-spacing)/4);
 
 @mixin large {
   @media screen and (min-width: #{$large-breakpoint}) {

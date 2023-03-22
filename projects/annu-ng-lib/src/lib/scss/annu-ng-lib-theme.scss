@@ -2,9 +2,9 @@
 @import "mixins";
 // Import all fonts here, that has been refered from theme files.
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
-@import "~prismjs/themes/prism-okaidia";
+@import "node_modules/prismjs/themes/prism-okaidia";
 
-@import 'firebaseui/dist/firebaseui.css';
+@import 'node_modules/firebaseui/dist/firebaseui.css';
 @import 'color-classes';
 
 // Use any of the Prismjs themes for code highlighting:
@@ -19,11 +19,12 @@
 * {
   box-sizing: border-box;
 }
+
 html {
   font-family: var(--anu-font-family);
   font-size: var(--anu-font-size);
-  line-height: 1.5;
-  letter-spacing: 0.05rem;
+  line-height: var(--anu-line-height);
+  letter-spacing: var(--anu-letter-spacing);
   scroll-behavior: smooth;
 }
 
@@ -38,8 +39,8 @@ body {
   flex-direction: column;
   align-items: center;
 
-  & > * {
-      max-width: var(--anu-site-width);
+  &>* {
+    max-width: var(--anu-site-width);
   }
 }
 
@@ -82,14 +83,51 @@ a {
     }
   }
 
-  &.disabled, &[disabled] {
+  &.success {
+    color: var(--anu-accent-lightest);
+    background-color: #{$success};
+    border-color: var(--anu-secondary-dark);
+
+    &:hover {
+      color: var(--anu-accent-lightest);
+      background-color: #{$success-hover};;
+      border-color: var(--anu-primary-normal);
+    }
+  }
+
+  &.warning {
+    color: var(--anu-accent-lightest);
+    background-color: #{$warning};
+    border-color: var(--anu-secondary-dark);
+
+    &:hover {
+      color: var(--anu-accent-lightest);
+      background-color: #{$warning-hover};;
+      border-color: var(--anu-primary-normal);
+    }
+  }
+
+  &.error {
+    color: var(--anu-accent-lightest);
+    background-color: #{$error};
+    border-color: var(--anu-secondary-dark);
+
+    &:hover {
+      color: var(--anu-accent-lightest);
+      background-color: #{$error-hover};;
+      border-color: var(--anu-primary-normal);
+    }
+  }
+
+  &.disabled,
+  &[disabled] {
     color: var(--anu-accent-light);
     background-color: var(--anu-accent-lighter);
     border-color: var(--anu-accent-light);
     pointer-events: none;
   }
 
-  + .btn {
+  +.btn {
     margin-left: 1rem;
   }
 
@@ -108,7 +146,7 @@ a {
     padding: 0.75rem;
     font-size: 0.9rem;
 
-    + .btn {
+    +.btn {
       margin-top: 1rem;
       margin-left: 0;
     }
@@ -202,7 +240,13 @@ label {
   font-weight: bold;
 }
 
-input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, select, option {
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea,
+select,
+option {
   display: block;
   width: 100%;
   padding: 1rem;
@@ -213,81 +257,82 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
     outline-color: var(--anu-primary-normal)
   }
 }
+
 // Checkbox styling with border & with no border
 input[type="checkbox"] {
-    &:before{
-        position: relative;
-        display: block;
-        width: #{$checkbox_size};
-        height: #{$checkbox_size};
-        content: "";
-        background: var(--anu-primary-deep-light);
-        border: 1px solid var(--anu-primary-normal);
-        color: var(--anu-primary-normal);
-        font-size: #{$checkbox_size};
+  &:before {
+    position: relative;
+    display: block;
+    width: #{$checkbox_size};
+    height: #{$checkbox_size};
+    content: "";
+    background: var(--anu-primary-deep-light);
+    border: 1px solid var(--anu-primary-normal);
+    color: var(--anu-primary-normal);
+    font-size: #{$checkbox_size};
+  }
+
+  &:after {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--anu-primary-deep-light);
+    border: 1px solid var(--anu-primary-normal);
+    color: var(--anu-primary-normal);
+    width: #{$checkbox_size};
+    height: #{$checkbox_size};
+    top: #{$checkbox_size * -1.12};
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &:checked:after {
+    background: var(--anu-primary-deep-light);
+    content: '\2713';
+    font-size: #{$checkbox_size};
+  }
+
+  &:disabled {
+    &::before {
+      background-color: var(--anu-accent-lighter);
     }
 
-    &:after{
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        background: var(--anu-primary-deep-light);
-        border: 1px solid var(--anu-primary-normal);
-        color: var(--anu-primary-normal);
-        width: #{$checkbox_size};
-        height: #{$checkbox_size};
-        top: #{$checkbox_size * -1.12};
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
+    :after {
+      background-color: var(--anu-accent-lighter);
     }
+  }
 
-    &:checked:after{
-        background: var(--anu-primary-deep-light);
-        content: '\2713';
-        font-size: #{$checkbox_size};
+  &:not(:disabled) {
+    &:checked:hover:after {
+      background-color: var(--anu-primary-lighter);
     }
-
-    &:disabled {
-        &::before {
-            background-color: var(--anu-accent-lighter);
-        }
-
-        :after{
-            background-color: var(--anu-accent-lighter);
-        }
-    }
-
-    &:not(:disabled) {
-        &:checked:hover:after {
-            background-color: var(--anu-primary-lighter);
-        }
-    }
+  }
 }
 
 input.no-border[type=checkbox] {
-    &:before{
-        border: none;
-    }
+  &:before {
+    border: none;
+  }
 
-    &:after{
-        border: none;
-        content: '\2713';
-        font-size: #{$checkbox_size};
-        color: var(--anu-accent-light);
-    }
+  &:after {
+    border: none;
+    content: '\2713';
+    font-size: #{$checkbox_size};
+    color: var(--anu-accent-light);
+  }
 
-    &:not(:disabled) {
-        &:checked:hover:after {
-            background-color: transparent;
-        }
+  &:not(:disabled) {
+    &:checked:hover:after {
+      background-color: transparent;
     }
+  }
 
-    &:checked:after{
-        color: var(--anu-primary-normal);
-        font-size: #{$checkbox_size};
-    }
+  &:checked:after {
+    color: var(--anu-primary-normal);
+    font-size: #{$checkbox_size};
+  }
 }
 
 
@@ -327,21 +372,21 @@ input.no-border[type=checkbox] {
   @include row;
 
   @include large {
-      &-lg {
-        @include row;
-      }
+    &-lg {
+      @include row;
+    }
   }
 
   @include medium {
-      &-md {
-        @include row;
-      }
+    &-md {
+      @include row;
+    }
   }
 
   @include small {
-      &-sm {
-        @include row;
-      }
+    &-sm {
+      @include row;
+    }
   }
 }
 
@@ -349,21 +394,21 @@ input.no-border[type=checkbox] {
   @include box-sizes;
 
   &-lg {
-      @include large {
-          @include box-sizes;
-      }
+    @include large {
+      @include box-sizes;
+    }
   }
 
   &-md {
-      @include medium {
-          @include box-sizes;
-      }
+    @include medium {
+      @include box-sizes;
+    }
   }
 
   &-sm {
-      @include small {
-          @include box-sizes;
-      }
+    @include small {
+      @include box-sizes;
+    }
   }
 }
 
@@ -375,6 +420,7 @@ input.no-border[type=checkbox] {
     justify-content: flex-start;
   }
 }
+
 .right {
   align-items: flex-end;
 
@@ -382,6 +428,7 @@ input.no-border[type=checkbox] {
     justify-content: flex-end;
   }
 }
+
 .center {
   align-items: center;
 
@@ -389,6 +436,7 @@ input.no-border[type=checkbox] {
     justify-content: center;
   }
 }
+
 .top {
   justify-content: flex-start;
 
@@ -396,6 +444,7 @@ input.no-border[type=checkbox] {
     align-items: flex-start;
   }
 }
+
 .bottom {
   justify-content: flex-end;
 
@@ -403,6 +452,7 @@ input.no-border[type=checkbox] {
     align-items: flex-end;
   }
 }
+
 .middle {
   justify-content: center;
 }
@@ -411,6 +461,10 @@ input.no-border[type=checkbox] {
 .spacing {
   padding: var(--anu-spacing);
 
+  &-half {
+    padding: #{$md-spacing};
+  }
+
   &-lg {
     @include large {
       padding: var(--anu-spacing);
@@ -419,19 +473,24 @@ input.no-border[type=checkbox] {
 
   &-md {
     @include medium {
-      padding: var(--anu-spacing);
+      padding: #{$md-spacing};
     }
   }
 
   &-sm {
     @include small {
-      padding: var(--anu-spacing);
+      padding: #{$sm-sapcing};
     }
   }
 
   &-horizontal {
     padding-left: var(--anu-spacing);
     padding-right: var(--anu-spacing);
+
+    &-half {
+      padding-left: #{$md-spacing};
+      padding-right: #{$md-spacing};
+    }
 
     &-lg {
       @include large {
@@ -442,15 +501,15 @@ input.no-border[type=checkbox] {
 
     &-md {
       @include medium {
-        padding-left: var(--anu-spacing);
-        padding-right: var(--anu-spacing);
+        padding-left: #{$md-spacing};
+        padding-right: #{$md-spacing};
       }
     }
 
     &-sm {
       @include small {
-        padding-left: var(--anu-spacing);
-        padding-right: var(--anu-spacing);
+        padding-left: #{$sm-sapcing};
+        padding-right: #{$sm-sapcing};
       }
     }
   }
@@ -459,6 +518,11 @@ input.no-border[type=checkbox] {
     padding-top: var(--anu-spacing);
     padding-bottom: var(--anu-spacing);
 
+    &-half {
+      padding-top: #{$md-spacing};
+      padding-bottom: #{$md-spacing};
+    }
+
     &-lg {
       @include large {
         padding-top: var(--anu-spacing);
@@ -468,15 +532,15 @@ input.no-border[type=checkbox] {
 
     &-md {
       @include medium {
-        padding-top: var(--anu-spacing);
-        padding-bottom: var(--anu-spacing);
+        padding-top: #{$md-spacing};
+        padding-bottom: #{$md-spacing};
       }
     }
 
     &-sm {
       @include small {
-        padding-top: var(--anu-spacing);
-        padding-bottom: var(--anu-spacing);
+        padding-top: #{$sm-sapcing};
+        padding-bottom: #{$sm-sapcing};
       }
     }
   }
@@ -484,6 +548,10 @@ input.no-border[type=checkbox] {
   &-around {
     margin: var(--anu-spacing);
 
+    &-half {
+      margin: #{$md-spacing};
+    }
+
     &-lg {
       @include large {
         margin: var(--anu-spacing);
@@ -492,19 +560,24 @@ input.no-border[type=checkbox] {
 
     &-md {
       @include medium {
-        margin: var(--anu-spacing);
+        margin: #{$md-spacing};
       }
     }
 
     &-sm {
       @include small {
-        margin: var(--anu-spacing);
+        margin: #{$sm-sapcing};
       }
     }
 
     &-horizontal {
       margin-left: var(--anu-spacing);
       margin-right: var(--anu-spacing);
+
+      &-half {
+        margin-left: #{$md-spacing};
+        margin-right: #{$md-spacing};
+      }
 
       &-lg {
         @include large {
@@ -515,15 +588,15 @@ input.no-border[type=checkbox] {
 
       &-md {
         @include medium {
-          margin-left: var(--anu-spacing);
-          margin-right: var(--anu-spacing);
+          margin-left: #{$md-spacing};
+          margin-right: var(--anu-spacing)/2;
         }
       }
 
       &-sm {
         @include small {
-          margin-left: var(--anu-spacing);
-          margin-right: var(--anu-spacing);
+          margin-left: #{$sm-sapcing};
+          margin-right: #{$sm-sapcing};
         }
       }
     }
@@ -532,6 +605,11 @@ input.no-border[type=checkbox] {
       margin-top: var(--anu-spacing);
       margin-bottom: var(--anu-spacing);
 
+      &-half {
+        margin-top: #{$md-spacing};
+        margin-bottom: #{$md-spacing};
+      }
+
       &-lg {
         @include large {
           margin-top: var(--anu-spacing);
@@ -541,15 +619,15 @@ input.no-border[type=checkbox] {
 
       &-md {
         @include medium {
-          margin-top: var(--anu-spacing);
-          margin-bottom: var(--anu-spacing);
+          margin-top: #{$md-spacing};
+          margin-bottom: #{$md-spacing};
         }
       }
 
       &-sm {
         @include small {
-          margin-top: var(--anu-spacing);
-          margin-bottom: var(--anu-spacing);
+          margin-top: #{$sm-sapcing};
+          margin-bottom: #{$sm-sapcing};
         }
       }
     }
@@ -558,147 +636,147 @@ input.no-border[type=checkbox] {
 
 // spacing
 .no-spacing {
-  padding: 0!important;
+  padding: 0 !important;
 
   &-lg {
     @include large {
-      padding: 0!important;
+      padding: 0 !important;
     }
   }
 
   &-md {
     @include medium {
-      padding: 0!important;
+      padding: 0 !important;
     }
   }
 
   &-sm {
     @include small {
-      padding: 0!important;
+      padding: 0 !important;
     }
   }
 
   &-horizontal {
-    padding-left: 0!important;
-    padding-right: 0!important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 
     &-lg {
       @include large {
-        padding-left: 0!important;
-        padding-right: 0!important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
       }
     }
 
     &-md {
       @include medium {
-        padding-left: 0!important;
-        padding-right: 0!important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
       }
     }
 
     &-sm {
       @include small {
-        padding-left: 0!important;
-        padding-right: 0!important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
       }
     }
   }
 
   &-vertical {
-    padding-top: 0!important;
-    padding-bottom: 0!important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 
     &-lg {
       @include large {
-        padding-top: 0!important;
-        padding-bottom: 0!important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
       }
     }
 
     &-md {
       @include medium {
-        padding-top: 0!important;
-        padding-bottom: 0!important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
       }
     }
 
     &-sm {
       @include small {
-        padding-top: 0!important;
-        padding-bottom: 0!important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
       }
     }
   }
 
   &-around {
-    margin: 0!important;
+    margin: 0 !important;
 
     &-lg {
       @include large {
-        margin: 0!important;
+        margin: 0 !important;
       }
     }
 
     &-md {
       @include medium {
-        margin: 0!important;
+        margin: 0 !important;
       }
     }
 
     &-sm {
       @include small {
-        margin: 0!important;
+        margin: 0 !important;
       }
     }
 
     &-horizontal {
-      margin-left: 0!important;
-      margin-right: 0!important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
 
       &-lg {
         @include large {
-          margin-left: 0!important;
-          margin-right: 0!important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
         }
       }
 
       &-md {
         @include medium {
-          margin-left: 0!important;
-          margin-right: 0!important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
         }
       }
 
       &-sm {
         @include small {
-          margin-left: 0!important;
-          margin-right: 0!important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
         }
       }
     }
 
     &-vertical {
-      margin-top: 0!important;
-      margin-bottom: 0!important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
 
       &-lg {
         @include large {
-          margin-top: 0!important;
-          margin-bottom: 0!important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
         }
       }
 
       &-md {
         @include medium {
-          margin-top: 0!important;
-          margin-bottom: 0!important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
         }
       }
 
       &-sm {
         @include small {
-          margin-top: 0!important;
-          margin-bottom: 0!important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
         }
       }
     }
@@ -730,46 +808,46 @@ input.no-border[type=checkbox] {
 
 //hidden
 .hidden {
-  display: none!important;
+  display: none !important;
 
   &-lg {
     @include large {
-      display: none!important;
+      display: none !important;
     }
   }
 
   &-md {
     @include medium {
-      display: none!important;
+      display: none !important;
     }
   }
 
   &-sm {
     @include small {
-      display: none!important;
+      display: none !important;
     }
   }
 }
 
 // nowrap
 .nowrap {
-  flex-flow: nowrap!important;
+  flex-flow: nowrap !important;
 
   &-lg {
     @include large {
-      flex-flow: nowrap!important;
+      flex-flow: nowrap !important;
     }
   }
 
   &-md {
     @include medium {
-      flex-flow: nowrap!important;
+      flex-flow: nowrap !important;
     }
   }
 
   &-sm {
     @include small {
-      flex-flow: nowrap!important;
+      flex-flow: nowrap !important;
     }
   }
 }
@@ -789,18 +867,24 @@ input.no-border[type=checkbox] {
 }
 
 .disable-select {
-  user-select: none; /* supported by Chrome and Opera */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  /* supported by Chrome and Opera */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
 }
 
 .shadow {
-  box-shadow: 0.01rem 0.2rem 0.3rem var(--anu-background-normal);
+  box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem var(--anu-background-normal);
 }
 
-:not(pre) > code, .code {
+:not(pre)>code,
+.code {
   background-color: var(--anu-accent-darker);
   color: var(--anu-accent-deep-light);
   padding-left: 0.5rem;
@@ -879,7 +963,32 @@ input.no-border[type=checkbox] {
 }
 
 .border {
-  &-round {
-      border-radius: var(--anu-border-radius);
+  border-width: 1px;
+  border-color: var(--anu-primary-normal);
+  border-style: solid;
+
+  &-thick {
+    border-width: 2px;
   }
+
+  &-thicker {
+    border-width: 3px;
+  }
+
+  &-thickest {
+    border-width: 5px;
+  }
+
+  &-round {
+    border-radius: var(--anu-border-radius);
+  }
+
+  &-primary {
+    border-color: var(--anu-primary-normal);
+  }
+
+  &-secondary {
+    border-color: var(--anu-secondary-normal);
+  }
+
 }

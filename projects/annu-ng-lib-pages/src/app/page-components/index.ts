@@ -6,5 +6,4 @@ export * from './directive-page/directive-page.component';
 export * from './interface-page/interface-page.component';
 export * from './guard-page/guard-page.component';
 export * from './interceptor-page/interceptor-page.component';
-
 export * from './lib-docs-home-page/lib-docs-home-page.component';

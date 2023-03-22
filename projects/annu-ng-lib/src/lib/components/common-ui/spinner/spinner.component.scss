@@ -1,4 +1,4 @@
-
+$spinner-z-index: 9999;
 $small: 1rem;
 $medium: 3rem;
 $large: 5rem;
@@ -6,6 +6,10 @@ $borderDivider: 7;
 $slow: 2s;
 $normal: 1s;
 $fast: 0.5s;
+// progress mode sizes
+$progress_small: 0.2rem;
+$progress_medium: 0.4rem;
+$progress_large: 0.6rem;
 
 :host {
     display: flex;
@@ -18,71 +22,188 @@ $fast: 0.5s;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: $spinner-z-index;
 
-    .spinner {
-        border: calc($medium/$borderDivider) solid var(--anu-primary-lightest);
-        border-radius: 50%;
-        border-top: calc($medium/$borderDivider) solid var(--anu-primary-normal);
-        width: $medium;
-        height: $medium;
-        -webkit-animation: spin $normal linear infinite; /* Safari */
-        animation: spin $normal linear infinite;
-
-        // theme
-        &.primary {
-            border-color: var(--anu-primary-lightest);
-            border-top-color: var(--anu-primary-normal);
-        }
-
-        &.secondary {
-            border-color: var(--anu-secondary-lightest);
-            border-top-color: var(--anu-secondary-normal);
-        }
-
-        // Size
-        &.sm {
-            width: $small;
-            height: $small;
-            border-width: calc($small/$borderDivider);
-        }
-
-        &.md {
+    .loader {
+        &.spinner {
+            border: calc($medium/$borderDivider) solid var(--anu-primary-lightest);
+            border-radius: 50%;
+            border-top: calc($medium/$borderDivider) solid var(--anu-primary-normal);
             width: $medium;
             height: $medium;
-            border-width: calc($medium/$borderDivider);
+            -webkit-animation: spin $normal linear infinite;
+            /* Safari */
+            animation: spin $normal linear infinite;
+
+
+            // theme
+            &.primary {
+                border-color: var(--anu-primary-lightest);
+                border-top-color: var(--anu-primary-normal);
+            }
+
+            &.secondary {
+                border-color: var(--anu-secondary-lightest);
+                border-top-color: var(--anu-secondary-normal);
+            }
+
+            // Size
+            &.sm {
+                width: $small;
+                height: $small;
+                border-width: calc($small/$borderDivider);
+            }
+
+            &.md {
+                width: $medium;
+                height: $medium;
+                border-width: calc($medium/$borderDivider);
+            }
+
+            &.lg {
+                width: $large;
+                height: $large;
+                border-width: calc($large/$borderDivider);
+            }
+
+            // Speed
+            &.slow {
+                animation-duration: $slow;
+                -webkit-animation-duration: $slow;
+            }
+
+            &.normal {
+                animation-duration: $normal;
+                -webkit-animation-duration: $normal;
+            }
+
+            &.fast {
+                animation-duration: $fast;
+                -webkit-animation-duration: $fast;
+            }
         }
 
-        &.lg {
-            width: $large;
-            height: $large;
-            border-width: calc($large/$borderDivider);
-        }
 
-        // Speed
-        &.slow {
-            animation-duration: $slow;
-            -webkit-animation-duration: $slow;
-        }
+        // Progress mode loader
+        &.progress {
+            width: 100%;
+            height: $progress_medium;
+            display: inline-block;
+            position: relative;
+            background: var(--anu-primary-lightest);
+            overflow: hidden;
 
-        &.normal {
-            animation-duration: $normal;
-            -webkit-animation-duration: $normal;
-        }
+            &::after {
+                content: '';
+                width: 150px;
+                height: $progress_medium;
+                background: var(--anu-primary-normal);
+                position: absolute;
+                top: 0;
+                left: 0;
+                box-sizing: border-box;
+                animation: progressloader $normal linear infinite;
+                -webkit-animation: progressloader $normal linear infinite;
+            }
 
-        &.fast {
-            animation-duration: $fast;
-            -webkit-animation-duration: $fast;
+            // theme
+            &.primary {
+                background: var(--anu-primary-lightest);
+
+                &::after {
+                    background: var(--anu-primary-normal);
+                }
+            }
+
+            &.secondary {
+                background: var(--anu-secondary-lightest);
+
+                &::after {
+                    background: var(--anu-secondary-normal);
+                }
+            }
+
+            // Size
+            &.sm {
+                height: $progress_small;
+
+                &::after {
+                    height: $progress_small;
+                }
+            }
+
+            &.md {
+                height: $progress_medium;
+
+                &::after {
+                    height: $progress_medium;
+                }
+            }
+
+            &.lg {
+                height: $progress_large;
+
+                &::after {
+                    height: $progress_large;
+                }
+            }
+
+            // Speed
+            &.slow {
+                &::after {
+                    animation-duration: $slow;
+                    -webkit-animation-duration: $slow;
+                }
+            }
+
+            &.normal {
+                &::after {
+                    animation-duration: $normal;
+                    -webkit-animation-duration: $normal;
+                }
+            }
+
+            &.fast {
+                &::after {
+                    animation-duration: $fast;
+                    -webkit-animation-duration: $fast;
+                }
+            }
         }
     }
 
     /* Safari */
     @-webkit-keyframes spin {
-        0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
     }
 
     @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
     }
+
+    // Progress mode keyframes
+    @keyframes progressloader {
+        0% {
+            left: 0;
+            transform: translateX(-100%);
+        }
+
+        100% {
+            left: 100%;
+            transform: translateX(0%);
+        }
+    }
+
 }

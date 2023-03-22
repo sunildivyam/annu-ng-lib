@@ -1,0 +1,8 @@
+<ng-container *ngFor="let fontSize of fontSizes">
+    <a
+    href="#"
+    [style.fontSize]="fontSize"
+    [class.active]="fontSize === selectedFontSize"
+    (click)="fontSizeClicked($event, fontSize)"
+    >A</a>
+</ng-container>

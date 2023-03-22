@@ -10,8 +10,11 @@ import { ImageInfo } from './image-form.interface';
 export class ImageFormComponent implements OnInit {
   @Input() src: string = '';
   @Input() alt: string = '';
+  @Input() helpText: string = '';
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
+
+  selectedImage: ImageFileInfo;
 
   constructor() { }
 
@@ -30,6 +33,7 @@ export class ImageFormComponent implements OnInit {
 
   public onFileBrowserSelect(imageFileInfo: ImageFileInfo): void {
     this.src = imageFileInfo.downloadUrl;
+    this.selectedImage = imageFileInfo;
   }
 
 }

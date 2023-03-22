@@ -4,12 +4,12 @@
             <h1 *ngIf="title">{{title}}</h1>
         </div>
         <div class="">
-            <a *ngIf="enableClose" href="javascript:void(0)" class="btn btn-primary" (click)="cancelClicked($event)">X</a>
+            <a *ngIf="enableClose" href="javascript:void(0)" class="btn btn-primary" (click)="cancelClicked()">X</a>
         </div>
     </div>
     <ng-content></ng-content>
     <div *ngIf="enableOk || enableCancel" class="row center spacing-vertical">
-        <a *ngIf="enableOk" href="javascript:void(0)" class="btn btn-primary" (click)="okClicked($event)">{{okLabel || 'Ok'}}</a>
-        <a *ngIf="enableCancel" href="javascript:void(0)" class="btn btn-primary" (click)="cancelClicked($event)">{{cancelLabel || 'Cancel'}}</a>
+        <a *ngIf="enableOk" href="javascript:void(0)" class="btn btn-primary" (click)="okClicked()">{{okLabel || 'Ok'}}</a>
+        <a *ngIf="enableCancel" href="javascript:void(0)" class="btn btn-primary" (click)="cancelClicked()">{{cancelLabel || 'Cancel'}}</a>
     </div>
 </div>

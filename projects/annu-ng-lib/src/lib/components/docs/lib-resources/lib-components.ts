@@ -47,6 +47,9 @@ import {
   ToolbarComponent,
   TypographyComponent,
   ImageBrowserComponent,
+  FiltersComponent,
+  ThemeFontResizerComponent,
+  SitemapComponent,
 } from '../../common-ui';
 
 import {
@@ -56,7 +59,7 @@ import {
 
 
 
-  import { ComponentInfoComponent } from '../component-info/component-info.component';
+  // import { ComponentInfoComponent } from '../component-info/component-info.component';
   import { ComponentPropsComponent } from '../component-props/component-props.component';
   // import { ComponentUsageComponent } from '../component-usage/component-usage.component';
   import { ServiceInfoComponent } from '../service-info/service-info.component';
@@ -99,6 +102,9 @@ export const LibComponents = {
   ToolbarComponent,
   TypographyComponent,
   ImageBrowserComponent,
+  FiltersComponent,
+  ThemeFontResizerComponent,
+  SitemapComponent,
 
   // CMS
   ArticleComponent,
@@ -118,7 +124,7 @@ export const LibComponents = {
   LoginStatusComponent,
 
   // docs
-  ComponentInfoComponent,
+  // ComponentInfoComponent,
   ComponentPropsComponent,
   // ComponentUsageComponent,
   ServiceInfoComponent,

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FirebaseStoreConfig } from '../../firebase/firebase.interface';
 
 
 /**
@@ -57,7 +58,7 @@ export class UtilsService {
         const dt = new Date(dateStr);
         timeStr = dt.getTime().toString();
       }
-    } catch (err) {}
+    } catch (err) { }
 
     return timeStr;
   }
@@ -77,9 +78,59 @@ export class UtilsService {
       if (timeStr) {
         dateStr = new Date(Number(timeStr)).toISOString();
       }
-    } catch (err) {}
+    } catch (err) { }
 
     return dateStr;
+  }
+
+
+  /**
+   * Stripe out all special characters from the string too except A-Z, a-z, 0-9.
+   * @date 2/12/2023 - 2:01:20 PM
+   *
+   * @public
+   * @param {string} str
+   * @returns {string}
+   */
+  public getStringWithNoSpecialChars(str: string): string {
+    if (!str) return '';
+    const strArr = str.split('');
+    const filteredStr = strArr.filter(char => {
+      if ((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || (char >= '0' && char <= '9') || char === ' ') {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    return filteredStr.join('');
+  }
+
+
+  /**
+   * Trims out additional consecutive spaces from a string, also trims spaces from end of the string.
+   * @date 2/12/2023 - 9:54:48 PM
+   *
+   * @public
+   * @param {string} str
+   * @returns {string}
+   */
+  public trimConsecutiveSpaces(str: string): string {
+    if (!str) return '';
+
+    return str.split('').filter((char, index) => {
+      if (char === ' ') {
+        if (index === (str.length - 1)) {
+          return false;
+        } else if (str[index + 1] === ' ') {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }).join('');
   }
 
   /**
@@ -90,7 +141,11 @@ export class UtilsService {
    * @returns
    */
   public toDashedString(title: string = ''): string {
-    return title.split(' ').join('-').toLocaleLowerCase();
+    // trims additional spaces from a string.
+    const spacesTrimmedStr = this.trimConsecutiveSpaces(title);
+    // Stripe out all special characters from the string too except A-Z, a-z, 0-9.
+    const titleWithNoSpecialChars = this.getStringWithNoSpecialChars(spacesTrimmedStr);
+    return titleWithNoSpecialChars.split(' ').join('-').toLocaleLowerCase();
   }
 
 
@@ -130,5 +185,37 @@ export class UtilsService {
     const uniqueId = Date.now().toString(36) + rndStr.substring(rndStr.length / 3);
 
     return `${dashed}-${uniqueId}`;
+  }
+
+
+  /**
+   * Generates a message for an image upload, based on image specifications.
+   * @date 2/4/2023 - 2:57:11 PM
+   *
+   * @public
+   * @param {FirebaseStoreConfig} imageSpecs
+   * @returns {string}
+   */
+  public getImageSpecsString(imageSpecs: FirebaseStoreConfig): string {
+    const { minWidth, minHeight, maxWidth, maxHeight, maxKBs } = imageSpecs;
+
+    return `Allowed Image specification: 1Kb <= size <= ${maxKBs}Kbs | ${minWidth}px <= width <= ${maxWidth}px | ${minHeight}px <= height <= ${maxHeight}px`;
+  }
+
+
+  /**
+   * Deep copy an object or an array
+   * @date 2/28/2023 - 3:22:38 AM
+   *
+   * @public
+   * @param {(any)} value
+   * @returns {(any)}
+   */
+  public deepCopy(value: any): any {
+    try {
+      return JSON.parse(JSON.stringify(value));
+    } catch (err) {
+      return null;
+    }
   }
 }

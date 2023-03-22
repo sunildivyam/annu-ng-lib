@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { SpinnerMode } from './spinner.interface';
 
 /**
  * Spinner component shows a spinner, to let user know that something is loading or in progress.
@@ -24,6 +25,10 @@ export class SpinnerComponent implements OnInit, OnChanges {
    */
   @Input() fullscreen: boolean = false;
   /**
+   * Shows the spinner static if true, else shows into the relative parent.
+   */
+  @Input() static: boolean = false;
+  /**
    * Changes the size of the spinner to one of the sm/md/lg.
    */
   @Input() size: string = 'md';
@@ -37,6 +42,11 @@ export class SpinnerComponent implements OnInit, OnChanges {
    * Changes the spinner rotation speed to one of the slow/normal/fast.
    */
    @Input() speed: string = 'normal';
+
+   /**
+   * Changes the spinner mode, 'spinner' or 'progress'.
+   */
+   @Input() mode: SpinnerMode = SpinnerMode.Spinner;
 
   /**
    * Binds the <code>display</code> style property to the display class varibale, that is set when <code>show</code> Input property changes.
@@ -55,7 +65,7 @@ export class SpinnerComponent implements OnInit, OnChanges {
    */
   ngOnInit(): void {
     this.display = this.show ? 'flex' : 'none';
-    this.position = this.fullscreen ? 'fixed' : 'absolute';
+    this.position = this.fullscreen ? 'fixed' : this.static ? 'relative' : 'absolute';
   }
 
   /**
@@ -63,6 +73,6 @@ export class SpinnerComponent implements OnInit, OnChanges {
    */
   ngOnChanges(): void {
     this.display = this.show ? 'flex' : 'none';
-    this.position = this.fullscreen ? 'fixed' : 'absolute';
+    this.position = this.fullscreen ? 'fixed' : this.static ? 'relative' : 'absolute';
   }
 }

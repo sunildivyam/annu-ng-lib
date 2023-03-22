@@ -20,7 +20,6 @@ export class LibDocsHomePageComponent implements OnInit {
 
   constructor(public route: ActivatedRoute, private router: Router, private metaService: MetaService) {
     this.routeEndEvent = this.router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
-      console.log('HOME VIEW - NAVIGATION-END: FILLING DATA TO VIEW - STARTING')
       const homeViewData = { ...this.route.snapshot.data[LIB_DOCS_ROUTE_RESOLVER_DATA_KEYS.LIB_DOCS_HOME_VIEW] } as LibDocsHomeViewRouteData || {};
       if (!homeViewData.libDocsInfoError) {
       this.docsNavs = this.getNavsByType('components', homeViewData.libDocsInfo?.components || []);
@@ -32,7 +31,6 @@ export class LibDocsHomePageComponent implements OnInit {
       this.docsNavs = this.getNavsByType('directives', homeViewData.libDocsInfo?.directives || []);
       }
       this.error = homeViewData?.libDocsInfoError;
-      console.log('HOME VIEW - NAVIGATION-END: FILLING DATA TO VIEW - ENDED')
     })
   }
 

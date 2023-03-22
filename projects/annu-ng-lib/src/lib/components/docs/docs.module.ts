@@ -20,7 +20,9 @@ import { DirectiveInfoModule } from './directive-info/directive-info.module';
     CommonModule,
     HttpClientModule,
   ],
-  providers: [DocsService],
+  providers: [
+    DocsService,
+  ],
   exports: [
     ServiceMethodModule,
     ComponentInfoModule,

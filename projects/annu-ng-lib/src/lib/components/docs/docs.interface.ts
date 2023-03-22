@@ -1,21 +1,13 @@
 export interface ComponentProp {
    name: string;
-   type: string;
+   type?: string;
    defaultValue?: string;
    deprecated?: boolean;
    deprecationMessage?: string;
    description?: string;
    accessModifier?: string;
-}
-
-export interface ComponentMethod {
-   name: string;
-   returnType: string;
+   returnType?: string;
    args?: Array<any>;
-   deprecated?: boolean;
-   deprecationMessage?: string;
-   description?: string;
-   accessModifier?: string;
 }
 
 export interface ComponentInfo {
@@ -31,7 +23,7 @@ export interface ComponentInfo {
    inputProps: Array<ComponentProp>;
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
-   methods: Array<ComponentMethod>;
+   methods: Array<ComponentProp>;
 }
 
 export interface DirectiveInfo {
@@ -42,7 +34,7 @@ export interface DirectiveInfo {
    inputProps: Array<ComponentProp>;
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
-   methods: Array<ComponentMethod>;
+   methods: Array<ComponentProp>;
 }
 
 export interface ServiceInfo {
@@ -53,7 +45,7 @@ export interface ServiceInfo {
    inputProps: Array<ComponentProp>;
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
-   methods: Array<ComponentMethod>;
+   methods: Array<ComponentProp>;
 }
 
 export interface InterfaceInfo {
@@ -71,7 +63,7 @@ export interface GuardInfo {
    inputProps: Array<ComponentProp>;
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
-   methods: Array<ComponentMethod>;
+   methods: Array<ComponentProp>;
 }
 
 export interface InterceptorInfo {
@@ -82,7 +74,7 @@ export interface InterceptorInfo {
    inputProps: Array<ComponentProp>;
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
-   methods: Array<ComponentMethod>;
+   methods: Array<ComponentProp>;
 }
 
 export interface ClassInfo {
@@ -93,7 +85,7 @@ export interface ClassInfo {
    inputProps: Array<ComponentProp>;
    outputProps: Array<ComponentProp>;
    props: Array<ComponentProp>;
-   methods: Array<ComponentMethod>;
+   methods: Array<ComponentProp>;
 }
 
 export interface LibDocsInfo {

@@ -11,6 +11,10 @@ export interface AppConfig {
     profileUrl?: string;
     tNcUrl: string;
     privacyPolicyUrl: string;
+    contactUsUrl?: string;
+    aboutUsUrl?: string;
+    adminEmail?: string;
+    defaultPageSize: number;
     metaInfo: MetaInfo;
     mainMenuItems: Array<MenuItem>;
 }
@@ -21,4 +25,6 @@ export class LibConfig {
     firebaseui?: any;
     firebase?: FirebaseConfig;
     firebaseStoreConfig: FirebaseStoreConfig;
+    firestoreBaseApiUrl: string;
+    apiBaseUrl?: string;
 }

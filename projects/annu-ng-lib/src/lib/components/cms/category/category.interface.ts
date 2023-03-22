@@ -11,4 +11,19 @@ export interface Category {
     updated?: string;
     userId?: string;    // User Id from Users
     isLive?: boolean;
+    inReview?: boolean; // if category is up for review, if this is true, then isLive must be false;
+    features?: Array<CategoryFeatures | string>;   // any of the values from CategoryFeature, and any custom values.
 };
+
+export enum CategoryFeatures {
+    primaryNavigation = 'primary-navigation',
+    footerNavigation = 'footer-navigation',
+    primeShow = 'prime-show',
+    primeShowAside = 'prime-show-aside',
+    inReview = 'in-review',
+    tnc = 'tnc',
+    privacy = 'privacy',
+    helpDocs = 'help-docs',
+    helpDocsAuthor = 'help-docs-author',
+    helpDocsAdmin = 'help-docs-admin',
+}

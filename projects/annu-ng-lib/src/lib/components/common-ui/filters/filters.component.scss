@@ -1,0 +1,12 @@
+:host {
+    display: flex;
+    flex-direction: column;
+
+    .single-select {
+        justify-content: space-evenly;
+    }
+
+    .multi-select {
+        justify-content: space-between;
+    }
+}

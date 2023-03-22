@@ -43,7 +43,7 @@
                             <anu-card>
                                 <anu-card-body>
                                     <p [innerHtml]="fn.description"></p>
-                                    <anu-service-method [method]="fn" [parameters]="methodParameters"
+                                    <anu-service-method [method]="fn"
                                         (changed)="methodParametersChanged($event, fn)"></anu-service-method>
                                     <anu-error *ngIf="methodErrors[fn.name]" [code]="methodErrors[fn.name].code"
                                         [message]="methodErrors[fn.name].message"></anu-error>

@@ -1,12 +1,22 @@
 {
-  "name": "@annu/ng-lib",
-  "version": "0.0.1",
+  "name": "@annubiz/ng-lib",
+  "version": "1.0.4",
+  "private": false,
   "peerDependencies": {
-    "@angular/common": "^10.0.9",
-    "@angular/core": "^10.0.9",
-    "prismjs": "^1.26.0",
-    "rxjs": "^7.5.4",
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0",
     "firebase": "^9.15.0",
-    "firebaseui": "^6.0.0"
+    "firebaseui": "^6.0.0",
+    "prismjs": "^1.29.0",
+    "rxjs": "~7.5.0",
+    "buffer": "^6.0.3",
+    "stream-browserify": "^3.0.0",
+    "xml-js": "^1.6.11"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

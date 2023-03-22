@@ -12,11 +12,13 @@ import { ToggleModule } from '../../common-ui/toggle';
 
 import { ContentEditorModule } from '../content-editor';
 import { ArticleModule } from '../article';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ArticleEditorComponent],
   imports: [
     CommonModule,
+    FormsModule,
     TabsModule,
     ContentEditorModule,
     CardModule,

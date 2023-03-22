@@ -1,10 +1,10 @@
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
 
-import { AnnuNgLibModule } from '@annu/ng-lib';
+import { AnnuNgLibModule, FirestoreInterceptor } from '@annu/ng-lib';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import {
   ComponentPageComponent,
   LibDocsHomePageComponent,
 } from './page-components';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -38,7 +39,6 @@ import {
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserTransferStateModule,   // Needed to access transfered state on browser from SSR.
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -47,7 +47,13 @@ import {
     // annu-ng-lib - this imports all lib modules
     AnnuNgLibModule.forRoot(environment.libConfig),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FirestoreInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

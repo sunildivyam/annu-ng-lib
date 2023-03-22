@@ -1,20 +1,32 @@
 <nav role="navigation" class="annuMenu row" aria-label="primary navigation">
     <div class="col-lg-4 col-md-10 col-sm-10 left">
-        <a [routerLink]="headingHref"><span class="app-name" aria-label="Application name">
-                {{heading}}
-            </span></a>
-        <a *ngIf="subHeading" [routerLink]="subHeadingHref"><span class="app-title" aria-label="Application title">
-                {{subHeading}}
-            </span></a>
+        <div *ngIf="logoUrl" class="row nowrap logo">
+            <div>
+                <a [routerLink]="headingHref">
+                    <img [src]="logoUrl" [alt]="heading" />
+                </a>
+            </div>
+            <div>
+                <a [routerLink]="headingHref" class="app-name col-12" aria-label="Application name">{{heading}}</a>
+                <a *ngIf="subHeading" [routerLink]="subHeadingHref" class="app-title col-12"
+                    aria-label="Application title">{{subHeading}}</a>
+            </div>
+        </div>
+        <ng-container *ngIf="!logoUrl">
+            <a [routerLink]="headingHref" class="app-name" aria-label="Application name">{{heading}}</a>
+            <a *ngIf="subHeading" [routerLink]="subHeadingHref" class="app-title"
+                aria-label="Application title">{{subHeading}}</a>
+        </ng-container>
     </div>
     <div class="col-lg-8 col-md-2 col-sm-2 right">
         <ul class="col-lg-12 col-md-8 col-sm-12" [ngClass]="{'opened': opened}">
-            <li *ngFor="let item of items"><a class="btn" [routerLink]="item.href"
-                    routerLinkActive="active" (click)="itemCliked(item)">{{item.title}}</a></li>
+            <li *ngFor="let item of items"><a class="btn" [routerLink]="item.href" routerLinkActive="active"
+                    (click)="itemCliked(item)">{{item.title}}</a></li>
             <li class="extra-nav center middle">
                 <ng-content></ng-content>
             </li>
         </ul>
-        <anu-hamburger heading="" class="hidden-lg size-md" [opened]="opened" (changed)="toggleOpen($event)"></anu-hamburger>
+        <anu-hamburger heading="" class="hidden-lg size-md" [opened]="opened"
+            (changed)="toggleOpen($event)"></anu-hamburger>
     </div>
 </nav>

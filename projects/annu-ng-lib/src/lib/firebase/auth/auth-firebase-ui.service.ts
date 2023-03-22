@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
-import  'firebase/compat/auth';
+import 'firebase/compat/auth';
 import { AuthFirebaseService } from './auth-firebase.service';
 
 import { LibConfig } from '../../app-config/app-config.interface';
+import { AdditionalUserInfo, User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -25,34 +26,47 @@ export class AuthFirebaseUiService {
     const firebaseui = await import('firebaseui');
     const ui = firebaseui.auth && (firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth));
 
-    const uiConfig = {...this.libConfig.firebaseui, callbacks: {
-      signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-        this.authFireSvc.authState.next(authResult.user);
-        // User successfully signed in.
-        // Return type determines whether we continue the redirect automatically
-        // or whether we leave that to developer to handle.
+    const uiConfig = {
+      ...this.libConfig.firebaseui, callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+          const user: User = authResult?.user;
+          const additionalUserInfo: AdditionalUserInfo = authResult?.additionalUserInfo;
 
-        if (successCb) {
-          successCb(authResult.user, redirectUrl);
-        }
-
-        return true;
-      },
-      signInFailure: (error) => {
-        // User sign in failure;
-        if (errorCb) {
-          errorCb(error);
-        }
-      },
-      uiShown: () => {
-        // The widget is rendered.
-        // Hide the loader.
-        if (uiShownCb) {
-          uiShownCb();
+          if (user && additionalUserInfo?.isNewUser) {
+            // Check if refresh is required.
+            // if the user is new, signed in first time, refresh the token
+            user.getIdToken(true)
+              .then(() => {
+                this.authFireSvc.authState.next(user);
+                if (successCb) {
+                  successCb(user, redirectUrl);
+                }
+              });
+          } else {
+            this.authFireSvc.authState.next(user);
+            if (successCb) {
+              successCb(user, redirectUrl);
+            }
+          }
+        },
+        signInFailure: (error) => {
+          // User sign in failure;
+          if (errorCb) {
+            errorCb(error);
+          }
+        },
+        uiShown: () => {
+          // The widget is rendered.
+          // Hide the loader.
+          if (uiShownCb) {
+            uiShownCb();
+          }
         }
       }
-    }};
+    };
 
-    ui && ui.start(elementId, uiConfig);
+    setTimeout(() => {
+      ui && ui.start(elementId, uiConfig);
+    });
   }
 }

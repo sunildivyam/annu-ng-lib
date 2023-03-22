@@ -1,11 +1,14 @@
 export const CATEGORIES_COUNT = 10;
 export const FEATURED_CATEGORIES_COUNT = 4;
 export const CATEGORY_ARTICLES_COUNT = 15;
-export const FIREBASE_DOCS = {
+export const ARTICLES_COLLECTIONS = {
   CATEGORIES: 'categories',
-  ARTICLES: 'articles'
+  CATEGORIES_BIN: 'categories-bin',
+  ARTICLES: 'articles',
+  ARTICLES_BIN: 'articles-bin'
 };
 
+export const RUN_QUERY_KEYWORD: string = ':runQuery';
 
 export const SEED_ARTICLE = {
 	"id": "sample-article-title",

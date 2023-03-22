@@ -4,7 +4,7 @@ import { of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LibConfig } from '../../app-config/app-config.interface';
 import { ACCESS_MODIFIERS } from './docs.constants';
-import { ComponentProp, ComponentInfo, ComponentMethod, ServiceInfo, LibDocsInfo } from './docs.interface';
+import { ComponentProp, ComponentInfo, ServiceInfo, LibDocsInfo } from './docs.interface';
 
 @Injectable()
 export class DocsService {
@@ -27,7 +27,7 @@ export class DocsService {
     } as ComponentProp;
   }
 
-  private parseMethod(cmpMethod: any): ComponentMethod {
+  private parseMethod(cmpMethod: any): ComponentProp {
     return {
       name: cmpMethod.name || '',
       returnType: cmpMethod.returnType || '',
@@ -36,7 +36,7 @@ export class DocsService {
       deprecationMessage: cmpMethod.deprecationMessage || '',
       description: cmpMethod.description || '',
       accessModifier: ACCESS_MODIFIERS[cmpMethod.modifierKind],
-    } as ComponentMethod;
+    } as ComponentProp;
   }
 
   private parseComponentInfo(rawCmpInfo: any = {}): ComponentInfo {
@@ -151,13 +151,11 @@ export class DocsService {
    */
   public async getLibDocsInfo(): Promise<LibDocsInfo> {
     return new Promise((resolve, reject) => {
-
-      this.httpClient.get<any>(this.url)
+      this.httpClient.get<any>(this.url, {responseType: 'json'})
         .pipe(catchError(
           (errorResponse: any) => {
             this.libDocsCache.services = [];
             this.libDocsCache.components = [];
-            console.log('STATUS', errorResponse.status);
             let errorMsg: string;
             if (errorResponse.error instanceof HttpErrorResponse) {
               errorMsg = errorResponse.error.message;

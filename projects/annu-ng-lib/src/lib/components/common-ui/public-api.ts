@@ -26,3 +26,6 @@ export * from './collapsible';
 export * from './multi-select-box';
 export * from './drawer';
 export * from './image-browser';
+export * from './filters';
+export * from './theme-font-resizer';
+export * from './sitemap';

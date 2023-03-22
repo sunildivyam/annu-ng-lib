@@ -29,10 +29,18 @@ export class CategoryComponent implements OnInit, OnChanges {
    */
   @Input() showMetaInfo: boolean = true;
   /**
+   * toggle show short title on the card.
+   */
+  @Input() showShortTitle: boolean = true;
+  /**
    * Trims the description to the given character count and adds ... to the end of the text.
    */
   @Input() descriptionCharCount: number = 0;
 
+  /**
+   * Shows/hides description from the card.
+   */
+  @Input() showDescription: boolean = true;
 
   trimmedDescription: string = '';
 

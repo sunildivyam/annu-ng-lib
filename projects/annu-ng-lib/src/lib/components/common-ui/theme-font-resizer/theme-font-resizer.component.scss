@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+
+    &>a {
+        padding: 0.2rem 0.3rem;
+
+        &.active {
+            color: var(--anu-primary-dark);
+        }
+    }
+}

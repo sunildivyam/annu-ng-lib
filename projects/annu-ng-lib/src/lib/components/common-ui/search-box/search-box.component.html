@@ -2,5 +2,5 @@
     <input type="text" [placeholder]="placeholder" [ngModel]="keywords"
         (ngModelChange)="keywordsModelChanged($event)" />
     <span *ngIf="!keywords.length" class="btn primary">⌕</span>
-    <span *ngIf="keywords.length" class="btn primary" (click)="clearSearch($event)">x</span>
+    <span *ngIf="keywords.length" class="btn primary" (click)="clearSearch()">x</span>
 </div>

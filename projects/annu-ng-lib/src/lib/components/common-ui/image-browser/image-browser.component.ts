@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthFirebaseService } from '../../../firebase/auth';
 import { ImageFireStoreService } from '../../../firebase/image-storage';
 import { ImageFileInfo } from './image-browser.interface';
@@ -11,18 +11,28 @@ const PAGE_SIZE = 10;
   styleUrls: ['./image-browser.component.scss']
 })
 export class ImageBrowserComponent implements OnInit {
-  @Input() selectedImage: ImageFileInfo;
+  @Input() selectedImage: ImageFileInfo = null;
   @Input() imageClassNames: Array<string> = ['col-sm-12', 'col-md-4', 'col-lg-4', 'shadow', 'spacing'];
+  @Input() pageSize: number = PAGE_SIZE;
+  @Input() helpText: string = '';
   @Output() selected: EventEmitter<ImageFileInfo> = new EventEmitter<ImageFileInfo>();
+  @ViewChild('fileInput') fileEl: ElementRef;
 
   imagesFiles: Array<ImageFileInfo> = [];
   nextPageToken: any;
   error: any;
   loading: boolean = false;
-  loadingPreview: boolean = false;
+  loadingPreview: Object = {};
   choosenFileName: string = '';
 
   constructor(private imageFireSvc: ImageFireStoreService, private authSvc: AuthFirebaseService) { }
+  private refreshPreviewLoaders(imageFiles: Array<ImageFileInfo>) {
+    this.loadingPreview = {};
+    imageFiles?.forEach(imageFile => {
+      const imageLoaderKey = `${imageFile.fullPath}${imageFile.name}`;
+      this.loadingPreview[imageLoaderKey] = false;
+    });
+  }
 
   private async deleteImageFile(imageFile: ImageFileInfo) {
     this.error = null;
@@ -32,6 +42,7 @@ export class ImageBrowserComponent implements OnInit {
       await this.imageFireSvc.deleteImage(imageFile.name, this.authSvc.getCurrentUserId());
       // Once deleted from firebase, remove from the local list too.
       this.imagesFiles = this.imagesFiles.filter(imgFile => imgFile.downloadUrl !== imageFile.downloadUrl);
+      this.refreshPreviewLoaders(this.imagesFiles);
       this.loading = false;
     } catch (error: any) {
       this.error = error;
@@ -59,7 +70,7 @@ export class ImageBrowserComponent implements OnInit {
     try {
       const uploadedImage = await this.imageFireSvc.uploadImage(file.name, file, false, this.authSvc.getCurrentUserId());
       this.imagesFiles = [uploadedImage, ...this.imagesFiles];
-
+      this.refreshPreviewLoaders(this.imagesFiles);
       this.loading = false;
     } catch (error: any) {
       this.error = error;
@@ -72,17 +83,18 @@ export class ImageBrowserComponent implements OnInit {
     this.loading = true;
 
     try {
-      const listResult = await this.imageFireSvc.getImagesList('', PAGE_SIZE, this.nextPageToken, this.authSvc.getCurrentUserId())
+      const listResult = await this.imageFireSvc.getImagesList('', this.pageSize, this.nextPageToken, this.authSvc.getCurrentUserId())
       if (append && this.nextPageToken) {
         this.imagesFiles = [...this.imagesFiles, ...listResult.imageFiles];
       } else {
         this.imagesFiles = [...listResult.imageFiles]
       }
-
+      this.refreshPreviewLoaders(this.imagesFiles);
       this.nextPageToken = listResult.nextPageToken;
       this.loading = false;
     } catch (error: any) {
       this.imagesFiles = [];
+      this.refreshPreviewLoaders(this.imagesFiles);
       this.nextPageToken = null;
       this.error = error;
       this.loading = false;
@@ -90,16 +102,17 @@ export class ImageBrowserComponent implements OnInit {
   }
 
   private async previewImageFile(imageFile: ImageFileInfo) {
+    const imageLoaderKey = `${imageFile.fullPath}${imageFile.name}`;
     this.error = null;
-    this.loadingPreview = true;
+    this.loadingPreview[imageLoaderKey] = true;
 
     try {
       const downloadUrl = await this.imageFireSvc.getImageUrl(imageFile.name, this.authSvc.getCurrentUserId());
       imageFile.downloadUrl = downloadUrl;
-      this.loadingPreview = false;
+      this.loadingPreview[imageLoaderKey] = false;
     } catch (error: any) {
       this.error = error;
-      this.loadingPreview = false;
+      this.loadingPreview[imageLoaderKey] = false;
     }
   }
 
@@ -147,5 +160,12 @@ export class ImageBrowserComponent implements OnInit {
       this.choosenFileName = file.name;
       this.uploadImageFile(file);
     }
+  }
+
+  public uploadClick(): void {
+    const fileInputEl = this.fileEl.nativeElement;
+    fileInputEl.value = '';
+    this.choosenFileName = '';
+    fileInputEl.click();
   }
 }
