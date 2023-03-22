@@ -18,7 +18,8 @@ export class FirestoreInterceptor implements HttpInterceptor {
   constructor(private libConfig: LibConfig, private authFireService: AuthFirebaseService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.includes(this.libConfig.firestoreBaseApiUrl)) {
+    // intercepts both firebase store and firebase storage http requests.
+    if (request.url.includes(this.libConfig.firestoreBaseApiUrl) || request.url.includes(this.libConfig.fireStorageBaseApiUrl)) {
       const apiKey = this.libConfig.firebase.apiKey;
       let clonedRequest = request.clone({
         setParams: { key: apiKey }

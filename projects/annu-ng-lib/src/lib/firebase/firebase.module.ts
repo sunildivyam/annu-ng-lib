@@ -5,6 +5,7 @@ import { LibConfig } from '../app-config/app-config.interface';
 import { ArticlesFirebaseModule } from './articles';
 import { AuthFirebaseModule } from './auth/auth-firebase.module';
 import { ImageStorageModule } from './image-storage/image-storage.module';
+import { SitemapStorageModule } from './sitemap-storage/sitemap-storage.module';
 import { CommonFirebaseModule, CommonFirebaseService } from './common-firebase';
 
 @NgModule({
@@ -14,12 +15,14 @@ import { CommonFirebaseModule, CommonFirebaseService } from './common-firebase';
     ArticlesFirebaseModule,
     AuthFirebaseModule,
     ImageStorageModule,
+    SitemapStorageModule,
     CommonFirebaseModule,
   ],
   exports: [
     ArticlesFirebaseModule,
     AuthFirebaseModule,
     ImageStorageModule,
+    SitemapStorageModule,
     CommonFirebaseModule,
   ]
 })

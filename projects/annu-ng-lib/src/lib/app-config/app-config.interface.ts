@@ -26,5 +26,6 @@ export class LibConfig {
     firebase?: FirebaseConfig;
     firebaseStoreConfig: FirebaseStoreConfig;
     firestoreBaseApiUrl: string;
+    fireStorageBaseApiUrl: string;
     apiBaseUrl?: string;
 }
