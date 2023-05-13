@@ -38,8 +38,8 @@ export class MetaFormComponent implements OnInit, OnChanges {
 
     this.metaForm = fb.group(formGroup);
 
-    this.metaForm.valueChanges.subscribe(value => {
-      this.metaInfo = value as MetaInfo;
+    this.metaForm.valueChanges.subscribe((value: MetaInfo) => {
+      this.metaInfo = value;
     })
   }
 
@@ -66,7 +66,14 @@ export class MetaFormComponent implements OnInit, OnChanges {
   public metaChanged(event: any, isBlur: boolean = false) {
     if (!isBlur) event.preventDefault();
 
-    // if (this.metaForm.invalid || !this.metaForm.dirty) return;
+
+    // Keeps article:tag in sync with keywords.
+    if (this.metaInfo.keywords != this.metaInfo['article:tag']) {
+      this.metaInfo['article:tag'] = this.metaInfo.keywords;
+      this.setValues(this.metaInfo);
+    }
+
+
     this.changed.emit({ ...this.metaInfo });
   }
 

@@ -92,6 +92,7 @@ export const META_PROPS: Array<MetaProp> = [
         allowedValues: META_ALLOWED_VALUES.robots,
         label: 'Allow robots to index your web page and follow all links?',
         defaultValue: META_ALLOWED_VALUES.robots[0].name,
+        isAdditionalProp: true,
     },
     {
         name: 'Content-Type',
@@ -99,18 +100,22 @@ export const META_PROPS: Array<MetaProp> = [
         allowedValues: META_ALLOWED_VALUES.contentTypes,
         label: 'What type of content will your web page display?',
         defaultValue: META_ALLOWED_VALUES.contentTypes[0].name,
+        isAdditionalProp: true,
     },
     {
         name: 'language',
         types: [META_PROP_TYPES.NAME],
         allowedValues: META_ALLOWED_VALUES.languages,
         label: 'What is your primary language?',
+        defaultValue: META_ALLOWED_VALUES.languages[0].name,
+        isAdditionalProp: true,
     },
     {
         name: 'revisit-after',
         types: [META_PROP_TYPES.NAME],
         label: 'Search engines should revisit the page after (eg. 7 days)',
-        defaultValue: '7 days'
+        defaultValue: '7 days',
+        isAdditionalProp: true,
     },
     {
         name: 'author',
@@ -123,6 +128,7 @@ export const META_PROPS: Array<MetaProp> = [
         allowedValues: META_ALLOWED_VALUES.types,
         label: 'What type of content your web page has?',
         defaultValue: META_ALLOWED_VALUES.types[0].name,
+        isAdditionalProp: true,
     },
     // Article creation date/ published date
     {
@@ -130,6 +136,7 @@ export const META_PROPS: Array<MetaProp> = [
         types: [META_PROP_TYPES.PROPERTY],
         label: 'When was the page (Article) published?',
         defaultValue: (new Date()).toISOString(),
+        isAdditionalProp: true,
     },
     // Article Author profile Url/name
     {
@@ -143,12 +150,14 @@ export const META_PROPS: Array<MetaProp> = [
         types: [META_PROP_TYPES.PROPERTY],
         allowedValues: META_ALLOWED_VALUES.articleSections,
         label: 'Article Category ie. Technology, Business etc.',
+        defaultValue: META_ALLOWED_VALUES.articleSections[0].name,
     },
     // Article tag names / keywords, comma separated
     {
         name: 'article:tag',
         types: [META_PROP_TYPES.PROPERTY],
         label: 'Tag names or keywords associated with the article',
+        isAdditionalProp: true,
     },
     {
         name: 'image',
@@ -165,21 +174,26 @@ export const META_PROPS: Array<MetaProp> = [
         types: [META_PROP_TYPES.TWITTER_PROPERTY],
         allowedValues: META_ALLOWED_VALUES.cards,
         label: 'Twitter Card',
+        defaultValue: META_ALLOWED_VALUES.cards[0].name,
+        isAdditionalProp: true,
     },
     {
         name: 'site_name',
         types: [META_PROP_TYPES.OG_PROPERTY],
         label: 'Main Site name',
+        isAdditionalProp: true,
     },
     {
         name: 'audio',
         types: [META_PROP_TYPES.OG_PROPERTY],
         label: 'Audio Url',
+        isAdditionalProp: true,
     },
     {
         name: 'video',
         types: [META_PROP_TYPES.OG_PROPERTY],
         label: 'Video Url',
+        isAdditionalProp: true,
     }
 
 ];

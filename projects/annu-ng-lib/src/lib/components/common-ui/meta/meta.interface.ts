@@ -39,4 +39,5 @@ export interface MetaProp {
     allowedValues?: Array<MetaPropValue>;
     defaultValue?: string;
     error?: string;
+    isAdditionalProp?: boolean;
 }
