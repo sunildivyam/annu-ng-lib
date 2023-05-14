@@ -28,4 +28,5 @@ export class LibConfig {
     firestoreBaseApiUrl: string;
     fireStorageBaseApiUrl: string;
     apiBaseUrl?: string;
+    imagesSourceUrl?: string;
 }

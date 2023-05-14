@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ImageFileInfo } from '../image-browser/image-browser.interface';
 import { ImageInfo } from './image-form.interface';
+import { LibConfig } from '../../../app-config/app-config.interface';
 
 @Component({
   selector: 'anu-image-form',
@@ -11,12 +12,13 @@ export class ImageFormComponent implements OnInit {
   @Input() src: string = '';
   @Input() alt: string = '';
   @Input() helpText: string = '';
+  @Input() isSrcFromFirebase: boolean = false;  // if select images as Firebase storage download urls else API url
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 
   selectedImage: ImageFileInfo;
 
-  constructor() { }
+  constructor(private libConfig: LibConfig) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +34,13 @@ export class ImageFormComponent implements OnInit {
   }
 
   public onFileBrowserSelect(imageFileInfo: ImageFileInfo): void {
-    this.src = imageFileInfo.downloadUrl;
+    if (this.isSrcFromFirebase === true) {
+      this.src = imageFileInfo.downloadUrl;
+    } else {
+      const imagesApiUrl = this.libConfig.imagesSourceUrl || '/getImage?imageId=';
+      this.src = `${imagesApiUrl}${imageFileInfo.fullPath}`;
+    }
+
     this.selectedImage = imageFileInfo;
   }
 
