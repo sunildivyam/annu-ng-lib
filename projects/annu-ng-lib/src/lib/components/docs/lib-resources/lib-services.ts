@@ -2,6 +2,7 @@ import { DocsService } from '../docs.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { SitemapService } from '../../../components/common-ui/sitemap/sitemap.service';
 import { ContentEditorService } from '../../cms/content-editor/services/content-editor.service';
+import { Html2JsonService } from '../../cms/content-editor/services/html2json.service';
 import { HighlightService } from '../../common-ui/code-block/highlight.service';
 import { SelectionService } from '../../cms/content-editor/services/selection.service';
 import { MetaService } from '../../common-ui/meta';
@@ -32,10 +33,15 @@ import {
   FirestoreQueryService,
 } from '../../../firebase/common-firebase';
 
+import {
+  OpenaiService
+} from '../../../openai/openai.service';
+
 export const LibServices = {
   UtilsService,
   SitemapService,
   ContentEditorService,
+  Html2JsonService,
   DocsService,
   HighlightService,
   MetaService,
@@ -60,4 +66,5 @@ export const LibServices = {
   ArticlesFirebaseService,
   ArticlesFirebaseSeedService,
 
+  OpenaiService,
 };

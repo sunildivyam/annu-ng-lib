@@ -12,6 +12,7 @@ import { AppConfigModule } from './app-config';
 import { RouteGuardsModule } from './services/route-guards/route-guards.module';
 import { UtilsModule } from './services/utils';
 import { LibDocsRouteResolversModule } from './services/lib-docs-route-resolvers';
+import { OpenaiModule } from './openai/openai.module';
 
 
 const libMoudlesToImportAndExport = [
@@ -28,6 +29,7 @@ const libMoudlesToImportAndExport = [
 
   FirebaseModule,
 
+  OpenaiModule,
 ];
 
 

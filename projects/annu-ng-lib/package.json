@@ -11,7 +11,8 @@
     "rxjs": "~7.5.0",
     "buffer": "^6.0.3",
     "stream-browserify": "^3.0.0",
-    "xml-js": "^1.6.11"
+    "xml-js": "^1.6.11",
+    "openai": "^3.2.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"
