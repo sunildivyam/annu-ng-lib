@@ -10,13 +10,13 @@
 <anu-tabs [tabs]="tabs" [activeTab]="activeTab" (changed)="tabChanged($event)"></anu-tabs>
 <section class="container tab-body">
 
-    <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'article'}">
-        <anu-card class="shadow spacing article-card">
-            <anu-card-body>
+    <section class="tab-item-body col-12" [ngClass]="{'active': activeTab.name === 'article'}">
+        <anu-card class="shadow spacing article-card col-12">
+            <anu-card-body class="col-12">
                 <h1>{{article?.metaInfo?.title}}</h1>
                 <p>{{article?.metaInfo?.description}}</p>
                 <label>You can start writing your content below:</label>
-                <anu-content-editor [value]="article?.body" (changed)="articleBodyChanged($event)"></anu-content-editor>
+                <anu-content-editor class="col-12" [value]="article?.body" (changed)="articleBodyChanged($event)"></anu-content-editor>
             </anu-card-body>
         </anu-card>
 
