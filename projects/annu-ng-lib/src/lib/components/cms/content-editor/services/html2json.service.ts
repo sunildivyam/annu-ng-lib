@@ -27,7 +27,7 @@ export class Html2JsonService {
     return htmlJson;
   }
 
-  public parseHtmlElement(el: HTMLElement | ChildNode): EditorElement {
+  private parseHtmlElement(el: HTMLElement | ChildNode): EditorElement {
     const tagName = ((el as HTMLElement).tagName || (el as ChildNode).nodeName).toLowerCase();
     const name = (el as HTMLElement).id || `${tagName}-${Date.now()}`;
     const isContainer = ['ol', 'ul', 'article'].includes(tagName);
@@ -96,5 +96,4 @@ export class Html2JsonService {
 
     return content;
   }
-
 }

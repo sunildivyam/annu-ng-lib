@@ -1,6 +1,9 @@
 <form class="container disable-select">
 
     <div class="input-container row nowrap">
+        <select class="prompt-types" name="prompt-types" [(ngModel)]="selectedPromptType">
+            <option [value]="optType.value" *ngFor="let optType of promptTypes">{{optType.key}}</option>
+        </select>
         <input name="openaiPrompt" type="text" placeholder="Write your prompt here" [(ngModel)]="currentPrompt" />
         <a href="javascript:void(0)" class="btn primary" (click)="goBtnClick($event)">⌕</a>
     </div>

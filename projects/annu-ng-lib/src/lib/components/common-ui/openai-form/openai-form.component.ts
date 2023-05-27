@@ -1,10 +1,18 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { OpenaiPrompt } from './openai-form.interface';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { OpenaiPrompt, OpenaiPromptType } from './openai-form.interface';
 
 @Component({
   selector: 'anu-openai-form',
   templateUrl: './openai-form.component.html',
-  styleUrls: ['./openai-form.component.scss']
+  styleUrls: ['./openai-form.component.scss'],
 })
 export class OpenaiFormComponent implements OnInit, OnChanges {
   @Input() prompts: Array<OpenaiPrompt> = [];
@@ -17,9 +25,13 @@ export class OpenaiFormComponent implements OnInit, OnChanges {
   selectedPrompt: OpenaiPrompt;
   selectedPromptText: string = '';
   selectedResultType: string = 'mdText';
+  promptTypes = Object.entries(OpenaiPromptType).map((pt) => ({
+    key: pt[0],
+    value: pt[1],
+  }));
+  selectedPromptType: OpenaiPromptType = OpenaiPromptType.content;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.setSelectedPrompt();
@@ -31,6 +43,7 @@ export class OpenaiFormComponent implements OnInit, OnChanges {
 
   public setSelectedPrompt(): void {
     this.selectedPrompt = this.findPrompt(this.selectedPromptText);
+    this.selectedPromptType = this.selectedPrompt?.promptType || OpenaiPromptType.content;
   }
 
   public promptListChanged(): void {
@@ -42,17 +55,23 @@ export class OpenaiFormComponent implements OnInit, OnChanges {
     if (!this.currentPrompt.trim()) return;
 
     if (!this.findPrompt(this.currentPrompt)) {
-      this.prompts.push({ prompt: this.currentPrompt, message: { mdText: '', htmlText: '', jsonText: ''} } as OpenaiPrompt);
+      this.prompts.push({
+        prompt: this.currentPrompt,
+        promptType: this.selectedPromptType,
+        message: { mdText: '', htmlText: '', jsonText: '' },
+      } as OpenaiPrompt);
 
       this.selectedPromptText = this.currentPrompt;
       this.selectedPrompt = this.findPrompt(this.selectedPromptText);
 
       this.currentPrompt = '';
+      this.selectedPromptType = OpenaiPromptType.content;
+
       this.goClicked.emit(this.prompts);
     }
   }
 
   private findPrompt(promptStr: string): OpenaiPrompt {
-    return this.prompts.find(p => p.prompt === promptStr)
+    return this.prompts.find((p) => p.prompt === promptStr);
   }
 }

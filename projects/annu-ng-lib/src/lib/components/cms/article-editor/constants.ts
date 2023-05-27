@@ -18,3 +18,9 @@ export const ARTICLE_EDITOR_TABS: Array<Tab> = [
         title: 'Publish',
     } as Tab,
 ];
+
+export const DESCRIPTION_PROMPT_PREFIX = 'Write a good description for ';
+export const KEYWORDS_PROMPT_PREFIX = 'List good keywords for ';
+export const CONTENT_PROMPT_PREFIX = '';
+export const OPENAI_REQUESTS_LIMIT = 3;
+export const OPENAI_REQUEST_TIME_LIMIT = 62000; //miliseconds or 1 min

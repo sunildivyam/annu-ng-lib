@@ -144,6 +144,8 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
 
   public saveImageChange(image: ImageInfo) {
     this.article.image = image;
+    this.article.metaInfo = this.article.metaInfo || {};
+    this.article.metaInfo.image = image?.src || '';
     this.toggleImageForm = false;
     this.changed.emit({ ...this.article });
   }

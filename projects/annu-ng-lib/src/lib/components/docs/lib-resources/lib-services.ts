@@ -5,6 +5,7 @@ import { ContentEditorService } from '../../cms/content-editor/services/content-
 import { Html2JsonService } from '../../cms/content-editor/services/html2json.service';
 import { HighlightService } from '../../common-ui/code-block/highlight.service';
 import { SelectionService } from '../../cms/content-editor/services/selection.service';
+import { ArticleEditorService } from '../../cms/article-editor/article-editor.service';
 import { MetaService } from '../../common-ui/meta';
 import { ThemeService } from '../../common-ui/theme';
 
@@ -67,4 +68,6 @@ export const LibServices = {
   ArticlesFirebaseSeedService,
 
   OpenaiService,
+
+  ArticleEditorService,
 };
