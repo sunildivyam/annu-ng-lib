@@ -15,3 +15,6 @@ export * from './images';
 
 //Global Services
 export * from './services';
+
+//openai
+export * from './openai';

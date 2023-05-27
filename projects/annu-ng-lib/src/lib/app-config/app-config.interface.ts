@@ -1,6 +1,7 @@
 import { MetaInfo } from "../components/common-ui/meta";
 import { FirebaseConfig, FirebaseStoreConfig } from "../firebase/firebase.interface";
 import { MenuItem } from "../components/common-ui/menu/menu.interface";
+import { OpenaiConfig } from "../openai/openai.interface";
 
 export interface AppConfig {
     name: string;
@@ -28,4 +29,6 @@ export class LibConfig {
     firestoreBaseApiUrl: string;
     fireStorageBaseApiUrl: string;
     apiBaseUrl?: string;
+    imagesSourceUrl?: string;
+    openaiConfig?: OpenaiConfig;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@annubiz/ng-lib",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "private": false,
   "peerDependencies": {
     "@angular/common": "^15.0.0",
@@ -11,7 +11,9 @@
     "rxjs": "~7.5.0",
     "buffer": "^6.0.3",
     "stream-browserify": "^3.0.0",
-    "xml-js": "^1.6.11"
+    "xml-js": "^1.6.11",
+    "openai": "^3.2.1",
+    "showdown": "^2.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

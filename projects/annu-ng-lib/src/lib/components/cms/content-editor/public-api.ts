@@ -7,3 +7,4 @@ export * from './directives/contenteditable-value-accessor.directive';
 export * from './directives/focus.directive';
 export * from './directives/format-inline.directive';
 export * from './leaf-element/leaf-element.component';
+export * from './services/html2json.service';

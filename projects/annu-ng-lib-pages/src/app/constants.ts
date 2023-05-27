@@ -97,6 +97,12 @@ const secSubNavs = [
         title: 'Authentication',
         href: 'auth',
         subNav: []
+    },
+    {
+        id: 'lib/openai',
+        title: 'OpenAI',
+        href: 'openai',
+        subNav: []
     }
 ];
 

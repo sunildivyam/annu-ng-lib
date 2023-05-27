@@ -101,7 +101,7 @@ export class ImageBrowserComponent implements OnInit {
     }
   }
 
-  private async previewImageFile(imageFile: ImageFileInfo) {
+  private async previewImageFile(imageFile: ImageFileInfo): Promise<ImageFileInfo> {
     const imageLoaderKey = `${imageFile.fullPath}${imageFile.name}`;
     this.error = null;
     this.loadingPreview[imageLoaderKey] = true;
@@ -110,9 +110,11 @@ export class ImageBrowserComponent implements OnInit {
       const downloadUrl = await this.imageFireSvc.getImageUrl(imageFile.name, this.authSvc.getCurrentUserId());
       imageFile.downloadUrl = downloadUrl;
       this.loadingPreview[imageLoaderKey] = false;
+      return imageFile;
     } catch (error: any) {
       this.error = error;
       this.loadingPreview[imageLoaderKey] = false;
+      return null;
     }
   }
 

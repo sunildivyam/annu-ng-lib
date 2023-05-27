@@ -218,4 +218,8 @@ export class UtilsService {
       return null;
     }
   }
+
+  public delay(miliseconds: number): Promise<unknown> {
+    return new Promise(resolve => setTimeout(resolve, miliseconds));
+  }
 }

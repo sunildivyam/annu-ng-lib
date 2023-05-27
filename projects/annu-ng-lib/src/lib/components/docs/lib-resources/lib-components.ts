@@ -50,6 +50,7 @@ import {
   FiltersComponent,
   ThemeFontResizerComponent,
   SitemapComponent,
+  OpenaiFormComponent,
 } from '../../common-ui';
 
 import {
@@ -105,6 +106,8 @@ export const LibComponents = {
   FiltersComponent,
   ThemeFontResizerComponent,
   SitemapComponent,
+  OpenaiFormComponent,
+
 
   // CMS
   ArticleComponent,

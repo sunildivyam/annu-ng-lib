@@ -30,12 +30,14 @@ import { ImageBrowserModule } from './image-browser/image-browser.module';
 import { FiltersModule } from './filters/filters.module';
 import { ThemeFontResizerModule } from './theme-font-resizer/theme-font-resizer.module';
 import { SitemapModule } from './sitemap';
+import { OpenaiFormModule } from './openai-form/openai-form.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    OpenaiFormModule,
 
   ],
   exports: [
