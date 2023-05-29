@@ -26,11 +26,15 @@ import {
   SUBTOPICS_PROMPT_NAME,
   QUESTIONS_PROMPT_PREFIX,
   QUESTIONS_PROMPT_NAME,
+  PROMPTS_SEPARATOR,
 } from './openai-auto-articles.constants';
 import { Article } from '../article/article.interface';
 import { AppConfig } from '../../../app-config/app-config.interface';
 import { ArticlesFirebaseHttpService } from '../../../firebase/articles/articles-firebase-http.service';
 import { EditorElement } from '../content-editor';
+import { OpenaiImageSize } from '../../../openai/openai.interface';
+import { ImageFireStoreService } from '../../../firebase/image-storage/image-fire-store.service';
+import { AuthFirebaseService } from '../../../firebase/auth/auth-firebase.service';
 
 @Component({
   selector: 'anu-openai-auto-articles',
@@ -50,6 +54,10 @@ export class OpenaiAutoArticlesComponent {
   promptQueueBatchJustBeforePause: OpenaiPromptQueueBatch = null;
   historyPrompts: Array<OpenaiPrompt> = [];
 
+  //Bulk articles modal
+  bulkArticlesPromptsText: string = '';
+  toggleBulkArticlesModal: boolean = false;
+
   //Timers
   expectedTotalTime: number = 0;
   ellapsedTime: number = 0;
@@ -61,7 +69,9 @@ export class OpenaiAutoArticlesComponent {
     private aeService: ArticleEditorService,
     private openaiService: OpenaiService,
     private html2json: Html2JsonService,
-    private articlesFirebaseService: ArticlesFirebaseHttpService
+    private articlesFirebaseService: ArticlesFirebaseHttpService,
+    private imageFireStoreService: ImageFireStoreService,
+    private authService: AuthFirebaseService
   ) {}
 
   public startTimer(): void {
@@ -101,6 +111,31 @@ export class OpenaiAutoArticlesComponent {
     } else {
       this.pauseQueue();
     }
+  }
+
+  public onBulkArticlesClick(): void {
+    this.toggleBulkArticlesModal = true;
+  }
+
+  public onGenerateBulkArticleQueues(): void {
+    this.toggleBulkArticlesModal = false;
+    if (!this.bulkArticlesPromptsText.trim()) return;
+
+    const promptTexts = this.bulkArticlesPromptsText.split(PROMPTS_SEPARATOR);
+    promptTexts.forEach((pmtText) => {
+      pmtText = pmtText.trim();
+      const prompt: OpenaiPrompt = {
+        prompt: pmtText,
+        promptType: OpenaiPromptType.content,
+        message: { mdText: '', htmlText: '', jsonText: '' },
+      };
+
+      // Create a new articleQueue item and add its first prompts.
+      pmtText && this.addToArticleQueue(prompt);
+    });
+
+    // resets the bulk prompt text
+    this.bulkArticlesPromptsText = '';
   }
 
   public onNewPrompt(prompts: Array<OpenaiPrompt>): void {
@@ -193,6 +228,7 @@ export class OpenaiAutoArticlesComponent {
         descriptionPromptQueueItem,
       ],
       promptQueueItemToAdd: this.utilsService.deepCopy(EMPTY_PROMPT_QUEUE_ITEM),
+      imagePromptText: prompt.prompt,
     };
 
     this.openaiArticleQueue.push(openaiArticleQueueItem);
@@ -466,6 +502,10 @@ export class OpenaiAutoArticlesComponent {
               article.metaInfo.description =
                 this.aeService.readDescriptionFromEditorElement(jsonEl);
               break;
+              case OpenaiPromptType.questions:
+              break;
+              case OpenaiPromptType.subtopics:
+              break;
             default:
               article.body.children = [].concat(
                 article.body.children,
@@ -477,17 +517,75 @@ export class OpenaiAutoArticlesComponent {
       }
     });
 
-    this.articlesFirebaseService
-      .addArticle(article)
-      .then((art) => {
-        artQItem.saveStatus = true;
-        this.errorMsg.push(`Article (${artQIndex + 1}) Saved: ${artQItem.name} id: ${art.id}`);
-      })
-      .catch((err) => {
-        artQItem.saveStatus = false;
-        this.errorMsg.push(
-          `<span class="error">Error Saving Article:</span>: ${artQItem.name} | ${err.message}`
-        );
-      });
+    this.generateAndSaveArticleImage(
+      article.id,
+      artQItem.imagePromptText,
+      artQIndex
+    ).then((imgUrl) => {
+      article.image.src = imgUrl;
+      article.metaInfo.image = imgUrl;
+
+      // Save article to firebase
+      this.articlesFirebaseService
+        .addArticle(article)
+        .then((art) => {
+          artQItem.saveStatus = true;
+          this.errorMsg.push(
+            `Article (${artQIndex + 1}) Saved: ${artQItem.name} id: ${art.id}`
+          );
+        })
+        .catch((err) => {
+          artQItem.saveStatus = false;
+          this.errorMsg.push(
+            `<span class="error">Error Saving Article:</span>: ${artQItem.name} | ${err.message}`
+          );
+        });
+    });
+  }
+
+  public async generateAndSaveArticleImage(
+    articleId: string,
+    articleTitle: string,
+    artQIndex: number
+  ): Promise<string> {
+    let base64Image: string = '';
+
+    try {
+      const base64Images = await this.openaiService.getImagetResponse(
+        articleTitle,
+        1,
+        OpenaiImageSize._1024x1024
+      );
+      base64Image = base64Images.length && base64Images[0];
+      this.errorMsg.push(
+        `<span class="success">Generated Article ${artQIndex} Image </span>`
+      );
+    } catch (err) {
+      this.errorMsg.push(
+        `<span class="error">Error generating Article ${artQIndex} Image </span>| ${err.message}`
+      );
+
+      return '';
+    }
+
+    try {
+      const imageFileInfo = await this.imageFireStoreService.uploadImage(
+        `${articleId}.jpg`,
+        base64Image,
+        true,
+        this.authService.getCurrentUserId(),
+        true
+      );
+      this.errorMsg.push(
+        `<span class="success">Uploaded Article ${artQIndex} Image </span>`
+      );
+      return this.aeService.generateArticleImageUrl(imageFileInfo.fullPath);
+    } catch (err) {
+      this.errorMsg.push(
+        `<span class="error">Error Saving Article ${artQIndex} Image </span>| ${err.message}`
+      );
+
+      return '';
+    }
   }
 }

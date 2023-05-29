@@ -5,6 +5,7 @@ import { OpenaiFormModule } from '../../common-ui/openai-form/openai-form.module
 import { FormsModule } from '@angular/forms';
 import { SpinnerModule } from '../../common-ui/spinner/spinner.module';
 import { CollapsibleModule } from '../../common-ui/collapsible/collapsible.module';
+import { ModalModule } from '../../common-ui/modal/modal.module';
 
 
 
@@ -17,7 +18,8 @@ import { CollapsibleModule } from '../../common-ui/collapsible/collapsible.modul
     FormsModule,
     OpenaiFormModule,
     SpinnerModule,
-    CollapsibleModule
+    CollapsibleModule,
+    ModalModule,
   ],
   exports: [
     OpenaiAutoArticlesComponent

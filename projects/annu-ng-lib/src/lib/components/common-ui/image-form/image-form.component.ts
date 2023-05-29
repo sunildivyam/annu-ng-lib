@@ -37,8 +37,7 @@ export class ImageFormComponent implements OnInit {
     if (this.isSrcFromFirebase === true) {
       this.src = imageFileInfo.downloadUrl;
     } else {
-      const imagesApiUrl = this.libConfig.imagesSourceUrl || '/getImage?imageId=';
-      this.src = `${imagesApiUrl}${imageFileInfo.fullPath}`;
+      this.src = `${this.libConfig.imagesSourceUrl}${imageFileInfo.fullPath}`;
     }
 
     this.selectedImage = imageFileInfo;

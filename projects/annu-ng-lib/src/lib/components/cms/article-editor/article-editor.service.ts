@@ -301,4 +301,8 @@ export class ArticleEditorService {
 
     return editorEl;
   }
+
+  public generateArticleImageUrl(imageFullPath: string): string {
+    return `${this.libConfig.imagesSourceUrl}${imageFullPath}`
+  }
 }

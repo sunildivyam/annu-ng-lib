@@ -30,3 +30,5 @@ export const QUESTIONS_PROMPT_PREFIX = 'List 5 good related questions for';
 export const OPENAI_MAX_REQUEST_COUNT = 3;
 export const OPENAI_MAX_REQUEST_DELAY = 65000;
 export const OPENAI_FAILED_REQUEST_DELAY = 25000;
+
+export const PROMPTS_SEPARATOR = '|||';

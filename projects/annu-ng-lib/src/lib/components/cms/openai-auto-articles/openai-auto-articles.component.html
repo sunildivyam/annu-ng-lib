@@ -1,6 +1,13 @@
-<anu-openai-form [prompts]='historyPrompts' [selectedPromptText]='' [showHistory]='true'
-    (goClicked)="onNewPrompt($event)">
-</anu-openai-form>
+<div class="row">
+    <div class="col-12 right">
+        <a class="primary" href="javascript:void(0)" (click)="onBulkArticlesClick()">Bulk Articles</a>
+    </div>
+    <div class="col-12">
+        <anu-openai-form [prompts]='historyPrompts' [selectedPromptText]='' [showHistory]='true'
+            (goClicked)="onNewPrompt($event)">
+        </anu-openai-form>
+    </div>
+</div>
 
 <anu-collapsible *ngIf="errorMsg.length" [collapsed]="false" class="col-12 spacing-around-vertical"
     [hamBurgerClassNames]="['size-sm']" [isDropdownStyle]="true">
@@ -16,8 +23,8 @@
 
 <div *ngIf="openaiArticleQueue.length" class="row">
     <div class="col-6"><strong>
-            {{ellapsedTime/60}}mins <br />
-            <span *ngIf="!isQueueFinished">Writing article {{openaiArticleQueueIndex + 1}} ...</span>
+            {{(ellapsedTime/60).toFixed(2)}}mins <br />
+            <span *ngIf="!isQueueFinished && !isQueuePaused">Writing article {{openaiArticleQueueIndex + 1}} ...</span>
         </strong>
     </div>
     <div class="col-6">
@@ -42,6 +49,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Already added prompt rows -->
             <tr *ngFor="let queueItem of artQueue.openaiPromptQueue; let pmtQindex = index">
                 <td>
                     <small>{{queueItem.name}}</small>
@@ -59,6 +67,8 @@
                         (click)="removePromptFromQueue(artQindex, pmtQindex)">X</a>
                 </td>
             </tr>
+
+            <!-- Additional Prompt Addition row -->
             <tr
                 *ngIf="(openaiArticleQueueIndex < artQindex || (openaiArticleQueueIndex === artQindex && openaiPromptQueueIndex < artQueue.openaiPromptQueue.length))">
                 <td>
@@ -75,7 +85,23 @@
                     <a class="primary" href="javascript:void(0)" (click)="addPromptToArticleQueue(artQindex)">Add</a>
                 </td>
             </tr>
+
+            <!-- Image Prompt Row -->
+            <tr>
+                <td colspan="4">
+                    <small>Article's Image Prompt</small>
+                    <input [readonly]="artQindex < openaiArticleQueueIndex" type="text"
+                        [(ngModel)]="artQueue.imagePromptText" />
+                </td>
+            </tr>
         </tbody>
     </table>
 
 </div>
+
+
+<anu-modal [enableCancel]="true" [enableOk]="true" [opened]="toggleBulkArticlesModal" title="Bulk Articles Prompts"
+    (okClick)="onGenerateBulkArticleQueues()" (cancelClick)="toggleBulkArticlesModal = false">
+    <textarea placeholder="Article titles separated by 3 pipe symbols |||"
+        [(ngModel)]="bulkArticlesPromptsText"></textarea>
+</anu-modal>

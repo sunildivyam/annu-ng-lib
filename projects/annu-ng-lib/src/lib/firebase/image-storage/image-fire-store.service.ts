@@ -1,19 +1,40 @@
 import { Injectable } from '@angular/core';
 import { LibConfig } from '../../app-config';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, list, ListOptions, ListResult } from 'firebase/storage';
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadString,
+  getDownloadURL,
+  deleteObject,
+  list,
+  ListOptions,
+  ListResult,
+  StringFormat,
+} from 'firebase/storage';
 import { CommonFirebaseService } from '../common-firebase';
-import { ImageFileInfo, ImageFileInfoList } from '../../components/common-ui/image-browser/image-browser.interface';
+import {
+  ImageFileInfo,
+  ImageFileInfoList,
+} from '../../components/common-ui/image-browser/image-browser.interface';
 
 @Injectable()
 export class ImageFireStoreService {
   public baseStoreUrl: string = '';
 
-  constructor(private commonFireSvc: CommonFirebaseService, private libConfig: LibConfig) {
+  constructor(
+    private commonFireSvc: CommonFirebaseService,
+    private libConfig: LibConfig
+  ) {
     this.baseStoreUrl = this.libConfig.firebaseStoreConfig.baseStoreUrl;
   }
 
   private buildImageUrl(filePath: string, userId: string = ''): string {
-    return this.baseStoreUrl + '/' + (userId ? `${userId}/${filePath}` : '' + filePath);
+    return (
+      this.baseStoreUrl +
+      '/' +
+      (userId ? `${userId}/${filePath}` : '' + filePath)
+    );
   }
 
   public async validateImage(imageData: any): Promise<string> {
@@ -28,7 +49,7 @@ export class ImageFireStoreService {
 
     //Size Check
     if (imageData.size > maxKBs * 1024) {
-      return `Image size exceeds the limit of ${maxKBs}KBs`
+      return `Image size exceeds the limit of ${maxKBs}KBs`;
     }
 
     // Dimension Check.
@@ -36,7 +57,8 @@ export class ImageFireStoreService {
   }
 
   public async validateImageDimension(imageData: any): Promise<string> {
-    const { maxWidth, maxHeight, minWidth, minHeight } = this.libConfig.firebaseStoreConfig;
+    const { maxWidth, maxHeight, minWidth, minHeight } =
+      this.libConfig.firebaseStoreConfig;
 
     var reader = new FileReader();
 
@@ -56,26 +78,41 @@ export class ImageFireStoreService {
           const width = image.naturalWidth;
           const height = image.naturalHeight;
 
-          if (width > maxWidth || minWidth < minWidth || maxHeight > maxHeight || minHeight < minHeight) {
-            resolve(`Image dimensions are ${width}px X ${height}px and does not meet the requirement. Allowed width = ${minWidth}px to ${maxWidth}px and allowed height = ${minHeight}px to ${maxHeight}px`);
+          if (
+            width > maxWidth ||
+            minWidth < minWidth ||
+            maxHeight > maxHeight ||
+            minHeight < minHeight
+          ) {
+            resolve(
+              `Image dimensions are ${width}px X ${height}px and does not meet the requirement. Allowed width = ${minWidth}px to ${maxWidth}px and allowed height = ${minHeight}px to ${maxHeight}px`
+            );
           } else {
             resolve('');
           }
-
         };
 
         // Reject promise on error
         image.onerror = (error: any) => {
           reject('Error loading Image');
         };
-      }
+      };
     });
 
     return promise;
   }
 
-  public async uploadImage(filePath: string, imageData: any, overWrite: boolean = false, userId: string = ''): Promise<ImageFileInfo> {
-    const fireStorage = getStorage(this.commonFireSvc.initOrGetFirebaseApp(), this.libConfig.firebase.storageBucket);
+  public async uploadImage(
+    filePath: string,
+    imageData: any,
+    overWrite: boolean = false,
+    userId: string = '',
+    isBas64: boolean = false
+  ): Promise<ImageFileInfo> {
+    const fireStorage = getStorage(
+      this.commonFireSvc.initOrGetFirebaseApp(),
+      this.libConfig.firebase.storageBucket
+    );
     const fileUrl = this.buildImageUrl(filePath, userId);
     const fileRef = ref(fireStorage, fileUrl);
 
@@ -93,14 +130,23 @@ export class ImageFireStoreService {
       }
     }
 
-
     try {
-      const uploadResult = await uploadBytes(fileRef, imageData);
+      let uploadResult;
+      if (isBas64) {
+        uploadResult = await uploadString(
+          fileRef,
+          imageData,
+          StringFormat.BASE64
+        );
+      } else {
+        uploadResult = await uploadBytes(fileRef, imageData);
+      }
+
       const downloadUrl = await this.getImageUrl(filePath, userId);
       const imageFileInfo: ImageFileInfo = {
         name: uploadResult.ref.name,
         fullPath: uploadResult.ref.fullPath,
-        downloadUrl
+        downloadUrl,
       };
 
       return imageFileInfo;
@@ -109,8 +155,14 @@ export class ImageFireStoreService {
     }
   }
 
-  public async getImageUrl(filePath: string, userId: string = ''): Promise<string> {
-    const fireStorage = getStorage(this.commonFireSvc.initOrGetFirebaseApp(), this.libConfig.firebase.storageBucket);
+  public async getImageUrl(
+    filePath: string,
+    userId: string = ''
+  ): Promise<string> {
+    const fireStorage = getStorage(
+      this.commonFireSvc.initOrGetFirebaseApp(),
+      this.libConfig.firebase.storageBucket
+    );
     const fileUrl = this.buildImageUrl(filePath, userId);
     const fileRef = ref(fireStorage, fileUrl);
 
@@ -123,9 +175,14 @@ export class ImageFireStoreService {
     }
   }
 
-
-  public async deleteImage(filePath: string, userId: string = ''): Promise<void> {
-    const fireStorage = getStorage(this.commonFireSvc.initOrGetFirebaseApp(), this.libConfig.firebase.storageBucket);
+  public async deleteImage(
+    filePath: string,
+    userId: string = ''
+  ): Promise<void> {
+    const fireStorage = getStorage(
+      this.commonFireSvc.initOrGetFirebaseApp(),
+      this.libConfig.firebase.storageBucket
+    );
     const fileUrl = this.buildImageUrl(filePath, userId);
     const fileRef = ref(fireStorage, fileUrl);
 
@@ -136,8 +193,16 @@ export class ImageFireStoreService {
     }
   }
 
-  public async getImagesList(filePath: string, pageSize: number = 10, nextPageToken: any = null, userId: string = ''): Promise<ImageFileInfoList> {
-    const fireStorage = getStorage(this.commonFireSvc.initOrGetFirebaseApp(), this.libConfig.firebase.storageBucket);
+  public async getImagesList(
+    filePath: string,
+    pageSize: number = 10,
+    nextPageToken: any = null,
+    userId: string = ''
+  ): Promise<ImageFileInfoList> {
+    const fireStorage = getStorage(
+      this.commonFireSvc.initOrGetFirebaseApp(),
+      this.libConfig.firebase.storageBucket
+    );
     const lookinFolder = this.buildImageUrl(filePath, userId);
     const listRef = ref(fireStorage, lookinFolder);
 
@@ -147,9 +212,13 @@ export class ImageFireStoreService {
 
       const imageList: ListResult = await list(listRef, listOptions);
       const imageFileInfoList: ImageFileInfoList = {
-        imageFiles: imageList.items.map(img => ({name: img.name, fullPath: img.fullPath, downloadUrl: ''})),
+        imageFiles: imageList.items.map((img) => ({
+          name: img.name,
+          fullPath: img.fullPath,
+          downloadUrl: '',
+        })),
         nextPageToken: imageList.nextPageToken,
-      }
+      };
 
       return imageFileInfoList;
     } catch (error: any) {
@@ -157,8 +226,14 @@ export class ImageFireStoreService {
     }
   }
 
-  public async imageExists(filePath: string, userId: string = ''): Promise<boolean> {
-    const fireStorage = getStorage(this.commonFireSvc.initOrGetFirebaseApp(), this.libConfig.firebase.storageBucket);
+  public async imageExists(
+    filePath: string,
+    userId: string = ''
+  ): Promise<boolean> {
+    const fireStorage = getStorage(
+      this.commonFireSvc.initOrGetFirebaseApp(),
+      this.libConfig.firebase.storageBucket
+    );
     const fileUrl = this.buildImageUrl(filePath, userId);
     const fileRef = ref(fireStorage, fileUrl);
 
@@ -174,5 +249,4 @@ export class ImageFireStoreService {
       }
     }
   }
-
 }

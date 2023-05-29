@@ -12,6 +12,7 @@ export interface OpenaiArticleQueueItem {
     openaiPromptQueue: Array<OpenaiPromptQueueItem>;
     promptQueueItemToAdd: OpenaiPromptQueueItem;
     saveStatus?: boolean;
+    imagePromptText?: string;
 }
 
 export enum OpenaiPromptQueueItemStatus {
