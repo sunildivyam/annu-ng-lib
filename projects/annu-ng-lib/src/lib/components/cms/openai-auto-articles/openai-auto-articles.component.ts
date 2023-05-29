@@ -228,11 +228,13 @@ export class OpenaiAutoArticlesComponent {
         this.promptQueueBatchJustBeforePause = promptQueueBatch;
       return;
     } else {
-      // Resume from where it was paused
-      promptQueueBatch = this.utilsService.deepCopy(
-        this.promptQueueBatchJustBeforePause
-      );
-      this.promptQueueBatchJustBeforePause = null;
+      if (!promptQueueBatch) {
+        // Resume from where it was paused
+        promptQueueBatch = this.utilsService.deepCopy(
+          this.promptQueueBatchJustBeforePause
+        );
+        this.promptQueueBatchJustBeforePause = null;
+      }
     }
 
     // If this is a not a failed call to processQueue(), then create a batch.
@@ -285,7 +287,7 @@ export class OpenaiAutoArticlesComponent {
           faileditems.push(pmtQItem);
           faileditemsIndices.push(batchIndices[index]);
           this.errorMsg.push(
-            `Article Queue: ${this.openaiArticleQueueIndex} | ${pmtQItem.name} | ${item.reason}`
+            `<span class="error">Article Queue:</span> ${this.openaiArticleQueueIndex} | ${pmtQItem.name} | ${item.reason}`
           );
         }
       });
@@ -479,12 +481,12 @@ export class OpenaiAutoArticlesComponent {
       .addArticle(article)
       .then((art) => {
         artQItem.saveStatus = true;
-        this.errorMsg.push(`Article Saved: ${artQItem.name} id: ${art.id}`);
+        this.errorMsg.push(`Article (${artQIndex + 1}) Saved: ${artQItem.name} id: ${art.id}`);
       })
       .catch((err) => {
         artQItem.saveStatus = false;
         this.errorMsg.push(
-          `Error saving article: ${artQItem.name} | ${err.message}`
+          `<span class="error">Error Saving Article:</span>: ${artQItem.name} | ${err.message}`
         );
       });
   }

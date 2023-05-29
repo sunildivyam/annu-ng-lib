@@ -1,20 +1,24 @@
-<anu-openai-form [prompts]='historyPrompts' [selectedPromptText]='' [showHistory]='true' (goClicked)="onNewPrompt($event)">
+<anu-openai-form [prompts]='historyPrompts' [selectedPromptText]='' [showHistory]='true'
+    (goClicked)="onNewPrompt($event)">
 </anu-openai-form>
 
-<anu-collapsible *ngIf="errorMsg.length" [collapsed]="false" class="col-12 spacing-around-vertical" [hamBurgerClassNames]="['size-sm']" [isDropdownStyle]="true">
+<anu-collapsible *ngIf="errorMsg.length" [collapsed]="false" class="col-12 spacing-around-vertical"
+    [hamBurgerClassNames]="['size-sm']" [isDropdownStyle]="true">
     <anu-collapsible-header>
         Queue Messagees
     </anu-collapsible-header>
     <anu-collapsible-content class="row">
-        <ul>
-            <li *ngFor="let msg of errorMsg">{{msg}}</li>
-        </ul>
+        <ol>
+            <li *ngFor="let msg of errorMsg" [innerHTML]="msg"></li>
+        </ol>
     </anu-collapsible-content>
 </anu-collapsible>
 
 <div *ngIf="openaiArticleQueue.length" class="row">
-    <div class="col-6">
-        {{ellapsedTime}}seconds
+    <div class="col-6"><strong>
+            {{ellapsedTime/60}}mins <br />
+            <span *ngIf="!isQueueFinished">Writing article {{openaiArticleQueueIndex + 1}} ...</span>
+        </strong>
     </div>
     <div class="col-6">
         <a *ngIf="!isQueueFinished" class="btn primary" href="javascript:void(0)"
@@ -32,7 +36,8 @@
                 <th class="queue_time-taken">Time taken(s)</th>
                 <th class="queue_action">
                     <span *ngIf="artQueue.saveStatus">Saved</span>
-                    <a *ngIf="!artQueue.saveStatus" class="btn secondary" href="javascript:void(0)" (click)="saveArticle(artQindex)">Save</a>
+                    <a *ngIf="!artQueue.saveStatus" class="btn secondary" href="javascript:void(0)"
+                        (click)="saveArticle(artQindex)">Save</a>
                 </th>
             </tr>
         </thead>
@@ -40,9 +45,8 @@
             <tr *ngFor="let queueItem of artQueue.openaiPromptQueue; let pmtQindex = index">
                 <td>
                     <small>{{queueItem.name}}</small>
-                    <input
-                        [readonly]="!(artQindex > openaiArticleQueueIndex || pmtQindex > openaiPromptQueueIndex)"
-                        type="text" [(ngModel)]="queueItem.prompt.prompt" />
+                    <input [readonly]="queueItem.status !== 'notstarted'" type="text"
+                        [(ngModel)]="queueItem.prompt.prompt" />
                 </td>
                 <td
                     [ngClass]="{'error': queueItem.status === 'failed', 'success': queueItem.status === 'completed', 'warning relative': queueItem.status === 'inprogress'}">
@@ -51,15 +55,15 @@
                 </td>
                 <td>{{queueItem.timeTaken / 1000}}s</td>
                 <td>
-                    <a *ngIf="(artQindex > openaiArticleQueueIndex || pmtQindex > openaiPromptQueueIndex)" class="error" href="javascript:void(0)"
+                    <a *ngIf="queueItem.status === 'notstarted'" class="error" href="javascript:void(0)"
                         (click)="removePromptFromQueue(artQindex, pmtQindex)">X</a>
                 </td>
             </tr>
-            <tr *ngIf="(openaiArticleQueueIndex < artQindex || (openaiArticleQueueIndex === artQindex && openaiPromptQueueIndex < artQueue.openaiPromptQueue.length))">
+            <tr
+                *ngIf="(openaiArticleQueueIndex < artQindex || (openaiArticleQueueIndex === artQindex && openaiPromptQueueIndex < artQueue.openaiPromptQueue.length))">
                 <td>
                     <small>{{artQueue.promptQueueItemToAdd.name}}</small>
-                    <input
-                        type="text" [(ngModel)]="artQueue.promptQueueItemToAdd.prompt.prompt" />
+                    <input type="text" [(ngModel)]="artQueue.promptQueueItemToAdd.prompt.prompt" />
                 </td>
                 <td
                     [ngClass]="{'error': artQueue.promptQueueItemToAdd.status === 'failed', 'success': artQueue.promptQueueItemToAdd.status === 'completed', 'warning relative': artQueue.promptQueueItemToAdd.status === 'inprogress'}">
