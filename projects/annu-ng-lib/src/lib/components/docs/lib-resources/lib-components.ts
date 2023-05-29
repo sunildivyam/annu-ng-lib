@@ -10,6 +10,7 @@ import {
   ContentEditorComponent,
   ContentElementComponent,
   LeafElementComponent,
+  OpenaiAutoArticlesComponent,
 } from '../../cms';
 
 import {
@@ -121,7 +122,7 @@ export const LibComponents = {
   ContentEditorComponent,
   ContentElementComponent,
   LeafElementComponent,
-
+  OpenaiAutoArticlesComponent,
   // Auth
   LoginComponent,
   LoginStatusComponent,

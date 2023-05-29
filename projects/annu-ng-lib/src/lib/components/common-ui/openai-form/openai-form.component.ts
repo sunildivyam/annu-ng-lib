@@ -16,6 +16,7 @@ import { OpenaiPrompt, OpenaiPromptType } from './openai-form.interface';
 })
 export class OpenaiFormComponent implements OnInit, OnChanges {
   @Input() prompts: Array<OpenaiPrompt> = [];
+  @Input() selectedPromptText: string = '';
   @Input() showHistory: boolean = true;
 
   @Output() goClicked = new EventEmitter<Array<OpenaiPrompt>>();
@@ -23,7 +24,6 @@ export class OpenaiFormComponent implements OnInit, OnChanges {
   currentPrompt: string = '';
   showPrompts: boolean = false;
   selectedPrompt: OpenaiPrompt;
-  selectedPromptText: string = '';
   selectedResultType: string = 'mdText';
   promptTypes = Object.entries(OpenaiPromptType).map((pt) => ({
     key: pt[0],

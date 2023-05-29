@@ -50,7 +50,7 @@ import { CategoryEditorComponent } from '../../cms/category-editor/docs.data';
 import { ContentEditorComponent } from '../../cms/content-editor/docs.data';
 import { ContentElementComponent } from '../../cms/content-editor/content-element/docs.data';
 import { LeafElementComponent } from '../../cms/content-editor/leaf-element/docs.data';
-
+import { OpenaiAutoArticlesComponent } from '../../cms/openai-auto-articles/docs.data';
 // Auth
 import { LoginComponent } from '../../auth/login/docs.data';
 import { LoginStatusComponent } from '../../auth/login-status/docs.data';
@@ -116,6 +116,7 @@ export const LibComponentsContent = {
   ContentEditorComponent,
   ContentElementComponent,
   LeafElementComponent,
+  OpenaiAutoArticlesComponent,
 
   // Auth
   LoginComponent,
