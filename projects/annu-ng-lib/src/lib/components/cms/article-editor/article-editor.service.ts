@@ -39,16 +39,8 @@ export class ArticleEditorService {
     return this.article$.asObservable();
   }
 
-  public async generateArticleFromOpenai(
-    articleTitle: string,
-    appConfig: AppConfig,
-    keyWordsPromptPrefix: string,
-    descriptionPromptPrefix: string,
-    contentPromptPrefix: string
-  ): Promise<Article> {
-    const timeStarted = Date.now();
-
-    const article: Article = {
+  public createInitializedArticle(articleTitle: string, appConfig: AppConfig): Article {
+    return {
       id: this.utilsService.getUniqueFromString(articleTitle),
       metaInfo: {
         title: articleTitle,
@@ -58,16 +50,16 @@ export class ArticleEditorService {
         'Content-Type': META_ALLOWED_VALUES.contentTypes[0].name,
         language: META_ALLOWED_VALUES.languages[0].name,
         'revisit-after': '7 days',
-        author: appConfig.metaInfo.author,
+        author: appConfig?.metaInfo?.author,
         type: META_ALLOWED_VALUES.types[0].name,
         image: '',
         url: '', // will be updated post assignment
         card: META_ALLOWED_VALUES.cards[0].name,
-        site_name: appConfig.metaInfo.title,
+        site_name: appConfig?.metaInfo?.title,
         audio: '',
         video: '',
         'article:published_time': this.utilsService.currentDate,
-        'article:author': appConfig.metaInfo['article:author'],
+        'article:author': appConfig?.metaInfo && appConfig?.metaInfo['article:author'],
         'article:section': META_ALLOWED_VALUES.articleSections[0].name,
         'article:tag': '', // will be updated post assignment
       } as MetaInfo,
@@ -84,6 +76,19 @@ export class ArticleEditorService {
       inReview: true,
       features: [],
     };
+  }
+  public async generateArticleFromOpenai(
+    articleTitle: string,
+    appConfig: AppConfig,
+    keyWordsPromptPrefix: string,
+    descriptionPromptPrefix: string,
+    contentPromptPrefix: string
+  ): Promise<Article> {
+    const timeStarted = Date.now();
+
+    const article: Article = this.createInitializedArticle(articleTitle, appConfig);
+    this.article$.next(article);
+
     // set title prompt content for article body
     article.body = await this.generateArticleContentFromOpenai(
       articleTitle, // article title content.
@@ -247,7 +252,7 @@ export class ArticleEditorService {
     return `${this.libConfig.apiBaseUrl}/${canonicalCategoryId}/${articleId}`;
   }
 
-  private readDescriptionFromEditorElement(el: EditorElement): string {
+  public readDescriptionFromEditorElement(el: EditorElement): string {
     let str = [];
     if (el.tagName.toLowerCase() === 'p' && el.data?.text) {
       str.push(el.data.text);
@@ -263,7 +268,7 @@ export class ArticleEditorService {
     return str.join(' ');
   }
 
-  private readKeywordsFromEditorElement(el: EditorElement): Array<string> {
+  public readKeywordsFromEditorElement(el: EditorElement): Array<string> {
     let str: Array<string> = [];
     if (['ul', 'ol'].includes(el.tagName.toLowerCase())) {
       el.children.forEach((chEl) => {
@@ -285,7 +290,7 @@ export class ArticleEditorService {
     return str;
   }
 
-  private generateArticleSubheading(subHeadingText: string): EditorElement {
+  public generateArticleSubheading(subHeadingText: string): EditorElement {
     const editorEl: EditorElement = {
       name: `h2-${Date.now()}`,
       tagName: 'h2',
