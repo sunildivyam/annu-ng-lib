@@ -8,6 +8,7 @@ export const environment = {
   libConfig: {
     apiBaseUrl: baseUrl,  // This should be the hosted url
     docsJsonUrl: `${baseUrl}/assets/documentation.json`,
+    imagesSourceUrl: '/getImage?imageId=',
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },
     firebaseStoreConfig,

@@ -5,7 +5,7 @@
 import { LibConfig } from "@annu/ng-lib";
 import { firebaseAppConfig, firebaseui, firebaseStoreConfig } from "../app/config/firebase.config";
 import { openaiConfig } from "../app/config/openai.config";
-const baseUrl = 'http://localhost:4201';
+const baseUrl = 'http://localhost:4200';
 
 export const environment = {
   production: false,
@@ -13,6 +13,7 @@ export const environment = {
     // dev:ssr local
     apiBaseUrl: baseUrl,
     docsJsonUrl: `${baseUrl}/assets/documentation.json`, // absolute urls are required for SSR
+    imagesSourceUrl: '/getImage?imageId=',
     firebaseui: { ...firebaseui },
     firebase: { ...firebaseAppConfig, apiKey: '' },
     firebaseStoreConfig,
