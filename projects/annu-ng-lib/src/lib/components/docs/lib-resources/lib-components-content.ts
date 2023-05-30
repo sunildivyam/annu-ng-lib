@@ -37,6 +37,7 @@ import { FiltersComponent } from '../../common-ui/filters/docs.data';
 import { ThemeFontResizerComponent } from '../../common-ui/theme-font-resizer/docs.data';
 import { SitemapComponent } from '../../common-ui/sitemap/sitemap/docs.data';
 import { OpenaiFormComponent } from '../../common-ui/openai-form/docs.data';
+import { OpenaiImageFormComponent } from '../../common-ui/openai-image-form/docs.data';
 
 // CMS
 import { ArticleComponent } from '../../cms/article/docs.data';
@@ -103,6 +104,7 @@ export const LibComponentsContent = {
   ThemeFontResizerComponent,
   SitemapComponent,
   OpenaiFormComponent,
+  OpenaiImageFormComponent,
 
   // CMS
   ArticleComponent,

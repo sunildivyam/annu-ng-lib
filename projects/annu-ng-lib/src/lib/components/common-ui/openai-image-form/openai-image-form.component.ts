@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ImageFileInfo } from '../image-browser/image-browser.interface';
 import { OpenaiService } from '../../../openai/openai.service';
 import { ImageFireStoreService } from '../../../firebase/image-storage/image-fire-store.service';
-import { OpenaiImageSize } from '@annu/ng-lib/public-api';
+import { OpenaiImageSize } from '../../../openai/openai.interface';
 import { AuthFirebaseService } from '../../../firebase/auth/auth-firebase.service';
 import { LibConfig } from '../../../app-config/app-config.interface';
 

@@ -32,7 +32,6 @@ import {
   FooterNavComponent,
   HamburgerComponent,
   ImageFormComponent,
-  OpenaiImageFormComponent,
   LinkFormComponent,
   MenuComponent,
   MetaFormComponent,
@@ -53,6 +52,7 @@ import {
   ThemeFontResizerComponent,
   SitemapComponent,
   OpenaiFormComponent,
+  OpenaiImageFormComponent,
 } from '../../common-ui';
 
 import {
@@ -89,7 +89,6 @@ export const LibComponents = {
   FooterNavComponent,
   HamburgerComponent,
   ImageFormComponent,
-  OpenaiImageFormComponent,
   LinkFormComponent,
   MenuComponent,
   MetaFormComponent,
@@ -110,6 +109,7 @@ export const LibComponents = {
   ThemeFontResizerComponent,
   SitemapComponent,
   OpenaiFormComponent,
+  OpenaiImageFormComponent,
 
 
   // CMS
