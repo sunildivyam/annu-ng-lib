@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LibConfig } from '../../app-config';
+import Compressor from 'compressorjs';
+
 import {
   getStorage,
   ref,
@@ -131,17 +133,12 @@ export class ImageFireStoreService {
     }
 
     try {
-      let uploadResult;
+
       if (isBas64) {
-        uploadResult = await uploadString(
-          fileRef,
-          imageData,
-          StringFormat.BASE64
-        );
-      } else {
-        uploadResult = await uploadBytes(fileRef, imageData);
+        imageData = await this.compressBase64ToJpeg(imageData);
       }
 
+      const uploadResult = await uploadBytes(fileRef, imageData);
       const downloadUrl = await this.getImageUrl(filePath, userId);
       const imageFileInfo: ImageFileInfo = {
         name: uploadResult.ref.name,
@@ -248,5 +245,48 @@ export class ImageFireStoreService {
         return false;
       }
     }
+  }
+
+  public async compressBase64ToJpeg(base64Image: string): Promise<Blob> {
+    const { maxWidth } =
+    this.libConfig.firebaseStoreConfig;
+
+    return new Promise((resolve, reject) => {
+      // Convert base64 to blob
+      const blob = this.dataURItoBlob(base64Image, 'image/jpeg');
+      const compressOptions: Compressor.Options = {
+        strict: true,
+        checkOrientation: true,
+        width: maxWidth, // Set the maximum width of the compressed image (optional)
+        height: maxWidth/2,
+        maxWidth: maxWidth, // Set the maximum width of the compressed image (optional)
+        maxHeight: maxWidth/2,
+        resize: 'cover',
+        convertTypes: 'image/jpg',
+        quality: 0.7, // Set the image quality (optional)
+
+        success: (compressedBlob: Blob) => {
+          // Handle the compressed image blob
+          resolve(compressedBlob);
+        },
+        error: (error: any) => {
+          reject(`Image compression error:${error.message}`);
+        },
+      }
+      // Create an image compressor instance
+      new Compressor(blob, compressOptions);
+    });
+  }
+
+  public dataURItoBlob(dataURI: string, type: string): Blob {
+    const byteString = atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([uint8Array], { type });
   }
 }

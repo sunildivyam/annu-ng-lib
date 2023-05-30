@@ -305,7 +305,7 @@ const jsonTheme = `{
       },
       {
         "name": "siteWidth",
-        "value": "1080px"
+        "value": "1369px"
       },
       {
         "name": "lineHeight",
