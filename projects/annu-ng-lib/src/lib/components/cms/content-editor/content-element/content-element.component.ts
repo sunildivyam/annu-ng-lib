@@ -13,6 +13,7 @@ import { TOOLBAR_FORMATTING, TOOLBAR_STYLES } from '../constants';
 export class ContentElementComponent implements OnInit, AfterContentChecked, OnChanges {
   @Input() editorElement: EditorElement = {} as EditorElement;
   @Input() fullTree: EditorElement = {} as EditorElement;
+  @Input() enableOpenai: boolean = false;
   @Output() changed = new EventEmitter<EditorElement>();
 
   isToolbar: boolean = false;

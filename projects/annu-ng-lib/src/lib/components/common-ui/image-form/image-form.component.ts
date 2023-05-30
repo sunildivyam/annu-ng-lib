@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ImageFileInfo } from '../image-browser/image-browser.interface';
 import { ImageInfo } from './image-form.interface';
 import { LibConfig } from '../../../app-config/app-config.interface';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
   selector: 'anu-image-form',
@@ -13,12 +14,16 @@ export class ImageFormComponent implements OnInit {
   @Input() alt: string = '';
   @Input() helpText: string = '';
   @Input() isSrcFromFirebase: boolean = false;  // if select images as Firebase storage download urls else API url
+  @Input() imageFileName: string = '';
+  @Input() imagePromptText: string = '';
+  @Input() enableOpenaiAutoImage: boolean = false;
+
   @Output() cancel = new EventEmitter();
   @Output() save = new EventEmitter<ImageInfo>();
 
   selectedImage: ImageFileInfo;
 
-  constructor(private libConfig: LibConfig) { }
+  constructor(private libConfig: LibConfig, private utilsService: UtilsService) { }
 
   ngOnInit(): void {
   }
@@ -37,10 +42,13 @@ export class ImageFormComponent implements OnInit {
     if (this.isSrcFromFirebase === true) {
       this.src = imageFileInfo.downloadUrl;
     } else {
-      this.src = `${this.libConfig.imagesSourceUrl}${imageFileInfo.fullPath}`;
+      this.src = this.utilsService.getImageUrl(this.libConfig, imageFileInfo.fullPath);
     }
 
     this.selectedImage = imageFileInfo;
   }
 
+  public openaiFileUploaded(imageFileInfo: ImageFileInfo): void {
+    this.src = this.utilsService.getImageUrl(this.libConfig, imageFileInfo.fullPath);
+  }
 }

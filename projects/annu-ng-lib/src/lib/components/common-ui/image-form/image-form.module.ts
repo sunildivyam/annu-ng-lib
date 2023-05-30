@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ErrorModule } from '../error';
 import { ImageBrowserModule } from '../image-browser';
 import { CollapsibleModule } from '../collapsible';
+import { OpenaiImageFormModule } from '../openai-image-form/openai-image-form.module';
 
 
 
@@ -16,6 +17,7 @@ import { CollapsibleModule } from '../collapsible';
     ErrorModule,
     ImageBrowserModule,
     CollapsibleModule,
+    OpenaiImageFormModule,
   ],
   exports: [ImageFormComponent],
 })
