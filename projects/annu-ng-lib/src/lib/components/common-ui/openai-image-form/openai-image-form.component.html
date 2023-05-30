@@ -5,7 +5,7 @@
             overwritten in your image library.</small></label>
     <input type="text" [(ngModel)]="imageFileName" name="imageFileName" />
     <div *ngIf="!!generatedBase64Image" class="row">
-        <label>Generated Image <a class="btn primary" href="javascript:void(0)"
+        <label>Generated Image <a class="primary" href="javascript:void(0)"
                 (click)="generatedBase64Image = ''">Clear</a></label>
         <img class="oif_image spacing-around-vertical" [src]="'data:image/image/jpg;base64,'+ generatedBase64Image" />
     </div>

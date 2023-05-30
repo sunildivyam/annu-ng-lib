@@ -27,7 +27,7 @@
             <span *ngIf="!isQueueFinished && !isQueuePaused">Writing article {{openaiArticleQueueIndex + 1}} ...</span>
         </strong>
     </div>
-    <div class="col-6">
+    <div class="col-6 right">
         <a *ngIf="!isQueueFinished" class="btn primary" href="javascript:void(0)"
             (click)="togglePauseQueue()">{{isQueuePaused ? 'Start Queue': 'Pause Queue'}}</a>
     </div>

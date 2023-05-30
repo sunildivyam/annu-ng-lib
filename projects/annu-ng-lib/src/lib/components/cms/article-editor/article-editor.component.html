@@ -16,7 +16,8 @@
                 <h1>{{article?.metaInfo?.title}}</h1>
                 <p>{{article?.metaInfo?.description}}</p>
                 <label>You can start writing your content below:</label>
-                <anu-content-editor [enableOpenai]="enableOpenai" class="col-12" [value]="article?.body" (changed)="articleBodyChanged($event)"></anu-content-editor>
+                <anu-content-editor [enableOpenai]="enableOpenai" class="col-12" [value]="article?.body"
+                    (changed)="articleBodyChanged($event)"></anu-content-editor>
             </anu-card-body>
         </anu-card>
 
@@ -65,8 +66,9 @@
             </anu-card-body>
         </anu-card>
         <anu-modal [opened]="toggleImageForm" title="Choose an image" (cancelClick)="cancelImageChange()">
-            <anu-image-form [enableOpenaiAutoImage]="enableOpenai" [helpText]="imageHelpText" [src]="article?.image?.src" [alt]="article?.image?.alt" (cancel)="cancelImageChange()"
-                (save)="saveImageChange($event)"></anu-image-form>
+            <anu-image-form [enableOpenaiAutoImage]="enableOpenai" [helpText]="imageHelpText" [imageFileName]="article?.id + '.jpg'"
+                [imagePromptText]="article?.metaInfo?.title" [src]="article?.image?.src" [alt]="article?.image?.alt"
+                (cancel)="cancelImageChange()" (save)="saveImageChange($event)"></anu-image-form>
         </anu-modal>
 
         <section class="row spacing-vertical right">
@@ -78,7 +80,8 @@
     <section class="tab-item-body" [ngClass]="{'active': activeTab.name === 'metainfo'}">
         <small><i>The <strong>Page title</strong> and <strong>Page description</strong> ideally should be same as to
                 your article's content.</i></small>
-        <anu-meta-form [metaInfo]="article?.metaInfo" [readonlyMetaProps]="readonlyMetaProps" (changed)="articleMetaChanged($event)"></anu-meta-form>
+        <anu-meta-form [metaInfo]="article?.metaInfo" [readonlyMetaProps]="readonlyMetaProps"
+            (changed)="articleMetaChanged($event)"></anu-meta-form>
 
         <section class="row spacing-vertical right">
             <a class="btn" href="#" (click)="saveArticle($event)">Save Article</a>
