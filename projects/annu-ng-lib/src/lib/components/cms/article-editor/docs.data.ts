@@ -33,5 +33,6 @@ export const ArticleEditorComponent: DocsData = {
     projectionContent: '',
     inputPropsValues: {
         categories: SAMPLE_CATEGORIES,
+        enableOpenai: true,
     }
 }

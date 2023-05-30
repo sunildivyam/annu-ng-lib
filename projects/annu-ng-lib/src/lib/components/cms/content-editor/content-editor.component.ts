@@ -14,6 +14,7 @@ import { Rectangle } from './content-editor.interface';
 })
 export class ContentEditorComponent implements OnInit {
   @Input() value: EditorElement = { ...EDITOR_ROOT_ELEMENT };
+  @Input() enableOpenai: boolean = false;
   @ViewChild('popup', { static: true }) popupEl: ElementRef;
   @Output() changed = new EventEmitter<EditorElement>();
 

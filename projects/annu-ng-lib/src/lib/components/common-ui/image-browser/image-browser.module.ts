@@ -4,6 +4,7 @@ import { ImageBrowserComponent } from './image-browser.component';
 import { CardModule } from '../card';
 import { ErrorModule } from '../error';
 import { SpinnerModule } from '../spinner';
+import { SearchBoxModule } from '../search-box/search-box.module';
 
 
 
@@ -16,6 +17,7 @@ import { SpinnerModule } from '../spinner';
     CardModule,
     ErrorModule,
     SpinnerModule,
+    SearchBoxModule,
   ],
   exports: [
     ImageBrowserComponent

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Article, ArticleFeatures } from '../article/article.interface';
 import { EditorElement, EDITOR_ROOT_ELEMENT } from '../content-editor';
 import { ImageInfo } from '../../common-ui/image-form';
@@ -7,19 +15,20 @@ import { Tab } from '../../common-ui/tabs';
 import { ARTICLE_EDITOR_TABS } from './constants';
 import { UtilsService } from '../../../services/utils';
 import { Category } from '../category/category.interface';
+import { LibConfig } from '../../../app-config/app-config.interface';
 
 const SAMPLE_ARTICLE = {
   body: { ...EDITOR_ROOT_ELEMENT },
   metaInfo: {
     title: EDITOR_ROOT_ELEMENT.children[0]?.data?.text,
     description: EDITOR_ROOT_ELEMENT.children[1]?.data?.text,
-  }
+  },
 };
 
 @Component({
   selector: 'anu-article-editor',
   templateUrl: './article-editor.component.html',
-  styleUrls: ['./article-editor.component.scss']
+  styleUrls: ['./article-editor.component.scss'],
 })
 export class ArticleEditorComponent implements OnInit, OnChanges {
   @Input() value: Article | null;
@@ -31,7 +40,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   @Input() enableDelete: boolean = true;
   @Input() enableReadonlyIdToggle: boolean = true;
   @Input() enableFeatures: boolean = true;
-
+  @Input() enableOpenai: boolean = false;
   @Input() categories: Array<Category> = [];
   @Output() changed = new EventEmitter<Article>();
   @Output() saveClicked = new EventEmitter<Article>();
@@ -40,7 +49,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   @Output() deleteClicked = new EventEmitter<Article>();
 
   toggleImageForm: boolean = false;
-  tabs: Array<Tab> = ARTICLE_EDITOR_TABS.map(t => ({ ...t }));
+  tabs: Array<Tab> = ARTICLE_EDITOR_TABS.map((t) => ({ ...t }));
 
   activeTab = this.tabs[0];
   article: Article;
@@ -51,10 +60,18 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   articleFeatures: Array<any> = [];
   readonlyMetaProps: Array<string> = [];
 
-  constructor(private utils: UtilsService) {
-    this.sampleArticle = { ...SAMPLE_ARTICLE, id: this.utils.getUniqueFromString(SAMPLE_ARTICLE.metaInfo.title), created: utils.currentDate, updated: utils.currentDate };
+  constructor(private utils: UtilsService, private libConfig: LibConfig) {
+    this.sampleArticle = {
+      ...SAMPLE_ARTICLE,
+      id: this.utils.getUniqueFromString(SAMPLE_ARTICLE.metaInfo.title),
+      created: utils.currentDate,
+      updated: utils.currentDate,
+    };
     this.article = { ...this.sampleArticle };
-    this.articleFeatures = Object.keys(ArticleFeatures).map(key => ({ id: ArticleFeatures[key], title: ArticleFeatures[key] }));
+    this.articleFeatures = Object.keys(ArticleFeatures).map((key) => ({
+      id: ArticleFeatures[key],
+      title: ArticleFeatures[key],
+    }));
   }
 
   private initArticle() {
@@ -66,11 +83,17 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     }
 
     // Init Article Categories
-    this.selectedArticleCategories = this.article.categories?.map(cat => ({ id: cat }));
-    this.categoriesMultiSelectItems = this.categories?.map(cat => ({ id: cat?.id, title: cat?.metaInfo?.title }));
+    this.selectedArticleCategories = this.article.categories?.map((cat) => ({
+      id: cat,
+    }));
+    this.categoriesMultiSelectItems = this.categories?.map((cat) => ({
+      id: cat?.id,
+      title: cat?.metaInfo?.title,
+    }));
 
     // Init ArticleFeatures
-    this.selectedArticleFeatures = this.article?.features?.map(f => ({ id: f, title: f })) || [];
+    this.selectedArticleFeatures =
+      this.article?.features?.map((f) => ({ id: f, title: f })) || [];
 
     // Init Meta form with readonly props
     this.readonlyMetaProps = this.readonlyTitle === true ? ['title'] : [];
@@ -95,7 +118,9 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
 
   public articleMetaChanged(metaInfo: MetaInfo) {
     if (metaInfo.title !== this.value.metaInfo.title) {
-      this.article.id = this.enableUniqueId ? this.utils.getUniqueFromString(metaInfo.title) : this.utils.toDashedString(metaInfo.title);
+      this.article.id = this.enableUniqueId
+        ? this.utils.getUniqueFromString(metaInfo.title)
+        : this.utils.toDashedString(metaInfo.title);
     } else {
       this.article.id = this.value.id;
     }
@@ -105,13 +130,29 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   }
 
   public onCategoriesChanged(selectedCategories: Array<any> = []): void {
-    this.article = { ...this.article, categories: selectedCategories?.map(cat => cat?.id) };
+    this.article = {
+      ...this.article,
+      categories: selectedCategories?.map((cat) => cat?.id),
+      metaInfo: {
+        ...this.article.metaInfo,
+        url: this.utils.getCanonicalUrl(
+          this.libConfig,
+          selectedCategories.length ? selectedCategories[0].id: '',
+          this.article.id
+        ),
+      },
+    };
     this.selectedArticleCategories = [...selectedCategories];
     this.changed.emit({ ...this.article });
   }
 
-  public onArticleFeaturesChanged(selectedArticleFeatures: Array<any> = []): void {
-    this.article = { ...this.article, features: selectedArticleFeatures?.map(f => f.id) };
+  public onArticleFeaturesChanged(
+    selectedArticleFeatures: Array<any> = []
+  ): void {
+    this.article = {
+      ...this.article,
+      features: selectedArticleFeatures?.map((f) => f.id),
+    };
     this.selectedArticleFeatures = [...selectedArticleFeatures];
     this.changed.emit({ ...this.article });
   }
@@ -144,8 +185,10 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
 
   public saveImageChange(image: ImageInfo) {
     this.article.image = image;
-    this.article.metaInfo = this.article.metaInfo || {};
-    this.article.metaInfo.image = image?.src || '';
+    this.article.metaInfo = {
+      ...this.article.metaInfo,
+      image: image?.src || '',
+    };
     this.toggleImageForm = false;
     this.changed.emit({ ...this.article });
   }
@@ -154,7 +197,6 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
     event.preventDefault();
     this.saveClicked.emit({ ...this.article });
   }
-
 
   public deleteArticle(event: any): void {
     event.preventDefault();

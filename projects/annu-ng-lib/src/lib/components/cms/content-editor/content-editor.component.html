@@ -1,4 +1,4 @@
-<anu-content-element (changed)="contentChanged($event)" [editorElement]="value" [fullTree]="value">
+<anu-content-element [enableOpenai]="enableOpenai" (changed)="contentChanged($event)" [editorElement]="value" [fullTree]="value">
 </anu-content-element>
 
 <div #popup [ngClass]="{'opened': isTextSelected}" class="popup" [style.top.px]="selectionRect.bottom"
@@ -12,7 +12,7 @@
     </anu-modal>
     <!-- Image Form Modal-->
     <anu-modal title="Choose an image" [opened]="toggleImageForm"  (cancelClick)="cancelImageModal()">
-        <anu-image-form [src]="imageInfo.src" [alt]="imageInfo.alt" (cancel)="cancelImageModal()"
+        <anu-image-form [enableOpenaiAutoImage]="enableOpenai" [src]="imageInfo.src" [alt]="imageInfo.alt" (cancel)="cancelImageModal()"
             (save)="saveImage($event)">
         </anu-image-form>
     </anu-modal>

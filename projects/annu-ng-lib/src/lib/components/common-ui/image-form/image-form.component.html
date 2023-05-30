@@ -4,12 +4,23 @@
     <label>Image alt text</label>
     <input type="text" [(ngModel)]="alt" name="image-alt" />
 
-    <anu-collapsible class="spacing-around-vertical" [hamBurgerClassNames]="['size-sm']">
+    <anu-collapsible *ngIf="enableOpenaiAutoImage" [collapsed]="false" class="spacing-around-vertical" [hamBurgerClassNames]="['size-sm']">
+        <anu-collapsible-header>
+            Autogenerate Image
+        </anu-collapsible-header>
+        <anu-collapsible-content>
+            <anu-openai-image-form [imageFileName]="imageFileName" [imagePromptText]="imagePromptText"
+                (fileUploaded)="openaiFileUploaded($event)"></anu-openai-image-form>
+        </anu-collapsible-content>
+    </anu-collapsible>
+
+    <anu-collapsible [collapsed]="false" class="spacing-around-vertical" [hamBurgerClassNames]="['size-sm']">
         <anu-collapsible-header>
             Browse from Server
         </anu-collapsible-header>
         <anu-collapsible-content>
-            <anu-image-browser [helpText]="helpText" (selected)="onFileBrowserSelect($event)" [selectedImage]="selectedImage">
+            <anu-image-browser [helpText]="helpText" (selected)="onFileBrowserSelect($event)"
+                [selectedImage]="selectedImage">
             </anu-image-browser>
         </anu-collapsible-content>
     </anu-collapsible>

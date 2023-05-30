@@ -10,8 +10,12 @@
         </div>
     </anu-card-body>
 </anu-card>
+<div class="row right">
+     <!-- Image Files filter -->
+<anu-search-box classs="col-12" [items]="imagesFiles" [keys]="['name']" (changed)="onImageListFilter($event)"></anu-search-box>
 
-<ng-container *ngFor="let imgFile of imagesFiles">
+</div>
+<ng-container *ngFor="let imgFile of imagesFilesFiltered">
     <anu-card class="border-round" [ngClass]="imageClassNames" [class.primary-lightest-bg]="imgFile.downloadUrl === selectedImage?.downloadUrl">
         <anu-card-image>
             <div *ngIf="!imgFile.downloadUrl" class="image-preview relative">
@@ -20,7 +24,7 @@
             </div>
             <img *ngIf="imgFile.downloadUrl" [src]="imgFile.downloadUrl" [alt]="imgFile.name" />
         </anu-card-image>
-        <anu-card-title class="spacing-around-vertical">
+        <anu-card-title class="spacing-around-vertical img-card-title">
             {{imgFile.name}}
         </anu-card-title>
         <anu-card-footer>

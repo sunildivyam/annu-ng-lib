@@ -62,7 +62,7 @@
               "zone.js",
               "dialog-polyfill"
             ],
-            "allowedCommonJsDependencies": ["prismjs","buffer", "stream", "xml-js"],
+            "allowedCommonJsDependencies": ["prismjs","buffer", "stream", "xml-js", "showdown", "openai", "compressorjs"],
             "tsConfig": "projects/annu-ng-lib-pages/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [

@@ -30,3 +30,4 @@ export * from './filters';
 export * from './theme-font-resizer';
 export * from './sitemap';
 export * from './openai-form';
+export * from './openai-image-form';

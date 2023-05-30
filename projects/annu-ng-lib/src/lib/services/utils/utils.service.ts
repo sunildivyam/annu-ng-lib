@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseStoreConfig } from '../../firebase/firebase.interface';
+import { LibConfig } from '../../app-config/app-config.interface';
+import { ImageFileInfo } from '../../components/common-ui/image-browser/image-browser.interface';
 
 
 /**
@@ -221,5 +223,13 @@ export class UtilsService {
 
   public delay(miliseconds: number): Promise<unknown> {
     return new Promise(resolve => setTimeout(resolve, miliseconds));
+  }
+
+  public getImageUrl(libConfig: LibConfig, imageFullPath: string): string {
+    return `${libConfig.imagesSourceUrl}${imageFullPath}`;
+  }
+
+  public getCanonicalUrl(libConfig: LibConfig, categoryid: string, articleId: string): string {
+    return `${libConfig.apiBaseUrl}/${categoryid}/${articleId}`;
   }
 }

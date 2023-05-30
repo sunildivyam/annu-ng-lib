@@ -31,13 +31,13 @@ import { FiltersModule } from './filters/filters.module';
 import { ThemeFontResizerModule } from './theme-font-resizer/theme-font-resizer.module';
 import { SitemapModule } from './sitemap';
 import { OpenaiFormModule } from './openai-form/openai-form.module';
+import { OpenaiImageFormModule } from './openai-image-form/openai-image-form.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    OpenaiFormModule,
 
   ],
   exports: [
@@ -70,6 +70,8 @@ import { OpenaiFormModule } from './openai-form/openai-form.module';
     FiltersModule,
     ThemeFontResizerModule,
     SitemapModule,
+    OpenaiFormModule,
+    OpenaiImageFormModule,
   ],
 })
 export class CommonUiModule { }
