@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-  CanActivateChild,
-  UrlTree
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { AuthFirebaseService } from '../../firebase/auth/auth-firebase.service';
 
 
 @Injectable()
-export class IsLoggedInGuard implements CanActivate, CanActivateChild {
+export class IsLoggedInGuard  {
 
   constructor(private authFireSvc: AuthFirebaseService,
     private router: Router) { }

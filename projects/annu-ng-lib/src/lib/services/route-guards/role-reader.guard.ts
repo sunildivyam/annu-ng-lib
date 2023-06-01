@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-  CanActivateChild,
-  UrlTree
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { AuthFirebaseService } from '../../firebase/auth/auth-firebase.service';
 import { FIREBASE_AUTH_ROLES } from '../../firebase/auth/auth-firebase.constants';
 
 
 @Injectable()
-export class RoleReaderGuard implements CanActivate, CanActivateChild {
+export class RoleReaderGuard  {
 
   constructor(private authFireSvc: AuthFirebaseService, private router: Router) { }
 

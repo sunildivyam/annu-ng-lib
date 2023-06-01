@@ -1,11 +1,7 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { isPlatformServer } from '@angular/common';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { LibDocsHomeViewRouteData } from '../lib-docs-route-resolvers.interface';
 
 import { DocsService } from '../../../components/docs';
@@ -22,7 +18,7 @@ import { DocsService } from '../../../components/docs';
  * @implements {Resolve<LibDocsHomeViewRouteData>}
  */
 @Injectable()
-export class LibDocsHomeViewRouteResolver implements Resolve<LibDocsHomeViewRouteData> {
+export class LibDocsHomeViewRouteResolver  {
 
   routeData: LibDocsHomeViewRouteData = {};
   LOGS_MODULE_NAME: string = LibDocsHomeViewRouteResolver.name;
