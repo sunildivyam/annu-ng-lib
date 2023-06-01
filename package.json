@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.0.4",
-    "@angular/cli": "~15.0.4",
+    "@angular/cli": "~16.0.4",
     "@angular/compiler-cli": "^16.0.4",
     "@compodoc/compodoc": "^1.1.19",
     "@nguniversal/builders": "^16.0.2",
