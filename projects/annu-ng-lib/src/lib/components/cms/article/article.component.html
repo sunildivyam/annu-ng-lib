@@ -1,7 +1,7 @@
-<anu-card [imageCssClasses]="['col-sm-12', 'col-md-4', 'col-lg-4']"
-    [contentCssClasses]="['col-sm-12', 'col-md-8', 'col-lg-8']" class="nowrap-md nowrap-lg">
-    <anu-card-image *ngIf="value?.image?.src">
-        <a *ngIf="titleHref" [routerLink]="titleHref" class="shadow"><img [src]="value?.image?.src" [alt]="value?.image?.alt" /></a>
+<anu-card [imageCssClasses]="imageClassNames" [contentCssClasses]="contentClassNames" [ngClass]="cardClassNames">
+    <anu-card-image *ngIf="value?.image?.src && showImage">
+        <a *ngIf="titleHref" [routerLink]="titleHref" class="shadow"><img [src]="value?.image?.src"
+                [alt]="value?.image?.alt" /></a>
         <img *ngIf="!titleHref" [src]="value?.image?.src" [alt]="value?.image?.alt" />
     </anu-card-image>
     <anu-card-image *ngIf="!value?.image?.src">

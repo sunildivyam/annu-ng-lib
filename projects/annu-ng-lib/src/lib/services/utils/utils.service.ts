@@ -225,11 +225,37 @@ export class UtilsService {
     return new Promise(resolve => setTimeout(resolve, miliseconds));
   }
 
-  public getImageUrl(libConfig: LibConfig, imageFullPath: string): string {
-    return `${libConfig.imagesSourceUrl}${imageFullPath}`;
+
+  /**
+   * Generates Image source urls to be displayed from API.
+   * Note: Do not provide base url, while saving urls to db, but while displaying only.
+   * @date 6/4/2023 - 12:27:34 AM
+   *
+   * @public
+   * @param {string} imageFullPath
+   * @param {string} imageApiEndpoint
+   * @param {string} [baseUrl='']
+   * @returns {string}
+   */
+  public getImageUrl(imageFullPath: string, imageApiEndpoint: string, baseUrl: string = ''): string {
+    const imageApiUrl = `${imageApiEndpoint}${imageFullPath}`;
+    return baseUrl ? `${baseUrl}/${imageApiUrl}` : imageApiUrl;
   }
 
-  public getCanonicalUrl(libConfig: LibConfig, categoryid: string, articleId: string): string {
-    return `${libConfig.apiBaseUrl}/${categoryid}/${articleId}`;
+  /**
+   * Generates the canonical categiry or article url.
+   * Note: Do not provide base url, while saving urls to db, but while displaying only.
+   * @date 6/4/2023 - 12:17:52 AM
+   *
+   * @public
+   * @param {string} categoryid
+   * @param {string} [articleId='']
+   * Provide only when displaying the url, and not while saving to db.
+   * @param {string} [baseUrl='']
+   * @returns {string}
+   */
+  public getCanonicalUrl(categoryid: string, articleId: string = '', baseUrl: string = ''): string {
+    const articleSegment = articleId ? `/${articleId}` : '';
+    return baseUrl ? `${baseUrl}/${categoryid}${articleSegment}` : `${categoryid}${articleSegment}`;
   }
 }

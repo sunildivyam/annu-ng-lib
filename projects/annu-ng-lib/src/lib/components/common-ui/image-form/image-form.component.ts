@@ -42,13 +42,19 @@ export class ImageFormComponent implements OnInit {
     if (this.isSrcFromFirebase === true) {
       this.src = imageFileInfo.downloadUrl;
     } else {
-      this.src = this.utilsService.getImageUrl(this.libConfig, imageFileInfo.fullPath);
+      this.src = this.utilsService.getImageUrl(
+          imageFileInfo.fullPath,
+          this.libConfig.imagesSourceUrl,
+        );
     }
 
     this.selectedImage = imageFileInfo;
   }
 
   public openaiFileUploaded(imageFileInfo: ImageFileInfo): void {
-    this.src = this.utilsService.getImageUrl(this.libConfig, imageFileInfo.fullPath);
+    this.src = this.utilsService.getImageUrl(
+          imageFileInfo.fullPath,
+          this.libConfig.imagesSourceUrl,
+        );
   }
 }

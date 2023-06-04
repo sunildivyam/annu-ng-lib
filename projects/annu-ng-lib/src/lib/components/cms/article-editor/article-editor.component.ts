@@ -15,7 +15,6 @@ import { Tab } from '../../common-ui/tabs';
 import { ARTICLE_EDITOR_TABS } from './constants';
 import { UtilsService } from '../../../services/utils';
 import { Category } from '../category/category.interface';
-import { LibConfig } from '../../../app-config/app-config.interface';
 
 const SAMPLE_ARTICLE = {
   body: { ...EDITOR_ROOT_ELEMENT },
@@ -60,7 +59,7 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
   articleFeatures: Array<any> = [];
   readonlyMetaProps: Array<string> = [];
 
-  constructor(private utils: UtilsService, private libConfig: LibConfig) {
+  constructor(private utils: UtilsService) {
     this.sampleArticle = {
       ...SAMPLE_ARTICLE,
       id: this.utils.getUniqueFromString(SAMPLE_ARTICLE.metaInfo.title),
@@ -136,7 +135,6 @@ export class ArticleEditorComponent implements OnInit, OnChanges {
       metaInfo: {
         ...this.article.metaInfo,
         url: this.utils.getCanonicalUrl(
-          this.libConfig,
           selectedCategories.length ? selectedCategories[0].id: '',
           this.article.id
         ),
