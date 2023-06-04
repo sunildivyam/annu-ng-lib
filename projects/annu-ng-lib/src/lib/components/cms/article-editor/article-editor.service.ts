@@ -338,14 +338,14 @@ export class ArticleEditorService {
     if (!jsonEl) return jsonEl;
 
     const phrasesF = phrases.filter((phrase) =>
-      jsonEl.data?.text.includes(phrase)
+      jsonEl?.data?.text.includes(phrase)
     );
     if (
       phrasesF.length ||
-      (jsonEl.tagName === '#text' && jsonEl.data?.text === '\n')
+      (jsonEl?.tagName === '#text' && jsonEl?.data?.text === '\n')
     ) {
       return null;
-    } else if (jsonEl.children && jsonEl.children.length) {
+    } else if (jsonEl?.children && jsonEl.children.length) {
       jsonEl.children = jsonEl.children
         .map((el) => this.cleanEditorEl(el, phrases))
         .filter((el) => el !== null);

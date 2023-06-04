@@ -263,8 +263,9 @@ export class UtilsService {
     baseUrl: string = ''
   ): string {
     const articleSegment = articleId ? `/${articleId}` : '';
+    const catId = categoryid.indexOf('/') === 0 ? categoryid : `/${categoryid}`;
     return baseUrl
-      ? `${baseUrl}/${categoryid}${articleSegment}`
-      : `/${categoryid}${articleSegment}`;
+      ? `${baseUrl}${catId}${articleSegment}`
+      : `${catId}${articleSegment}`;
   }
 }
