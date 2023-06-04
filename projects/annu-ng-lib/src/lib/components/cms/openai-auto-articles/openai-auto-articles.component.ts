@@ -35,6 +35,7 @@ import { EditorElement } from '../content-editor';
 import { OpenaiImageSize } from '../../../openai/openai.interface';
 import { ImageFireStoreService } from '../../../firebase/image-storage/image-fire-store.service';
 import { AuthFirebaseService } from '../../../firebase/auth/auth-firebase.service';
+import { OPENAI_ID_PHRASES } from '../../../openai/openai.constants';
 
 @Component({
   selector: 'anu-openai-auto-articles',
@@ -305,7 +306,9 @@ export class OpenaiAutoArticlesComponent {
             .openaiPromptQueue[batchIndices[index]];
         if (item.status === 'fulfilled') {
           // Write result back to original promptQueue, on successful prompt
-          pmtQItem.prompt.message.json = this.html2json.html2json(this.html2json.md2html(item.value));;
+          pmtQItem.prompt.message.json = this.html2json.html2json(
+            this.html2json.md2html(item.value)
+          );
           pmtQItem.status = OpenaiPromptQueueItemStatus.completed;
           pmtQItem.timeTaken = Date.now() - this.batchStartTime;
         } else {
@@ -315,7 +318,9 @@ export class OpenaiAutoArticlesComponent {
           faileditems.push(pmtQItem);
           faileditemsIndices.push(batchIndices[index]);
           this.errorMsg.push(
-            `<span class="error">Article Queue:</span> ${this.openaiArticleQueueIndex + 1} | ${pmtQItem.name} | ${item.reason}`
+            `<span class="error">Article Queue:</span> ${
+              this.openaiArticleQueueIndex + 1
+            } | ${pmtQItem.name} | ${item.reason}`
           );
         }
       });
@@ -478,7 +483,10 @@ export class OpenaiAutoArticlesComponent {
     );
 
     artQItem.openaiPromptQueue.forEach((item, index) => {
-      const jsonEl = item.prompt.message.json;
+      const jsonEl = this.aeService.cleanAndFormatEditorEl(
+        item.prompt.message.json,
+        OPENAI_ID_PHRASES
+      );
       if (jsonEl) {
         if (index === 0) {
           article.body = jsonEl;
@@ -494,9 +502,9 @@ export class OpenaiAutoArticlesComponent {
               article.metaInfo.description =
                 this.aeService.readDescriptionFromEditorElement(jsonEl);
               break;
-              case OpenaiPromptType.questions:
+            case OpenaiPromptType.questions:
               break;
-              case OpenaiPromptType.subtopics:
+            case OpenaiPromptType.subtopics:
               break;
             default:
               article.body.children = [].concat(
@@ -529,7 +537,9 @@ export class OpenaiAutoArticlesComponent {
         .catch((err) => {
           artQItem.saveStatus = false;
           this.errorMsg.push(
-            `<span class="error">Error Saving Article (${artQIndex + 1}):</span>: ${artQItem.name} | ${err.message}`
+            `<span class="error">Error Saving Article (${
+              artQIndex + 1
+            }):</span>: ${artQItem.name} | ${err.message}`
           );
         });
     });
@@ -554,7 +564,9 @@ export class OpenaiAutoArticlesComponent {
       );
     } catch (err) {
       this.errorMsg.push(
-        `<span class="error">Error generating Article ${artQIndex + 1} Image </span>| ${err.message}`
+        `<span class="error">Error generating Article ${
+          artQIndex + 1
+        } Image </span>| ${err.message}`
       );
 
       return '';
@@ -574,7 +586,9 @@ export class OpenaiAutoArticlesComponent {
       return this.aeService.generateArticleImageUrl(imageFileInfo.fullPath);
     } catch (err) {
       this.errorMsg.push(
-        `<span class="error">Error Saving Article ${artQIndex + 1} Image </span>| ${err.message}`
+        `<span class="error">Error Saving Article ${
+          artQIndex + 1
+        } Image </span>| ${err.message}`
       );
 
       return '';

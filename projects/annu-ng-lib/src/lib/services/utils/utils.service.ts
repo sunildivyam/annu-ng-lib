@@ -3,7 +3,6 @@ import { FirebaseStoreConfig } from '../../firebase/firebase.interface';
 import { LibConfig } from '../../app-config/app-config.interface';
 import { ImageFileInfo } from '../../components/common-ui/image-browser/image-browser.interface';
 
-
 /**
  * UtilsService exports all the methods that provides some common utility.
  *
@@ -13,8 +12,7 @@ import { ImageFileInfo } from '../../components/common-ui/image-browser/image-br
  */
 @Injectable()
 export class UtilsService {
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Returns the current Date from browser in the ISO format.
@@ -24,9 +22,8 @@ export class UtilsService {
    * @type {string}
    */
   public get currentDate(): string {
-    return (new Date()).toISOString();
+    return new Date().toISOString();
   }
-
 
   /**
    * Returns a local date string
@@ -42,7 +39,6 @@ export class UtilsService {
     const dt = new Date(date);
     return dt.toLocaleDateString('en-US', options);
   }
-
 
   /**
    * Converts ISOString date string to its equivalent time in milliseconds since 1970, returns numeric value as a string.
@@ -60,7 +56,7 @@ export class UtilsService {
         const dt = new Date(dateStr);
         timeStr = dt.getTime().toString();
       }
-    } catch (err) { }
+    } catch (err) {}
 
     return timeStr;
   }
@@ -80,11 +76,10 @@ export class UtilsService {
       if (timeStr) {
         dateStr = new Date(Number(timeStr)).toISOString();
       }
-    } catch (err) { }
+    } catch (err) {}
 
     return dateStr;
   }
-
 
   /**
    * Stripe out all special characters from the string too except A-Z, a-z, 0-9.
@@ -97,8 +92,13 @@ export class UtilsService {
   public getStringWithNoSpecialChars(str: string): string {
     if (!str) return '';
     const strArr = str.split('');
-    const filteredStr = strArr.filter(char => {
-      if ((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || (char >= '0' && char <= '9') || char === ' ') {
+    const filteredStr = strArr.filter((char) => {
+      if (
+        (char >= 'A' && char <= 'Z') ||
+        (char >= 'a' && char <= 'z') ||
+        (char >= '0' && char <= '9') ||
+        char === ' '
+      ) {
         return true;
       } else {
         return false;
@@ -107,7 +107,6 @@ export class UtilsService {
 
     return filteredStr.join('');
   }
-
 
   /**
    * Trims out additional consecutive spaces from a string, also trims spaces from end of the string.
@@ -120,19 +119,22 @@ export class UtilsService {
   public trimConsecutiveSpaces(str: string): string {
     if (!str) return '';
 
-    return str.split('').filter((char, index) => {
-      if (char === ' ') {
-        if (index === (str.length - 1)) {
-          return false;
-        } else if (str[index + 1] === ' ') {
-          return false;
+    return str
+      .split('')
+      .filter((char, index) => {
+        if (char === ' ') {
+          if (index === str.length - 1) {
+            return false;
+          } else if (str[index + 1] === ' ') {
+            return false;
+          } else {
+            return true;
+          }
         } else {
           return true;
         }
-      } else {
-        return true;
-      }
-    }).join('');
+      })
+      .join('');
   }
 
   /**
@@ -146,10 +148,10 @@ export class UtilsService {
     // trims additional spaces from a string.
     const spacesTrimmedStr = this.trimConsecutiveSpaces(title);
     // Stripe out all special characters from the string too except A-Z, a-z, 0-9.
-    const titleWithNoSpecialChars = this.getStringWithNoSpecialChars(spacesTrimmedStr);
+    const titleWithNoSpecialChars =
+      this.getStringWithNoSpecialChars(spacesTrimmedStr);
     return titleWithNoSpecialChars.split(' ').join('-').toLocaleLowerCase();
   }
-
 
   /**
    * Scrolls the page to the desired top position.
@@ -172,7 +174,6 @@ export class UtilsService {
     return str.substring(0, count) + '...';
   }
 
-
   /**
    * Generates a unique ID from a string by adding dashes for spaces and adding a unique string.
    * @date 14/4/2022 - 2:39:05 pm
@@ -184,11 +185,11 @@ export class UtilsService {
   public getUniqueFromString(str: string = ''): string {
     const dashed = this.toDashedString(str);
     const rndStr = Math.random().toString(36).substring(2);
-    const uniqueId = Date.now().toString(36) + rndStr.substring(rndStr.length / 3);
+    const uniqueId =
+      Date.now().toString(36) + rndStr.substring(rndStr.length / 3);
 
     return `${dashed}-${uniqueId}`;
   }
-
 
   /**
    * Generates a message for an image upload, based on image specifications.
@@ -203,7 +204,6 @@ export class UtilsService {
 
     return `Allowed Image specification: 1Kb <= size <= ${maxKBs}Kbs | ${minWidth}px <= width <= ${maxWidth}px | ${minHeight}px <= height <= ${maxHeight}px`;
   }
-
 
   /**
    * Deep copy an object or an array
@@ -222,9 +222,8 @@ export class UtilsService {
   }
 
   public delay(miliseconds: number): Promise<unknown> {
-    return new Promise(resolve => setTimeout(resolve, miliseconds));
+    return new Promise((resolve) => setTimeout(resolve, miliseconds));
   }
-
 
   /**
    * Generates Image source urls to be displayed from API.
@@ -237,9 +236,13 @@ export class UtilsService {
    * @param {string} [baseUrl='']
    * @returns {string}
    */
-  public getImageUrl(imageFullPath: string, imageApiEndpoint: string, baseUrl: string = ''): string {
+  public getImageUrl(
+    imageFullPath: string,
+    imageApiEndpoint: string,
+    baseUrl: string = ''
+  ): string {
     const imageApiUrl = `${imageApiEndpoint}${imageFullPath}`;
-    return baseUrl ? `${baseUrl}/${imageApiUrl}` : imageApiUrl;
+    return baseUrl ? `${baseUrl}${imageApiUrl}` : imageApiUrl;
   }
 
   /**
@@ -254,8 +257,14 @@ export class UtilsService {
    * @param {string} [baseUrl='']
    * @returns {string}
    */
-  public getCanonicalUrl(categoryid: string, articleId: string = '', baseUrl: string = ''): string {
+  public getCanonicalUrl(
+    categoryid: string,
+    articleId: string = '',
+    baseUrl: string = ''
+  ): string {
     const articleSegment = articleId ? `/${articleId}` : '';
-    return baseUrl ? `${baseUrl}/${categoryid}${articleSegment}` : `${categoryid}${articleSegment}`;
+    return baseUrl
+      ? `${baseUrl}/${categoryid}${articleSegment}`
+      : `/${categoryid}${articleSegment}`;
   }
 }

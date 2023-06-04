@@ -4,13 +4,15 @@ import { DOCUMENT } from '@angular/common';
 import * as showdown from 'showdown';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Html2JsonService {
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  constructor(@Inject(DOCUMENT) private document: Document) { }
-
-  public md2html(mdText: string, replaceNewlineWith: string = '<p></p>'): string {
+  public md2html(
+    mdText: string,
+    replaceNewlineWith: string = '<p></p>'
+  ): string {
     const converter = new showdown.Converter();
     let html = converter.makeHtml(mdText);
     // html = html.replaceAll('\\n', replaceNewlineWith);
@@ -28,7 +30,9 @@ export class Html2JsonService {
   }
 
   private parseHtmlElement(el: HTMLElement | ChildNode): EditorElement {
-    const tagName = ((el as HTMLElement).tagName || (el as ChildNode).nodeName).toLowerCase();
+    const tagName = (
+      (el as HTMLElement).tagName || (el as ChildNode).nodeName
+    ).toLowerCase();
     const name = (el as HTMLElement).id || `${tagName}-${Date.now()}`;
     const isContainer = ['ol', 'ul', 'article'].includes(tagName);
     const focused = false;
@@ -39,15 +43,29 @@ export class Html2JsonService {
       const children: Array<EditorElement> = [];
       if (tagName === 'pre') {
         let codeEl;
-        el.childNodes.forEach(node => {
+        el.childNodes.forEach((node) => {
           if (node.nodeName === 'CODE') {
             codeEl = node;
           }
         });
 
-        return { ...editorEl, tagName: 'anu-code-block', data: this.getContent(codeEl) };
-      } else if (['p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
-        return { ...editorEl, data: { text: (el as HTMLElement).innerHTML } };
+        return {
+          ...editorEl,
+          tagName: 'anu-code-block',
+          data: this.getContent(codeEl),
+        };
+      } else if (
+        ['p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)
+      ) {
+        return {
+          ...editorEl,
+          data: {
+            text:
+              tagName === 'p'
+                ? (el as HTMLElement).innerHTML
+                : (el as HTMLElement).textContent,
+          },
+        };
       } else {
         for (let i = 0; i < elementChildren.length; i++) {
           const elObj = this.parseHtmlElement(elementChildren[i]);
@@ -73,21 +91,21 @@ export class Html2JsonService {
 
     switch (tagName) {
       case 'IMG':
-        const imgEl = (el as HTMLImageElement);
+        const imgEl = el as HTMLImageElement;
         content.src = imgEl.src || '';
         content.alt = imgEl.alt || '';
         break;
       case 'A':
-        const aEl = (el as HTMLAnchorElement);
+        const aEl = el as HTMLAnchorElement;
         content.href = aEl.href || '';
         break;
       case 'CODE':
-        const codeEl = (el as HTMLElement);
+        const codeEl = el as HTMLElement;
         content.source = codeEl.innerHTML || '';
         content.language = codeEl.lang || '';
         break;
       case '#text':
-        const textEl = (el as HTMLSpanElement);
+        const textEl = el as HTMLSpanElement;
         content.text = textEl.textContent || '';
         break;
       default:

@@ -7,5 +7,6 @@
     </li>
 </ul>
 <div class="row right">
-    {{category?.metaInfo?.title}} - <a [routerLink]="[href, category?.id]">Read more...</a>
+    <a [routerLink]="[href, category?.id]">Click to read more related articles
+        on <strong>{{category?.metaInfo?.title}}</strong></a>
 </div>
