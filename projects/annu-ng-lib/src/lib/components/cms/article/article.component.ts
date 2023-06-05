@@ -1,11 +1,17 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Article } from './article.interface';
 import { UtilsService } from '../../../services/utils';
 
 @Component({
   selector: 'anu-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss']
+  styleUrls: ['./article.component.scss'],
 })
 export class ArticleComponent implements OnInit, OnChanges {
   /**
@@ -44,23 +50,57 @@ export class ArticleComponent implements OnInit, OnChanges {
    */
   @Input() showDescription: boolean = true;
 
+  /**
+   * Shows/hides image on the card.
+   */
+  @Input() showImage: boolean = true;
+
+  /**
+   * Shows/hides image on the card.
+   */
+  @Input() isRowLayout: boolean = true;
+
   trimmedDescription: string = '';
+  imageClassNames: Array<string> = [];
+  contentClassNames: Array<string> = [];
+  cardClassNames: Array<string> = [];
 
   constructor(public utilsSvc: UtilsService) {}
 
   ngOnInit(): void {
     this.trimDescription();
+    this.setClassNames();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.trimDescription();
+    this.setClassNames();
+  }
+
+  private setClassNames(): void {
+    if (this.isRowLayout) {
+      this.imageClassNames = this.showImage
+        ? ['col-sm-12', 'col-md-4', 'col-lg-4']
+        : ['hidden'];
+      this.contentClassNames = this.showImage
+        ? ['col-sm-12', 'col-md-8', 'col-lg-8']
+        : ['col-12'];
+      this.cardClassNames = ['nowrap-md', 'nowrap-lg'];
+    } else {
+      this.imageClassNames = this.showImage ? ['col-12'] : ['hidden'];
+      this.contentClassNames = ['col-12'];
+      this.cardClassNames = [];
+    }
   }
 
   private trimDescription() {
     const desc = this.value?.metaInfo?.description;
 
     if (this.descriptionCharCount && this.descriptionCharCount > 0) {
-      this.trimmedDescription = this.utilsSvc.getTrimmedStringByChars(desc, this.descriptionCharCount);
+      this.trimmedDescription = this.utilsSvc.getTrimmedStringByChars(
+        desc,
+        this.descriptionCharCount
+      );
     } else {
       this.trimmedDescription = desc;
     }

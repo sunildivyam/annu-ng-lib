@@ -3,12 +3,22 @@ import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { META_PROPS } from './constants';
 import { MetaInfo, MetaProp, MetaPropertyType } from './meta.interface';
 import { DOCUMENT } from '@angular/common';
+import { UtilsService } from '../../../services/utils/utils.service';
+import { LibConfig } from '../../../app-config/app-config.interface';
 
 @Injectable()
 export class MetaService {
 
-  constructor(private meta: Meta, private title: Title,
+  constructor(private meta: Meta, private title: Title, private utilsSvc: UtilsService, private libConfig: LibConfig,
     @Inject(DOCUMENT) private document: Document) { }
+
+  private getMetaInfoWithBaseUrlAdded(metaInfo: MetaInfo): MetaInfo {
+    return {
+      ...metaInfo,
+      url: this.utilsSvc.getCanonicalUrl(metaInfo.url, '', this.libConfig.apiBaseUrl),
+      image: this.utilsSvc.getImageUrl(metaInfo.image, '', this.libConfig.apiBaseUrl),
+    } as MetaInfo;
+  }
 
   private getTagAsString(metaDefinition: MetaDefinition): string {
     let keyName = '';
@@ -58,27 +68,31 @@ export class MetaService {
   }
 
   public getTagsAsString(pageMeta: MetaInfo): Array<string> {
-    const metaDefinitions = this.generateAllMetaDefinitions(pageMeta);
+    let metaInfo = this.getMetaInfoWithBaseUrlAdded(pageMeta);
+
+    const metaDefinitions = this.generateAllMetaDefinitions(metaInfo);
 
     const tagsAsString: Array<string> = metaDefinitions.map(m => this.getTagAsString(m));
-    if(pageMeta.url) {
-      tagsAsString.push(`<link rel="canonical" href="${pageMeta.url}"/>`);
+    if(metaInfo.url) {
+      tagsAsString.push(`<link rel="canonical" href="${metaInfo.url}"/>`);
     }
 
     return tagsAsString;
   }
 
   public setPageMeta(pageMeta: MetaInfo): Array<HTMLMetaElement> {
-    const metaDefinitions = this.generateAllMetaDefinitions(pageMeta);
+    let metaInfo = this.getMetaInfoWithBaseUrlAdded(pageMeta);
+
+    const metaDefinitions = this.generateAllMetaDefinitions(metaInfo);
     const addedMetaElements: Array<HTMLMetaElement> = [];
     // remove all existing meta tags, before adding new ones.
     this.removeExistingMetaTags();
 
     // sets title
-    this.title.setTitle(pageMeta?.title);
+    this.title.setTitle(metaInfo?.title);
 
     // sets canonical url link tag
-    this.setCanonicalLinkTag(pageMeta);
+    this.setCanonicalLinkTag(metaInfo);
 
     // sets all other meta tags.
     for (let metaDef of metaDefinitions) {

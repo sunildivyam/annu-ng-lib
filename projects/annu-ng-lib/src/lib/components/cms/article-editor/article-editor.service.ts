@@ -14,12 +14,14 @@ import {
   CONTENT_PROMPT_PREFIX,
   DESCRIPTION_PROMPT_PREFIX,
   KEYWORDS_PROMPT_PREFIX,
+  MAX_STRONG_FORMATTING_CHAR_COUNT,
   OPENAI_REQUESTS_LIMIT,
   OPENAI_REQUEST_TIME_LIMIT,
 } from './constants';
 import { Html2JsonService } from '../content-editor/services/html2json.service';
 import { AuthFirebaseService } from '../../../firebase/auth/auth-firebase.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { OPENAI_ID_PHRASES } from '../../../openai/openai.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +41,10 @@ export class ArticleEditorService {
     return this.article$.asObservable();
   }
 
-  public createInitializedArticle(articleTitle: string, appConfig: AppConfig): Article {
+  public createInitializedArticle(
+    articleTitle: string,
+    appConfig: AppConfig
+  ): Article {
     return {
       id: this.utilsService.getUniqueFromString(articleTitle),
       metaInfo: {
@@ -59,7 +64,8 @@ export class ArticleEditorService {
         audio: '',
         video: '',
         'article:published_time': this.utilsService.currentDate,
-        'article:author': appConfig?.metaInfo && appConfig?.metaInfo['article:author'],
+        'article:author':
+          appConfig?.metaInfo && appConfig?.metaInfo['article:author'],
         'article:section': META_ALLOWED_VALUES.articleSections[0].name,
         'article:tag': '', // will be updated post assignment
       } as MetaInfo,
@@ -86,7 +92,10 @@ export class ArticleEditorService {
   ): Promise<Article> {
     const timeStarted = Date.now();
 
-    const article: Article = this.createInitializedArticle(articleTitle, appConfig);
+    const article: Article = this.createInitializedArticle(
+      articleTitle,
+      appConfig
+    );
     this.article$.next(article);
 
     // set title prompt content for article body
@@ -204,10 +213,7 @@ export class ArticleEditorService {
         i + OPENAI_REQUESTS_LIMIT
       );
       const chunkPromises = chunkSubHeadings.map((promptText) =>
-        this.generateArticleContentFromOpenai(
-          promptText,
-          contentPromptPrefix
-        )
+        this.generateArticleContentFromOpenai(promptText, contentPromptPrefix)
       );
       const chunkJsonElms = await Promise.all(chunkPromises);
 
@@ -222,7 +228,7 @@ export class ArticleEditorService {
       const tempArticle: Article = this.utilsService.deepCopy(
         this.article$.value
       );
-      tempArticle.body = body;
+      tempArticle.body = this.cleanAndFormatEditorEl(body, OPENAI_ID_PHRASES);
       this.article$.next(tempArticle);
 
       // Delay if OPENAI_REQUEST_TIME_LIMIT API time limit is not completed yet.
@@ -248,8 +254,7 @@ export class ArticleEditorService {
     const canonicalCategoryId = articleCategories.length
       ? articleCategories[0]
       : '';
-
-    return `${this.libConfig.apiBaseUrl}/${canonicalCategoryId}/${articleId}`;
+    return this.utilsService.getCanonicalUrl(canonicalCategoryId, articleId);
   }
 
   public readDescriptionFromEditorElement(el: EditorElement): string {
@@ -303,6 +308,87 @@ export class ArticleEditorService {
   }
 
   public generateArticleImageUrl(imageFullPath: string): string {
-    return `${this.libConfig.imagesSourceUrl}${imageFullPath}`
+    return this.utilsService.getImageUrl(
+      imageFullPath,
+      this.libConfig.imagesSourceUrl
+    );
+  }
+
+  public cleanAndFormatEditorEl(
+    jsonEl: EditorElement,
+    phrases: Array<string>
+  ): EditorElement {
+    return this.formatEditorElement(this.cleanEditorEl(jsonEl, phrases));
+  }
+
+  /**
+   * Cleans Open ai language keywords and tags with \n only.
+   * @date 6/5/2023 - 12:48:30 AM
+   *
+   * @public
+   * @param {EditorElement} jsonEl
+   * @param {Array<string>} phrases
+   * @returns {EditorElement}
+   */
+  public cleanEditorEl(
+    jsonEl: EditorElement,
+    phrases: Array<string>
+  ): EditorElement {
+    if (!phrases || !phrases.length) return this.utilsService.deepCopy(jsonEl);
+    if (!jsonEl) return jsonEl;
+
+    const phrasesF = phrases.filter((phrase) =>
+      jsonEl?.data?.text.includes(phrase)
+    );
+    if (
+      phrasesF.length ||
+      (jsonEl?.tagName === '#text' && jsonEl?.data?.text === '\n')
+    ) {
+      return null;
+    } else if (jsonEl?.children && jsonEl.children.length) {
+      jsonEl.children = jsonEl.children
+        .map((el) => this.cleanEditorEl(el, phrases))
+        .filter((el) => el !== null);
+      return jsonEl;
+    }
+
+    return jsonEl;
+  }
+
+  /**
+   * Formats LI items those having an heading within, as strong.
+   * @date 6/5/2023 - 12:55:14 AM
+   *
+   * @public
+   * @param {EditorElement} el
+   * @returns {EditorElement}
+   */
+  public formatEditorElement(el: EditorElement): EditorElement {
+    if (['ul', 'ol'].includes(el.tagName.toLowerCase())) {
+      el.children.forEach((chEl) => {
+        if (chEl.tagName.toLowerCase() === 'li' && chEl.data?.text) {
+          const str = chEl.data?.text || '';
+          const colonIndex = str.indexOf(':');
+          const pIndex = str.indexOf('<p>');
+          const pTag =
+            pIndex >= 0 && pIndex < MAX_STRONG_FORMATTING_CHAR_COUNT
+              ? '<p>'
+              : '';
+          if (colonIndex > 0 && colonIndex < MAX_STRONG_FORMATTING_CHAR_COUNT) {
+            // means is a bold text
+            let strongText = str.substring(0, colonIndex);
+            const normalText = str.substring(colonIndex);
+            strongText = pTag ? strongText.replace('<p>', '') : strongText;
+            chEl.data.text = `${pTag}<strong>${strongText}</strong>${normalText}`;
+          }
+        }
+      });
+    }
+
+    if (el.children && el.children.length) {
+      el.children = el.children.map((chEl) => this.formatEditorElement(chEl));
+    }
+
+    return el;
   }
 }

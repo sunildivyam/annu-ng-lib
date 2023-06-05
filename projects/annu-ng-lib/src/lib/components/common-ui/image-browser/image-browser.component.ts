@@ -160,8 +160,8 @@ export class ImageBrowserComponent implements OnInit {
         );
       } else {
         imageFile.downloadUrl = this.utilsService.getImageUrl(
-          this.libConfig,
-          imageFile.fullPath
+          imageFile.fullPath,
+          this.libConfig.imagesSourceUrl,
         );
       }
 
