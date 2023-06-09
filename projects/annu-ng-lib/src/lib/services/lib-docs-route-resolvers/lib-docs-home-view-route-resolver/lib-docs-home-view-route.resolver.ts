@@ -1,5 +1,10 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  makeStateKey,
+  TransferState,
+} from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { LibDocsHomeViewRouteData } from '../lib-docs-route-resolvers.interface';
@@ -18,21 +23,32 @@ import { DocsService } from '../../../components/docs';
  * @implements {Resolve<LibDocsHomeViewRouteData>}
  */
 @Injectable()
-export class LibDocsHomeViewRouteResolver  {
-
+export class LibDocsHomeViewRouteResolver {
   routeData: LibDocsHomeViewRouteData = {};
   LOGS_MODULE_NAME: string = LibDocsHomeViewRouteResolver.name;
 
-  constructor(private docsService: DocsService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) { }
+  constructor(
+    private docsService: DocsService,
+    private transferState: TransferState,
+    @Inject(PLATFORM_ID) private platformId
+  ) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<LibDocsHomeViewRouteData> {
+  async resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<LibDocsHomeViewRouteData> {
     this.routeData = {};
     // create a unique key that holds the route stata data.
-    const HOME_VIEW_ROUTE_KEY = makeStateKey<LibDocsHomeViewRouteData>('lib-docs-home-view-route');
+    const HOME_VIEW_ROUTE_KEY = makeStateKey<LibDocsHomeViewRouteData>(
+      'lib-docs-home-view-route'
+    );
 
     //Check if state data already exists, if yes, serve it from state, and clear the state else, fetch the data and set it to state, that can be used at client side.
     if (this.transferState.hasKey(HOME_VIEW_ROUTE_KEY)) {
-      this.routeData = this.transferState.get<LibDocsHomeViewRouteData>(HOME_VIEW_ROUTE_KEY, {});
+      this.routeData = this.transferState.get<LibDocsHomeViewRouteData>(
+        HOME_VIEW_ROUTE_KEY,
+        {}
+      );
       this.transferState.remove(HOME_VIEW_ROUTE_KEY);
       return this.routeData;
     } else {
