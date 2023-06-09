@@ -1,6 +1,6 @@
 {
   "name": "@annubiz/ng-lib",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "private": false,
   "peerDependencies": {
     "@angular/common": "^16.0.4",
