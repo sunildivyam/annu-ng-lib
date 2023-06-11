@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Category } from '../../components/cms/category';
-import { Article } from '../../components/cms/article';
+import { Article, ArticleFeatures } from '../../components/cms/article';
 import { LibConfig } from '../../app-config';
 import {
   FirestoreParserService,
@@ -402,6 +402,33 @@ export class ArticlesFirebaseHttpService {
     try {
       const articles = await this.runQueryByConfig(articlesQueryConfig);
       return articles;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  public async getLiveOnePageShallowArticlesByFeatures(
+    features: Array<ArticleFeatures>,
+    isLive: boolean = true,
+    pageSize: number = 0,
+    startPage: string | null = null,
+    isForwardDir: boolean = true
+  ): Promise<PageArticles> {
+    const articlesQueryConfig: QueryConfig = {
+      isLive,
+      orderField: 'updated',
+      orderFieldType: StructuredQueryValueType.stringValue,
+      startPage,
+      pageSize,
+      isForwardDir,
+      isDesc: true,
+      features,
+      selectFields: SHALLOW_ARTICLE_FIELDS,
+    };
+    try {
+      const articles = await this.runQueryByConfig(articlesQueryConfig);
+
+      return await this.buildPageOfArticles(articles, pageSize);
     } catch (error: any) {
       throw error;
     }
