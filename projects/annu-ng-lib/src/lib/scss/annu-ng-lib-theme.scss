@@ -38,6 +38,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 
   &>* {
     max-width: var(--anu-site-width);
@@ -90,7 +91,8 @@ a {
 
     &:hover {
       color: var(--anu-accent-lightest);
-      background-color: #{$success-hover};;
+      background-color: #{$success-hover};
+      ;
       border-color: var(--anu-primary-normal);
     }
   }
@@ -102,7 +104,8 @@ a {
 
     &:hover {
       color: var(--anu-accent-lightest);
-      background-color: #{$warning-hover};;
+      background-color: #{$warning-hover};
+      ;
       border-color: var(--anu-primary-normal);
     }
   }
@@ -114,7 +117,8 @@ a {
 
     &:hover {
       color: var(--anu-accent-lightest);
-      background-color: #{$error-hover};;
+      background-color: #{$error-hover};
+      ;
       border-color: var(--anu-primary-normal);
     }
   }
