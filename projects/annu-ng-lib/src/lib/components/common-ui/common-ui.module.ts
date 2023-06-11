@@ -32,14 +32,11 @@ import { ThemeFontResizerModule } from './theme-font-resizer/theme-font-resizer.
 import { SitemapModule } from './sitemap';
 import { OpenaiFormModule } from './openai-form/openai-form.module';
 import { OpenaiImageFormModule } from './openai-image-form/openai-image-form.module';
-
+import { SlideshowModule } from './slideshow/slideshow.module';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-
-  ],
+  imports: [CommonModule],
   exports: [
     TabsModule,
     ColorPaletteModule,
@@ -72,6 +69,7 @@ import { OpenaiImageFormModule } from './openai-image-form/openai-image-form.mod
     SitemapModule,
     OpenaiFormModule,
     OpenaiImageFormModule,
+    SlideshowModule,
   ],
 })
-export class CommonUiModule { }
+export class CommonUiModule {}

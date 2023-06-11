@@ -38,6 +38,7 @@ import { ThemeFontResizerComponent } from '../../common-ui/theme-font-resizer/do
 import { SitemapComponent } from '../../common-ui/sitemap/sitemap/docs.data';
 import { OpenaiFormComponent } from '../../common-ui/openai-form/docs.data';
 import { OpenaiImageFormComponent } from '../../common-ui/openai-image-form/docs.data';
+import { SlideshowComponent } from '../../common-ui/slideshow/docs.data';
 
 // CMS
 import { ArticleComponent } from '../../cms/article/docs.data';
@@ -52,6 +53,8 @@ import { ContentEditorComponent } from '../../cms/content-editor/docs.data';
 import { ContentElementComponent } from '../../cms/content-editor/content-element/docs.data';
 import { LeafElementComponent } from '../../cms/content-editor/leaf-element/docs.data';
 import { OpenaiAutoArticlesComponent } from '../../cms/openai-auto-articles/docs.data';
+import { ArticlesSlideshowComponent } from '../../cms/articles-slideshow/docs.data';
+
 // Auth
 import { LoginComponent } from '../../auth/login/docs.data';
 import { LoginStatusComponent } from '../../auth/login-status/docs.data';
@@ -63,9 +66,8 @@ import { ComponentUsageComponent } from '../../docs/component-usage/docs.data';
 import { ServiceInfoComponent } from '../../docs/service-info/docs.data';
 import { ServiceMethodComponent } from '../../docs/service-method/docs.data';
 
-
 export const LibComponentsContent = {
-    // Common UI
+  // Common UI
   AsideNavComponent,
   AsideNavHeaderComponent,
   AsideNavItemComponent,
@@ -105,6 +107,7 @@ export const LibComponentsContent = {
   SitemapComponent,
   OpenaiFormComponent,
   OpenaiImageFormComponent,
+  SlideshowComponent,
 
   // CMS
   ArticleComponent,
@@ -119,6 +122,7 @@ export const LibComponentsContent = {
   ContentElementComponent,
   LeafElementComponent,
   OpenaiAutoArticlesComponent,
+  ArticlesSlideshowComponent,
 
   // Auth
   LoginComponent,
@@ -130,4 +134,4 @@ export const LibComponentsContent = {
   ComponentUsageComponent,
   ServiceInfoComponent,
   ServiceMethodComponent,
-}
+};
