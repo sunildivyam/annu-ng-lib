@@ -94,15 +94,9 @@ export class ArticleComponent implements OnInit, OnChanges {
   }
 
   private trimDescription() {
-    const desc = this.value?.metaInfo?.description;
-
-    if (this.descriptionCharCount && this.descriptionCharCount > 0) {
-      this.trimmedDescription = this.utilsSvc.getTrimmedStringByChars(
-        desc,
-        this.descriptionCharCount
-      );
-    } else {
-      this.trimmedDescription = desc;
-    }
+    this.trimmedDescription = this.utilsSvc.getTrimmedStringByChars(
+      this.value?.metaInfo?.description,
+      this.descriptionCharCount
+    );
   }
 }

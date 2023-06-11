@@ -11,6 +11,7 @@ import {
   ContentElementComponent,
   LeafElementComponent,
   OpenaiAutoArticlesComponent,
+  ArticlesSlideshowComponent,
 } from '../../cms';
 
 import {
@@ -53,21 +54,16 @@ import {
   SitemapComponent,
   OpenaiFormComponent,
   OpenaiImageFormComponent,
+  SlideshowComponent,
 } from '../../common-ui';
 
-import {
-  LoginComponent,
-  LoginStatusComponent,
-} from '../../auth';
+import { LoginComponent, LoginStatusComponent } from '../../auth';
 
-
-
-  // import { ComponentInfoComponent } from '../component-info/component-info.component';
-  import { ComponentPropsComponent } from '../component-props/component-props.component';
-  // import { ComponentUsageComponent } from '../component-usage/component-usage.component';
-  import { ServiceInfoComponent } from '../service-info/service-info.component';
-  import { ServiceMethodComponent } from '../service-method/service-method.component';
-
+// import { ComponentInfoComponent } from '../component-info/component-info.component';
+import { ComponentPropsComponent } from '../component-props/component-props.component';
+// import { ComponentUsageComponent } from '../component-usage/component-usage.component';
+import { ServiceInfoComponent } from '../service-info/service-info.component';
+import { ServiceMethodComponent } from '../service-method/service-method.component';
 
 export const LibComponents = {
   // Common UI
@@ -110,7 +106,7 @@ export const LibComponents = {
   SitemapComponent,
   OpenaiFormComponent,
   OpenaiImageFormComponent,
-
+  SlideshowComponent,
 
   // CMS
   ArticleComponent,
@@ -125,6 +121,8 @@ export const LibComponents = {
   ContentElementComponent,
   LeafElementComponent,
   OpenaiAutoArticlesComponent,
+  ArticlesSlideshowComponent,
+
   // Auth
   LoginComponent,
   LoginStatusComponent,
