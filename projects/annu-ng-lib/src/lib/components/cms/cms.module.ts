@@ -10,13 +10,11 @@ import { ArticleListModule } from './article-list/article-list.module';
 import { ArticleViewModule } from './article-view/article-view.module';
 import { CategoryArticlesListModule } from './category-articles-list/category-articles-list.module';
 import { OpenaiAutoArticlesModule } from './openai-auto-articles/openai-auto-articles.module';
+import { ArticlesSlideshowModule } from './articles-slideshow/articles-slideshow.module';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    OpenaiAutoArticlesModule,
-  ],
+  imports: [CommonModule],
   exports: [
     ContentEditorModule,
     ArticleModule,
@@ -26,6 +24,8 @@ import { OpenaiAutoArticlesModule } from './openai-auto-articles/openai-auto-art
     ArticleListModule,
     ArticleViewModule,
     CategoryArticlesListModule,
-  ]
+    OpenaiAutoArticlesModule,
+    ArticlesSlideshowModule,
+  ],
 })
-export class CmsModule { }
+export class CmsModule {}

@@ -19,6 +19,7 @@ export enum CategoryFeatures {
   primaryNavigation = 'primary-navigation',
   footerNavigation = 'footer-navigation',
   primeShow = 'prime-show',
+  footerShow = 'footer-show',
   primeShowAside = 'prime-show-aside',
   inReview = 'in-review',
   tnc = 'tnc',
