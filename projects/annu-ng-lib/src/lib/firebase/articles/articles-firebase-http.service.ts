@@ -133,11 +133,10 @@ export class ArticlesFirebaseHttpService {
     delete pArticle.id;
 
     return new Promise((resolve, reject) => {
-      const url = `${this.firestoreApiUrl}/${
-        isBin === true
+      const url = `${this.firestoreApiUrl}/${isBin === true
           ? ARTICLES_COLLECTIONS.ARTICLES_BIN
           : ARTICLES_COLLECTIONS.ARTICLES
-      }/${article.id}`;
+        }/${article.id}`;
       const body = this.firestoreParser.buildFirebaseFields(
         pArticle,
         fieldsToUpdate

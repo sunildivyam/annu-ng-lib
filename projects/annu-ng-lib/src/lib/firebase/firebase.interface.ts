@@ -1,4 +1,4 @@
-import { StructuredQueryValue, StructuredQueryValueType } from "./common-firebase";
+import { StructuredQueryValue, StructuredQueryValueType } from "./common-firebase/common-firebase.interface";
 
 export class FirebaseConfig {
     public projectId?= '';
